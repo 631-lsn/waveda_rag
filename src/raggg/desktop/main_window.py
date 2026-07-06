@@ -371,11 +371,14 @@ def _preload_all_images(image_index: dict[str, str]) -> None:
         _path_to_data_uri(path)
 
 
-def _extract_images_from_sources(sources: list, image_index: dict[str, str]) -> list[tuple[str, str]]:
-    """从检索到的来源chunk中提取图片路径, 返回 [(绝对路径, 标题), ...]"""
+def _extract_images_from_sources(sources: list, image_index: dict[str, str],
+                                  min_score: float = 0.75) -> list[tuple[str, str]]:
+    """从检索到的来源chunk中提取图片路径, 过滤低分来源, 返回 [(绝对路径, 标题), ...]"""
     seen = set()
     results = []
     for src in sources:
+        if src.score < min_score:
+            continue
         content = src.chunk.content
         title = src.chunk.title
         for match in IMAGE_PATH_RE.finditer(content):
