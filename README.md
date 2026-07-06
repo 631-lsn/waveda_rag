@@ -1,104 +1,97 @@
-# WavEDA + 多物理场笔记 RAG
+# WavEDA RAG — 多物理场仿真知识库助手
 
-这是一个便携的本地 RAG 系统，用于合并检索三类资料：
+一个便携的本地 RAG（检索增强生成）问答系统，帮助用户快速解决 WavEDA 仿真软件的操作问题。
 
-- WavEDA 本地帮助文档（Markdown 提取页 + HTML）
-- 团队自编教程（Markdown）
-- 多物理场理论笔记（Obsidian Markdown）
+## 能做什么
 
-系统重点服务 WavEDA 软件使用问题。涉及端口、边界、PML、网格、激励源、3D 几何建模、仿真设置等问题时，会优先检索 WavEDA 帮助文档；理论笔记主要用于补充电磁场、有限元、吸收边界等理论背景。
+- 问 WavEDA 怎么用（端口设置、边界条件、激励源、求解器……）→ 自动检索帮助文档回答
+- 问电磁理论（Maxwell 方程、PML、有限元……）→ 检索理论笔记补充背景
+- 支持 Markdown 渲染、LaTeX 公式显示
+- 每条回答标注来源文档，可追溯
 
-## 当前能力
+## 怎么用
 
-- 合并 WavEDA HTML 帮助文档、提取页、团队教程和理论笔记。
-- 构建本地知识库索引。
-- 使用 WavEDA 优先的混合检索排序。
-- 支持 DeepSeek / OpenAI 兼容接口生成回答。
-- 未配置 API Key 时也能返回本地检索片段式回答。
-- 提供 PySide6 深色桌面工作台。
-- 回答中支持基础 Markdown 渲染：加粗、编号列表、项目列表。
-- 回答中支持常见 LaTeX 公式可读化渲染。
-- 右侧显示来源证据、来源类型、文件路径和匹配分数。
+1. 双击 `start.bat` 启动桌面工作台
+2. 打开后点左侧 **"API 设置"** → 下拉选择大模型 → 输入你自己的 API Key → 保存
+3. 在输入框里用明确的术语提问，例如：
+   - `波端口怎么设置？`
+   - `PML 和吸收边界有什么区别？`
+   - `如何设置平面波激励？`
+
+## 支持的大模型
+
+| 提供商 | 需要什么 |
+|------|------|
+| DeepSeek | DeepSeek API Key |
+| Kimi (Moonshot) | Moonshot API Key |
+| 千问 / 百炼 (阿里云) | 阿里云百炼 API Key |
+| OpenAI | OpenAI API Key |
+
+在界面的 API 设置里一键切换，**不需要手动填网址和模型名**。
 
 ## 项目结构
 
-```text
+```
 waveda_rag/
-├── app/desktop_app.py              # 桌面应用入口
-├── knowledge_base/                 # 团队教程、FAQ、案例
-│   ├── tutorials/
-│   │   ├── 02_电磁模块/
-│   │   └── 03_案例/
-│   └── theory_notes/
-├── wavEDA_docs/                    # WavEDA 软件文档
-│   ├── extracted_pages/
-│   ├── helpHtml/
-│   ├── examples/
-│   └── error_cases/
-├── data/
-│   ├── raw_manifest.json
-│   ├── processed_chunks.json
-│   └── index/
-│       ├── chunks.json
-│       └── vectors.npy
+├── start.bat                        # 双击启动
+├── app/desktop_app.py               # 桌面应用入口
+├── knowledge_base/                  # 团队自编教程（Markdown）
+│   ├── 00_软件概述.md
+│   ├── 01_快速入门.md
+│   ├── 03_常见问题FAQ.md
+│   ├── 04_错误排查指南.md
+│   └── tutorials/
+│       ├── 02_电磁模块/             # 端口、激励、边界、求解器、后处理
+│       └── 03_案例/                 # 微环谐振器、Y分支波导
+├── wavEDA_docs/                     # WavEDA 软件文档
+│   ├── extracted_pages/             # 帮助页（Markdown）
+│   ├── helpHtml/                    # 官方 HTML 帮助
+│   ├── examples/                    # 案例库
+│   └── error_cases/                 # 错误排查
+├── data/index/                      # 知识库索引（向量 + 知识块）
 ├── config/
-│   ├── .env                        # API Key 配置（不要公开）
-│   ├── .env.example
-│   └── kb_sources.yaml            # 知识库数据源配置
+│   ├── .env                         # API Key（本地，不提交）
+│   └── kb_sources.yaml             # 知识库数据源配置
 ├── scripts/
-│   ├── build_knowledge_base.py
-│   ├── add_document.py            # 单文档增量追加
-│   └── smoke_test.py
-└── src/raggg/                     # RAG 引擎
-    ├── loaders/
-    ├── preprocessing/
-    ├── indexing/
-    ├── retrieval/
-    ├── generation/
-    ├── pipeline/
-    └── desktop/
+│   ├── add_document.py              # 单文档增量追加
+│   └── smoke_test.py                # 基础问答验证
+└── src/raggg/                       # RAG 引擎核心
+    ├── desktop/                     # PySide6 深色界面
+    ├── retrieval/                   # 混合检索（向量 + 关键词）
+    ├── generation/                  # LLM 调用与提示词
+    └── indexing/                    # 本地哈希向量
 ```
 
-## 怎么启动
+## 开发指南
 
-双击 `start.bat`。内置 Python 运行时，不需要预先装 Python。
+### 安装（开发者）
 
-## API Key 配置
-
-`config/.env` 中已配置 DeepSeek API Key。也可以用其他 OpenAI 兼容接口：
-
-```text
-RAG_LLM_BASE_URL=https://api.deepseek.com
-RAG_LLM_API_KEY=你的API密钥
-RAG_LLM_MODEL=deepseek-chat
-```
-
-注意：`.env` 中包含密钥，不要公开、提交或截图发送。
-
-## 验证
-
-双击 `run_smoke_test.bat`，运行三条基础问答，确认知识库和模型调用是否可用。
-
-## 更新知识库
-
-新增文档后追加到索引：
+本项目内置 Python 运行时，无需额外安装 Python。如果要开发：
 
 ```bash
-runtime/python/python.exe scripts/add_document.py <文件路径>
+pip install PySide6 numpy
 ```
 
-然后在界面上点"重新载入索引"即可生效。
+### 更新知识库
 
-## 当前限制
+在 `knowledge_base/` 下写好新 Markdown 文档，然后：
 
-- 使用本地哈希向量和关键词混合检索，无需下载 embedding 模型，但语义检索能力弱于 BGE/FAISS 方案。
-- LaTeX 公式渲染是轻量转换，不是完整 MathJax 引擎。
-- 知识库更新需要手动运行构建脚本。
+```bash
+runtime/python/python.exe scripts/add_document.py knowledge_base/新文档.md
+```
 
-## 推荐使用方式
+在界面上点 **"重新载入索引"** 即可，不需要重启。
 
-1. 启动桌面工作台（双击 `start.bat`）。
-2. 优先用明确的软件对象提问，例如：
-   - `波端口怎么设置？`
-   - `PML 和吸收边界有什么关系？`
-   - `平面波激励怎么设置？`
+### API Key 配置
+
+API Key 存在 `config/.env` 中（已加入 `.gitignore`，不会泄露）。也可以在界面上直接配置。
+
+## 当前版本
+
+- **v1.0** — 知识库 1908 个知识块，覆盖 WavEDA 电磁模块 + 多物理场理论
+- 检索方式：本地哈希向量 + 关键词混合检索
+- 界面：PySide6 深色桌面工作台
+
+## 许可证
+
+内部项目，仅供团队使用。
