@@ -43,8 +43,3 @@ waveda_rag/
 1. 在 knowledge_base/ 下写新 Markdown
 2. 运行 `runtime/python/python.exe scripts/add_document.py <文件路径>`
 3. 界面上点"重新载入索引"
-
-### 相关项目
-- `实习案例/` 下有 S参数误差计算的 MATLAB/Python 脚本（仿真1、仿真2、微环谐振器、Y分支波导）
-- S参数对比使用复数域 norm(S1-S2)/norm(S2) 公式，同时包含幅度和相位误差
-- COMSOL 和 wavEDA 的 S参数经常存在端口极性定义差异（需翻转符号）
