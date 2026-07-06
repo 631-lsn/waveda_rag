@@ -268,18 +268,19 @@ def markdown_to_html(text: str) -> str:
     lines = text.strip().splitlines()
     output: list[str] = []
     list_mode: str | None = None
+    list_prefix: str = ""  # 缓存列表项间空白
 
     def close_list() -> None:
-        nonlocal list_mode
+        nonlocal list_mode, list_prefix
         if list_mode:
             output.append(f"</{list_mode}>")
-            list_mode = None
+        list_mode = None
+        list_prefix = ""
 
     for raw_line in lines:
         line = raw_line.strip()
         if not line:
-            close_list()
-            output.append("<div style='height:8px;'></div>")
+            list_prefix += "<div style='height:4px;'></div>"
             continue
 
         ordered = ORDERED_RE.match(line)
@@ -287,19 +288,24 @@ def markdown_to_html(text: str) -> str:
         if ordered:
             if list_mode != "ol":
                 close_list()
-                output.append("<ol>")
+                output.append(list_prefix + "<ol>")
+                list_prefix = ""
                 list_mode = "ol"
             output.append(f"<li>{render_inline_markdown(ordered.group(2))}</li>")
             continue
         if unordered:
             if list_mode != "ul":
                 close_list()
-                output.append("<ul>")
+                output.append(list_prefix + "<ul>")
+                list_prefix = ""
                 list_mode = "ul"
             output.append(f"<li>{render_inline_markdown(unordered.group(1))}</li>")
             continue
 
         close_list()
+        if list_prefix:
+            output.append(list_prefix)
+            list_prefix = ""
         if line.startswith(">"):
             output.append(
                 f"<blockquote style='margin:8px 0;padding:8px 12px;border-left:3px solid {COLORS['accent']};color:{COLORS['muted']};'>"
@@ -315,7 +321,11 @@ def markdown_to_html(text: str) -> str:
             output.append(f"<p style='margin:7px 0;line-height:1.58;'>{render_inline_markdown(line)}</p>")
 
     close_list()
+    if list_prefix:
+        output.append(list_prefix)
     result = "\n".join(output)
+    # Merge broken ordered lists: </ol>...<ol> -> nothing
+    result = re.sub(r"</ol>(<div[^>]*></div>)<ol>", r"\1", result)
     # Convert image markdown to actual <img> tags pointing to helpHtml
     result = _convert_image_refs(result)
     return result
