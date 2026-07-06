@@ -642,8 +642,7 @@ class WorkbenchWindow(QMainWindow):
     def _open_api_settings(self) -> None:
         dialog = ApiSettingsDialog(self.settings, self)
         if dialog.exec() == QDialog.Accepted:
-            from raggg.config import Settings
-            self.settings = Settings.from_env(Path(__file__).resolve().parents[3])
+            self.settings = load_settings()
             self._load_pipeline_if_ready()
             QMessageBox.information(self, "已保存", "API 设置已更新，重启应用后生效。")
 
@@ -795,7 +794,7 @@ window.scrollTo(0, document.body.scrollHeight);
 def run_desktop_app() -> int:
     app = QApplication(sys.argv)
     app.setStyle("Fusion")
-    settings = Settings.from_env(Path(__file__).resolve().parents[3])
+    settings = load_settings()
     window = WorkbenchWindow(settings)
     window.show()
     return app.exec()
