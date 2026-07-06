@@ -41,9 +41,9 @@ from raggg.retrieval.retriever import SearchResult
 COLORS = {
     "bg": "#07111f",
     "surface": "#0d1726",
-    "surface2": "#121f32",
-    "surface3": "#18263b",
-    "border": "#26364c",
+    "surface2": "#1a2a43",
+    "surface3": "#2F4564",
+    "border": "#475a75",
     "text": "#e6edf7",
     "muted": "#92a2b8",
     "subtle": "#607087",
@@ -607,7 +607,7 @@ class WorkbenchWindow(QMainWindow):
         title.setObjectName("title")
         title_row.addWidget(title, stretch=1)
         titles.addLayout(title_row)
-        subtitle = QLabel("软件帮助优先的仿真知识检索与问答工作台")
+        subtitle = QLabel("WavEDA 仿真软件知识问答助手")
         subtitle.setObjectName("subtitle")
         titles.addWidget(subtitle)
         titles.addWidget(subtitle)
@@ -653,7 +653,7 @@ class WorkbenchWindow(QMainWindow):
             button.clicked.connect(lambda _checked=False, text=prompt: self._ask(text))
             layout.addWidget(button)
 
-        note = QLabel("涉及 WavEDA 的问题会优先检索软件帮助文档，理论笔记作为补充。")
+        note = QLabel("优先检索 WavEDA 帮助文档和团队教程，理论笔记作为补充。")
         note.setObjectName("muted")
         note.setWordWrap(True)
         layout.addStretch(1)
@@ -702,7 +702,7 @@ class WorkbenchWindow(QMainWindow):
         layout.setSpacing(10)
         title = QLabel("来源证据")
         title.setObjectName("section")
-        subtitle = QLabel("按相关性排序，WavEDA 文档优先")
+        subtitle = QLabel("按相关性排序，帮助文档和团队教程优先")
         subtitle.setObjectName("muted")
         self.sources = QWebEngineView()
         self.sources.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
@@ -877,7 +877,7 @@ window.scrollTo(0, document.body.scrollHeight);
         return web_wrapper(
             f"""<div style="text-align:center;padding:60px 20px;">
             <div style="font-size:22px;font-weight:700;color:{COLORS['accent']};margin-bottom:12px;">WavEDA Knowledge Workbench</div>
-            <div style="color:{COLORS['muted']};margin-bottom:24px;">软件帮助优先的仿真知识检索与问答工作台</div>
+            <div style="color:{COLORS['muted']};margin-bottom:24px;">WavEDA 仿真软件知识问答助手</div>
             <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
               <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
                 <div style="font-size:20px;font-weight:700;color:{COLORS['accent']};">1,908</div>
