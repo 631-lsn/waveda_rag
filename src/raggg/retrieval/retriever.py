@@ -61,12 +61,13 @@ class Retriever:
             score = 0.65 * vector_score + 0.35 * lexical_score
 
             chunk_text_lower = f"{chunk.title} {chunk.section} {chunk.content}".lower()
-            if chunk.source_type == "waveda_help" and any(term in query_lower for term in WAVEDA_TERMS):
+            is_helpful = chunk.source_type in ("waveda_help", "user_tutorial")
+            if is_helpful and any(term in query_lower for term in WAVEDA_TERMS):
                 score += 0.08
             compact_query = query_lower.replace(" ", "").replace("？", "").replace("?", "")
             compact_title = chunk.title.lower().replace(" ", "")
             if (
-                chunk.source_type == "waveda_help"
+                is_helpful
                 and len(compact_title) >= 2
                 and compact_title not in GENERIC_TITLES
                 and compact_title in compact_query
