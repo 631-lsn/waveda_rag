@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+
+<head>
+<meta charset="UTF-8">
+<!-- 下面是标题 -->
+<title>
+  历史树-体
+</title>
+<link rel="stylesheet" href="../css/template.css">
+</head>
+
+
+<body>
+
+<header>
+	<h1>WavEDA</h1>
+</header>
+<div class="content-div">
+  
+	<h1>
+    <!-- 下面是标题 -->
+    历史树-体
+    </h1>
+	<p style="color:blue;">
+    <!-- 下面是类型、时间、参与编辑人数 -->
+     <!-- 肖雨慧 · 02/26/2025 · 1 contributors-->
+    </p>
+
+
+	<!-- 下面是标题和正文，如需多个则按照下两行复制，修改内容即可（以下部分均可参考） -->
+	<p>
+	双击编辑后的体，在体的属性窗口中记录体的所有操作步骤，即体的历史树。
+      WavEDA的体-历史树支持模型编辑和历史操作撤回等操作，下面将逐一介绍。
+	</p>
+          <img src=./images/History_Tree_Solid_1.png> 
+  
+  	<h2 id="仿真设置">布尔操作</h2>
+  
+  	<p></p>
+  	<p>在历史树中可直接对该模型与列出的几何形状进行布尔运算。<p>
+          <img src=./images/History_Tree_Solid_2.png> 
+	<h3 id="Ordered">操作步骤：</h2>
+	<ol>
+		<li>选中在相加、相减或相交。</li>
+		<li>点击另一种模型类型进行创建。</li>
+        <li>创建过程中选择预览，确定另一个模型的位置和大小。</li>
+       <li>点击完成，查看效果。</li>
+  </ol>  
+ 	<p>以一个正方体加上一个小球为例：</p>
+  	<ol>
+		<li>双击正方体，打开历史树。</li>
+         <img src=./images/History_Tree_Solid_7.png> 
+		<li>选中相加布尔操作，点击圆，填入尺寸。</li>
+      <img src=./images/History_Tree_Solid_4.png> 
+        <li>点击预览查看效果，点击完成。</li>
+            <img src=./images/History_Tree_Solid_5.png> 
+       <li>此时即完成了在历史树中完成一次布尔操作的操作，且该此操作加在了历史树中。</li>
+                  <img src=./images/History_Tree_Solid_6.png> 
+  </ol> 
+    	<h2 id="仿真设置">撤销操作</h2>
+  <p>选中之前对模型的编辑操作，可进行撤销，还原等操作。图中依次为删除，解除关联以及恢复操作。<p>
+       <img src=./images/History_Tree_Solid_8.png> 
+  <li> 删除：选中操作，点击删除，即可删除操作。</a></li>
+   <li> 解除关联：解除该操作时，两个或多个物体之间的关联。</a></li>
+   <li> 恢复：将原始物体恢复。</a></li>
+  
+</div>
+</body>
+</html>

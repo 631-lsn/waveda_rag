@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+
+<head>
+<meta charset="UTF-8">
+<!-- 下面是标题 -->
+<title>
+倒斜角
+</title>
+<link rel="stylesheet" href="../css/template.css">
+</head>
+
+
+<body>
+
+<header>
+	<h1>WavEDA</h1>
+</header>
+<div class="content-div">
+
+    <h1>
+        <!-- 下面是标题 -->
+        倒斜角
+    </h1>
+    <p style="color:blue;">
+        <!-- 下面是类型、时间、参与编辑人数
+        赖诗妍 · 26/02/2025 · 1 contributors
+    </p>
+
+    <br> -->
+        <!-- 下面是超链接的主题，不需要则删除<h5></h5>内所有内容 -->
+        <!-- 下面是介绍 -->
+        
+<p>
+        该功能常用于处理几何体的边缘，创建斜切或倒角的过渡，从而使模型的边缘更加平滑，避免尖锐的边缘或角落。
+        通常在制造、组装、或电磁仿真中使用。倒角常用于消除锐角，提高结构的机械强度或减少电磁波的反射。
+        这在建模过程中，特别是处理金属零件、微波组件、天线设计和电磁仿真时非常有用。
+
+
+
+<p>
+
+
+    <!-- 下面是空行符，需要空行则直接另起一行写上<br>
+    <br>-->
+    <!-- 下面是介绍,不需要则删除<p></p>内所有内容 -->
+<p>
+        <h3>激活倒斜角功能</h3>
+    <p>
+        切换到选线模式，选择要应用倒斜角的棱边。可以选择单个棱边，或者多个棱边进行倒角，选中主菜单栏“建模”->“形状”下的倒斜角 <img src=./images/Chamfer_Edges_1.png style="min-width: 5px; max-width: 25px; " />图标。
+
+
+        <div style="text-align: left;">
+            <img src=./images/Chamfer_Edges_5.png style="min-width: 100px; max-width: 200px; " />
+
+            <img src=./images/Chamfer_Edges_3.png style="min-width: 30px; max-width: 200px; " />
+        </div>
+        <h3>设置参数</h3>
+<p><img src=./images/Chamfer_Edges_2.png style="min-width: 400px; max-width: 500px; " /></p>
+<p>
+    输入倒角的两个主要参数：倒角距离和角度。
+    <h4 id="#倒角距离">倒角距离</h4>
+<p> 这是倒角切除斜边的直线距离。软件默认15，可以根据需要设置其他距离。
+<p class="important">
+        注意：倒角距离是否适合几何，避免自相交或拓扑错误。
+        <h4 id="#角度">角度</h4>
+    <p>
+        这是倒角的倾斜角度，软件默认45°，可以根据需要设置其他角度。点击“完成”后可以看到棱边变成了斜角边。
+
+
+        <div style="text-align: left;">
+            <img src=./images/Chamfer_Edges_6.png style="min-width: 100px; max-width: 200px; " />
+
+            <img src=./images/Chamfer_Edges_4.png style="min-width: 30px; max-width: 200px; " />
+        </div>
+
+
+        <h4 id="#反转">反转</h4>
+    <p>
+        反转可以将倒角的方向反向，例如设置15°，设置的模型倒角的方向向下，点击“反转”，倒角的方向向上。
+
+        <div style="text-align: left;">
+            <img src=./images/Chamfer_Edges_7.png style="min-width: 100px; max-width: 200px; " />
+
+            <img src=./images/Chamfer_Edges_8.png style="min-width: 30px; max-width: 200px; " />
+        </div>
+
+      
+
+        <h3 id="Thermal">相关文档</h3>
+
+        <a href=../Model_Editing/Move_Face_To_Modify_Solid.html>面平移调整</a>，
+        <a href=../Model_Editing/Blend_Edges.html>倒圆角</a>，
+        <a href=../Model_Editing/Extrusion.html>从现有面拉伸成体</a>。
+
+</div>
+</body>
+</html>

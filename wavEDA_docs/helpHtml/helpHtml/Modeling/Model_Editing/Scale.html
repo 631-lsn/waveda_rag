@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+
+<head>
+<meta charset="UTF-8">
+<!-- 下面是标题 -->
+<title>
+  缩放
+</title>
+<link rel="stylesheet" href="../css/template.css">
+</head>
+
+
+<body>
+
+<header>
+	<h1>WavEDA</h1>
+</header>
+<div class="content-div">
+
+    <h1>
+        <!-- 下面是标题 -->
+        缩放
+    </h1>
+    <p style="color:blue;">
+        <!-- 下面是类型、时间、参与编辑人数
+            赖诗妍 肖雨慧 · 12/30/2024 · 1 contributors
+        </p>
+
+        <br>-->
+        <!-- 下面是超链接的主题，不需要则删除<h5></h5>内所有内容 -->
+        <!-- 下面是介绍 -->
+    <p>
+        缩放操作可对体与面进行放大与缩小，该功能只能在选中物体后才会被激活，且可通过预览按钮检查操作的正确性。
+    </p>
+
+    <!-- 提示：这个是图片插入的代码，你想插入图片只需要把图片放到同一个目录下，比方说我有image.png这个图片 -->
+    <img src=./images/Scale_1.png>
+    <!-- 提示：这个是图片插入的代码,把复制到你想放图片的位置即可 -->
+    <!-- 下面是空行符，需要空行则直接另起一行写上<br> -->
+    <br>
+
+
+
+    <!-- 下面是标题和正文，如需多个则按照下两行复制，修改内容即可（以下部分均可参考） -->
+    <h3 id="Exchange">缩放原点</h3>
+    <p>
+        缩放原点可选择“在GSC(全局坐标系)上自定义点”，“在LSC(局部坐标系)上自定义点”，“单体质心”以及“边界盒子中心”。
+        其中“在GSC(全局坐标系)上自定义点”和“在LSC(局部坐标系)上自定义点”选项需要输入点的坐标或在选点模式下选中点，
+        “单体质心”和“边界盒子中心”由WavEDA判断缩放原点坐标。
+    </p>
+
+    <h3 id="Bkg&Mat">缩放因子</h3>
+    <p>可单独给定U轴、V轴、W轴的缩放因子（大于0），也可勾选下图所示“统一缩放因子”复选框，只输入单个数字即可。</p>
+    <img src=./images/Scale_2.png>
+    <p>对于面的缩放操作，面的厚度方向上的缩放因子无效。</p>
+
+    <h3 id="Bkg&Mat">高级</h3>
+    <p>如下图，若勾选保留原始物体复选框可保留原始物体，开启后可输入旋转生成的物体名称。</p>
+    <img src=./images/Scale_3.png>
+    <p>如下图，若勾选链接受影响的对象复选框，在保留原始物体的基础上，更改原始物体属性时，旋转生成的物体也会一起被修改。</p>
+    <img src=./images/Scale_4.png>
+
+    <h3>例子</h3>
+    <p>
+        尺寸为100*100*100的正方体，选择正方体的一个角点为缩放点，缩放因子为2，效果如下图所示。
+    </p>
+
+    <p>
+        <img src=./images/Scale_7.png style="min-width: 100px; max-width: 330px; " />
+    </p>
+
+
+
+        <h3 id="Thermal">相关文档</h3>
+        <a href=../Model_Editing/Array_Copy.html>阵列复制</a>，
+        <a href=../Model_Editing/Translate.html>移动</a>，
+        <a href=../Model_Editing/Mirror.html>镜像</a>，
+        <a href=../Model_Editing/Rotate.html>旋转</a>，
+        <a href=../Model_Editing/Align.html>与坐标系平面对齐</a>，
+        <a href=../Model_Editing/Split.html>切割</a>，
+        <a href=../Model_Editing/Shell.html>挖空</a>。
+    </p>
+</div>
+</body>
+</html>

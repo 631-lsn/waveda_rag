@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+
+<head>
+<meta charset="UTF-8">
+<!-- 下面是标题 -->
+<title>
+  波端口积分线
+</title>
+<link rel="stylesheet" href="../css/template.css">
+</head>
+
+
+<body>
+
+<header>
+	<h1>WavEDA</h1>
+</header>
+<div class="content-div">
+  
+	<h1>
+    <!-- 下面是标题 -->
+    波端口积分线
+    </h1>
+	<p style="color:blue;">
+    <!-- 下面是类型、时间、参与编辑人数 -->
+  <!--  肖雨慧 · 12/30/2024 · 1 contributors-->
+    </p>
+  
+<!-- 下面是介绍 -->
+	<p>波端口积分线用于模式对齐以及极性设置，通常应用于波端口为单导体以及双导体的情况下。
+      波端口包含多导体时，建议使用<a href=./Multi_Conductors.html>波端口多导体</a>功能来设置导体电势。</p>
+    <p>下图为WavEDA积分线设置界面，可以选择“使用积分线设置模式极性”和“使用积分线对齐模式”来选择积分线对模式的控制作用。</p>
+	<img src=./images/Integration_Line_1.png>
+
+	<!-- 下面是空行符，需要空行则直接另起一行写上<br> -->
+	<br>
+
+	<!-- 下面是标题和正文，如需多个则按照下两行复制，修改内容即可（以下部分均可参考） -->
+	<h2 id="General">创建积分线</h2>
+	<p>切换到积分线创建窗口后，建模界面会切换到选点模式。选取起始点和结束点定义积分线，积分线可点击反向切换方向。
+      起始点和结束点一般选取对应模式下，电势差最大的两个点。对于双导体波端口，积分线起始和结束点通常分布在两个导体上。</p>
+    <p>创建积分线后，点击预览在建模视图中查看各个模式下的积分线情况，下图给出了矩形波端口在三个模式下设置的三条积分线情况图。</p>
+     <img src=./images/Integration_Line_2.png>
+  
+	<h2 id="Electromagnetic">使用积分线设置模式极性</h2>
+ 
+	<p>该选项下，积分线可用来设置模式中电场的极性，但无法控制电场的方向。
+      当模型存在两个或两个以上的波端口，且端口之间模式电场的方向需要对齐时，通常会选择该选项。
+      下图给出了两个同轴波端口在设置积分线前（左）后（右）模式图。当两个端口模式的极性明确时，S参数的相位才具有参考性。</p>
+       <img src=./images/Integration_Line_5.png></p>
+       <img src=./images/Integration_Line_3.png></p>
+       <img src=./images/Integration_Line_4.png>
+
+  
+  
+  	<h2 id="Elastodynamic">使用积分线对齐模式</h2>
+	<p>该选项下，积分线用来设置模式中电压的积分方向。当波端口存在简并模式需要区分时，
+      需选择该选项，并给出所有简并模的电场的方向为各模式的积分线方向，否则WavEDA将随机给定模式。
+      下面给出了圆波导在模式对齐前（上）后（下）的模式图，只有在模式对齐后，S参数结果才具有参考性。</p>
+       <img src=./images/Integration_Line_8.png></p>
+       <img src=./images/Integration_Line_6_1.png></p>
+       <img src=./images/Integration_Line_6_2.png>
+  
+</div>
+</body>
+</html>

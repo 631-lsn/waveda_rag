@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <QtHelpProject version="1.0">
+   <namespace>WavEDAClient.Help</namespace>
+   <virtualFolder>doc</virtualFolder>
+<filterSection>
+<toc>
+<section title="WavEDA">
+  <section title="介绍" ref="helpHtml/Introduction.html"></section>
+  
+		<section title="文件">
+      <section title="文件" ref="helpHtml/File/File.html"></section>
+      <section title="主页" ref="helpHtml/File/Homepage.html"></section>
+      <section title="选项" ref="helpHtml/File/Options.html"></section>
+		</section>
+
+    <section title="模型">
+      <section title="建模" ref="helpHtml/Modeling/Modeling.html"></section>
+      
+      <section title="背景和材料">
+        <section title="背景" ref="helpHtml/Modeling/Bkg_Mat/Background.html"></section>
+        <section title="材料" ref="helpHtml/Modeling/Bkg_Mat/Materials.html"></section>
+        <section title="电色散材料" ref="helpHtml/Modeling/Bkg_Mat/Dielectric_Dispersion.html"></section>
+        <section title="磁色散材料" ref="helpHtml/Modeling/Bkg_Mat/Magnetic_Dispersion.html"></section>
+      </section>
+      
+      <section title="设计">
+        <section title="单位" ref="helpHtml/Modeling/Design/Unit.html"></section>
+        <section title="计算区域" ref="helpHtml/Modeling/Design/Domain.html"></section>
+        <section title="求解器" ref="helpHtml/Modeling/Design/Solver.html"></section>
+        <section title="频率" ref="helpHtml/Modeling/Design/Frequency.html"></section>
+      </section>
+      
+      <section title="创建体">
+        <section title="长方体" ref="helpHtml/Modeling/Create_3D_Geometry/Box.html"></section>
+        <section title="圆锥/棱锥" ref="helpHtml/Modeling/Create_3D_Geometry/Cone.html"></section>
+        <section title="圆柱" ref="helpHtml/Modeling/Create_3D_Geometry/Cylinder.html"></section>
+        <section title="阿基米德螺旋线" ref="helpHtml/Modeling/Create_3D_Geometry/Archimedean_Spiral.html"></section>
+        <section title="键合线" ref="helpHtml/Modeling/Create_3D_Geometry/Bondwire.html"></section>
+        <section title="球体" ref="helpHtml/Modeling/Create_3D_Geometry/Sphere.html"></section>
+        <section title="环" ref="helpHtml/Modeling/Create_3D_Geometry/Torus.html"></section>
+        <section title="棱柱" ref="helpHtml/Modeling/Create_3D_Geometry/Prism.html"></section>
+        <section title="环状螺旋线圈" ref="helpHtml/Modeling/Create_3D_Geometry/Toroidal_Spiral.html"></section>
+        <section title="物体相交" ref="helpHtml/Modeling/Create_3D_Geometry/Solid_Intersection.html"></section>
+        <section title="历史树-体" ref="helpHtml/Modeling/Create_3D_Geometry/History_Tree_Solid.html"></section>
+      </section>
+      
+      <section title="创建面">
+        <section title="矩形" ref="helpHtml/Modeling/Create_Face/Rectangle.html"></section>
+        <section title="多边形面" ref="helpHtml/Modeling/Create_Face/Polygon.html"></section>
+        <section title="半椭球面" ref="helpHtml/Modeling/Create_Face/Semiellipsoid_Face.html"></section>
+        <section title="椭圆面" ref="helpHtml/Modeling/Create_Face/Ellipse.html"></section>
+        <section title="参数面" ref="helpHtml/Modeling/Create_Face/Parametric_Face.html"></section>
+        <section title="圆锥面" ref="helpHtml/Modeling/Create_Face/Cone_Face.html"></section>
+        <section title="历史树-面" ref="helpHtml/Modeling/Create_Face/History_Tree_Face.html"></section>
+      </section>
+      
+      <section title="创建曲线">
+        <section title="直线" ref="helpHtml/Modeling/Create_Curve/Line.html"></section>
+        <section title="3D折线" ref="helpHtml/Modeling/Create_Curve/Polyline.html"></section>
+        <section title="3D弧线" ref="helpHtml/Modeling/Create_Curve/Circular_Arc.html"></section>
+        <section title="3D参数曲线" ref="helpHtml/Modeling/Create_Curve/Parametric_Curve.html"></section>
+        <section title="历史树-线" ref="helpHtml/Modeling/Create_Curve/History_Tree_Curve.html"></section>
+      </section>
+      
+      <section title="模型编辑">
+        <section title="布尔操作" ref="helpHtml/Modeling/Model_Editing/Boolean.html"></section>
+        <section title="从现有面拉伸成体" ref="helpHtml/Modeling/Model_Editing/Extrusion.html"></section>
+        <section title="面平移调整" ref="helpHtml/Modeling/Model_Editing/Move_Face_To_Modify_Solid.html"></section>
+        <section title="倒斜角" ref="helpHtml/Modeling/Model_Editing/Chamfer_Edges.html"></section>
+        <section title="倒圆角" ref="helpHtml/Modeling/Model_Editing/Blend_Edges.html"></section>
+        <section title="阵列复制" ref="helpHtml/Modeling/Model_Editing/Array_Copy.html"></section>
+        <section title="移动" ref="helpHtml/Modeling/Model_Editing/Translate.html"></section>
+        <section title="旋转" ref="helpHtml/Modeling/Model_Editing/Rotate.html"></section>
+        <section title="镜像" ref="helpHtml/Modeling/Model_Editing/Mirror.html"></section>
+        <section title="缩放" ref="helpHtml/Modeling/Model_Editing/Scale.html"></section>
+        <section title="切割" ref="helpHtml/Modeling/Model_Editing/Split.html"></section>
+        <section title="挖空" ref="helpHtml/Modeling/Model_Editing/Shell.html"></section>
+        <section title="与坐标系平面对齐" ref="helpHtml/Modeling/Model_Editing/Align.html"></section>
+        <section title="扩展操作" ref="helpHtml/Modeling/Model_Editing/Extended_Operations.html"></section>
+        <section title="加厚面" ref="helpHtml/Modeling/Model_Editing/Face_Thicken.html"></section>
+        <section title="扩大面" ref="helpHtml/Modeling/Model_Editing/Enlarge.html"></section>
+      </section>
+      
+      <section title="激励">
+        <section title="波端口" ref="helpHtml/Modeling/Stimulate/Wave_Port.html"></section>
+        <section title="集总端口" ref="helpHtml/Modeling/Stimulate/Lumped_Port.html"></section>
+        <section title="点激励源" ref="helpHtml/Modeling/Stimulate/Create_Point_Source.html"></section>
+        <section title="平面波" ref="helpHtml/Modeling/Stimulate/Plane_Wave.html"></section>
+        <section title="波端口多导体" ref="helpHtml/Modeling/Stimulate/Multi_Conductors.html"></section>
+        <section title="波端口积分线" ref="helpHtml/Modeling/Stimulate/Integration_Line.html"></section>
+      </section>
+      
+      <section title="局部坐标" ref="helpHtml/Modeling/LCS.html"></section>
+    </section>
+    
+    
+    <section title="视图">
+      <section title="视图" ref="helpHtml/View/View.html"></section>
+      <section title="设计列表" ref="helpHtml/View/Design_list.html"></section>
+    </section>
+    
+    <section title="工具">
+      <section title="工具" ref="helpHtml/Tool/Tool.html"></section>
+      <section title="变量" ref="helpHtml/Tool/Variables.html"></section>
+      <section title="导出图片" ref="helpHtml/Tool/Export_Figure.html"></section>
+      <section title="导出Snp" ref="helpHtml/Tool/Export_Snp.html"></section>
+      <section title="详细日志" ref="helpHtml/Tool/Details_Logs.html"></section>
+      <section title="设计设置" ref="helpHtml/Tool/Design_Setting.html"></section>
+      <section title="矢量拟合" ref="helpHtml/Tool/Vector_Fitting.html"></section>
+		</section>
+		
+		<section title="网格">
+      <section title="3D网格" ref="helpHtml/Mesh/3D_Mesh.html"></section>
+      <section title="自适应网格" ref="helpHtml/Mesh/Adaptive_Mesh.html"></section>
+      <section title="波端口网格" ref="helpHtml/Mesh/Waveport_Mesh.html"></section>
+      <section title="导入网格" ref="helpHtml/Mesh/Import_Mesh.html"></section>
+      <section title="导入自适应网格" ref="helpHtml/Mesh/Import_Adaptive_Mesh.html"></section>
+      <section title="显示网格" ref="helpHtml/Mesh/Show_Mesh.html"></section>
+		</section>
+		
+		<section title="仿真">
+      <section title="仿真" ref="helpHtml/Simulation/Simulation.html"></section>
+      <section title="参数扫描" ref="helpHtml/Simulation/Parameter_Sweep.html"></section>
+		</section>
+		
+		<section title="后处理">
+      <section title="后处理" ref="helpHtml/Post_Processing/Post_Processing.html"></section>
+      <section title="端口结果" ref="helpHtml/Post_Processing/New_Port.html"></section>
+      <section title="接收器结果" ref="helpHtml/Post_Processing/New_Observers.html"></section>
+		</section>
+		
+		<section title="EM设计">
+		  <section title="接收器">
+        <section title="接收器" ref="helpHtml/EM_Project/Observer/Observer.html"></section>
+        <section title="创建点接收器" ref="helpHtml/EM_Project/Observer/Create_Point_Observer.html"></section>
+        <section title="创建线接收器" ref="helpHtml/EM_Project/Observer/Create_Line_Observer.html"></section>
+      </section>
+      
+      <section title="集总元件" ref="helpHtml/EM_Project/Create_A_New_RCLD.html"></section>
+      <section title="边界条件" ref="helpHtml/EM_Project/Boundary.html"></section>
+      <section title="线节点" ref="helpHtml/EM_Project/Tree_Curves.html"></section>
+      <section title="面节点" ref="helpHtml/EM_Project/Tree_Faces.html"></section>
+      <section title="体节点" ref="helpHtml/EM_Project/Tree_Solids.html"></section>
+      <section title="场结果" ref="helpHtml/EM_Project/Field_Result.html"></section>
+      <section title="快照" ref="helpHtml/EM_Project/Snapshot.html"></section>
+      <section title="远场" ref="helpHtml/EM_Project/Far_Field.html"></section>
+      <section title="电磁结果" ref="helpHtml/EM_Project/EM_Results.html"></section>
+      <section title="快捷菜单" ref="helpHtml/EM_Project/HotKey.html"></section>
+		</section>
+
+</section>
+</toc>
+
+<keywords>
+  <keyword name = "Introduction" ref="helpHtml/Introduction.html"></keyword>
+  <keyword name = "Geometries" ref="helpHtml/Geometries.html"></keyword>
+  <keyword name = "GUI" ref="helpHtml/GUI_Overview.html"></keyword>
+	<keyword name = "Menu" ref="helpHtml/GUI_Overview/Menu.html"></keyword>
+	<keyword name = "Tree" ref="helpHtml/GUI_Overview/Tree.html"></keyword>
+</keywords>
+
+<files>
+  <file>helpHtml/*.html</file>
+  <file>helpHtml/File/*.html</file>
+  <file>helpHtml/Modeling/*.html</file>
+  <file>helpHtml/Modeling/Bkg_Mat/*.html</file>
+  <file>helpHtml/Modeling/Design/*.html</file>
+  <file>helpHtml/Modeling/Create_3D_Geometry/*.html</file>
+  <file>helpHtml/Modeling/Create_Face/*.html</file>
+  <file>helpHtml/Modeling/Create_Curve/*.html</file>
+  <file>helpHtml/Modeling/Model_Editing/*.html</file>
+  <file>helpHtml/Modeling/Stimulate/*.html</file>
+  <file>helpHtml/View/*.html</file>
+  <file>helpHtml/Tool/*.html</file>
+  <file>helpHtml/Mesh/*.html</file>
+  <file>helpHtml/Simulation/*.html</file>
+  <file>helpHtml/Post_Processing/*.html</file>
+  <file>helpHtml/EM_Project/*.html</file>
+  <file>helpHtml/EM_Project/Observer/*.html</file>
+  
+  <file>helpHtml/images/*.png</file>
+  <file>helpHtml/File/images/*.png</file>
+  <file>helpHtml/Modeling/images/*.png</file>
+  <file>helpHtml/Modeling/Bkg_Mat/images/*.png</file>
+  <file>helpHtml/Modeling/Design/images/*.png</file>
+  <file>helpHtml/Modeling/Create_3D_Geometry/images/*.png</file>
+  <file>helpHtml/Modeling/Create_Face/images/*.png</file>
+  <file>helpHtml/Modeling/Create_Curve/images/*.png</file>
+  <file>helpHtml/Modeling/Model_Editing/images/*.png</file>
+  <file>helpHtml/Modeling/Stimulate/images/*.png</file>
+  <file>helpHtml/View/images/*.png</file>
+  <file>helpHtml/Tool/images/*.png</file>
+  <file>helpHtml/Mesh/images/*.png</file>
+  <file>helpHtml/Simulation/images/*.png</file>
+  <file>helpHtml/Post_Processing/images/*.png</file>
+  <file>helpHtml/EM_Project/images/*.png</file>
+  <file>helpHtml/EM_Project/Observer/images/*.png</file>
+  
+  <file>helpHtml/css/*.css</file>
+  <file>image/*.png</file>
+</files>
+  
+</filterSection>
+</QtHelpProject>

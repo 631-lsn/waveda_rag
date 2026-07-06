@@ -1,0 +1,29 @@
+body{
+	
+}
+header{
+	height:62px;
+	background-color: rgb(94,113,138);
+	color: white;
+}
+header h1{
+	height:62px;
+	background-color: rgb(94,113,138);
+	padding-top:10px; 
+	padding-left:50px; 
+}
+h1{
+	width: 100%;
+	height: 100%;
+}
+p {
+    text-indent: 2em; /* 调整缩进的大小，2em 可以根据需要修改 */
+}
+div.content-div{
+	padding-left:50px;
+}
+.important::before {
+	content: "🌟 ";
+	color: red;
+	font-weight: bold;
+}

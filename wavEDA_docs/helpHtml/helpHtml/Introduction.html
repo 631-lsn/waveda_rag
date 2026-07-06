@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+
+<head>
+<meta charset="UTF-8">
+<!-- 下面是标题 -->
+<title>
+  介绍
+</title>
+<link rel="stylesheet" href="./css/template.css">
+</head>
+
+
+<body>
+
+<header>
+	<h1>WavEDA</h1>
+</header>
+<div class="content-div">
+  
+	<h1>
+    <!-- 下面是标题 -->
+    介绍
+    </h1>
+	<p style="color:blue;">
+    <!-- 下面是类型、时间、参与编辑人数
+    陈珂 · 30/12/2024 · 1 contributors -->
+    </p>
+
+	<p>
+WavEDA电磁场仿真工具以革新性的混合有限元算法为核心，
+融合区域分解、
+<a href=./Mesh/Adaptive_Mesh.html>自适应网格</a>迭代与模型降阶技术，
+突破了传统电磁与电路仿真在芯片-封装-系统级、射频集成微系统、RFIC及MMIC领域的局限，
+有效应对了大规模、多尺度、高密度崩溃及高频电磁效应等复杂挑战。
+	</p>
+
+	<p>
+该工具实现了对目标系统的精准
+<a href=./Modeling/Modeling.html>3D建模</a>与分析，
+展现了其无与伦比的先进性。
+它支持多样化的复杂边界条件（包括
+<a href=./EM_Project/Boundary.html>PML</a>、
+<a href=./EM_Project/Boundary.html>阻抗</a>、
+<a href=./EM_Project/Boundary.html>周期及开放边界</a>等），
+多种激励类型（如<a href=./Modeling/Stimulate/Create_Point_Source.html>点源</a>、
+<a href=./Modeling/Stimulate/Plane_Wave.html>平面波</a>、
+<a href=./Modeling/Stimulate/Lumped_Port.html>集总端口</a>及<a href=./Modeling/Stimulate/Wave_Port.html>波端口</a>），
+并能高效仿真<a href=./Modeling/Bkg_Mat/Dielectric_Dispersion.html>高损耗电色散</a>、
+<a href=./Modeling/Bkg_Mat/Magnetic_Dispersion.html>磁色散</a>及
+<a href=./Modeling/Bkg_Mat/Materials.html>各向异性</a>等复杂材料，
+显著提升了仿真效率与精度。同时拥有强大的后处理能力，
+方便用户查看<a href=./EM_Project/EM_Results.html>S参数</a>，
+<a href=./EM_Project/Far_Field.html>远场结果</a>，
+<a href=./EM_Project/Snapshot.html>快照</a>等。
+	</p>
+
+  	<p>
+在S参数提取、信号/电源完整性及电磁兼容分析中，
+WavEDA工具的快速扫频方法展现出了卓越的能力。
+尤其在射频微波的仿真领域，
+为用户提供了前所未有的仿真精度与效率。
+	</p>
+	
+	<div style="display: flex; gap: 10px;">
+		<figure style="text-align: center;">
+		<img src="./images/Introduction_1.png"; style="min-width: 300px; max-width: 300px; object-fit: cover;">
+		<figcaption>航空雷达探测</figcaption>
+		</figure>
+		<figure style="text-align: center;">
+		<img src="./images/Introduction_2.png"; style="min-width: 350px; max-width: 350px; object-fit: cover;">
+		<figcaption>PCB</figcaption>
+		</figure>
+	</div>
+		</p>
+	<div style="display: flex; gap: 10px;">
+  		<figure style="min-width: 300px; text-align: center;">
+		<img src="./images/Introduction_3.png"; style="min-width: 190px; max-width: 190px; object-fit: cover;">
+		<figcaption>射频微波</figcaption>
+		</figure>
+		<figure style="text-align: center;">
+		<img src="./images/Introduction_4.png"; style="min-width: 300px; max-width: 300px; object-fit: cover;">
+		<figcaption>阵列天线</figcaption>
+		</figure>
+	</div>
+</div>
+</body>
+</html>

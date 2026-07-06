@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+
+<head>
+<meta charset="UTF-8">
+<!-- 下面是标题 -->
+<title>
+    物体相交
+</title>
+<link rel="stylesheet" href="../css/template.css">
+</head>
+
+
+<body>
+
+<header>
+	<h1>WavEDA</h1>
+</header>
+<div class="content-div">
+
+    <h1>
+        <!-- 下面是标题 -->
+        物体相交
+    </h1>
+    <p style="color:blue;">
+        <!-- 下面是类型、时间、参与编辑人数 -->
+        <!-- 赖诗妍 · 12/30/2024 · 1 contributors
+    </p>
+
+        <!-- 下面是超链接的主题，不需要则删除<h5></h5>内所有内容 -->
+        <!-- 下面是介绍 -->
+<p>
+        创建模型时，在创建与一个(或多个)现有形状(A)相交的新形状(B)后，会自动打开物体相交对话框。可以决定如何处理相交的物体。
+    </p>
+
+
+
+
+    <!-- 下面是标题和正文，如需多个则按照下两行复制，修改内容即可（以下部分均可参考） -->
+    <h2 id="新物体">新物体</h2>
+    <p>
+        两个物体相交时，旧的物体(形状A)会减去与新的物体(形状B)。详见<a href=../Model_Editing/Boolean.html>布尔运算</a>相减操作。
+    </p>
+    <p>
+        <img src=./images/Solid_Intersection_1.png>
+    </p>
+
+    <h2 id="(已经存在的物体)">已经存在的物体</h2>
+    <p>
+        两个物体相交时，新的物体(形状B)会减去与旧的物体(形状A)。详见<a href=../Model_Editing/Boolean.html>布尔运算</a>相减操作。
+    </p>
+    <p>
+        <img src=./images/Solid_Intersection_2.png>
+    </p>
+    <h2 id="空">空</h2>
+    物体保留原有的形状。通常不建议这样做，因为这会导致相交的部分物体材料分布不明确。
+    <p>
+        <img src=./images/Solid_Intersection_3.png>
+    </p>
+    <h2 id="将新物体用于之后的冲突情况">将新物体用于之后的冲突情况</h2>
+    <p>
+        如果当前新物体（形状D）会与多个物体（形状A\形状B\形状C）相交，保留新物体（形状A）的形状，让旧物体（形状B\形状C\形状D）减去与新物体（形状A）相交的部分。
+    </p>
+    <p>
+        <img src=./images/Solid_Intersection_4.png>
+    </p>
+
+    <h2 id="将现有物体用于之后的冲突情况">将现有物体用于之后的冲突情况</h2>
+    <p>
+        如果当前新物体（形状D）会与多个物体（形状A\形状B\形状C）相交，保留旧物体（形状B\形状C\形状D）的形状，让新物体（形状A）减去与旧物体（形状B\形状C\形状D）相交的部分。
+    </p>
+    <p>
+        <img src=./images/Solid_Intersection_5.png>
+    </p>
+    <h2 id="不选择任何物体用于之后的冲突情况">不选择任何物体用于之后的冲突情况</h2>
+    和“空”一致，应用于新物体（形状D）多个物体（形状A\形状B\形状C）相交的情况，物体保留原有的形状。通常不建议这样做，因为这会导致相交的部分物体材料分布不明确。
+    <p>
+        <img src=./images/Solid_Intersection_6.png>
+    </p>
+</div>
+</body>
+</html>

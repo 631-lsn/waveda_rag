@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+
+<head>
+<meta charset="UTF-8">
+<!-- 下面是标题 -->
+<title>
+  建模
+</title>
+<link rel="stylesheet" href="../css/template.css">
+</head>
+
+
+<body>
+
+<header>
+	<h1>WavEDA</h1>
+</header>
+<div class="content-div">
+  
+	<h1>
+    <!-- 下面是标题 -->
+    建模
+    </h1>
+	<p style="color:blue;">
+    <!-- 下面是类型、时间、参与编辑人数 -->
+       <!-- 肖雨慧 · 11/29/2024 · 1 contributors-->
+    </p>
+	<!-- 下面是超链接的主题，不需要则删除<h5></h5>内所有内容 -->
+
+
+	<!-- 下面是介绍 -->
+	<p>
+      建模菜单栏提供了仿真前模型处理的所有功能，在此菜单栏可以导入/导出CAD文件、创建模型、编辑模型、创建端口等仿真前的部分设置。
+	</p>
+  
+    <!-- 提示：这个是图片插入的代码，你想插入图片只需要把图片放到同一个目录下，比方说我有image.png这个图片 -->
+    <img src=./images/Modeling_1.png>
+    <!-- 提示：这个是图片插入的代码,把复制到你想放图片的位置即可 -->
+	<!-- 下面是空行符，需要空行则直接另起一行写上<br> -->
+	<br>
+
+	<!-- 下面是超链接的主题，不需要则删除<h5></h5>内所有内容 -->
+	<h5>本文涉及模块</h5>
+    <!-- 下面是超链接，不需要则删除<dl></dl>内所有内容 -->
+	<dl>
+        <!-- 下面是本文超链接，不需要则删除<dd></dd>内所有内容 -->
+        <!-- <dd></dd>内的<a></a>是超链接内容&文本 -->
+		<dd>- <a href="#Exchange">交换</a></dd>
+		<dd>- <a href="#Bkg&Mat">背景与材料</a></dd>
+		<dd>- <a href="#Design">设计</a></dd>
+		<dd>- <a href="#3D_Geometry">3D几何</a></dd>
+		<dd>- <a href="#Face&Curve">面&线</a></dd>
+		<dd>- <a href="#Boolean">布尔操作</a></dd>
+		<dd>- <a href="#Shape">形状</a></dd>
+      	<dd>- <a href="#Ports">端口</a></dd>
+        <dd>- <a href="#LCS">局部坐标系</a></dd>
+	</dl>
+  
+  
+  
+	<!-- 下面是标题和正文，如需多个则按照下两行复制，修改内容即可（以下部分均可参考） -->
+  	<h2 id="Exchange">交换</h2>
+	<p>此目录用于CAD文件的导入与导出，详情可见<a href=./Import_Export.html>导入/导出</a>。</p>
+  
+	<h2 id="Bkg&Mat">背景与材料</h2>
+	<p>此目录用于模型背景属性与设计文件中材料的添加，背景属性设置详情见<a href=./Bkg_Mat/Background.html>背景</a>，
+      材料设置详情见<a href=./Bkg_Mat/Materials.html>材料</a>。</p>
+  
+	<h2 id="Design">设计</h2>
+	<p>此目录用于模型仿真前的部分设置，包括<a href=./Design/Unit.html>单位</a>，
+      <a href=./Design/Domain.html>计算区域</a>，<a href=./Design/Solver.html>求解器</a>，
+      <a href=./Design/Frequency.html>频率</a>设置。</p>
+  
+  	<h2 id="3D_Geometry">3D几何</h2>
+	<p>此目录用于创建3D几何模型，各3D几何形状的创建方法可见：
+      <a href=./Create_3D_Geometry/Box.html>长方体</a>，
+      <a href=./Create_3D_Geometry/Sphere.html>球</a>，
+      <a href=./Create_3D_Geometry/Cone.html>圆锥/棱锥</a>，
+      <a href=./Create_3D_Geometry/Torus.html>环</a>，
+      <a href=./Create_3D_Geometry/Cylinder.html>椭圆柱</a>，
+      <a href=./Create_3D_Geometry/Prism.html>棱柱</a>，
+      <a href=./Create_3D_Geometry/Archimedean_Spiral.html>阿基米德螺旋线</a>，
+      <a href=./Create_3D_Geometry/Toroidal_Spiral.html>环形螺旋线</a>，
+      <a href=./Create_3D_Geometry/Bondwire.html>键合线</a>。</p>
+      <p>WavEDA支持用户在建模窗口选点进行模型的创建，只需控制该目录中如下图标（左：关闭，右：开启），可切换建模状态。</p>
+      <img src=./images/Modeling_2.png>
+      <img src=./images/Modeling_3.png>  
+    
+  	<h2 id="Face&Curve">面&线</h2>
+	<p>此目录用于创建面与曲线，各面创建方法可见
+      <a href=./Create_Face/Rectangle.html>矩形</a>，
+      <a href=./Create_Face/Ellipse.html>椭圆</a>，
+      <a href=./Create_Face/Polygon.html>多边形</a>，
+      <a href=./Create_Face/Parametric_Face.html>参数面</a>，
+      <a href=./Create_Face/Semiellipsoid_Face.html>半椭球面</a>，
+      <a href=./Create_Face/Cone_Face.html>圆锥面</a>。
+      而各类曲线的创建方法可见
+      <a href=./Create_Curve/Line.html>直线</a>，
+      <a href=./Create_Curve/Polyline.html>折线</a>，
+      <a href=./Create_Curve/Circular_Arc.html>弧线</a>，
+      <a href=./Create_Curve/Parametric_Curve.html>3D参数曲线</a>。
+    </p>
+  
+  	<h2 id="Boolean">布尔操作</h2>
+	<p>WavEDA支持体与体、体与面、面与面之间的布尔操作，详情见<a href=./Model_Editing/Boolean.html>布尔操作</a>。</p>
+  
+    <h2 id="Shape">形状</h2>
+	<p>该目录用于对模型进行一系列形状的编辑功能，包括
+      <a href=./Model_Editing/Move_Face_To_Modify_Solid.html>面平移调整</a>，
+      <a href=./Model_Editing/Extrusion.html>从现有面拉伸成体</a>，
+      <a href=./Model_Editing/Blend_Edges.html>倒圆角</a>，
+      <a href=./Model_Editing/Chamfer_Edges.html>倒斜角</a>。
+  </p>
+  	<p>同时提供了模型位移编辑功能，包括
+      <a href=./Model_Editing/Array_Copy.html>阵列复制</a>，
+      <a href=./Model_Editing/Translate.html>移动</a>，
+      <a href=./Model_Editing/Mirror.html>镜像</a>，
+      <a href=./Model_Editing/Rotate.html>旋转</a>，
+      <a href=./Model_Editing/Scale.html>缩放</a>，
+      <a href=./Model_Editing/Split.html>切割</a>，
+      <a href=./Model_Editing/Shell.html>挖空</a>。
+  </p>
+
+  
+  	<h2 id="Ports">端口</h2>
+	<p>WavEDA支持集总端口与波端口两种端口的创建，详情见<a href=./Stimulate/Lumped_Port.html>集总端口</a>，
+      <a href=./Stimulate/Wave_Port.html>波端口</a>。</p>
+  
+    <h2 id="LCS">局部坐标</h2>
+	<p>WavEDA支持利用局部坐标创建模型与编辑模型，具体操作方法见<a href=./LCS.html>局部坐标</a>。</p>
+  
+  
+    <h2 id="Thermal">相关文档</h2>
+    <p>其他菜单栏相关文档可查看以下文档：
+    <a href=../File/File.html>文件</a>，
+    <a href=../View/View.html>视图</a>，
+    <a href=../Tool/Tool.html>工具</a>，
+    <a href=../Mesh/3D_Mesh.html>网格</a>，
+    <a href=../Simulation/Simulation.html>仿真</a>。
+  </p>
+</div>
+</body>
+</html>

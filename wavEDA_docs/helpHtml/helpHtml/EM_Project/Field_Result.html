@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+
+<head>
+<meta charset="UTF-8">
+<!-- 下面是标题 -->
+<title>
+  场结果
+</title>
+<link rel="stylesheet" href="../css/template.css">
+</head>
+
+
+<body>
+
+<header>
+	<h1>WavEDA</h1>
+</header>
+<div class="content-div">
+  
+	<h1>
+    <!-- 下面是标题 -->
+    场结果
+    </h1>
+	<p style="color:blue;">
+    <!-- 下面是类型、时间、参与编辑人数 -->
+    <!--王传敏 · 13/08/2024 · 1 contributors-->
+    </p>
+
+
+	<!-- 下面是超链接的主题，不需要则删除<h5></h5>内所有内容 -->
+	<h5>本文涉及模块</h5>
+    <!-- 下面是超链接，不需要则删除<dl></dl>内所有内容 -->
+	<dl>
+        <!-- 下面是本文超链接，不需要则删除<dd></dd>内所有内容 -->
+        <!-- <dd></dd>内的<a></a>是超链接内容&文本 -->
+		<dd>- <a href="#视图与显示格式">视图与显示格式</a></dd>
+        <dd>- <a href="#场选择">场选择</a></dd>
+        <dd>- <a href="#时谐场">时谐场</a></dd>  
+        <dd>- <a href="#分量场">分量场</a></dd> 
+      	<dd>- <a href="#场数据格式">场数据格式</a></dd>
+      	<dd>- <a href="#最大值设置">最大值设置</a></dd>
+      	<dd>- <a href="#注意事项">注意事项</a></dd>
+                <dd>- <a href="#相关文档">相关文档</a></dd>
+	</dl>
+
+	<!-- 下面是介绍 -->
+	<h2 id="视图与显示格式">视图与显示格式</h2>
+    <ul>
+    <li>
+    视图：进入场界面后，可通过场结果窗口左上方快捷键选择查看模型的主视图<img src=./images/Field_Result_1.png style="min-width:5px; max-width:25px;"/>、
+      后视图<img src=./images/Field_Result_2.png style="min-width:5px; max-width:25px;"/>、
+      左视图<img src=./images/Field_Result_3.png style="min-width:5px; max-width:25px;"/>、
+      右视图<img src=./images/Field_Result_4.png style="min-width:5px; max-width:25px;"/>、
+      俯视图<img src=./images/Field_Result_5.png style="min-width:5px; max-width:25px;"/>和
+      仰视图<img src=./images/Field_Result_6.png style="min-width:5px; max-width:25px;"/>，
+      具备模型的放大缩小<img src=./images/Field_Result_7.png style="min-width:5px; max-width:25px;"/>功能。</p>
+    </li>
+    <li>
+    位置重置：如下图所示，可选择存在空气盒子重置位置、去除空气盒子重置位置、仅根据结果重置位置。</p>
+    <img src=./images/Field_Result_8.png>
+    </li>
+    <li>
+    显示与隐藏：具有坐标轴<img src=./images/Field_Result_9.png style="min-width:5px; max-width:25px;"/>、
+      信息<img src=./images/Field_Result_10.png style="min-width:5px; max-width:25px;"/>、
+      颜色条<img src=./images/Field_Result_11.png style="min-width:5px; max-width:25px;"/>、
+      模型<img src=./images/Field_Result_12.png style="min-width:5px; max-width:25px;"/>、
+      层<img src=./images/Field_Result_13.png style="min-width:5px; max-width:25px;"/>、
+      透明度<img src=./images/Field_Result_14.png style="min-width:5px; max-width:25px;"/>
+      的显示与隐藏功能，其中，信息位于场结果框的左下角，透明度的显示与隐藏表现的是模型是否透明。</p>
+    </li>
+    <li>
+    箭头的显示及箭头大小数量设置，可设置均匀采样或网格采样，通过调节箭头质量和密度显示合适示意图。</p>
+    <img src=./images/Field_Result_15.png>
+    </li>
+    </ul>
+
+    <h2 id="场选择">场选择</h2>
+    <p>场界面处可选择激励方式、频率、具体查看的场信息，可查看电场、磁场、电通量、磁通量信息。</p>
+    <img src=./images/Field_Result_16.png>
+  
+    <h2 id="时谐场">时谐场</h2>
+    <p>勾选时谐场左边的框，可查看某一相位下时谐场或设置相位步长查看动态时谐场；并根据帧速率设置来设置动态时谐场速率。</p>
+    <img src=./images/Field_Result_17.png>
+    <p>选择步长类型后，右上角导出时谐场选项可导出动态时谐场图，动态时谐场如下图所示：</p>
+    <img src=./images/Field_Result_1.gif>
+  
+    <h2 id="分量场">分量场</h2>
+    <p>可查看X、Y、Z、切向、矢量场信息。</p>
+    <img src=./images/Field_Result_18.png>
+  
+    <h2 id="场数据格式">场数据格式</h2>
+    <p>可修改场数据的表示类型，分为Real、Imag、Mag、Phase、Linear、dB20格式。</p> 
+    <img src=./images/Field_Result_19.png>
+  
+    <h2 id="最大值设置">最大值设置</h2>
+    <p>可对场数据信息进行归一化或自定义最大最小值进行场结果查看，同时可修改数据条的颜色。</p> 
+    <img src=./images/Field_Result_20.png>
+
+    <h2 id="注意事项">注意事项</h2>
+    <p>该场结果操作信息适用波端口模式显示与远场结果查看场信息。</p>
+
+    <h2 id="相关文档">相关文档</h2>    
+    <p><a href=../Modeling/Stimulate/Wave_Port.html>波端口模式</a>、<a href=./EM_Results.html>远场结果</a></p>
+    
+</div>
+</body>
+</html>

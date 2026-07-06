@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+
+<head>
+<meta charset="UTF-8">
+<!-- 下面是标题 -->
+<title>
+集总端口
+</title>
+<link rel="stylesheet" href="../css/template.css">
+</head>
+
+
+<body>
+
+	<header>
+		<h1>WavEDA</h1>
+	</header>
+	<div class="content-div">
+
+		<h1>
+			<!-- 下面是标题 -->
+			集总端口
+		</h1>
+
+			<!-- 下面是类型、时间、参与编辑人数 
+			李雨欣 · 12/30/2024 · 1 contributor-->
+	
+
+
+		<!-- 下面是超链接的主题，不需要则删除<h5></h5>内所有内容 -->
+		<h5>本文涉及模块</h5>
+		<!-- 下面是超链接，不需要则删除<dl></dl>内所有内容 -->
+		<dl>
+			<!-- 下面是本文超链接，不需要则删除<dd></dd>内所有内容 -->
+			<!-- <dd></dd>内的<a></a>是超链接内容&文本 -->
+          	<dd>- <a href="#集总端口类型">集总端口类型</a></dd>
+			<dd>- <a href="#创建集总端口">创建集总端口</a></dd>
+          	<dd>- <a href="#设置差分对">设置差分对</a></dd>
+		</dl>
+
+		<!-- 下面是介绍 -->
+		<p>在电磁仿真中，端口激励是用来模拟电磁波源和信号输入的一种方式。集总端口表示信号进入或离开设备的内部表面，用于激励设备和测量散射参数（S参数）的集总元件。</p>
+		
+      
+      
+		<h2 id="集总端口类型">集总端口类型</h2>
+      
+      <p>WavEDA的集总端口分为集总面端口和集总线端口，如下图所示。</p>
+
+
+  	<div style="text-align: left;">                          
+             <img src=./images/Lumped_Port_2.png style="width:12%;margin-right: 50px;"/>               
+             <img src=./images/Lumped_Port_1.png style="width:12%;margin-right: 20px;"/>
+                      
+	</div>                               
+         
+      
+	<h3 id="集总面端口">集总面端口</h3>    
+           
+      <p>WavEDA当前仅支持在圆环面和矩形面上建立集总面端口（绿色面），集总端口所在面的材料用户无法设置，软件默认为空气。</p>  
+      
+   	<div style="text-align: left;">                          
+             <img src=./images/Lumped_Port_3.png style="width:20%;margin-right: 50px;"/>               
+             <img src=./images/Lumped_Port_4.png style="width:20%;margin-right: 20px;"/>
+                      
+	</div>    
+      
+      
+     <p class="important">需要注意的是集总面端口仅支持上下边接触金属结构，集总面端口不可经过金属体的截面，如下图所示集总面端口（绿色面）不可与金属结构的横截面交叉（红色体结构）</p>
+      
+      
+	<div style="text-align: left;">                          
+             <img src=./images/Lumped_Port_5.png style="width:25%"/>
+	</div>               
+      
+      
+          
+	<h3 id="集总线端口">集总线端口</h3>      
+      
+    
+      <p>可以使用集总面端口的模型建议使用集总面端口。若无法建立集总面端口则使用集总线端口，如下图螺丝连接器模型所示，可在核心模型结构顶点与顶部PEC面之间建立集总线端口。</p>  
+        
+   	<div style="text-align: left;">                          
+             <img src=./images/Lumped_Port_6.png style="width:30%;margin-right: 50px;"/>               
+             <img src=./images/Lumped_Port_7.png style="width:13%;margin-right: 20px;"/>
+                      
+	</div>    
+      
+    <p class="important">需要注意的是集总线端口的路径不可完全位于模型的外边界（即集总线端口不可完全贴着空气盒子）。</p>
+  
+      
+		<h2 id=" 创建集总端口">创建集总端口</h2>
+      
+      <p>集总端口的阻抗必须是大于零的实数，软件默认端口阻抗为50 Ω。所选面如果是一个独立的面，成功创建端口后此面会被自动移至“Ports”组下；所选面若是体结构上的一个面，则在“Ports”下会自动生成一个名称为lp-face面，若有多个端口则命名会以lp_face、lp_face_1、lp_face_2...类推。</p>
+
+      <div style="text-align: left;">                          
+             <img src=./images/Lumped_Port_8.png style="width:15%"/>
+	</div>               
+      
+      
+      
+      
+      
+      
+		<h3>创建集总面端口</h3>
+		
+      <p>选面/体模式下，选中需要创建集总端口的面，点击“建模”栏下的“集总端口”，软件会默认给出集总面端口的积分线。若积分线方向并非用户所需要要，点击“反向”即可反转积分线方向。若积分线位置并非用户需要的，可以连续选中两个点并点击“选点”，则生成新的积分线。 </p>
+      
+            
+	<div style="text-align: left;">                          
+             <img src=./images/Lumped_Port_9.png style="width:35%"/>
+	</div>               
+      
+      
+      <p>创建集总面端口的方式：</p> 
+	<ol>
+		<li>用户建立了一个材料为空气的平面（矩形和圆环），在此面上定义集总面端口。</li>
+      <br>
+		<li>在选边模式下，选中两条平行的金属棱边，点击“集总端口”（或右击选择创建端口），WavEDA自动在选中的两条棱边之间生成一个集总面端口。</li>
+           <br>
+      
+  	<div style="text-align: left;">                          
+             <img src=./images/Lumped_Port_10.png style="width:20%;margin-right: 40px;"/>               
+             <img src=./images/Lumped_Port_11.png style="width:40%;margin-right: 20px;"/>
+                 
+	</div>                               
+                     
+       <br>
+      
+      <li>在选面模式下选中一个金属面，长按键盘Ctrl，切换至选边模式选中一条金属棱边，点击“集总端口”（或右击选择创建端口），在选中的面和棱边之间生成一个集总面端口。</li>
+          <br>
+        	<div style="text-align: left;">                          
+             <img src=./images/Lumped_Port_12.png style="width:20%;margin-right: 40px;"/>                         
+	</div>                               
+       
+  </ol>
+
+         <br>
+		<h3>创建集总线端口</h3>    
+      	<ol>
+		<li>在选点模式下选中金属面/体上的两点，点击“集总端口”（或右击选择创建端口），WavEDA自动在选中的两点之间会生成集总线端口。</li>
+      <br>
+		<li>在选边模式下，选中金属棱边，长按键盘Ctrl，切换至选点模式选中一个点，点击“集总端口”（或右击选择创建端口），WavEDA自动在所选点和边之间生成一个积分路径最短的集总线端口。</li>
+               <br>
+          
+        <li>在选面模式下，选中金属面，长按键盘Ctrl，切换至选点模式选中一个点，点击“集总端口”（或右击选择创建端口），WavEDA自动在所选点和面之间生成一个积分路径最短的集总线端口。</li>
+               <br>
+          
+       <div style="text-align: left;">                          
+             <img src=./images/Lumped_Port_13.png style="width:20%;margin-right: 40px;"/>                         
+	</div>          
+       
+  </ol>
+
+
+     		<h2 id="设置差分对">设置差分对</h2> 
+      
+      <p>集总端口激励支持差分共模信号的仿真。在仿真前后均可右击工程树中的集总端口，选择"设置差分对"，弹出差分对设置窗口。  </p>
+      
+                
+       <div style="text-align: left;">                          
+             <img src=./images/Lumped_Port_14.png style="width:17%;margin-right: 40px;"/>                         
+	</div>   
+      
+      
+     <p> 将需要配对的端口列入同一差分对中，设置差分阻抗与共模阻抗。设置好的差分对将在集总端口树下，WavEDA也支持差分共模与单端信号的混合仿真。</p>
+      
+        	<div style="text-align: left;">                          
+             <img src=./images/Lumped_Port_15.png style="width:40%;margin-right: 30px;"/>               
+             <img src=./images/Lumped_Port_16.png style="width:17%;margin-right: 20px;"/>
+           
+                     
+	</div>                               
+                
+      
+      
+
+	</p>
+	</div>
+</body>
+</html>

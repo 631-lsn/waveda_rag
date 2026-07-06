@@ -1,0 +1,45 @@
+# ============================================================
+# RAGGG 知识库数据源配置
+# 每次添加新文档后，运行 scripts/build_knowledge_base.py 重新索引
+# 单文件追加: python scripts/add_document.py <文件路径>
+# ============================================================
+
+sources:
+  # ---- 团队自编教程 (Markdown) ----
+  - path: ./knowledge_base/
+    type: markdown
+    desc: "团队自编教程与FAQ"
+    recursive: true
+
+  - path: ./knowledge_base/tutorials/
+    type: markdown
+    desc: "分模块操作教程"
+    recursive: true
+
+  # ---- wavEDA 软件文档 ----
+  - path: ./wavEDA_docs/extracted_pages/
+    type: markdown
+    desc: "wavEDA帮助文档（已提取为Markdown）"
+    recursive: true
+
+  - path: ./wavEDA_docs/helpHtml/
+    type: html
+    desc: "wavEDA官方HTML帮助文档"
+    recursive: true
+
+  # ---- 案例与排错 ----
+  - path: ./wavEDA_docs/examples/
+    type: markdown
+    desc: "仿真案例库"
+    recursive: true
+
+  - path: ./wavEDA_docs/error_cases/
+    type: markdown
+    desc: "错误案例库"
+    recursive: true
+
+  # ---- 理论笔记 (Obsidian) ----
+  - path: ./knowledge_base/theory_notes/
+    type: markdown
+    desc: "多物理场理论笔记"
+    recursive: true

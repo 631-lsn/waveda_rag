@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+
+<head>
+<meta charset="UTF-8">
+<!-- 下面是标题 -->
+<title>
+倒圆角
+</title>
+<link rel="stylesheet" href="../css/template.css">
+</head>
+
+
+<body>
+
+<header>
+	<h1>WavEDA</h1>
+</header>
+<div class="content-div">
+
+    <h1>
+        <!-- 下面是标题 -->
+        倒圆角
+    </h1>
+    
+
+    <p>
+    <p style="color:blue;">
+        <!-- 下面是类型、时间、参与编辑人数
+        赖诗妍 · 26/02/2025 · 1 contributors
+    </p>
+
+        <br> -->
+        <!-- 下面是超链接的主题，不需要则删除<h5></h5>内所有内容 -->
+        </dl>
+
+        <!-- 下面是介绍 -->
+<p>
+        该功能常用于在构建复杂几何体时，用于平滑连接不同表面或边缘。
+        它有助于减少几何体中不同面或曲面之间的硬过渡，使得模型更加自然、平滑，尤其是在进行电磁场仿真时，平滑过渡可以避免不必要的奇异点或不连续性。
+        优点在于可以减少尖锐边缘对美观和物理性能的影响。
+
+
+<p>
+
+
+    <!-- 下面是空行符，需要空行则直接另起一行写上<br>
+    <br>-->
+    <!-- 下面是介绍,不需要则删除<p></p>内所有内容 -->
+<p>
+
+
+        <h3>激活倒圆角功能</h3>
+    <p>
+        切换到选线模式，选择要应用倒圆角的棱边。可以选择单个棱边，或者多个棱边进行倒圆角，选中主菜单栏“建模”的“形状”下的倒圆角图标。
+       
+
+        <div style="text-align: left;">
+
+            <img src=./images/Blend_Edges_5.png style="min-width: 50px; max-width: 200px; " />
+            <img src=./images/Blend_Edges_4.png style="min-width: 50px; max-width: 200px; " />
+
+
+
+        </div>
+
+        <h3 id=" 半径">半径</h3>
+<p>
+        <img src=./images/Blend_Edges_1.png style="min-width: 400px; max-width: 500px; " />
+    </p>
+<p>
+    半径决定了两个面或边缘之间平滑过渡的范围。过渡半径越大，过渡区域的曲率就越大，连接的区域越平滑。软件默认为15°。
+    对于大多数设计，建议开始时选择较小的半径。
+    确保在设置倒圆角时，点击“预览”模型查看整体效果，避免局部过渡过于极端。点击“完成”后你可以看到棱边变成了平滑过渡的弧边。
+<p>
+        <div style="text-align: left;">
+            <img src=./images/Blend_Edges_6.png style="min-width: 50px; max-width: 200px; " />
+            <img src=./images/Blend_Edges_3.png style="min-width: 50px; max-width: 200px; " />
+
+        </div>
+    <p class="important">
+        注意：过渡半径的选择是否合理。过渡半径过大可能会导致几何不相交或拓扑错误，过小可能达不到预期效果。
+
+
+
+        <h3 id="Thermal">相关文档</h3>
+        <a href=../Model_Editing/Move_Face_To_Modify_Solid.html>面平移调整</a>，
+        <a href=../Model_Editing/Chamfer_Edges.html>倒斜角</a>，
+        <a href=../Model_Editing//Extrusion.html>从现有面拉伸成体</a>。
+</div>
+</body>
+</html>

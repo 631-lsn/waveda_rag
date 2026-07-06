@@ -1,0 +1,16 @@
+# API密钥 - 不要提交到Git
+config/.env
+
+# 知识库索引（本地重建，不需要Git追踪）
+data/index/
+data/processed_chunks.json
+
+# Python环境
+runtime/
+__pycache__/
+*.pyc
+*.pyo
+
+# 系统文件
+.DS_Store
+Thumbs.db

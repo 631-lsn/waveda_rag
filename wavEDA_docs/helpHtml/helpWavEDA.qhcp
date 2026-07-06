@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+ <QHelpCollectionProject version="1.0">
+ <assistant>
+   <title>WavEDA client help documentation</title>
+   <applicationIcon>image/waveda.png</applicationIcon>
+   <cacheDirectory>cache/helpCache</cacheDirectory>
+   <homePage>qthelp://WavEDAClient.Help/doc/helpHtml/Introduction.html</homePage>
+   <startPage>qthelp://WavEDAClient.Help/doc/helpHtml/Introduction.html</startPage>
+   <aboutMenuText>
+     <text>about</text>
+   </aboutMenuText>
+   <aboutDialog>
+     <file>./about.txt</file>
+     <icon>image/waveda.png</icon>
+   </aboutDialog>
+   <enableDocumentationManager>true</enableDocumentationManager>
+   <enableAddressBar>true</enableAddressBar>
+   <enableFilterFunctionality>true</enableFilterFunctionality>
+ </assistant>
+ <docFiles>
+   <generate>
+     <file>
+       <input>helpWavEDA.qhp</input>
+       <output>helpWavEDA.qch</output>
+     </file>
+   </generate>
+   <register>
+     <file>helpWavEDA.qch</file>
+   </register>
+ </docFiles>
+ </QHelpCollectionProject>

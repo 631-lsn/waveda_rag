@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+  
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+<!-- 提示：所有绿色注释下面的区域是替换的部分 -->
+
+<head>
+<meta charset="UTF-8">
+<!-- 下面是标题 -->
+<title>
+  体节点
+</title>
+<link rel="stylesheet" href="../css/template.css">
+</head>
+
+
+<body>
+
+<header>
+	<h1>WavEDA</h1>
+</header>
+<div class="content-div">
+  
+	<h1>
+    <!-- 下面是标题 -->
+    体节点
+    </h1>
+	<p style="color:blue;">
+    <!-- 下面是类型、时间、参与编辑人数 -->
+    <!-- 王传敏 · 23/12/2024 · 1 contributors-->
+    </p>
+
+	<!-- 下面是超链接的主题，不需要则删除<h5></h5>内所有内容 -->
+	<h5>本文涉及模块</h5>
+    <!-- 下面是超链接，不需要则删除<dl></dl>内所有内容 -->
+	<dl>
+        <!-- 下面是本文超链接，不需要则删除<dd></dd>内所有内容 -->
+        <!-- <dd></dd>内的<a></a>是超链接内容&文本 -->
+		<dd>- <a href="#创建">创建</a></dd>
+        <dd>- <a href="#删除、显示与隐藏">删除、显示与隐藏</a></dd>
+        <dd>- <a href="#求解物体内部">求解物体内部</a></dd>
+        <dd>- <a href="#创建覆盖所选物体的长方体">创建覆盖所选物体的长方体</a></dd>
+        <dd>- <a href="#转换导入的物体">转换导入的物体</a></dd>      
+        <dd>- <a href="#其他功能">其他功能</a></dd>
+      
+	</dl>
+	<!-- 下面是介绍 -->
+	<p>
+      在工程树上体选项栏点击鼠标右键可对体进行如下图操作：
+	</p>
+  
+    <!-- 提示：这个是图片插入的代码，你想插入图片只需要把图片放到同一个目录下，比方说我有image.png这个图片 -->
+    <img src=./images/Tree_Solids_1.png>
+  	<p>
+      在体选项栏点击鼠标右键可对体进行如下图操作：
+	</p>
+  
+    <!-- 提示：这个是图片插入的代码，你想插入图片只需要把图片放到同一个目录下，比方说我有image.png这个图片 -->
+    <img src=./images/Tree_Solids_2.png>
+    <!-- 提示：这个是图片插入的代码,把复制到你想放图片的位置即可 -->
+	<!-- 下面是空行符，需要空行则直接另起一行写上<br> -->
+	<br>
+  
+  
+  
+	<!-- 下面是标题和正文，如需多个则按照下两行复制，修改内容即可（以下部分均可参考） -->
+  	<h2 id="创建">创建</h2>
+    <ul>
+    <li>
+	创建3D几何体：如下图所示，具体创建过程查看创建<a href=../Modeling/Create_3D_Geometry/Box.html>体</a>，
+      <a href=../Modeling/Create_3D_Geometry/Sphere.html>球</a>，
+      <a href=../Modeling/Create_3D_Geometry/Cone.html>圆锥/棱锥</a>，
+    <a href=../Modeling/Create_3D_Geometry/Cylinder.html>圆柱</a>，
+    <a href=../Modeling/Create_3D_Geometry/Prism.html>棱柱</a>，<a href=../Modeling/Create_3D_Geometry/Torus.html>环</a>，
+    <a href=../Modeling/Create_3D_Geometry/Archimedean_Spiral.html>阿基米德螺旋线</a>，
+    <a href=../Modeling/Create_3D_Geometry/Toroidal_Spiral.html>环形螺旋线圈</a>，
+    <a href=../Modeling/Create_3D_Geometry/Bondwire.html>键合线</a> 。</p>
+    <img src=./images/Tree_Solids_3.png>
+    </li>
+    <li>
+    创建组：如下图所示，可进行创建新的分组，且可自定义分组名称。</p>
+    <img src=./images/Tree_Solids_4.png>
+      </li>
+    </ul>
+    <h2 id="删除、显示与隐藏">删除、显示与隐藏</h2>
+    <p>如下图所示，具备删除所有结果、显示所有物体、隐藏所有物体、显示与隐藏的反选功能，若勾选保留原始物体复选框可保留原始物体，同时可设置移动后生成的物体名称。</p>
+    <img src=./images/Tree_Solids_5.png> 
+
+
+    <h2 id="求解物体内部">求解物体内部</h2>
+    <p>针对良导体，即金属材料，可设置是否求解物体内部，如下图所示。</p>
+    <img src=./images/Tree_Solids_6.png>
+    <ul>
+    <li>
+    默认情况下，对于电导率较高的材料（如铜、银等良导体），不会求解模型内部的场分布，
+       因为电磁场的能量主要集中在导体表面，这是由于趋肤效应。因此，对于良导体，默认情况下不求解物体内部，将会把物体设置成阻抗边界体(IBC)进行仿真。</p>
+    </li>
+    <li>
+    对于具有显著电导率损耗的材料或特定厚度的导体,如果导体的厚度与趋肤深度相近或小于趋肤深度时，如果需要精确考虑导体损耗，需要求解物体内部。</p>
+    </li>
+    </ul>
+    
+    <p>其中，针对金属较多模型，可在下拉选项框中根据金属材料进行选择，同时也可全选。</p>
+    <img src=./images/Tree_Solids_7.png>
+  
+     <h2 id="创建覆盖所选物体的长方体">创建覆盖所选物体的长方体</h2>
+    <p>对所选择的物体可创建一个覆盖该物体的长方体，该长方体可进行编辑操作。</p>
+    <p>如图所示，创建了一个覆盖球的长方体，该长方体可进行属性的修改等操作。</p>
+    <img src=./images/Tree_Solids_8.png>
+  
+    <h2 id="转换导入的物体">转换导入的物体</h2>
+    <p>对导入的规则正方体/长方体、球体、正多边形棱柱、圆柱可转换为模型中物体，进行其他编辑操作。</p>
+    <img src=./images/Tree_Solids_9.png>
+  
+      
+    <h2 id="其他功能">其他功能</h2>  
+    <p>右键工程树上体还可对未分组的物体进行根据材料进行分组、显示体网格、展开/折叠体下所有分组节点；右键体还可进行属性修改、重命名、复制、删除、隐藏、转换、显示网格、是否求解物体内部、调整该物体最佳视图功能。</p>  
+      
+  </p>
+</div>
+</body>
+</html>
