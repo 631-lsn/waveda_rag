@@ -1,6 +1,29 @@
 # WavEDA RAG — 多物理场仿真知识库助手
 
-一个便携的本地 RAG（检索增强生成）问答系统，帮助用户快速解决 WavEDA 仿真软件的操作问题。
+[![Python](https://img.shields.io/badge/python-3.14-blue)]()
+[![Platform](https://img.shields.io/badge/platform-Windows-lightgrey)]()
+[![Version](https://img.shields.io/badge/version-1.0-orange)]()
+[![License](https://img.shields.io/badge/license-Internal-red)]()
+
+一个便携的本地 RAG（检索增强生成）问答系统，帮助用户快速解决 WavEDA 仿真软件的操作问题。**解压即用，无需安装 Python。**
+
+## 快速开始
+
+```bash
+# 1. 下载
+点击绿色 "<> Code" → Download ZIP → 解压
+
+# 2. 启动
+双击 start.bat
+
+# 3. 配置 API
+左侧点击 "API 设置" → 下拉选择大模型 → 输入你自己的 Key → 保存
+
+# 4. 提问
+在输入框输入问题，如"波端口怎么设置？"
+```
+
+> 内置 Python 运行时和知识库索引，不需要联网下载任何模型。
 
 ## 能做什么
 
