@@ -345,17 +345,30 @@ MIME_MAP = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
             ".gif": "image/gif", ".svg": "image/svg+xml"}
 
 
+_data_uri_cache: dict[str, str] = {}
+
+
 def _path_to_data_uri(filepath: str) -> str:
-    """将本地图片文件转为 base64 data URI，彻底绕过文件路径权限问题"""
+    """将本地图片文件转为 base64 data URI，带缓存"""
+    if filepath in _data_uri_cache:
+        return _data_uri_cache[filepath]
     try:
         with open(filepath, "rb") as f:
             data = f.read()
         ext = os.path.splitext(filepath)[1].lower()
         mime = MIME_MAP.get(ext, "image/png")
         b64 = base64.b64encode(data).decode("ascii")
-        return f"data:{mime};base64,{b64}"
+        result = f"data:{mime};base64,{b64}"
+        _data_uri_cache[filepath] = result
+        return result
     except Exception:
         return ""
+
+
+def _preload_all_images(image_index: dict[str, str]) -> None:
+    """后台线程：预编码所有图片为data URI"""
+    for path in image_index.values():
+        _path_to_data_uri(path)
 
 
 def _extract_images_from_sources(sources: list, image_index: dict[str, str]) -> list[tuple[str, str]]:
@@ -532,6 +545,15 @@ class WorkbenchWindow(QMainWindow):
         self._build_image_index()
         self._build_ui()
         self._load_pipeline_if_ready()
+        # 后台预编码所有图片，用户第一次问就不慢了
+        self._preload_images()
+
+    def _preload_images(self) -> None:
+        """后台异步预编码所有图片到缓存，用户第一次提问时不再等待"""
+        from functools import partial
+        worker = Worker(partial(_preload_all_images, self._image_index))
+        worker.signals.finished.connect(lambda: print("Image preload complete"))
+        self.thread_pool.start(worker)
 
     def _build_image_index(self) -> None:
         """预建图片索引: 文件名 -> 绝对路径"""
