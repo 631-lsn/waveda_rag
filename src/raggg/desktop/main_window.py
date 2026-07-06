@@ -1,12 +1,17 @@
 from __future__ import annotations
 
 import html
+import os
 import re
+import sys
 from dataclasses import dataclass
+from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, Signal, Slot
+from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QUrl, Signal, Slot
 from PySide6.QtGui import QFont
+from PySide6.QtWebEngineWidgets import QWebEngineView
+from PySide6.QtWebEngineCore import QWebEngineSettings
 from PySide6.QtWidgets import (
     QApplication,
     QComboBox,
@@ -22,7 +27,6 @@ from PySide6.QtWidgets import (
     QMessageBox,
     QPushButton,
     QSizePolicy,
-    QTextBrowser,
     QVBoxLayout,
     QWidget,
 )
@@ -129,12 +133,6 @@ QLineEdit {{
     padding: 13px 14px;
     selection-background-color: {COLORS["accent"]};
 }}
-QTextBrowser {{
-    background: {COLORS["input"]};
-    border: 1px solid {COLORS["border"]};
-    border-radius: 12px;
-    padding: 12px;
-}}
 QScrollBar:vertical {{
     background: transparent;
     width: 10px;
@@ -177,6 +175,7 @@ class Worker(QRunnable):
             self.signals.finished.emit()
 
 
+IMAGE_MD_RE = re.compile(r">?\s*图片:\s*`\.?/(images/[^`)]+\.(?:png|jpg|jpeg|gif|svg))`")
 INLINE_BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
 ORDERED_RE = re.compile(r"^\s*(\d+)\.\s+(.+)$")
 UNORDERED_RE = re.compile(r"^\s*[-*]\s+(.+)$")
@@ -225,7 +224,7 @@ def latex_formula_to_html(formula: str) -> str:
     converted = converted.replace("\\", "")
     converted = converted.replace(",", " ")
     converted = re.sub(r"\s+", " ", converted).strip()
-    converted = re.sub(r"∂\s+([A-Za-z\u4e00-\u9fff])", r"∂\1", converted)
+    converted = re.sub(r"∂\s+([A-Za-z一-鿿])", r"∂\1", converted)
     converted = re.sub(r"∇\s+", "∇", converted)
     converted = converted.replace("· ", " · ")
     converted = re.sub(r"\s+", " ", converted).strip()
@@ -316,7 +315,53 @@ def markdown_to_html(text: str) -> str:
             output.append(f"<p style='margin:7px 0;line-height:1.58;'>{render_inline_markdown(line)}</p>")
 
     close_list()
-    return "\n".join(output)
+    result = "\n".join(output)
+    # Convert image markdown to actual <img> tags pointing to helpHtml
+    result = _convert_image_refs(result)
+    return result
+
+
+def _convert_image_refs(html_text: str) -> str:
+    """把 图片: `./images/xxx.png` 换成实际可显示的 <img> 标签"""
+    def _img_repl(match: re.Match[str]) -> str:
+        img_rel = match.group(1)  # images/xxx.png
+        # Find actual image in helpHtml
+        project_root = Path(__file__).resolve().parents[3]
+        help_base = project_root / "wavEDA_docs" / "helpHtml" / "helpHtml"
+        # Search recursively for the image
+        for root, dirs, files in os.walk(help_base):
+            if "images" in dirs:
+                candidate = os.path.join(root, img_rel.replace("/", os.sep))
+                if os.path.exists(candidate):
+                    abs_path = candidate.replace(os.sep, "/")
+                    return f'<p style="margin:8px 0;"><img src="file:///{abs_path}" style="max-width:100%;border-radius:8px;border:1px solid {COLORS["border"]};" alt="示意图"></p>'
+        return match.group(0)  # fallback: leave as text
+    return IMAGE_MD_RE.sub(_img_repl, html_text)
+
+
+WEBVIEW_BG = COLORS["input"]
+WEBVIEW_TEXT = COLORS["text"]
+
+
+def web_wrapper(body_html: str, extra_css: str = "") -> str:
+    return f"""<!DOCTYPE html>
+<html><head><meta charset="UTF-8"><style>
+body {{
+    font-family: "Microsoft YaHei UI", "Segoe UI", sans-serif;
+    font-size: 14px;
+    background: {WEBVIEW_BG};
+    color: {WEBVIEW_TEXT};
+    margin: 0;
+    padding: 0;
+}}
+p {{ margin: 7px 0; line-height: 1.58; }}
+ol, ul {{ margin: 8px 0; padding-left: 24px; }}
+li {{ margin: 4px 0; }}
+strong {{ color: {COLORS["accent"]}; }}
+blockquote {{ margin: 8px 0; padding: 8px 12px; border-left: 3px solid {COLORS["accent"]}; color: {COLORS["muted"]}; }}
+a {{ color: {COLORS["accent2"]}; }}
+{extra_css}
+</style></head><body>{body_html}</body></html>"""
 
 
 class MetricCard(QFrame):
@@ -369,7 +414,6 @@ class ApiSettingsDialog(QDialog):
         self.provider_combo = QComboBox()
         for name, _, _ in LLM_PROVIDERS:
             self.provider_combo.addItem(name)
-        # 预设当前配置对应的选项
         current_url = settings.llm_base_url.rstrip("/")
         current_idx = 0
         for i, (_, url, _) in enumerate(LLM_PROVIDERS):
@@ -428,6 +472,7 @@ class WorkbenchWindow(QMainWindow):
         self.setWindowTitle("WavEDA Knowledge Workbench")
         self.resize(1360, 840)
         self.setMinimumSize(1120, 720)
+        self._project_root = Path(__file__).resolve().parents[3]
         self._build_ui()
         self._load_pipeline_if_ready()
 
@@ -526,9 +571,11 @@ class WorkbenchWindow(QMainWindow):
         top.addWidget(self.activity_label)
         layout.addLayout(top)
 
-        self.chat = QTextBrowser()
-        self.chat.setOpenExternalLinks(False)
+        self.chat = QWebEngineView()
+        self.chat.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
+        self.chat.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessRemoteUrls, False)
         self.chat.setHtml(self._welcome_html())
+        self.chat.setMinimumHeight(300)
         layout.addWidget(self.chat, stretch=1)
 
         composer = QHBoxLayout()
@@ -552,7 +599,8 @@ class WorkbenchWindow(QMainWindow):
         title.setObjectName("section")
         subtitle = QLabel("按相关性排序，WavEDA 文档优先")
         subtitle.setObjectName("muted")
-        self.sources = QTextBrowser()
+        self.sources = QWebEngineView()
+        self.sources.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
         self.sources.setHtml(self._empty_sources_html())
         layout.addWidget(title)
         layout.addWidget(subtitle)
@@ -581,7 +629,7 @@ class WorkbenchWindow(QMainWindow):
             self.pipeline = None
             self.status_card.set_value("未构建", COLORS["danger"])
             self.chunk_card.set_value("-", COLORS["warning"])
-            self.sources.setHtml(self._empty_sources_html("知识库尚未构建。请点击左侧“重建知识库”。"))
+            self.sources.setHtml(self._empty_sources_html("知识库尚未构建。"))
             return
         self.pipeline = RAGPipeline(self.settings)
         self.status_card.set_value("已载入", COLORS["accent"])
@@ -594,7 +642,6 @@ class WorkbenchWindow(QMainWindow):
     def _open_api_settings(self) -> None:
         dialog = ApiSettingsDialog(self.settings, self)
         if dialog.exec() == QDialog.Accepted:
-            # Reload settings from .env
             from raggg.config import Settings
             self.settings = Settings.from_env(Path(__file__).resolve().parents[3])
             self._load_pipeline_if_ready()
@@ -649,106 +696,106 @@ class WorkbenchWindow(QMainWindow):
         self.is_busy = busy
         self.activity_label.setText(text)
         self.activity_label.setStyleSheet(f"color: {COLORS['warning' if busy else 'accent']};")
-        for button in (self.ask_button, self.rebuild_button, self.reload_button):
+        for button in (self.ask_button, self.reload_button):
             button.setDisabled(busy)
 
     def _append_user(self, question: str) -> None:
-        self.chat.append(
-            f"""
-            <div style="margin:16px 0 8px 0;">
-              <div style="color:{COLORS['accent']};font-weight:700;">你</div>
+        msg_html = web_wrapper(
+            f"""<div style="margin:16px 0 8px 0;">
+              <div style="color:{COLORS['accent']};font-weight:700;font-size:13px;">你</div>
               <div style="margin-top:6px;padding:12px 14px;border-radius:12px;background:#102033;color:{COLORS['text']};">
                 {html.escape(question)}
               </div>
-            </div>
-            """
+            </div>"""
         )
+        self._append_html(msg_html)
 
     def _append_assistant(self, answer: str) -> None:
         rendered = markdown_to_html(answer)
-        self.chat.append(
-            f"""
-            <div style="margin:16px 0 18px 0;">
-              <div style="color:{COLORS['warning']};font-weight:700;">RAG</div>
+        msg_html = web_wrapper(
+            f"""<div style="margin:16px 0 18px 0;">
+              <div style="color:{COLORS['warning']};font-weight:700;font-size:13px;">RAG</div>
               <div style="margin-top:6px;padding:14px 16px;border-radius:12px;background:#111c2f;color:{COLORS['text']};line-height:1.55;">
                 {rendered}
               </div>
-            </div>
-            """
+            </div>"""
+        )
+        self._append_html(msg_html)
+
+    def _append_html(self, html_content: str) -> None:
+        """Append HTML content to the chat WebView, preserving existing content."""
+        self.chat.page().runJavaScript(
+            f"""var div=document.createElement('div');
+div.innerHTML=`{html_content}`;
+document.body.appendChild(div);
+window.scrollTo(0, document.body.scrollHeight);
+"""
         )
 
     def _sources_html(self, sources: list[SearchResult]) -> str:
         cards: list[str] = []
-        seen: set[str] = set()
-        for source in sources:
-            chunk = source.chunk
-            key = f"{chunk.relative_path}:{chunk.section}"
-            if key in seen:
-                continue
-            seen.add(key)
-            label = "WavEDA 帮助文档" if chunk.source_type == "waveda_help" else "理论笔记"
-            label_color = COLORS["accent"] if chunk.source_type == "waveda_help" else COLORS["accent2"]
-            snippet = html.escape(chunk.content[:560]).replace("\n", " ")
+        for rank, result in enumerate(sources[:10], start=1):
+            chunk = result.chunk
+            score_pct = min(1.0, result.score)
+            color = COLORS["accent"] if score_pct > 0.8 else (COLORS["warning"] if score_pct > 0.5 else COLORS["muted"])
+            badge_label = "WavEDA 帮助" if chunk.source_type == "waveda_help" else "理论笔记"
+            badge_color = "#103430" if chunk.source_type == "waveda_help" else "#1f2937"
+            source_link = chunk.relative_path
+
+            # If there's an HTML source, link to it
+            if chunk.source_type == "waveda_help" and chunk.relative_path:
+                source_link = f"<a href='file:///{str(self._project_root / chunk.relative_path).replace(chr(92), '/')}'>{html.escape(chunk.relative_path)}</a>"
+
             cards.append(
-                f"""
-                <div style="margin:0 0 14px 0;padding:14px;border-radius:12px;background:{COLORS['surface2']};border:1px solid {COLORS['border']};">
-                  <div style="color:{COLORS['text']};font-weight:700;font-size:14px;">{html.escape(chunk.title)}</div>
-                  <div style="margin-top:6px;color:{label_color};font-size:12px;">{label} | 分数 {source.score:.3f}</div>
-                  <div style="margin-top:4px;color:{COLORS['muted']};font-size:12px;">{html.escape(chunk.relative_path)}</div>
-                  <div style="margin-top:10px;color:{COLORS['text']};line-height:1.45;">{snippet}</div>
-                </div>
-                """
+                f"""<div style="background:{COLORS['surface2']};border:1px solid {COLORS['border']};border-radius:8px;padding:10px 12px;margin-bottom:8px;">
+                  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                    <span style="font-weight:700;color:{COLORS['text']};">[{rank}] {html.escape(chunk.title)}</span>
+                    <span style="background:{badge_color};color:{color};border-radius:8px;padding:2px 10px;font-size:11px;font-weight:600;">{badge_label}</span>
+                  </div>
+                  <div style="color:{COLORS['muted']};font-size:11px;margin-bottom:4px;">{source_link}</div>
+                  <div style="color:{color};font-size:11px;">匹配度 {score_pct:.1%}</div>
+                </div>"""
             )
-            if len(cards) >= 6:
-                break
-        return self._html_page("".join(cards) or self._empty_sources_html())
+        return web_wrapper("\n".join(cards))
 
     def _welcome_html(self) -> str:
-        return self._html_page(
-            f"""
-            <div style="padding:4px 2px 14px 2px;">
-              <div style="color:{COLORS['accent']};font-weight:700;font-size:16px;">就绪</div>
-              <div style="margin-top:8px;color:{COLORS['muted']};line-height:1.6;">
-                询问 WavEDA 的端口、边界、PML、网格、激励设置，或用理论笔记补充解释电磁概念。
+        return web_wrapper(
+            f"""<div style="text-align:center;padding:60px 20px;">
+            <div style="font-size:22px;font-weight:700;color:{COLORS['accent']};margin-bottom:12px;">WavEDA Knowledge Workbench</div>
+            <div style="color:{COLORS['muted']};margin-bottom:24px;">软件帮助优先的仿真知识检索与问答工作台</div>
+            <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+              <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
+                <div style="font-size:20px;font-weight:700;color:{COLORS['accent']};">1,908</div>
+                <div style="color:{COLORS['muted']};font-size:12px;">知识块</div>
+              </div>
+              <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
+                <div style="font-size:20px;font-weight:700;color:{COLORS['accent2']};">WavEDA优先</div>
+                <div style="color:{COLORS['muted']};font-size:12px;">检索策略</div>
+              </div>
+              <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
+                <div style="font-size:20px;font-weight:700;color:{COLORS['warning']};">DeepSeek</div>
+                <div style="color:{COLORS['muted']};font-size:12px;">大模型</div>
               </div>
             </div>
-            """
+            <div style="margin-top:28px;color:{COLORS['subtle']};font-size:13px;">在下方输入 WavEDA 相关问题开始</div>
+          </div>"""
         )
 
     def _empty_sources_html(self, message: str = "提出问题后，这里会显示可追溯的来源证据。") -> str:
-        return self._html_page(
-            f"""
-            <div style="padding:16px;border-radius:12px;background:{COLORS['surface2']};border:1px solid {COLORS['border']};color:{COLORS['muted']};line-height:1.6;">
-              {html.escape(message)}
-            </div>
-            """
+        return web_wrapper(
+            f"""<div style="text-align:center;padding:40px 16px;">
+            <div style="color:{COLORS['subtle']};font-size:13px;">{html.escape(message)}</div>
+          </div>"""
         )
 
-    def _html_page(self, body: str) -> str:
-        return f"""
-        <html>
-        <body style="background:{COLORS['input']};color:{COLORS['text']};font-family:'Microsoft YaHei UI','Segoe UI';font-size:13px;">
-        {body}
-        </body>
-        </html>
-        """
-
     def _show_error(self, title: str, message: str) -> None:
-        QMessageBox.critical(self, title, message)
-
-
-class RAGDesktopApp:
-    def __init__(self, settings: Settings | None = None) -> None:
-        self.settings = settings or load_settings()
-
-    def run(self) -> int:
-        app = QApplication.instance() or QApplication([])
-        app.setStyleSheet(APP_STYLE)
-        window = WorkbenchWindow(self.settings)
-        window.show()
-        self.window = window
-        return app.exec()
+        QMessageBox.warning(self, title, message)
 
 
 def run_desktop_app() -> int:
-    return RAGDesktopApp().run()
+    app = QApplication(sys.argv)
+    app.setStyle("Fusion")
+    settings = Settings.from_env(Path(__file__).resolve().parents[3])
+    window = WorkbenchWindow(settings)
+    window.show()
+    return app.exec()
