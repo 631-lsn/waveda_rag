@@ -294,6 +294,13 @@ def markdown_to_html(text: str) -> str:
             output.append(f"<li>{render_inline_markdown(ordered.group(2))}</li>")
             continue
         if unordered:
+            if list_mode == "ol":
+                # 有序列表内不嵌套无序列表，当作文本追加到上一个<li>
+                if output:
+                    last = output[-1]
+                    if last.endswith("</li>"):
+                        output[-1] = last[:-5] + "<br>" + render_inline_markdown(unordered.group(1)) + "</li>"
+                continue
             if list_mode != "ul":
                 close_list()
                 output.append(list_prefix + "<ul>")
