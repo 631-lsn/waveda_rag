@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import base64
 import html
 import os
 import re
@@ -340,28 +341,36 @@ def markdown_to_html(text: str) -> str:
 
 IMAGE_PATH_RE = re.compile(r"[`\"]?(\.?/?images/[^`\"\s)]+\.(?:png|jpg|jpeg|gif|svg))[`\"]?", re.IGNORECASE)
 
+MIME_MAP = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+            ".gif": "image/gif", ".svg": "image/svg+xml"}
 
-def _extract_images_from_sources(sources: list) -> list[tuple[str, str]]:
+
+def _path_to_data_uri(filepath: str) -> str:
+    """将本地图片文件转为 base64 data URI，彻底绕过文件路径权限问题"""
+    try:
+        with open(filepath, "rb") as f:
+            data = f.read()
+        ext = os.path.splitext(filepath)[1].lower()
+        mime = MIME_MAP.get(ext, "image/png")
+        b64 = base64.b64encode(data).decode("ascii")
+        return f"data:{mime};base64,{b64}"
+    except Exception:
+        return ""
+
+
+def _extract_images_from_sources(sources: list, image_index: dict[str, str]) -> list[tuple[str, str]]:
     """从检索到的来源chunk中提取图片路径, 返回 [(绝对路径, 标题), ...]"""
-    project_root = Path(__file__).resolve().parents[3]
-    help_base = project_root / "wavEDA_docs" / "helpHtml" / "helpHtml"
     seen = set()
     results = []
     for src in sources:
         content = src.chunk.content
         title = src.chunk.title
-        # Extract just the filename from image references
         for match in IMAGE_PATH_RE.finditer(content):
-            img_name = os.path.basename(match.group(1))  # just "Boundary_1.png"
-            if img_name in seen:
+            img_name = os.path.basename(match.group(1))
+            if img_name in seen or img_name not in image_index:
                 continue
-            # Search recursively for this filename in images/ subdirs
-            for root, dirs, files in os.walk(str(help_base)):
-                if os.path.basename(root) == "images" and img_name in files:
-                    candidate = os.path.join(root, img_name).replace(os.sep, "/")
-                    seen.add(img_name)
-                    results.append((candidate, title))
-                    break
+            seen.add(img_name)
+            results.append((image_index[img_name], title))
     return results
 
 
@@ -377,8 +386,10 @@ def _convert_image_refs(html_text: str) -> str:
             if "images" in dirs:
                 candidate = os.path.join(root, img_rel.replace("/", os.sep))
                 if os.path.exists(candidate):
-                    abs_path = candidate.replace(os.sep, "/")
-                    return f'<p style="margin:8px 0;"><img src="file:///{abs_path}" style="max-width:100%;border-radius:8px;border:1px solid {COLORS["border"]};" alt="示意图"></p>'
+                    data_uri = _path_to_data_uri(candidate)
+                    if data_uri:
+                        return f'<p style="margin:8px 0;"><img src="{data_uri}" style="max-width:100%;border-radius:8px;border:1px solid {COLORS["border"]};" alt="示意图"></p>'
+                    return match.group(0)
         return match.group(0)  # fallback: leave as text
     return IMAGE_MD_RE.sub(_img_repl, html_text)
 
@@ -517,8 +528,22 @@ class WorkbenchWindow(QMainWindow):
         self.resize(1360, 840)
         self.setMinimumSize(1120, 720)
         self._project_root = Path(__file__).resolve().parents[3]
+        self._image_index: dict[str, str] = {}  # filename -> absolute_path
+        self._build_image_index()
         self._build_ui()
         self._load_pipeline_if_ready()
+
+    def _build_image_index(self) -> None:
+        """预建图片索引: 文件名 -> 绝对路径"""
+        help_base = self._project_root / "wavEDA_docs" / "helpHtml" / "helpHtml"
+        if not help_base.exists():
+            return
+        for root, dirs, files in os.walk(str(help_base)):
+            if os.path.basename(root) == "images":
+                for fname in files:
+                    if fname.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg')):
+                        self._image_index[fname] = os.path.join(root, fname).replace(os.sep, "/")
+        print(f"Image index: {len(self._image_index)} images loaded")
 
     def _build_ui(self) -> None:
         root = QWidget()
@@ -734,12 +759,14 @@ class WorkbenchWindow(QMainWindow):
     def _on_answer_done(self, result: AskResult) -> None:
         self._append_assistant(result.answer.answer)
         # ---- 追加来源中的图片 ----
-        all_images = _extract_images_from_sources(result.answer.sources)
+        all_images = _extract_images_from_sources(result.answer.sources, self._image_index)
         if all_images:
             img_html = '<div style="margin:12px 0 8px 0;"><div style="color:' + COLORS["accent2"] + ';font-weight:700;margin-bottom:8px;">操作截图</div>'
             for img_path, title in all_images[:6]:
                 abs_path = img_path.replace(os.sep, "/")
-                img_html += f'<p style="margin:6px 0;"><span style="color:{COLORS["muted"]};font-size:12px;">{html.escape(title)}</span><br><img src="file:///{abs_path}" style="max-width:100%;max-height:400px;border-radius:8px;border:1px solid {COLORS["border"]};margin-top:4px;"></p>'
+                data_uri = _path_to_data_uri(abs_path)
+            if data_uri:
+                img_html += f'<p style="margin:6px 0;"><span style="color:{COLORS["muted"]};font-size:12px;">{html.escape(title)}</span><br><img src="{data_uri}" style="max-width:100%;max-height:400px;border-radius:8px;border:1px solid {COLORS["border"]};margin-top:4px;"></p>'
             img_html += '</div>'
             self._append_html(web_wrapper(img_html))
         self.sources.setHtml(self._sources_html(result.answer.sources))
