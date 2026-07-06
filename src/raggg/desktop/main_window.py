@@ -9,6 +9,10 @@ from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, Signal, Slot
 from PySide6.QtGui import QFont
 from PySide6.QtWidgets import (
     QApplication,
+    QComboBox,
+    QDialog,
+    QDialogButtonBox,
+    QFormLayout,
     QFrame,
     QGridLayout,
     QHBoxLayout,
@@ -336,6 +340,83 @@ class MetricCard(QFrame):
             self.value_label.setStyleSheet(f"color: {color};")
 
 
+LLM_PROVIDERS = [
+    ("DeepSeek",      "https://api.deepseek.com",                       "deepseek-chat"),
+    ("Kimi (Moonshot)", "https://api.moonshot.cn/v1",                    "moonshot-v1-8k"),
+    ("千问 (通义)",     "https://dashscope.aliyuncs.com/compatible-mode/v1", "qwen-plus"),
+    ("百炼 (阿里云)",   "https://dashscope.aliyuncs.com/compatible-mode/v1", "qwen-plus"),
+    ("OpenAI",        "https://api.openai.com/v1",                      "gpt-4o-mini"),
+]
+
+
+class ApiSettingsDialog(QDialog):
+    def __init__(self, settings: Settings, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self.settings = settings
+        self.setWindowTitle("API 设置 — 选择大模型")
+        self.setMinimumWidth(400)
+        layout = QVBoxLayout(self)
+        layout.setSpacing(14)
+
+        desc = QLabel("选择大模型提供商，输入你的 API Key 即可。\nBase URL 和模型名称会自动填写。")
+        desc.setStyleSheet(f"color:{COLORS['muted']};font-size:12px;")
+        desc.setWordWrap(True)
+        layout.addWidget(desc)
+
+        form = QFormLayout()
+        form.setSpacing(10)
+
+        self.provider_combo = QComboBox()
+        for name, _, _ in LLM_PROVIDERS:
+            self.provider_combo.addItem(name)
+        # 预设当前配置对应的选项
+        current_url = settings.llm_base_url.rstrip("/")
+        current_idx = 0
+        for i, (_, url, _) in enumerate(LLM_PROVIDERS):
+            if url == current_url:
+                current_idx = i; break
+        self.provider_combo.setCurrentIndex(current_idx)
+        self.provider_combo.currentIndexChanged.connect(self._on_provider_changed)
+        form.addRow("大模型:", self.provider_combo)
+
+        self.key_edit = QLineEdit(settings.llm_api_key)
+        self.key_edit.setPlaceholderText("sk-...")
+        self.key_edit.setEchoMode(QLineEdit.Password)
+        form.addRow("API Key:", self.key_edit)
+
+        self.info_label = QLabel()
+        self.info_label.setStyleSheet(f"color:{COLORS['subtle']};font-size:11px;")
+        self._on_provider_changed(current_idx)
+        form.addRow(self.info_label)
+
+        layout.addLayout(form)
+
+        buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        buttons.accepted.connect(self._save_and_accept)
+        buttons.rejected.connect(self.reject)
+        layout.addWidget(buttons)
+
+    def _on_provider_changed(self, index: int) -> None:
+        _, url, model = LLM_PROVIDERS[index]
+        self.info_label.setText(f"URL: {url}   |   Model: {model}")
+
+    def _save_and_accept(self) -> None:
+        _, url, model = LLM_PROVIDERS[self.provider_combo.currentIndex()]
+        env_path = Path(__file__).resolve().parents[3] / "config" / ".env"
+        lines = []
+        if env_path.exists():
+            lines = env_path.read_text(encoding="utf-8").splitlines()
+        new_lines = []
+        for line in lines:
+            if not any(line.startswith(k + "=") for k in ("RAG_LLM_BASE_URL", "RAG_LLM_API_KEY", "RAG_LLM_MODEL")):
+                new_lines.append(line)
+        new_lines.append(f"RAG_LLM_BASE_URL={url}")
+        new_lines.append(f"RAG_LLM_API_KEY={self.key_edit.text().strip()}")
+        new_lines.append(f"RAG_LLM_MODEL={model}")
+        env_path.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
+        self.accept()
+
+
 class WorkbenchWindow(QMainWindow):
     def __init__(self, settings: Settings) -> None:
         super().__init__()
@@ -408,6 +489,10 @@ class WorkbenchWindow(QMainWindow):
         self.reload_button = self._button("重新载入索引")
         self.reload_button.clicked.connect(self._load_pipeline_if_ready)
         layout.addWidget(self.reload_button)
+
+        self.api_button = self._button("API 设置")
+        self.api_button.clicked.connect(self._open_api_settings)
+        layout.addWidget(self.api_button)
 
         prompt_label = QLabel("快捷问题")
         prompt_label.setObjectName("section")
@@ -505,6 +590,15 @@ class WorkbenchWindow(QMainWindow):
         model_color = COLORS["accent"] if self.settings.llm_api_key else COLORS["warning"]
         self.model_card.set_value(model_name, model_color)
         self.sources.setHtml(self._empty_sources_html())
+
+    def _open_api_settings(self) -> None:
+        dialog = ApiSettingsDialog(self.settings, self)
+        if dialog.exec() == QDialog.Accepted:
+            # Reload settings from .env
+            from raggg.config import Settings
+            self.settings = Settings.from_env(Path(__file__).resolve().parents[3])
+            self._load_pipeline_if_ready()
+            QMessageBox.information(self, "已保存", "API 设置已更新，重启应用后生效。")
 
     def _rebuild_async(self) -> None:
         if self.is_busy:
