@@ -321,6 +321,33 @@ def markdown_to_html(text: str) -> str:
     return result
 
 
+IMAGE_PATH_RE = re.compile(r"[`\"]?(\.?/?images/[^`\"\s)]+\.(?:png|jpg|jpeg|gif|svg))[`\"]?", re.IGNORECASE)
+
+
+def _extract_images_from_sources(sources: list) -> list[tuple[str, str]]:
+    """从检索到的来源chunk中提取图片路径, 返回 [(绝对路径, 标题), ...]"""
+    project_root = Path(__file__).resolve().parents[3]
+    help_base = project_root / "wavEDA_docs" / "helpHtml" / "helpHtml"
+    seen = set()
+    results = []
+    for src in sources:
+        content = src.chunk.content
+        title = src.chunk.title
+        # Extract just the filename from image references
+        for match in IMAGE_PATH_RE.finditer(content):
+            img_name = os.path.basename(match.group(1))  # just "Boundary_1.png"
+            if img_name in seen:
+                continue
+            # Search recursively for this filename in images/ subdirs
+            for root, dirs, files in os.walk(str(help_base)):
+                if os.path.basename(root) == "images" and img_name in files:
+                    candidate = os.path.join(root, img_name).replace(os.sep, "/")
+                    seen.add(img_name)
+                    results.append((candidate, title))
+                    break
+    return results
+
+
 def _convert_image_refs(html_text: str) -> str:
     """把 图片: `./images/xxx.png` 换成实际可显示的 <img> 标签"""
     def _img_repl(match: re.Match[str]) -> str:
@@ -689,6 +716,15 @@ class WorkbenchWindow(QMainWindow):
 
     def _on_answer_done(self, result: AskResult) -> None:
         self._append_assistant(result.answer.answer)
+        # ---- 追加来源中的图片 ----
+        all_images = _extract_images_from_sources(result.answer.sources)
+        if all_images:
+            img_html = '<div style="margin:12px 0 8px 0;"><div style="color:' + COLORS["accent2"] + ';font-weight:700;margin-bottom:8px;">操作截图</div>'
+            for img_path, title in all_images[:6]:
+                abs_path = img_path.replace(os.sep, "/")
+                img_html += f'<p style="margin:6px 0;"><span style="color:{COLORS["muted"]};font-size:12px;">{html.escape(title)}</span><br><img src="file:///{abs_path}" style="max-width:100%;max-height:400px;border-radius:8px;border:1px solid {COLORS["border"]};margin-top:4px;"></p>'
+            img_html += '</div>'
+            self._append_html(web_wrapper(img_html))
         self.sources.setHtml(self._sources_html(result.answer.sources))
 
     def _set_busy(self, busy: bool, text: str) -> None:
