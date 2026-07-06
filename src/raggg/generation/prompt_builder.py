@@ -14,11 +14,15 @@ def build_prompt(question: str, sources: list[SearchResult]) -> str:
             f"{chunk.content[:900]}"
         )
     joined = "\n\n".join(snippets)
+    if joined.strip():
+        context = f"资料：\n{joined}\n\n请优先使用资料中的内容回答，资料不足时用自己的知识补充。"
+    else:
+        context = "（知识库中暂无相关文档）\n\n请用自己的知识回答这个问题，给出简洁、可操作的建议。"
     return (
-        "你是一个中文 RAG 助手。只根据给定资料回答；资料不足时可用自己的知识补充回答。\n\n"
+        "你是一个中文 RAG 助手，帮助用户解决 WavEDA 仿真软件的使用问题。\n\n"
         f"问题：{question}\n\n"
-        f"资料：\n{joined}\n\n"
-        "请给出简洁、可操作的回答，并列出引用。"
+        f"{context}\n\n"
+        "请给出简洁、可操作的回答，如果引用了资料请标注来源。"
     )
 
 
