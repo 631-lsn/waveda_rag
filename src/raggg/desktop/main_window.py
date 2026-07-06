@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Callable
 
 from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QUrl, Signal, Slot
-from PySide6.QtGui import QFont
+from PySide6.QtGui import QFont, QIcon
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings
 from PySide6.QtWidgets import (
@@ -540,10 +540,13 @@ class WorkbenchWindow(QMainWindow):
         self.thread_pool = QThreadPool.globalInstance()
         self._active_workers: list[Worker] = []
         self.is_busy = False
+        self._project_root = Path(__file__).resolve().parents[3]
         self.setWindowTitle("WavEDA Knowledge Workbench")
+        icon_path = self._project_root / "wavEDA_docs" / "helpHtml" / "image" / "waveda.png"
+        if icon_path.exists():
+            self.setWindowIcon(QIcon(str(icon_path)))
         self.resize(1360, 840)
         self.setMinimumSize(1120, 720)
-        self._project_root = Path(__file__).resolve().parents[3]
         self._image_index: dict[str, str] = {}  # filename -> absolute_path
         self._build_image_index()
         self._build_ui()
