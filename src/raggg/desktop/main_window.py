@@ -451,7 +451,7 @@ class WorkbenchWindow(QMainWindow):
         composer = QHBoxLayout()
         composer.setSpacing(10)
         self.question = QLineEdit()
-        self.question.setPlaceholderText("询问 WavEDA 设置、端口、边界、网格、激励或背后的电磁理论")
+        self.question.setPlaceholderText("输入WavEDA问题，如：波端口怎么设置？| PML和吸收边界的关系？")
         self.question.returnPressed.connect(self._ask)
         self.ask_button = self._button("提问", primary=True)
         self.ask_button.clicked.connect(self._ask)
