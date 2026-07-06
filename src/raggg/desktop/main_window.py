@@ -38,7 +38,7 @@ from raggg.pipeline.rag_pipeline import RAGAnswer, RAGPipeline
 from raggg.retrieval.retriever import SearchResult
 
 
-DARK_COLORS = {
+COLORS = {
     "bg": "#07111f",
     "surface": "#0d1726",
     "surface2": "#121f32",
@@ -52,33 +52,10 @@ DARK_COLORS = {
     "warning": "#f5c26b",
     "danger": "#f87171",
     "input": "#0a1322",
-    "badge_bg": "#103430",
-    "badge_border": "#1f6b5e",
 }
 
-LIGHT_COLORS = {
-    "bg": "#f0f2f5",
-    "surface": "#ffffff",
-    "surface2": "#f5f6f8",
-    "surface3": "#e8eaed",
-    "border": "#d4d8dd",
-    "text": "#1a1d23",
-    "muted": "#5f6672",
-    "subtle": "#8b919c",
-    "accent": "#0d7b6c",
-    "accent2": "#2563eb",
-    "warning": "#b85e00",
-    "danger": "#dc2626",
-    "input": "#ffffff",
-    "badge_bg": "#d0f0eb",
-    "badge_border": "#8dd5cc",
-}
 
-COLORS = dict(DARK_COLORS)
-
-
-def _build_app_style() -> str:
-    return f"""
+APP_STYLE = f"""
 QWidget {{
     background: {COLORS["bg"]};
     color: {COLORS["text"]};
@@ -118,9 +95,9 @@ QLabel#metricValue {{
     font-weight: 700;
 }}
 QLabel#badge {{
-    background: {COLORS["badge_bg"]};
+    background: #103430;
     color: {COLORS["accent"]};
-    border: 1px solid {COLORS["badge_border"]};
+    border: 1px solid #1f6b5e;
     border-radius: 12px;
     padding: 8px 14px;
     font-weight: 700;
@@ -169,8 +146,6 @@ QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
     height: 0;
 }}
 """
-
-APP_STYLE = _build_app_style()
 
 
 @dataclass(frozen=True)
@@ -435,14 +410,18 @@ def _convert_image_refs(html_text: str) -> str:
     return IMAGE_MD_RE.sub(_img_repl, html_text)
 
 
+WEBVIEW_BG = COLORS["input"]
+WEBVIEW_TEXT = COLORS["text"]
+
+
 def web_wrapper(body_html: str, extra_css: str = "") -> str:
     return f"""<!DOCTYPE html>
 <html><head><meta charset="UTF-8"><style>
 body {{
     font-family: "Microsoft YaHei UI", "Segoe UI", sans-serif;
     font-size: 14px;
-    background: {COLORS["input"]};
-    color: {COLORS["text"]};
+    background: {WEBVIEW_BG};
+    color: {WEBVIEW_TEXT};
     margin: 0;
     padding: 0;
 }}
@@ -570,7 +549,6 @@ class WorkbenchWindow(QMainWindow):
         self._build_ui()
         self._load_pipeline_if_ready()
         # 后台预编码所有图片，用户第一次问就不慢了
-        self._dark_mode = True
         self._preload_images()
 
     def _preload_images(self) -> None:
@@ -627,11 +605,6 @@ class WorkbenchWindow(QMainWindow):
         badge = QLabel("WavEDA 优先")
         badge.setObjectName("badge")
         header.addWidget(badge, alignment=Qt.AlignRight | Qt.AlignVCenter)
-
-        self.theme_btn = QPushButton("浅色")
-        self.theme_btn.setCursor(Qt.PointingHandCursor)
-        self.theme_btn.clicked.connect(self._toggle_theme)
-        header.addWidget(self.theme_btn, alignment=Qt.AlignRight | Qt.AlignVCenter)
         return header
 
     def _left_panel(self) -> QFrame:
@@ -759,30 +732,6 @@ class WorkbenchWindow(QMainWindow):
         model_color = COLORS["accent"] if self.settings.llm_api_key else COLORS["warning"]
         self.model_card.set_value(model_name, model_color)
         self.sources.setHtml(self._empty_sources_html())
-
-    def _toggle_theme(self) -> None:
-        self._dark_mode = not self._dark_mode
-        if self._dark_mode:
-            COLORS.update(DARK_COLORS)
-            self.theme_btn.setText("浅色")
-        else:
-            COLORS.update(LIGHT_COLORS)
-            self.theme_btn.setText("深色")
-        # Rebuild stylesheet
-        global APP_STYLE
-        APP_STYLE = _build_app_style()
-        self.centralWidget().setStyleSheet(APP_STYLE)
-        # Apply stylesheet to all children recursively
-        for child in self.centralWidget().findChildren(QWidget):
-            child.setStyleSheet("")
-        self.centralWidget().setStyleSheet(APP_STYLE)
-        # Refresh WebView content with new theme
-        self.chat.setHtml(self._welcome_html())
-        self.sources.setHtml(self._empty_sources_html())
-        self.question.setStyleSheet(
-            f"background: {COLORS['input']}; color: {COLORS['text']}; "
-            f"border: 1px solid {COLORS['border']}; border-radius: 12px; padding: 13px 14px;"
-        )
 
     def _open_api_settings(self) -> None:
         dialog = ApiSettingsDialog(self.settings, self)
