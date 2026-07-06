@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Callable
 
 from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QUrl, Signal, Slot
-from PySide6.QtGui import QFont, QIcon
+from PySide6.QtGui import QFont, QIcon, QPixmap
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings
 from PySide6.QtWidgets import (
@@ -597,11 +597,19 @@ class WorkbenchWindow(QMainWindow):
         header = QHBoxLayout()
         header.setContentsMargins(2, 0, 2, 0)
         titles = QVBoxLayout()
+        title_row = QHBoxLayout()
+        icon_label = QLabel()
+        icon_label.setPixmap(QPixmap(str(self._project_root / "wavEDA_docs" / "helpHtml" / "image" / "waveda.png"))
+                             .scaled(36, 36, Qt.KeepAspectRatio, Qt.SmoothTransformation))
+        icon_label.setFixedSize(42, 42)
+        title_row.addWidget(icon_label)
         title = QLabel("WavEDA Knowledge Workbench")
         title.setObjectName("title")
+        title_row.addWidget(title, stretch=1)
+        titles.addLayout(title_row)
         subtitle = QLabel("软件帮助优先的仿真知识检索与问答工作台")
         subtitle.setObjectName("subtitle")
-        titles.addWidget(title)
+        titles.addWidget(subtitle)
         titles.addWidget(subtitle)
         header.addLayout(titles)
         header.addStretch(1)
