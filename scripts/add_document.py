@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-RAGGG 单文档增量追加工具
+waveda_rag 单文档增量追加工具
 用法:
   python scripts/add_document.py <文件路径>
   python scripts/add_document.py knowledge_base/tutorials/新教程.md

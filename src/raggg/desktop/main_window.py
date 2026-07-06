@@ -404,11 +404,9 @@ class WorkbenchWindow(QMainWindow):
         layout.addWidget(self.chunk_card)
         layout.addWidget(self.model_card)
 
-        self.rebuild_button = self._button("重建知识库", primary=True)
-        self.rebuild_button.clicked.connect(self._rebuild_async)
+        # 重建知识库按钮已移除 — 改用 scripts/add_document.py 追加文档
         self.reload_button = self._button("重新载入索引")
         self.reload_button.clicked.connect(self._load_pipeline_if_ready)
-        layout.addWidget(self.rebuild_button)
         layout.addWidget(self.reload_button)
 
         prompt_label = QLabel("快捷问题")

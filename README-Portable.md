@@ -1,4 +1,4 @@
-# RAGGG Portable 使用说明
+# waveda_rag 便携版使用说明
 
 这是 `WavEDA + 多物理场笔记 RAG` 的 Windows 便携版。
 
