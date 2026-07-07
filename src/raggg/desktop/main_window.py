@@ -9,10 +9,10 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QUrl, Signal, Slot
+from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, Signal, Slot
 from PySide6.QtGui import QFont, QIcon, QPixmap
 from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
+from PySide6.QtWebEngineCore import QWebEngineSettings
 from PySide6.QtWidgets import (
     QApplication,
     QComboBox,
@@ -687,26 +687,8 @@ class WorkbenchWindow(QMainWindow):
         self.chat.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessRemoteUrls, False)
         self.chat.setHtml(self._welcome_html())
         self.chat.setMinimumHeight(300)
-        self.chat.page().setProperty("_workbench", self)  # 让页面能找回窗口引用
+        self.chat.page().javaScriptConsoleMessage.connect(self._on_console_msg)
         layout.addWidget(self.chat, stretch=1)
-
-        # 自定义 console 消息拦截：JS 中 console.log('RAGGG_XXX') 触发 Python 回调
-        class _FavPage(QWebEnginePage):
-            def javaScriptConsoleMessage(self, level, msg, line, source):
-                if msg == "RAGGG_FAV":
-                    wb = self.parent().findChild(WorkbenchWindow)
-                    if wb is None:
-                        wb = self.property("_workbench")
-                    if wb:
-                        wb._do_fav()
-                elif msg.startswith("RAGGG_FAVDEL:"):
-                    idx = int(msg.split(":")[1])
-                    wb = self.parent().findChild(WorkbenchWindow)
-                    if wb is None:
-                        wb = self.property("_workbench")
-                    if wb and hasattr(wb, '_fav_dialog'):
-                        wb._do_fav_del(idx)
-        self.chat.setPage(_FavPage(self.chat))
 
         composer = QHBoxLayout()
         composer.setSpacing(10)
@@ -768,6 +750,13 @@ class WorkbenchWindow(QMainWindow):
         model_color = COLORS["accent"] if self.settings.llm_api_key else COLORS["warning"]
         self.model_card.set_value(model_name, model_color)
         self.sources.setHtml(self._empty_sources_html())
+
+    def _on_console_msg(self, level, msg: str, line: int, source: str) -> None:
+        if msg == "RAGGG_FAV":
+            self._do_fav()
+        elif msg.startswith("RAGGG_FAVDEL:"):
+            # Not used here; favorites dialog uses Qt buttons now
+            pass
 
     def _do_fav(self) -> None:
         q, a = self._last_qa
