@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QUrl, Signal, Slot
+from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, Signal, Slot
 from PySide6.QtGui import QFont, QIcon, QPixmap
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings
@@ -681,8 +681,6 @@ class WorkbenchWindow(QMainWindow):
         self.chat.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessRemoteUrls, False)
         self.chat.setHtml(self._welcome_html())
         self.chat.setMinimumHeight(300)
-        self.chat.loadFinished.connect(self._inject_selection_followup)
-        self.chat.page().urlChanged.connect(self._on_chat_url_change)
         layout.addWidget(self.chat, stretch=1)
 
         composer = QHBoxLayout()
@@ -745,55 +743,6 @@ class WorkbenchWindow(QMainWindow):
         model_color = COLORS["accent"] if self.settings.llm_api_key else COLORS["warning"]
         self.model_card.set_value(model_name, model_color)
         self.sources.setHtml(self._empty_sources_html())
-
-    def _inject_selection_followup(self) -> None:
-        """注入JS：选中文字后弹出追问按钮"""
-        js = """
-        var followupBtn = document.getElementById('_followupBtn');
-        if (!followupBtn) {
-            followupBtn = document.createElement('div');
-            followupBtn.id = '_followupBtn';
-            followupBtn.innerHTML = '追问';
-            followupBtn.style.cssText = 'position:fixed;display:none;background:var(--accent);color:#fff;'
-                + 'padding:4px 12px;border-radius:6px;font-size:12px;cursor:pointer;z-index:9999;font-weight:700;';
-            followupBtn.onclick = function() {
-                var sel = window.getSelection().toString().trim();
-                if (sel) {
-                    window.location.href = 'followup://' + encodeURIComponent(sel);
-                }
-                followupBtn.style.display = 'none';
-            };
-            document.body.appendChild(followupBtn);
-        }
-        document.addEventListener('mouseup', function(e) {
-            setTimeout(function() {
-                var sel = window.getSelection().toString().trim();
-                if (sel && sel.length > 2) {
-                    var rect = window.getSelection().getRangeAt(0).getBoundingClientRect();
-                    followupBtn.style.left = (rect.left + window.scrollX + rect.width + 6) + 'px';
-                    followupBtn.style.top = (rect.top + window.scrollY - 4) + 'px';
-                    followupBtn.style.display = 'block';
-                } else {
-                    followupBtn.style.display = 'none';
-                }
-            }, 200);
-        });
-        """
-        self.chat.page().runJavaScript(js)
-
-    def _on_chat_url_change(self, url: QUrl) -> None:
-        """拦截 followup:// URL，将选中文字填入输入框"""
-        if url.scheme() == "followup":
-            text = url.toString().replace("followup://", "")
-            try:
-                from urllib.parse import unquote
-                text = unquote(text)
-            except Exception:
-                pass
-            self.question.setText(f"关于「{text}」，请问：")
-            self.question.setFocus()
-            # 阻止URL跳转，回到原页面
-            self.chat.page().runJavaScript("window.history.back();")
 
     def _open_api_settings(self) -> None:
         dialog = ApiSettingsDialog(self.settings, self)
