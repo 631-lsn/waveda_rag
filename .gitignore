@@ -4,8 +4,7 @@ config/.env
 # 知识库索引中间产物（本地重建，不需要Git追踪）
 data/processed_chunks.json
 
-# Python环境
-runtime/
+# Python缓存
 __pycache__/
 *.pyc
 *.pyo
