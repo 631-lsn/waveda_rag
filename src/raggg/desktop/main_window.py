@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, Signal, Slot
+from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QUrl, Signal, Slot
 from PySide6.QtGui import QFont, QIcon, QPixmap
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
@@ -719,14 +719,16 @@ class WorkbenchWindow(QMainWindow):
         title.setObjectName("section")
         subtitle = QLabel("按相关性排序，帮助文档和团队教程优先")
         subtitle.setObjectName("muted")
+        self._source_list_html = self._empty_sources_html()
         self.sources = QWebEngineView()
         self.sources.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
-        self.sources.setHtml(self._empty_sources_html())
+        self.sources.page().urlChanged.connect(self._on_src_url)
+        self.sources.setHtml(self._source_list_html)
         src_nav = QHBoxLayout()
         src_nav.setSpacing(6)
-        back_btn = QPushButton("← 返回")
+        back_btn = QPushButton("← 返回来源列表")
         back_btn.setCursor(Qt.PointingHandCursor)
-        back_btn.clicked.connect(lambda: self.sources.page().runJavaScript("window.history.back();"))
+        back_btn.clicked.connect(lambda: self.sources.setHtml(self._source_list_html))
         src_nav.addWidget(back_btn)
         src_nav.addStretch(1)
         layout.addWidget(title)
@@ -766,6 +768,21 @@ class WorkbenchWindow(QMainWindow):
         model_color = COLORS["accent"] if self.settings.llm_api_key else COLORS["warning"]
         self.model_card.set_value(model_name, model_color)
         self.sources.setHtml(self._empty_sources_html())
+
+    def _on_src_url(self, url: QUrl) -> None:
+        """拦截 ragsrc:// 链接，在原位加载完整帮助页"""
+        if url.scheme() == "ragsrc":
+            html_rel = url.toString().replace("ragsrc://", "")
+            html_path = self._project_root / "wavEDA_docs" / html_rel
+            if html_path.exists():
+                with open(html_path, "r", encoding="utf-8") as f:
+                    html_content = f.read()
+                # Fix image sources to absolute paths
+                img_base = str(html_path.parent / "images").replace(os.sep, "/")
+                css_base = str(self._project_root / "wavEDA_docs" / "helpHtml" / "helpHtml" / "css").replace(os.sep, "/")
+                html_content = re.sub(r'src="\.?/?images/', f'src="file:///{img_base}/', html_content)
+                html_content = re.sub(r'href="\.\./css/', f'href="file:///{css_base}/', html_content)
+                self.sources.setHtml(html_content)
 
     def _on_console_msg(self, level, msg: str, line: int, source: str) -> None:
         if msg == "RAGGG_FAV":
@@ -905,7 +922,8 @@ class WorkbenchWindow(QMainWindow):
                 img_html += f'<p style="margin:6px 0;"><span style="color:{COLORS["muted"]};font-size:12px;">{html.escape(title)}</span><br><img src="{data_uri}" style="max-width:100%;max-height:400px;border-radius:8px;border:1px solid {COLORS["border"]};margin-top:4px;"></p>'
             img_html += '</div>'
             self._append_html(web_wrapper(img_html))
-        self.sources.setHtml(self._sources_html(result.answer.sources))
+        self._source_list_html = self._sources_html(result.answer.sources)
+        self.sources.setHtml(self._source_list_html)
 
     def _set_busy(self, busy: bool, text: str) -> None:
         self.is_busy = busy
@@ -973,14 +991,10 @@ window.scrollTo(0, document.body.scrollHeight);
 
             # Link to the original HTML help file (with images + CSS)
             if chunk.source_type in ("waveda_help", "user_tutorial") and chunk.relative_path:
-                # Map extracted_pages/EM_Project/Boundary.md -> helpHtml/helpHtml/EM_Project/Boundary.html
-                html_rel = chunk.relative_path
-                html_rel = html_rel.replace("extracted_pages/", "helpHtml/")
+                # Map extracted_pages/EM_Project/Boundary.md -> helpHtml/same_path.html
+                html_rel = chunk.relative_path.replace("extracted_pages/", "helpHtml/")
                 html_rel = re.sub(r"\.md$", ".html", html_rel)
-                from urllib.parse import quote
-                html_abs = str(self._project_root / "wavEDA_docs" / html_rel).replace(os.sep, "/")
-                encoded = "file:///" + quote(html_abs.replace("file:///", ""), safe="/:")
-                source_link = f"<a href='{encoded}' target='_blank' style='color:{COLORS['accent2']};'>{html.escape(chunk.relative_path)}</a>"
+                source_link = f"<a href='ragsrc://{html_rel}' style='color:{COLORS['accent2']};cursor:pointer;'>{html.escape(chunk.relative_path)}</a>"
 
             cards.append(
                 f"""<div style="background:{COLORS['surface2']};border:1px solid {COLORS['border']};border-radius:8px;padding:10px 12px;margin-bottom:8px;">
