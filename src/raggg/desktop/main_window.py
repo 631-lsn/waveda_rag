@@ -12,7 +12,7 @@ from typing import Callable
 from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QUrl, Signal, Slot
 from PySide6.QtGui import QFont, QIcon, QPixmap
 from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtWebEngineCore import QWebEngineSettings
+from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
 from PySide6.QtWidgets import (
     QApplication,
     QComboBox,
@@ -687,8 +687,26 @@ class WorkbenchWindow(QMainWindow):
         self.chat.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessRemoteUrls, False)
         self.chat.setHtml(self._welcome_html())
         self.chat.setMinimumHeight(300)
-        self.chat.page().urlChanged.connect(self._on_fav_url)
+        self.chat.page().setProperty("_workbench", self)  # 让页面能找回窗口引用
         layout.addWidget(self.chat, stretch=1)
+
+        # 自定义 console 消息拦截：JS 中 console.log('RAGGG_XXX') 触发 Python 回调
+        class _FavPage(QWebEnginePage):
+            def javaScriptConsoleMessage(self, level, msg, line, source):
+                if msg == "RAGGG_FAV":
+                    wb = self.parent().findChild(WorkbenchWindow)
+                    if wb is None:
+                        wb = self.property("_workbench")
+                    if wb:
+                        wb._do_fav()
+                elif msg.startswith("RAGGG_FAVDEL:"):
+                    idx = int(msg.split(":")[1])
+                    wb = self.parent().findChild(WorkbenchWindow)
+                    if wb is None:
+                        wb = self.property("_workbench")
+                    if wb and hasattr(wb, '_fav_dialog'):
+                        wb._do_fav_del(idx)
+        self.chat.setPage(_FavPage(self.chat))
 
         composer = QHBoxLayout()
         composer.setSpacing(10)
@@ -751,16 +769,14 @@ class WorkbenchWindow(QMainWindow):
         self.model_card.set_value(model_name, model_color)
         self.sources.setHtml(self._empty_sources_html())
 
-    def _on_fav_url(self, url: QUrl) -> None:
-        if url.scheme() == "fav":
-            q, a = self._last_qa
-            if q and a:
-                favs = self._load_favs()
-                favs.append({"question": q, "answer": a, "time": __import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M")})
-                with open(self._fav_file, "w", encoding="utf-8") as f:
-                    import json as _json; _json.dump(favs, f, ensure_ascii=False, indent=2)
-                QMessageBox.information(self, "已收藏", "问答已加入收藏夹。")
-            self.chat.page().runJavaScript("window.history.back();")
+    def _do_fav(self) -> None:
+        q, a = self._last_qa
+        if q and a:
+            favs = self._load_favs()
+            favs.append({"question": q, "answer": a, "time": __import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M")})
+            with open(self._fav_file, "w", encoding="utf-8") as f:
+                import json as _json; _json.dump(favs, f, ensure_ascii=False, indent=2)
+            self.status_card.set_value("已收藏", COLORS["accent"])
 
     def _load_favs(self) -> list:
         import json as _json
@@ -769,6 +785,7 @@ class WorkbenchWindow(QMainWindow):
                 return _json.load(f)
         return []
 
+
     def _open_favorites(self) -> None:
         favs = self._load_favs()
         if not favs:
@@ -776,34 +793,48 @@ class WorkbenchWindow(QMainWindow):
             return
         dialog = QDialog(self)
         dialog.setWindowTitle("收藏夹")
-        dialog.resize(700, 500)
+        dialog.resize(750, 550)
         layout = QVBoxLayout(dialog)
-        browser = QWebEngineView()
-        items = []
+        from PySide6.QtWidgets import QScrollArea
+        scroll = QWidget()
+        scroll_layout = QVBoxLayout(scroll)
         for i, f in enumerate(reversed(favs)):
-            items.append(
-                f"<div style='background:{COLORS['surface2']};border:1px solid {COLORS['border']};border-radius:8px;padding:12px;margin-bottom:8px;'>"
-                f"<div style='display:flex;justify-content:space-between;'><span style='color:{COLORS['accent']};font-weight:700;'>Q: {html.escape(f['question'])}</span>"
-                f"<span style='color:{COLORS['subtle']};font-size:11px;'>{f.get('time','')}</span></div>"
-                f"<div style='color:{COLORS['text']};margin-top:8px;line-height:1.5;'>{markdown_to_html(f['answer'])}</div>"
-                f"<button onclick=\"window.location.href='favdel://{i}'\" style='margin-top:8px;background:{COLORS['danger']};color:#fff;border:0;border-radius:4px;padding:2px 8px;font-size:11px;cursor:pointer;'>删除</button>"
-                f"</div>"
-            )
-        browser.setHtml(web_wrapper("\n".join(items) or "<p>暂无收藏</p>"))
-        browser.page().urlChanged.connect(lambda u: self._on_fav_del(u, dialog))
-        layout.addWidget(browser)
+            card = QFrame()
+            card.setObjectName("metricCard")
+            card_layout = QVBoxLayout(card)
+            q_label = QLabel(f"Q: {f['question']}")
+            q_label.setStyleSheet(f"color:{COLORS['accent']};font-weight:700;")
+            time_label = QLabel(f.get('time', ''))
+            time_label.setStyleSheet(f"color:{COLORS['subtle']};font-size:11px;")
+            hdr = QHBoxLayout()
+            hdr.addWidget(q_label, stretch=1)
+            hdr.addWidget(time_label)
+            card_layout.addLayout(hdr)
+            a_label = QLabel(f['answer'][:500])
+            a_label.setWordWrap(True)
+            a_label.setStyleSheet(f"color:{COLORS['text']};margin-top:6px;")
+            card_layout.addWidget(a_label)
+            del_btn = QPushButton("删除")
+            del_btn.setStyleSheet(f"background:{COLORS['danger']};color:#fff;border:0;padding:2px 8px;font-size:11px;")
+            real_idx = len(favs) - 1 - i
+            del_btn.clicked.connect(lambda ch=False, idx=real_idx: self._do_fav_del(idx, dialog))
+            card_layout.addWidget(del_btn)
+            scroll_layout.addWidget(card)
+        scroll_layout.addStretch(1)
+        area = QScrollArea()
+        area.setWidgetResizable(True)
+        area.setWidget(scroll)
+        layout.addWidget(area)
         dialog.exec()
 
-    def _on_fav_del(self, url: QUrl, dialog: QDialog) -> None:
-        if url.scheme() == "favdel":
-            idx = int(url.toString().replace("favdel://", ""))
-            favs = self._load_favs()
-            favs = [f for i, f in enumerate(reversed(favs)) if len(favs)-1-i != idx]
-            # Re-number and save
+    def _do_fav_del(self, idx: int, dialog: QDialog) -> None:
+        favs = self._load_favs()
+        if 0 <= idx < len(favs):
+            del favs[idx]
             with open(self._fav_file, "w", encoding="utf-8") as f:
-                import json as _json; _json.dump(sorted(favs, key=lambda x: x.get("time","")), f, ensure_ascii=False, indent=2)
-            dialog.accept()
-            self._open_favorites()
+                import json as _json; _json.dump(favs, f, ensure_ascii=False, indent=2)
+        dialog.accept()
+        self._open_favorites()
 
     def _open_api_settings(self) -> None:
         dialog = ApiSettingsDialog(self.settings, self)
@@ -897,7 +928,7 @@ class WorkbenchWindow(QMainWindow):
                 <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='已复制!';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
                   style="background:{COLORS['surface3']};color:{COLORS['muted']};border:1px solid {COLORS['border']};border-radius:6px;padding:2px 10px;font-size:11px;cursor:pointer;"
                   onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">复制</button>
-                <button onclick="window.location.href='fav://save'"
+                <button onclick="console.log('RAGGG_FAV')"
                   style="background:{COLORS['surface3']};color:{COLORS['muted']};border:1px solid {COLORS['border']};border-radius:6px;padding:2px 10px;font-size:11px;cursor:pointer;"
                   onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">收藏</button>
               </div>
