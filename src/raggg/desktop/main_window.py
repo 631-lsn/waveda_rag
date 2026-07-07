@@ -819,11 +819,12 @@ class WorkbenchWindow(QMainWindow):
             del_btn.clicked.connect(lambda ch=False, idx=real_idx: self._do_fav_del(idx, dialog))
             card_layout.addWidget(del_btn)
             scroll_layout.addWidget(card)
+        scroll.setMinimumSize(700, len(favs) * 180)
         scroll_layout.addStretch(1)
         area = QScrollArea()
         area.setWidgetResizable(True)
         area.setWidget(scroll)
-        layout.addWidget(area)
+        layout.addWidget(area, stretch=1)
         dialog.exec()
 
     def _do_fav_del(self, idx: int, dialog: QDialog) -> None:
