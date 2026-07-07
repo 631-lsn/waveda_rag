@@ -925,7 +925,7 @@ class WorkbenchWindow(QMainWindow):
                 <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='已复制!';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
                   style="background:{COLORS['surface3']};color:{COLORS['muted']};border:1px solid {COLORS['border']};border-radius:6px;padding:2px 10px;font-size:11px;cursor:pointer;"
                   onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">复制</button>
-                <button onclick="console.log('RAGGG_FAV')"
+                <button onclick="console.log('RAGGG_FAV');this.innerHTML='已收藏';this.style.color='{COLORS['accent']}';setTimeout(function(){{this.innerHTML='收藏';this.style.color='{COLORS['muted']}'}}.bind(this),1500)"
                   style="background:{COLORS['surface3']};color:{COLORS['muted']};border:1px solid {COLORS['border']};border-radius:6px;padding:2px 10px;font-size:11px;cursor:pointer;"
                   onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">收藏</button>
               </div>
