@@ -799,21 +799,20 @@ class WorkbenchWindow(QMainWindow):
             card = QFrame()
             card.setObjectName("metricCard")
             card_layout = QVBoxLayout(card)
-            q_label = QLabel(f"Q: {f['question']}")
-            q_label.setStyleSheet(f"color:{COLORS['accent']};font-weight:700;background:{COLORS['surface2']};")
-            time_label = QLabel(f.get('time', ''))
-            time_label.setStyleSheet(f"color:{COLORS['subtle']};font-size:11px;")
-            hdr = QHBoxLayout()
-            hdr.addWidget(q_label, stretch=1)
-            hdr.addWidget(time_label)
-            card_layout.addLayout(hdr)
+            # Q&A 合并显示在一个文本框里，统一背景
             from PySide6.QtWidgets import QTextEdit
-            a_text = QTextEdit()
-            a_text.setReadOnly(True)
-            a_text.setPlainText(f['answer'])
-            a_text.setMaximumHeight(200)
-            a_text.setStyleSheet(f"color:{COLORS['text']};background:{COLORS['surface2']};border:0;margin-top:6px;")
-            card_layout.addWidget(a_text)
+            qa_text = QTextEdit()
+            qa_text.setReadOnly(True)
+            html_body = (
+                f"<p style='color:{COLORS['accent']};font-weight:700;margin:0;'>Q: {html.escape(f['question'])}</p>"
+                f"<p style='color:{COLORS['subtle']};font-size:11px;margin:2px 0 6px 0;'>{f.get('time','')}</p>"
+                f"<hr style='border-color:{COLORS['border']};margin:6px 0;'>"
+                f"<p style='color:{COLORS['text']};line-height:1.55;margin:0;white-space:pre-wrap;'>{html.escape(f['answer'])}</p>"
+            )
+            qa_text.setHtml(html_body)
+            qa_text.setMaximumHeight(250)
+            qa_text.setStyleSheet(f"background:{COLORS['surface2']};border:0;")
+            card_layout.addWidget(qa_text)
             del_btn = QPushButton("删除")
             del_btn.setStyleSheet(f"background:{COLORS['danger']};color:#fff;border:0;padding:2px 8px;font-size:11px;")
             real_idx = len(favs) - 1 - i
