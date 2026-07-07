@@ -807,10 +807,13 @@ class WorkbenchWindow(QMainWindow):
             hdr.addWidget(q_label, stretch=1)
             hdr.addWidget(time_label)
             card_layout.addLayout(hdr)
-            a_label = QLabel(f['answer'][:500])
-            a_label.setWordWrap(True)
-            a_label.setStyleSheet(f"color:{COLORS['text']};margin-top:6px;")
-            card_layout.addWidget(a_label)
+            from PySide6.QtWidgets import QTextEdit
+            a_text = QTextEdit()
+            a_text.setReadOnly(True)
+            a_text.setPlainText(f['answer'])
+            a_text.setMaximumHeight(200)
+            a_text.setStyleSheet(f"color:{COLORS['text']};background:transparent;border:0;margin-top:6px;")
+            card_layout.addWidget(a_text)
             del_btn = QPushButton("删除")
             del_btn.setStyleSheet(f"background:{COLORS['danger']};color:#fff;border:0;padding:2px 8px;font-size:11px;")
             real_idx = len(favs) - 1 - i
