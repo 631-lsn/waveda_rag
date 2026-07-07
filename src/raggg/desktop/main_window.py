@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, Signal, Slot
+from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QUrl, Signal, Slot
 from PySide6.QtGui import QFont, QIcon, QPixmap
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings
@@ -540,6 +540,8 @@ class WorkbenchWindow(QMainWindow):
         self.thread_pool = QThreadPool.globalInstance()
         self._active_workers: list[Worker] = []
         self.is_busy = False
+        self._last_qa: tuple[str, str] = ("", "")  # (question, answer)
+        self._fav_file = settings.data_dir / "favorites.json"
         self._project_root = Path(__file__).resolve().parents[3]
         self.setWindowTitle("WavEDA Knowledge Workbench")
         icon_path = self._project_root / "wavEDA_docs" / "helpHtml" / "image" / "waveda.png"
@@ -644,6 +646,10 @@ class WorkbenchWindow(QMainWindow):
         self.api_button.clicked.connect(self._open_api_settings)
         layout.addWidget(self.api_button)
 
+        self.fav_button = self._button("收藏夹")
+        self.fav_button.clicked.connect(self._open_favorites)
+        layout.addWidget(self.fav_button)
+
         prompt_label = QLabel("快捷问题")
         prompt_label.setObjectName("section")
         layout.addSpacing(10)
@@ -681,6 +687,7 @@ class WorkbenchWindow(QMainWindow):
         self.chat.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessRemoteUrls, False)
         self.chat.setHtml(self._welcome_html())
         self.chat.setMinimumHeight(300)
+        self.chat.page().urlChanged.connect(self._on_fav_url)
         layout.addWidget(self.chat, stretch=1)
 
         composer = QHBoxLayout()
@@ -743,6 +750,60 @@ class WorkbenchWindow(QMainWindow):
         model_color = COLORS["accent"] if self.settings.llm_api_key else COLORS["warning"]
         self.model_card.set_value(model_name, model_color)
         self.sources.setHtml(self._empty_sources_html())
+
+    def _on_fav_url(self, url: QUrl) -> None:
+        if url.scheme() == "fav":
+            q, a = self._last_qa
+            if q and a:
+                favs = self._load_favs()
+                favs.append({"question": q, "answer": a, "time": __import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M")})
+                with open(self._fav_file, "w", encoding="utf-8") as f:
+                    import json as _json; _json.dump(favs, f, ensure_ascii=False, indent=2)
+                QMessageBox.information(self, "已收藏", "问答已加入收藏夹。")
+            self.chat.page().runJavaScript("window.history.back();")
+
+    def _load_favs(self) -> list:
+        import json as _json
+        if self._fav_file.exists():
+            with open(self._fav_file, "r", encoding="utf-8") as f:
+                return _json.load(f)
+        return []
+
+    def _open_favorites(self) -> None:
+        favs = self._load_favs()
+        if not favs:
+            QMessageBox.information(self, "收藏夹", "还没有收藏任何问答。")
+            return
+        dialog = QDialog(self)
+        dialog.setWindowTitle("收藏夹")
+        dialog.resize(700, 500)
+        layout = QVBoxLayout(dialog)
+        browser = QWebEngineView()
+        items = []
+        for i, f in enumerate(reversed(favs)):
+            items.append(
+                f"<div style='background:{COLORS['surface2']};border:1px solid {COLORS['border']};border-radius:8px;padding:12px;margin-bottom:8px;'>"
+                f"<div style='display:flex;justify-content:space-between;'><span style='color:{COLORS['accent']};font-weight:700;'>Q: {html.escape(f['question'])}</span>"
+                f"<span style='color:{COLORS['subtle']};font-size:11px;'>{f.get('time','')}</span></div>"
+                f"<div style='color:{COLORS['text']};margin-top:8px;line-height:1.5;'>{markdown_to_html(f['answer'])}</div>"
+                f"<button onclick=\"window.location.href='favdel://{i}'\" style='margin-top:8px;background:{COLORS['danger']};color:#fff;border:0;border-radius:4px;padding:2px 8px;font-size:11px;cursor:pointer;'>删除</button>"
+                f"</div>"
+            )
+        browser.setHtml(web_wrapper("\n".join(items) or "<p>暂无收藏</p>"))
+        browser.page().urlChanged.connect(lambda u: self._on_fav_del(u, dialog))
+        layout.addWidget(browser)
+        dialog.exec()
+
+    def _on_fav_del(self, url: QUrl, dialog: QDialog) -> None:
+        if url.scheme() == "favdel":
+            idx = int(url.toString().replace("favdel://", ""))
+            favs = self._load_favs()
+            favs = [f for i, f in enumerate(reversed(favs)) if len(favs)-1-i != idx]
+            # Re-number and save
+            with open(self._fav_file, "w", encoding="utf-8") as f:
+                import json as _json; _json.dump(sorted(favs, key=lambda x: x.get("time","")), f, ensure_ascii=False, indent=2)
+            dialog.accept()
+            self._open_favorites()
 
     def _open_api_settings(self) -> None:
         dialog = ApiSettingsDialog(self.settings, self)
@@ -815,6 +876,7 @@ class WorkbenchWindow(QMainWindow):
             button.setDisabled(busy)
 
     def _append_user(self, question: str) -> None:
+        self._last_qa = (question, "")  # 记住问题，等回答来了配对
         msg_html = web_wrapper(
             f"""<div style="margin:16px 0 8px 0;">
               <div style="color:{COLORS['accent']};font-weight:700;font-size:13px;">你</div>
@@ -826,8 +888,8 @@ class WorkbenchWindow(QMainWindow):
         self._append_html(msg_html)
 
     def _append_assistant(self, answer: str) -> None:
+        self._last_qa = (self._last_qa[0], answer)  # 配对完成
         rendered = markdown_to_html(answer)
-        # 把原文藏在data属性里，复制按钮通过DOM读取
         msg_html = web_wrapper(
             f"""<div style="margin:16px 0 18px 0;">
               <div style="display:flex;align-items:center;gap:8px;">
@@ -835,6 +897,9 @@ class WorkbenchWindow(QMainWindow):
                 <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='已复制!';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
                   style="background:{COLORS['surface3']};color:{COLORS['muted']};border:1px solid {COLORS['border']};border-radius:6px;padding:2px 10px;font-size:11px;cursor:pointer;"
                   onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">复制</button>
+                <button onclick="window.location.href='fav://save'"
+                  style="background:{COLORS['surface3']};color:{COLORS['muted']};border:1px solid {COLORS['border']};border-radius:6px;padding:2px 10px;font-size:11px;cursor:pointer;"
+                  onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">收藏</button>
               </div>
               <div style="margin-top:6px;padding:14px 16px;border-radius:12px;background:#111c2f;color:{COLORS['text']};line-height:1.55;">
                 {rendered}
