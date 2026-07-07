@@ -1,0 +1,67 @@
+---
+title: "工具"
+merged_source: "current_waveda_agent_kb"
+source_relative_path: "10_extracted_pages/Tool/Tool.md"
+original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Tool\Tool.md"
+content_kind: "markdown"
+merged_at: "2026-07-07"
+---
+
+# 工具
+
+- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Tool\Tool.html`
+- 原始相对路径: `Tool/Tool.html`
+- 知识模块: `工具`
+
+## 正文抽取
+## 工具
+
+- 变量 - 导出图像 - 导出Snp - 详细日志 - 设计设置 - 矢量拟合
+
+该页主要介绍各种常用的工具操作。
+
+> 图片: `./images/Tool.png`  
+> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Tool.png`
+
+### 变量
+
+模型建立过程中如果需要设置变量，则可以在工具>变量添加并查看所有变量的信息。输入变量名称和并在输入栏填写相应数值，点击添加即完成。详细操作可以查看 变量添加文档。
+
+### 导出图像
+
+该操作用于将模型图片导出，并且可以选择图片格式。 详细操作可以查看 导出图像文档。
+
+### 导出Snp
+
+该操作用于仿真运行后的端口Snp文件导出。 详细操作可以查看 导出Snp文档。
+
+### 详细日志
+
+查看仿真过程中的详细日志与网格信息。 详细操作可以查看 详细日志文档。
+
+### 设计设置
+
+用于仿真前对有损电介质的频率属性进行设置 详细操作可以查看 设计设置文档。
+
+### 矢量拟合
+
+主要通过有理函数逼近频域响应曲线，以极点和零点的形式来表征传递函数的特征。 详细操作可以查看 矢量拟合文档。
+
+## 图片资源
+
+1. `./images/Tool.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Tool.png`
+
+## 页内/相关链接
+
+- - 变量: `#变量`
+- - 变量 - 导出图像: `#导出图像`
+- - 变量 - 导出图像 - 导出Snp: `#导出Snp`
+- - 变量 - 导出图像 - 导出Snp - 详细日志: `#详细日志`
+- - 变量 - 导出图像 - 导出Snp - 详细日志 - 设计设置: `#设计设置`
+- - 变量 - 导出图像 - 导出Snp - 详细日志 - 设计设置 - 矢量拟合: `#矢量拟合`
+- 模型建立过程中如果需要设置变量，则可以在工具>变量添加并查看所有变量的信息。输入变量名称和并在输入栏填写相应数值，点击添加即完成。详细操作可以查看 变量添加: `./Variables.html`
+- 该操作用于将模型图片导出，并且可以选择图片格式。 详细操作可以查看 导出图像: `./Export_Figure.html`
+- 该操作用于仿真运行后的端口Snp文件导出。 详细操作可以查看 导出Snp: `./Export_Snp.html`
+- 查看仿真过程中的详细日志与网格信息。 详细操作可以查看 详细日志: `./Details_Logs.html`
+- 用于仿真前对有损电介质的频率属性进行设置 详细操作可以查看 设计设置: `./Design_Setting.html`
+- 主要通过有理函数逼近频域响应曲线，以极点和零点的形式来表征传递函数的特征。 详细操作可以查看 矢量拟合: `./Vector_Fitting.html`
