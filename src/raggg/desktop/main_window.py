@@ -12,7 +12,7 @@ from typing import Callable
 from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, Signal, Slot
 from PySide6.QtGui import QFont, QIcon, QPixmap
 from PySide6.QtWebEngineWidgets import QWebEngineView
-from PySide6.QtWebEngineCore import QWebEngineSettings
+from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
 from PySide6.QtWidgets import (
     QApplication,
     QComboBox,
@@ -685,9 +685,17 @@ class WorkbenchWindow(QMainWindow):
         self.chat = QWebEngineView()
         self.chat.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
         self.chat.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessRemoteUrls, False)
+
+        # 自定义页面：拦截 console.log 消息
+        wb_ref = self
+        class _FavPage(QWebEnginePage):
+            def javaScriptConsoleMessage(self2, level, msg, line, source):
+                if msg == "RAGGG_FAV":
+                    wb_ref._do_fav()
+        self.chat.setPage(_FavPage(self.chat))
+
         self.chat.setHtml(self._welcome_html())
         self.chat.setMinimumHeight(300)
-        self.chat.page().javaScriptConsoleMessage.connect(self._on_console_msg)
         layout.addWidget(self.chat, stretch=1)
 
         composer = QHBoxLayout()
