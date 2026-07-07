@@ -1,8 +1,7 @@
 # API密钥 - 不要提交到Git
 config/.env
 
-# 知识库索引（本地重建，不需要Git追踪）
-data/index/
+# 知识库索引中间产物（本地重建，不需要Git追踪）
 data/processed_chunks.json
 
 # Python环境

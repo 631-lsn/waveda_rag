@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, Signal, Slot
+from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QUrl, Signal, Slot
 from PySide6.QtGui import QFont, QIcon, QPixmap
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
@@ -719,11 +719,21 @@ class WorkbenchWindow(QMainWindow):
         title.setObjectName("section")
         subtitle = QLabel("按相关性排序，帮助文档和团队教程优先")
         subtitle.setObjectName("muted")
+        self._source_list_html = self._empty_sources_html()
         self.sources = QWebEngineView()
         self.sources.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
-        self.sources.setHtml(self._empty_sources_html())
+        self.sources.page().urlChanged.connect(self._on_src_url)
+        self.sources.setHtml(self._source_list_html)
+        src_nav = QHBoxLayout()
+        src_nav.setSpacing(6)
+        back_btn = QPushButton("← 返回来源列表")
+        back_btn.setCursor(Qt.PointingHandCursor)
+        back_btn.clicked.connect(lambda: self.sources.setHtml(self._source_list_html))
+        src_nav.addWidget(back_btn)
+        src_nav.addStretch(1)
         layout.addWidget(title)
         layout.addWidget(subtitle)
+        layout.addLayout(src_nav)
         layout.addWidget(self.sources, stretch=1)
         return panel
 
@@ -758,6 +768,21 @@ class WorkbenchWindow(QMainWindow):
         model_color = COLORS["accent"] if self.settings.llm_api_key else COLORS["warning"]
         self.model_card.set_value(model_name, model_color)
         self.sources.setHtml(self._empty_sources_html())
+
+    def _on_src_url(self, url: QUrl) -> None:
+        """拦截 ragsrc:// 链接，在原位加载完整帮助页"""
+        if url.scheme() == "ragsrc":
+            html_rel = url.toString().replace("ragsrc://", "")
+            html_path = self._project_root / "wavEDA_docs" / html_rel
+            if html_path.exists():
+                with open(html_path, "r", encoding="utf-8") as f:
+                    html_content = f.read()
+                # Fix image sources to absolute paths
+                img_base = str(html_path.parent / "images").replace(os.sep, "/")
+                css_base = str(self._project_root / "wavEDA_docs" / "helpHtml" / "helpHtml" / "css").replace(os.sep, "/")
+                html_content = re.sub(r'src="\.?/?images/', f'src="file:///{img_base}/', html_content)
+                html_content = re.sub(r'href="\.\./css/', f'href="file:///{css_base}/', html_content)
+                self.sources.setHtml(html_content)
 
     def _on_console_msg(self, level, msg: str, line: int, source: str) -> None:
         if msg == "RAGGG_FAV":
@@ -819,11 +844,12 @@ class WorkbenchWindow(QMainWindow):
             del_btn.clicked.connect(lambda ch=False, idx=real_idx: self._do_fav_del(idx, dialog))
             card_layout.addWidget(del_btn)
             scroll_layout.addWidget(card)
+        scroll.setMinimumSize(700, len(favs) * 180)
         scroll_layout.addStretch(1)
         area = QScrollArea()
         area.setWidgetResizable(True)
         area.setWidget(scroll)
-        layout.addWidget(area)
+        layout.addWidget(area, stretch=1)
         dialog.exec()
 
     def _do_fav_del(self, idx: int, dialog: QDialog) -> None:
@@ -896,7 +922,8 @@ class WorkbenchWindow(QMainWindow):
                 img_html += f'<p style="margin:6px 0;"><span style="color:{COLORS["muted"]};font-size:12px;">{html.escape(title)}</span><br><img src="{data_uri}" style="max-width:100%;max-height:400px;border-radius:8px;border:1px solid {COLORS["border"]};margin-top:4px;"></p>'
             img_html += '</div>'
             self._append_html(web_wrapper(img_html))
-        self.sources.setHtml(self._sources_html(result.answer.sources))
+        self._source_list_html = self._sources_html(result.answer.sources)
+        self.sources.setHtml(self._source_list_html)
 
     def _set_busy(self, busy: bool, text: str) -> None:
         self.is_busy = busy
@@ -954,13 +981,20 @@ window.scrollTo(0, document.body.scrollHeight);
             chunk = result.chunk
             score_pct = min(1.0, result.score)
             color = COLORS["accent"] if score_pct > 0.8 else (COLORS["warning"] if score_pct > 0.5 else COLORS["muted"])
-            badge_label = "WavEDA 帮助" if chunk.source_type == "waveda_help" else "理论笔记"
-            badge_color = "#103430" if chunk.source_type == "waveda_help" else "#1f2937"
+            if chunk.source_type == "waveda_help":
+                badge_label, badge_color = "WavEDA 帮助", "#103430"
+            elif chunk.source_type == "user_tutorial":
+                badge_label, badge_color = "团队教程", "#1f472b"
+            else:
+                badge_label, badge_color = "理论笔记", "#1f2937"
             source_link = chunk.relative_path
 
-            # If there's an HTML source, link to it
-            if chunk.source_type == "waveda_help" and chunk.relative_path:
-                source_link = f"<a href='file:///{str(self._project_root / chunk.relative_path).replace(chr(92), '/')}'>{html.escape(chunk.relative_path)}</a>"
+            # Link to the original HTML help file (with images + CSS)
+            if chunk.source_type in ("waveda_help", "user_tutorial") and chunk.relative_path:
+                # Map extracted_pages/EM_Project/Boundary.md -> helpHtml/same_path.html
+                html_rel = chunk.relative_path.replace("extracted_pages/", "helpHtml/")
+                html_rel = re.sub(r"\.md$", ".html", html_rel)
+                source_link = f"<a href='ragsrc://{html_rel}' style='color:{COLORS['accent2']};cursor:pointer;'>{html.escape(chunk.relative_path)}</a>"
 
             cards.append(
                 f"""<div style="background:{COLORS['surface2']};border:1px solid {COLORS['border']};border-radius:8px;padding:10px 12px;margin-bottom:8px;">
