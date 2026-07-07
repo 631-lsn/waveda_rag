@@ -722,8 +722,16 @@ class WorkbenchWindow(QMainWindow):
         self.sources = QWebEngineView()
         self.sources.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
         self.sources.setHtml(self._empty_sources_html())
+        src_nav = QHBoxLayout()
+        src_nav.setSpacing(6)
+        back_btn = QPushButton("← 返回")
+        back_btn.setCursor(Qt.PointingHandCursor)
+        back_btn.clicked.connect(lambda: self.sources.page().runJavaScript("window.history.back();"))
+        src_nav.addWidget(back_btn)
+        src_nav.addStretch(1)
         layout.addWidget(title)
         layout.addWidget(subtitle)
+        layout.addLayout(src_nav)
         layout.addWidget(self.sources, stretch=1)
         return panel
 
@@ -955,13 +963,24 @@ window.scrollTo(0, document.body.scrollHeight);
             chunk = result.chunk
             score_pct = min(1.0, result.score)
             color = COLORS["accent"] if score_pct > 0.8 else (COLORS["warning"] if score_pct > 0.5 else COLORS["muted"])
-            badge_label = "WavEDA 帮助" if chunk.source_type == "waveda_help" else "理论笔记"
-            badge_color = "#103430" if chunk.source_type == "waveda_help" else "#1f2937"
+            if chunk.source_type == "waveda_help":
+                badge_label, badge_color = "WavEDA 帮助", "#103430"
+            elif chunk.source_type == "user_tutorial":
+                badge_label, badge_color = "团队教程", "#1f472b"
+            else:
+                badge_label, badge_color = "理论笔记", "#1f2937"
             source_link = chunk.relative_path
 
-            # If there's an HTML source, link to it
-            if chunk.source_type == "waveda_help" and chunk.relative_path:
-                source_link = f"<a href='file:///{str(self._project_root / chunk.relative_path).replace(chr(92), '/')}'>{html.escape(chunk.relative_path)}</a>"
+            # Link to the original HTML help file (with images + CSS)
+            if chunk.source_type in ("waveda_help", "user_tutorial") and chunk.relative_path:
+                # Map extracted_pages/EM_Project/Boundary.md -> helpHtml/helpHtml/EM_Project/Boundary.html
+                html_rel = chunk.relative_path
+                html_rel = html_rel.replace("extracted_pages/", "helpHtml/")
+                html_rel = re.sub(r"\.md$", ".html", html_rel)
+                from urllib.parse import quote
+                html_abs = str(self._project_root / "wavEDA_docs" / html_rel).replace(os.sep, "/")
+                encoded = "file:///" + quote(html_abs.replace("file:///", ""), safe="/:")
+                source_link = f"<a href='{encoded}' target='_blank' style='color:{COLORS['accent2']};'>{html.escape(chunk.relative_path)}</a>"
 
             cards.append(
                 f"""<div style="background:{COLORS['surface2']};border:1px solid {COLORS['border']};border-radius:8px;padding:10px 12px;margin-bottom:8px;">
