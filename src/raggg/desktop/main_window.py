@@ -832,7 +832,7 @@ class WorkbenchWindow(QMainWindow):
             f"""<div style="margin:16px 0 18px 0;">
               <div style="display:flex;align-items:center;gap:8px;">
                 <div style="color:{COLORS['warning']};font-weight:700;font-size:13px;">RAG</div>
-                <button onclick="var p=this.parentElement.nextElementSibling;navigator.clipboard.writeText(p.innerText)"
+                <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='已复制!';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
                   style="background:{COLORS['surface3']};color:{COLORS['muted']};border:1px solid {COLORS['border']};border-radius:6px;padding:2px 10px;font-size:11px;cursor:pointer;"
                   onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">复制</button>
               </div>
