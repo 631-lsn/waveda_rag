@@ -1,0 +1,376 @@
+# WavEDA Merged Markdown Knowledge Base
+
+This package merges the current RAG knowledge base with two newly provided knowledge bases. All content is represented as Markdown.
+
+## Source Statistics
+
+| Source | Documents | Root |
+|---|---:|---|
+| `current_waveda_agent_kb` | 160 | `D:\RAGGG\knowledge_sources\waveda_agent_kb` |
+| `current_user_dropbox` | 1 | `D:\RAGGG\knowledge_sources\user_dropbox` |
+| `new_waveda_rag` | 11 | `D:\BaiduNetdiskDownload\waveda_rag\knowledge_base` |
+| `new_teaching_agent_ted` | 1 | `D:\BaiduNetdiskDownload\WavEDA-Teaching-Agent-Ted\knowledge_base` |
+
+- Total markdown documents: 173
+- Output folder: `D:\RAGGG\exports\waveda_merged_markdown_kb_2026-07-07_final`
+- Single-file version: `WavEDA_Merged_Knowledge_Base_single_file.md`
+
+## File Index
+
+### current_user_dropbox
+
+- [Symbol and Footprint Database](sources/current_user_dropbox/SFgen_prcv.pdf.md)
+  - Source relative path: `SFgen_prcv.pdf`
+
+### current_waveda_agent_kb
+
+- [WavEDA 使用教导 Agent 知识库（第一版）](sources/current_waveda_agent_kb/00_README.md)
+  - Source relative path: `00_README.md`
+- [Agent 使用指南](sources/current_waveda_agent_kb/01_agent_usage_guide.md)
+  - Source relative path: `01_agent_usage_guide.md`
+- [WavEDA 非 documentation 资源蒸馏盘点](sources/current_waveda_agent_kb/02_non_document_source_inventory.md)
+  - Source relative path: `02_non_document_source_inventory.md`
+- [边界](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Boundary.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Boundary.md`
+- [Circuit](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Create_A_New_RCLD.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Create_A_New_RCLD.md`
+- [电磁结果](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/EM_Results.md)
+  - Source relative path: `10_extracted_pages/EM_Project/EM_Results.md`
+- [远场](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Far_field.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Far_field.md`
+- [场结果](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Field_Result.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Field_Result.md`
+- [快捷键](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/HotKey.md)
+  - Source relative path: `10_extracted_pages/EM_Project/HotKey.md`
+- [创建线接收器](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Observer/Create_Line_Observer.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Observer/Create_Line_Observer.md`
+- [创建点接收器](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Observer/Create_Point_Observer.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Observer/Create_Point_Observer.md`
+- [接收器](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Observer/Observer.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Observer/Observer.md`
+- [快照](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Snapshot.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Snapshot.md`
+- [沿轴扫描](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Sweep_Along_Axis.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Sweep_Along_Axis.md`
+- [沿路径扫描](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Sweep_Along_Path.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Sweep_Along_Path.md`
+- [线节点](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Tree_Curves.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Tree_Curves.md`
+- [面节点](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Tree_Faces.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Tree_Faces.md`
+- [体节点](sources/current_waveda_agent_kb/10_extracted_pages/EM_Project/Tree_Solids.md)
+  - Source relative path: `10_extracted_pages/EM_Project/Tree_Solids.md`
+- [文件](sources/current_waveda_agent_kb/10_extracted_pages/File/File.md)
+  - Source relative path: `10_extracted_pages/File/File.md`
+- [主页](sources/current_waveda_agent_kb/10_extracted_pages/File/Homepage.md)
+  - Source relative path: `10_extracted_pages/File/Homepage.md`
+- [选项](sources/current_waveda_agent_kb/10_extracted_pages/File/Options.md)
+  - Source relative path: `10_extracted_pages/File/Options.md`
+- [介绍](sources/current_waveda_agent_kb/10_extracted_pages/Introduction.md)
+  - Source relative path: `10_extracted_pages/Introduction.md`
+- [帮助文档暂未提供](sources/current_waveda_agent_kb/10_extracted_pages/Invalid_Doc.md)
+  - Source relative path: `10_extracted_pages/Invalid_Doc.md`
+- [3D网格](sources/current_waveda_agent_kb/10_extracted_pages/Mesh/3D_Mesh.md)
+  - Source relative path: `10_extracted_pages/Mesh/3D_Mesh.md`
+- [自适应网格](sources/current_waveda_agent_kb/10_extracted_pages/Mesh/Adaptive_Mesh.md)
+  - Source relative path: `10_extracted_pages/Mesh/Adaptive_Mesh.md`
+- [导入自适应网格](sources/current_waveda_agent_kb/10_extracted_pages/Mesh/Import_Adaptive_Mesh.md)
+  - Source relative path: `10_extracted_pages/Mesh/Import_Adaptive_Mesh.md`
+- [导入网格](sources/current_waveda_agent_kb/10_extracted_pages/Mesh/Import_Mesh.md)
+  - Source relative path: `10_extracted_pages/Mesh/Import_Mesh.md`
+- [网格](sources/current_waveda_agent_kb/10_extracted_pages/Mesh/Mesh.md)
+  - Source relative path: `10_extracted_pages/Mesh/Mesh.md`
+- [显示网格](sources/current_waveda_agent_kb/10_extracted_pages/Mesh/Show_Mesh.md)
+  - Source relative path: `10_extracted_pages/Mesh/Show_Mesh.md`
+- [波端口网格](sources/current_waveda_agent_kb/10_extracted_pages/Mesh/Waveport_Mesh.md)
+  - Source relative path: `10_extracted_pages/Mesh/Waveport_Mesh.md`
+- [背景](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Bkg_Mat/Background.md)
+  - Source relative path: `10_extracted_pages/Modeling/Bkg_Mat/Background.md`
+- [电色散材料](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Bkg_Mat/Dielectric_Dispersion.md)
+  - Source relative path: `10_extracted_pages/Modeling/Bkg_Mat/Dielectric_Dispersion.md`
+- [磁色散材料](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Bkg_Mat/Magnetic_Dispersion.md)
+  - Source relative path: `10_extracted_pages/Modeling/Bkg_Mat/Magnetic_Dispersion.md`
+- [材料](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Bkg_Mat/Materials.md)
+  - Source relative path: `10_extracted_pages/Modeling/Bkg_Mat/Materials.md`
+- [阿基米德螺旋线](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_3D_Geometry/Archimedean_Spiral.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_3D_Geometry/Archimedean_Spiral.md`
+- [键合线](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_3D_Geometry/Bondwire.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_3D_Geometry/Bondwire.md`
+- [长方体](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_3D_Geometry/Box.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_3D_Geometry/Box.md`
+- [圆锥/棱锥](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_3D_Geometry/Cone.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_3D_Geometry/Cone.md`
+- [圆柱](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_3D_Geometry/Cylinder.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_3D_Geometry/Cylinder.md`
+- [历史树-体](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_3D_Geometry/History_Tree_Solid.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_3D_Geometry/History_Tree_Solid.md`
+- [棱柱](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_3D_Geometry/Prism.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_3D_Geometry/Prism.md`
+- [物体相交](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_3D_Geometry/Solid_Intersection.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_3D_Geometry/Solid_Intersection.md`
+- [sphere](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_3D_Geometry/Sphere.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_3D_Geometry/Sphere.md`
+- [环形螺旋线圈](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_3D_Geometry/Toroidal_Spiral.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_3D_Geometry/Toroidal_Spiral.md`
+- [环](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_3D_Geometry/Torus.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_3D_Geometry/Torus.md`
+- [弧线](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Curve/Circular_Arc.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Curve/Circular_Arc.md`
+- [历史树-线](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Curve/History_Tree_Curve.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Curve/History_Tree_Curve.md`
+- [直线](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Curve/Line.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Curve/Line.md`
+- [3D参数曲线](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Curve/Parametric_Curve.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Curve/Parametric_Curve.md`
+- [折线](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Curve/Polyline.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Curve/Polyline.md`
+- [圆锥面](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Face/Cone_Face.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Face/Cone_Face.md`
+- [编辑多边形面](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Face/Edit_Polygon.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Face/Edit_Polygon.md`
+- [椭圆](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Face/Ellipse.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Face/Ellipse.md`
+- [历史树-面](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Face/History_Tree_Face.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Face/History_Tree_Face.md`
+- [参数面](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Face/Parametric_Face.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Face/Parametric_Face.md`
+- [多边形面](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Face/Polygon.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Face/Polygon.md`
+- [矩形](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Face/Rectangle.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Face/Rectangle.md`
+- [半椭球面](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Create_Face/Semiellipsoid_Face.md)
+  - Source relative path: `10_extracted_pages/Modeling/Create_Face/Semiellipsoid_Face.md`
+- [计算区域](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Design/Domain.md)
+  - Source relative path: `10_extracted_pages/Modeling/Design/Domain.md`
+- [频率](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Design/Frequency.md)
+  - Source relative path: `10_extracted_pages/Modeling/Design/Frequency.md`
+- [求解器](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Design/Solver.md)
+  - Source relative path: `10_extracted_pages/Modeling/Design/Solver.md`
+- [单位](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Design/Unit.md)
+  - Source relative path: `10_extracted_pages/Modeling/Design/Unit.md`
+- [导入/导出](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Import_Export.md)
+  - Source relative path: `10_extracted_pages/Modeling/Import_Export.md`
+- [局部坐标系](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/LCS.md)
+  - Source relative path: `10_extracted_pages/Modeling/LCS.md`
+- [与坐标系平面对齐](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Align.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Align.md`
+- [阵列复制](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Array_Copy.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Array_Copy.md`
+- [倒圆角](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Blend_Edges.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Blend_Edges.md`
+- [布尔操作](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Boolean.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Boolean.md`
+- [倒斜角](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Chamfer_Edges.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Chamfer_Edges.md`
+- [扩大面](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Enlarge.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Enlarge.md`
+- [扩展操作](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Extended_Operations.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Extended_Operations.md`
+- [从现有面拉伸成体](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Extrusion.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Extrusion.md`
+- [加厚面](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Face_Thicken.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Face_Thicken.md`
+- [镜像](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Mirror.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Mirror.md`
+- [面平移调整](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Move_Face_To_Modify_Solid.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Move_Face_To_Modify_Solid.md`
+- [旋转](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Rotate.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Rotate.md`
+- [缩放](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Scale.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Scale.md`
+- [挖空](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Shell.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Shell.md`
+- [切割](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Split.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Split.md`
+- [移动](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Model_Editing/Translate.md)
+  - Source relative path: `10_extracted_pages/Modeling/Model_Editing/Translate.md`
+- [建模](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Modeling.md)
+  - Source relative path: `10_extracted_pages/Modeling/Modeling.md`
+- [点激励源](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Stimulate/Create_Point_Source.md)
+  - Source relative path: `10_extracted_pages/Modeling/Stimulate/Create_Point_Source.md`
+- [波端口积分线](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Stimulate/Integration_Line.md)
+  - Source relative path: `10_extracted_pages/Modeling/Stimulate/Integration_Line.md`
+- [集总端口](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Stimulate/Lumped_Port.md)
+  - Source relative path: `10_extracted_pages/Modeling/Stimulate/Lumped_Port.md`
+- [Multi_Conductors](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Stimulate/Multi_Conductors.md)
+  - Source relative path: `10_extracted_pages/Modeling/Stimulate/Multi_Conductors.md`
+- [平面波](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Stimulate/Plane_Wave.md)
+  - Source relative path: `10_extracted_pages/Modeling/Stimulate/Plane_Wave.md`
+- [波端口](sources/current_waveda_agent_kb/10_extracted_pages/Modeling/Stimulate/Wave_Port.md)
+  - Source relative path: `10_extracted_pages/Modeling/Stimulate/Wave_Port.md`
+- [新建接收器结果](sources/current_waveda_agent_kb/10_extracted_pages/Post_Processing/New_Observers.md)
+  - Source relative path: `10_extracted_pages/Post_Processing/New_Observers.md`
+- [新建端口结果](sources/current_waveda_agent_kb/10_extracted_pages/Post_Processing/New_Port.md)
+  - Source relative path: `10_extracted_pages/Post_Processing/New_Port.md`
+- [后处理](sources/current_waveda_agent_kb/10_extracted_pages/Post_Processing/Post_Processing.md)
+  - Source relative path: `10_extracted_pages/Post_Processing/Post_Processing.md`
+- [Parameter Sweep](sources/current_waveda_agent_kb/10_extracted_pages/Simulation/Parameter_Sweep.md)
+  - Source relative path: `10_extracted_pages/Simulation/Parameter_Sweep.md`
+- [仿真](sources/current_waveda_agent_kb/10_extracted_pages/Simulation/Simulation.md)
+  - Source relative path: `10_extracted_pages/Simulation/Simulation.md`
+- [设计设置](sources/current_waveda_agent_kb/10_extracted_pages/Tool/Design_Setting.md)
+  - Source relative path: `10_extracted_pages/Tool/Design_Setting.md`
+- [详细日志](sources/current_waveda_agent_kb/10_extracted_pages/Tool/Details_logs.md)
+  - Source relative path: `10_extracted_pages/Tool/Details_logs.md`
+- [导出图像](sources/current_waveda_agent_kb/10_extracted_pages/Tool/Export_Figure.md)
+  - Source relative path: `10_extracted_pages/Tool/Export_Figure.md`
+- [导出Snp](sources/current_waveda_agent_kb/10_extracted_pages/Tool/Export_Snp.md)
+  - Source relative path: `10_extracted_pages/Tool/Export_Snp.md`
+- [工具](sources/current_waveda_agent_kb/10_extracted_pages/Tool/Tool.md)
+  - Source relative path: `10_extracted_pages/Tool/Tool.md`
+- [变量](sources/current_waveda_agent_kb/10_extracted_pages/Tool/Variables.md)
+  - Source relative path: `10_extracted_pages/Tool/Variables.md`
+- [矢量拟合](sources/current_waveda_agent_kb/10_extracted_pages/Tool/Vector_Fitting.md)
+  - Source relative path: `10_extracted_pages/Tool/Vector_Fitting.md`
+- [设计列表](sources/current_waveda_agent_kb/10_extracted_pages/View/Design_list.md)
+  - Source relative path: `10_extracted_pages/View/Design_list.md`
+- [视图](sources/current_waveda_agent_kb/10_extracted_pages/View/View.md)
+  - Source relative path: `10_extracted_pages/View/View.md`
+- [按钮/入口/功能索引](sources/current_waveda_agent_kb/20_indexes/button_location_function_index.md)
+  - Source relative path: `20_indexes/button_location_function_index.md`
+- [限制、注意与疑似故障原因索引](sources/current_waveda_agent_kb/20_indexes/constraint_warning_index.md)
+  - Source relative path: `20_indexes/constraint_warning_index.md`
+- [知识地图](sources/current_waveda_agent_kb/20_indexes/knowledge_map.md)
+  - Source relative path: `20_indexes/knowledge_map.md`
+- [模块能力索引](sources/current_waveda_agent_kb/20_indexes/module_capability_index.md)
+  - Source relative path: `20_indexes/module_capability_index.md`
+- [模块与页面索引](sources/current_waveda_agent_kb/20_indexes/module_page_index.md)
+  - Source relative path: `20_indexes/module_page_index.md`
+- [新手仿真流程卡](sources/current_waveda_agent_kb/30_topic_cards/beginner_simulation_workflow.md)
+  - Source relative path: `30_topic_cards/beginner_simulation_workflow.md`
+- [WavEDA 模块选择指南](sources/current_waveda_agent_kb/30_topic_cards/module_selection_guide.md)
+  - Source relative path: `30_topic_cards/module_selection_guide.md`
+- [端口与激励选择卡](sources/current_waveda_agent_kb/30_topic_cards/ports_and_excitations.md)
+  - Source relative path: `30_topic_cards/ports_and_excitations.md`
+- [后处理与结果查看卡](sources/current_waveda_agent_kb/30_topic_cards/post_processing_results.md)
+  - Source relative path: `30_topic_cards/post_processing_results.md`
+- [仿真方法对比卡](sources/current_waveda_agent_kb/30_topic_cards/simulation_methods_comparison.md)
+  - Source relative path: `30_topic_cards/simulation_methods_comparison.md`
+- [排错与约束卡](sources/current_waveda_agent_kb/30_topic_cards/troubleshooting_and_constraints.md)
+  - Source relative path: `30_topic_cards/troubleshooting_and_constraints.md`
+- [error_message_index](sources/current_waveda_agent_kb/40_error_cases/error_message_index.csv.md)
+  - Source relative path: `40_error_cases/error_message_index.csv`
+- [真实 UI 报错/警告文案索引](sources/current_waveda_agent_kb/40_error_cases/error_message_index.md)
+  - Source relative path: `40_error_cases/error_message_index.md`
+- [raw_ui_messages](sources/current_waveda_agent_kb/40_error_cases/raw_ui_messages.csv.md)
+  - Source relative path: `40_error_cases/raw_ui_messages.csv`
+- [WavEDA](sources/current_waveda_agent_kb/40_example_cases/Circuit/Filter/Filter/Filter.md)
+  - Source relative path: `40_example_cases/Circuit/Filter/Filter/Filter.md`
+- [LC低通滤波器](sources/current_waveda_agent_kb/40_example_cases/Circuit/LC_LPF/LC_LPF/LC_LPF.md)
+  - Source relative path: `40_example_cases/Circuit/LC_LPF/LC_LPF/LC_LPF.md`
+- [威尔金森功分器](sources/current_waveda_agent_kb/40_example_cases/Circuit/Wilkinson%20power%20divider/Wilkinson%20power%20divider/Wilkinson%20power%20divider.md)
+  - Source relative path: `40_example_cases/Circuit/Wilkinson power divider/Wilkinson power divider/Wilkinson power divider.md`
+- [超宽带缝隙形天线](sources/current_waveda_agent_kb/40_example_cases/EM/Antenna/Wideband_slot_antenna/Wideband_slot_antenna.md)
+  - Source relative path: `40_example_cases/EM/Antenna/Wideband_slot_antenna/Wideband_slot_antenna.md`
+- [双频带微带天线](sources/current_waveda_agent_kb/40_example_cases/EM/Antenna/dual_band_antenna/dual_band_antenna.md)
+  - Source relative path: `40_example_cases/EM/Antenna/dual_band_antenna/dual_band_antenna.md`
+- [阵列贴片天线](sources/current_waveda_agent_kb/40_example_cases/EM/Antenna/patch_array_ant/patch_array_ant.md)
+  - Source relative path: `40_example_cases/EM/Antenna/patch_array_ant/patch_array_ant.md`
+- [基片集成波导耦合器](sources/current_waveda_agent_kb/40_example_cases/EM/Coupler/HMSIW_Coupler/HMSIW_coupler.md)
+  - Source relative path: `40_example_cases/EM/Coupler/HMSIW_Coupler/HMSIW_coupler.md`
+- [紧耦合定向耦合器](sources/current_waveda_agent_kb/40_example_cases/EM/Coupler/Tight_Coupled_coupler/Tight_Coupled_coupler.md)
+  - Source relative path: `40_example_cases/EM/Coupler/Tight_Coupled_coupler/Tight_Coupled_coupler.md`
+- [三频带功分器](sources/current_waveda_agent_kb/40_example_cases/EM/Divider/triband_power_divider/triband_power_divider.md)
+  - Source relative path: `40_example_cases/EM/Divider/triband_power_divider/triband_power_divider.md`
+- [双腔介质波导滤波器](sources/current_waveda_agent_kb/40_example_cases/EM/Filter/4-2_DR/4-2_DR.md)
+  - Source relative path: `40_example_cases/EM/Filter/4-2_DR/4-2_DR.md`
+- [SIW双频带滤波器](sources/current_waveda_agent_kb/40_example_cases/EM/Filter/SIW_dual_band_filter/SIW_dual_band_filter.md)
+  - Source relative path: `40_example_cases/EM/Filter/SIW_dual_band_filter/SIW_dual_band_filter.md`
+- [毫米波IPD滤波器](sources/current_waveda_agent_kb/40_example_cases/EM/Filter/mmwave_bpf_IPD/mmwave_bpf_IPD.md)
+  - Source relative path: `40_example_cases/EM/Filter/mmwave_bpf_IPD/mmwave_bpf_IPD.md`
+- [人工磁体单元胞](sources/current_waveda_agent_kb/40_example_cases/EM/PBC/AMC/AMC.md)
+  - Source relative path: `40_example_cases/EM/PBC/AMC/AMC.md`
+- [微带贴片天线](sources/current_waveda_agent_kb/40_example_cases/EM/PBC/Antenna/microstrip_patch_antenna.md)
+  - Source relative path: `40_example_cases/EM/PBC/Antenna/microstrip_patch_antenna.md`
+- [频率选择表面](sources/current_waveda_agent_kb/40_example_cases/EM/PBC/FSS/FSS_unit.md)
+  - Source relative path: `40_example_cases/EM/PBC/FSS/FSS_unit.md`
+- [球](sources/current_waveda_agent_kb/40_example_cases/EM/Plane%20Wave/Sphere/sphere.md)
+  - Source relative path: `40_example_cases/EM/Plane Wave/Sphere/sphere.md`
+- [蘑菇形共模低通滤波器](sources/current_waveda_agent_kb/40_example_cases/EM/SI_PI/Commom-Mode_Filter/Commom-Mode_Filter.md)
+  - Source relative path: `40_example_cases/EM/SI_PI/Commom-Mode_Filter/Commom-Mode_Filter.md`
+- [孔隙介质](sources/current_waveda_agent_kb/40_example_cases/EM/geological%20exploration/porous_medium/porosity_medium.md)
+  - Source relative path: `40_example_cases/EM/geological exploration/porous_medium/porosity_medium.md`
+- [螺栓](sources/current_waveda_agent_kb/40_example_cases/Mech/Bolt/Bolt/Bolt.md)
+  - Source relative path: `40_example_cases/Mech/Bolt/Bolt/Bolt.md`
+- [凳子模型](sources/current_waveda_agent_kb/40_example_cases/Mech/Stool/Stool/Stool.md)
+  - Source relative path: `40_example_cases/Mech/Stool/Stool/Stool.md`
+- [梯面尺](sources/current_waveda_agent_kb/40_example_cases/Mech/ruler/ruler/ruler.md)
+  - Source relative path: `40_example_cases/Mech/ruler/ruler/ruler.md`
+- [GIS insulator 仿真模型介绍](sources/current_waveda_agent_kb/40_example_cases/Multi-Physics/Gis%20insulator/Gis%20insulator/Gis%20insulator.md)
+  - Source relative path: `40_example_cases/Multi-Physics/Gis insulator/Gis insulator/Gis insulator.md`
+- [PBGA封装热力仿真](sources/current_waveda_agent_kb/40_example_cases/Multi-Physics/PBGA/PBGA/PBGA.md)
+  - Source relative path: `40_example_cases/Multi-Physics/PBGA/PBGA/PBGA.md`
+- [PKG_WB封装电热力仿真](sources/current_waveda_agent_kb/40_example_cases/Multi-Physics/PKG_WB_Model/PKG_WB_Model/PKG_WB_Model.md)
+  - Source relative path: `40_example_cases/Multi-Physics/PKG_WB_Model/PKG_WB_Model/PKG_WB_Model.md`
+- [QCLP_Model 仿真模型介绍](sources/current_waveda_agent_kb/40_example_cases/Multi-Physics/Quarter_Chip_Layout_Pillar_Model/Quarter_Chip_Layout_Pillar_Model/Quarter_Chip_Layout_Pillar_Model.md)
+  - Source relative path: `40_example_cases/Multi-Physics/Quarter_Chip_Layout_Pillar_Model/Quarter_Chip_Layout_Pillar_Model/Quarter_Chip_Layout_Pillar_Model.md`
+- [贴片电阻模型](sources/current_waveda_agent_kb/40_example_cases/Multi-Physics/Resistor/Resistor/Resistor.md)
+  - Source relative path: `40_example_cases/Multi-Physics/Resistor/Resistor/Resistor.md`
+- [Wirebonds model](sources/current_waveda_agent_kb/40_example_cases/Multi-Physics/Wirebonds_model/Wirebonds_model/Wirebonds_model.md)
+  - Source relative path: `40_example_cases/Multi-Physics/Wirebonds_model/Wirebonds_model/Wirebonds_model.md`
+- [灯泡模型](sources/current_waveda_agent_kb/40_example_cases/Thermal/Light_bulb/Light_bulb/Light_bulb.md)
+  - Source relative path: `40_example_cases/Thermal/Light_bulb/Light_bulb/Light_bulb.md`
+- [散热器](sources/current_waveda_agent_kb/40_example_cases/Thermal/Radiator/Radiator/Radiator.md)
+  - Source relative path: `40_example_cases/Thermal/Radiator/Radiator/Radiator.md`
+- [硅基板-铜柱阵列结构模型](sources/current_waveda_agent_kb/40_example_cases/Thermal/Silicon_sub_copper_pillar_array/Silicon_sub_copper_pillar_array/Silicon_sub_copper_pillar_array.md)
+  - Source relative path: `40_example_cases/Thermal/Silicon_sub_copper_pillar_array/Silicon_sub_copper_pillar_array/Silicon_sub_copper_pillar_array.md`
+- [example_manifest](sources/current_waveda_agent_kb/40_example_cases/example_manifest.csv.md)
+  - Source relative path: `40_example_cases/example_manifest.csv`
+- [示例案例索引](sources/current_waveda_agent_kb/40_example_cases/index.md)
+  - Source relative path: `40_example_cases/index.md`
+- [material_index](sources/current_waveda_agent_kb/50_material_library/material_index.csv.md)
+  - Source relative path: `50_material_library/material_index.csv`
+- [材料选择指南](sources/current_waveda_agent_kb/50_material_library/material_selection_guide.md)
+  - Source relative path: `50_material_library/material_selection_guide.md`
+- [WavEDA 内置材料库索引](sources/current_waveda_agent_kb/50_material_library/materials.md)
+  - Source relative path: `50_material_library/materials.md`
+- [component_icon_index](sources/current_waveda_agent_kb/60_circuit_components/component_icon_index.csv.md)
+  - Source relative path: `60_circuit_components/component_icon_index.csv`
+- [电路组件与图标索引](sources/current_waveda_agent_kb/60_circuit_components/component_index.md)
+  - Source relative path: `60_circuit_components/component_index.md`
+- [toolbar_icon_index](sources/current_waveda_agent_kb/70_ui_icons/toolbar_icon_index.csv.md)
+  - Source relative path: `70_ui_icons/toolbar_icon_index.csv`
+- [工具栏图标索引](sources/current_waveda_agent_kb/70_ui_icons/toolbar_icon_index.md)
+  - Source relative path: `70_ui_icons/toolbar_icon_index.md`
+- [新手任务流程补充模板](sources/current_waveda_agent_kb/90_maintenance_templates/beginner_task_flow_template.md)
+  - Source relative path: `90_maintenance_templates/beginner_task_flow_template.md`
+- [按钮/入口补充模板](sources/current_waveda_agent_kb/90_maintenance_templates/button_entry_template.md)
+  - Source relative path: `90_maintenance_templates/button_entry_template.md`
+- [报错案例补充模板](sources/current_waveda_agent_kb/90_maintenance_templates/error_case_template.md)
+  - Source relative path: `90_maintenance_templates/error_case_template.md`
+- [_extra_extraction_summary](sources/current_waveda_agent_kb/_extra_extraction_summary.json.md)
+  - Source relative path: `_extra_extraction_summary.json`
+- [_generation_summary](sources/current_waveda_agent_kb/_generation_summary.json.md)
+  - Source relative path: `_generation_summary.json`
+- [_source_manifest](sources/current_waveda_agent_kb/_source_manifest.jsonl.md)
+  - Source relative path: `_source_manifest.jsonl`
+
+### new_teaching_agent_ted
+
+- [WavEDA 操作教学型 Agent 知识库](sources/new_teaching_agent_ted/user_experience_sources/WavEDA_操作教学型Agent_知识库.md)
+  - Source relative path: `user_experience_sources/WavEDA_操作教学型Agent_知识库.md`
+
+### new_waveda_rag
+
+- [wavEDA 软件概述](sources/new_waveda_rag/00_软件概述.md)
+  - Source relative path: `00_软件概述.md`
+- [快速入门](sources/new_waveda_rag/01_快速入门.md)
+  - Source relative path: `01_快速入门.md`
+- [常见问题 FAQ](sources/new_waveda_rag/03_常见问题FAQ.md)
+  - Source relative path: `03_常见问题FAQ.md`
+- [错误排查指南](sources/new_waveda_rag/04_错误排查指南.md)
+  - Source relative path: `04_错误排查指南.md`
+- [端口设置](sources/new_waveda_rag/tutorials/02_电磁模块/01_端口设置.md)
+  - Source relative path: `tutorials/02_电磁模块/01_端口设置.md`
+- [激励源配置](sources/new_waveda_rag/tutorials/02_电磁模块/02_激励源配置.md)
+  - Source relative path: `tutorials/02_电磁模块/02_激励源配置.md`
+- [边界条件](sources/new_waveda_rag/tutorials/02_电磁模块/03_边界条件.md)
+  - Source relative path: `tutorials/02_电磁模块/03_边界条件.md`
+- [求解器设置](sources/new_waveda_rag/tutorials/02_电磁模块/04_求解器设置.md)
+  - Source relative path: `tutorials/02_电磁模块/04_求解器设置.md`
+- [结果后处理](sources/new_waveda_rag/tutorials/02_电磁模块/05_结果后处理.md)
+  - Source relative path: `tutorials/02_电磁模块/05_结果后处理.md`
+- [案例教程：微环谐振器仿真](sources/new_waveda_rag/tutorials/03_案例/01_微环谐振器仿真.md)
+  - Source relative path: `tutorials/03_案例/01_微环谐振器仿真.md`
+- [案例教程：Y 分支波导仿真](sources/new_waveda_rag/tutorials/03_案例/02_Y分支波导仿真.md)
+  - Source relative path: `tutorials/03_案例/02_Y分支波导仿真.md`

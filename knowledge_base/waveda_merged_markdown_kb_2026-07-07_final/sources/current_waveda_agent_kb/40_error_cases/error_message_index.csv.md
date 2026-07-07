@@ -1,0 +1,1415 @@
+---
+title: "error_message_index"
+merged_source: "current_waveda_agent_kb"
+source_relative_path: "40_error_cases/error_message_index.csv"
+original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\40_error_cases\error_message_index.csv"
+content_kind: "csv_as_markdown"
+merged_at: "2026-07-07"
+---
+
+# error_message_index
+
+| file | context | source | translation | category | suggested_check |
+| --- | --- | --- | --- | --- | --- |
+| st_cad_Chinese.ts | QObject | The following variables do not exist: | 以下变量不存在： | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | LCS U/V Axis are not ortho, please check it. | LCS U/V轴不是正交的，请检查。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | An error occurred in the OCC model library. | OCC模型库发生错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Curve creation failed. Please check. | 曲线创建失败，请检查。（可能有各种各样的原因导致失败）。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_cad_Chinese.ts | QObject | Mesh Fail | 网格化失败 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_cad_Chinese.ts | QObject | Point P is too close to P1. | P点不能过于接近P1。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The offset of Ang0 & Ang1 > 360 or Ang0 = Ang1 | 角1和角2的偏移不能大于360，且角1不能等于角2 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The value of t0 cannot be empty. | t0的值不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The value of t0 cannot contain Chinese characters. | t0的值不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The value of t0 cannot contain other characters. | t0的值不能包含其他字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The value of t1 cannot be empty. | t1的值不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The value of t1 cannot contain Chinese characters. | t1的值不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The value of t1 cannot contain other characters. | t1的值不能包含其他字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The definition of U(t) cannot be empty. | U(t)的定义不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The definition of U(t) cannot contain Chinese characters. | U(t)的定义不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The definition of V(t) cannot be empty. | V(t)的定义不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The definition of W(t) cannot be empty. | W(t)的定义不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The definition of W(t) cannot contain Chinese characters. | W(t)的定义不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The definition of U(t) cannot contain other characters. | U(t)的定义不能包含其他字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The definition of V(t) cannot contain other characters. | V(t)的定义不能包含其他字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The definition of W(t) cannot contain other characters. | W(t)的定义不能包含其他字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | User-defined discrete points cannot contain Chinese characters. | 用户自定义离散点数不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | User-defined discrete points cannot contain characters other than numbers. | 用户自定义离散点数不能包含除数字外的其他字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The height value cannot be 0. | 高度值不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Corner point 1 cannot contain Chinese characters. | 角点1不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Corner point 2 cannot contain Chinese characters. | 角点2不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Corner point 1 format error. The correct format is: value1, value2. | 角点1格式错误，正确格式：value1，value2。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Corner point 2 format error. The correct format is: value1, value2. | 角点2格式错误，正确格式：value1，value2。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Rectangle dimensions cannot be 0. | 矩形尺寸不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Length cannot contain Chinese characters. | 长度不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Width cannot contain Chinese characters. | 宽度不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Length format error. It cannot contain other symbols. Please enter a valid number directly. | 长度格式错误，不能包含其他符号，请直接输入合理的数字。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Width format error. It cannot contain other symbols. Please enter a valid number directly. | 宽度格式错误，不能包含其他符号，请直接输入合理的数字。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | The length of the rectangle cannot be 0. | 矩形的长不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The width of the rectangle cannot be 0. | 矩形的宽不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Width format error. The width cannot be 0. | 宽度格式错误，宽度不能为0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Corner point 1 format error. The correct format is: x, y. | 角点1格式错误，正确格式：x，y。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Corner point 2 format error. The correct format is: x, y. | 角点2格式错误，正确格式：x，y。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | The length of the rectangle cannot be <= 0. | 矩形的长不能<=0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The width of the rectangle cannot be <= 0. | 矩形的宽不能<=0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The radius (U-axis direction) cannot contain Chinese characters. | 半径（U轴方向）不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The radius (V-axis direction) cannot contain Chinese characters. | 半径（V轴方向）不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Radius (U-axis direction) format error. It cannot contain other symbols. Please enter a valid number directly. | 半径（U轴方向）格式错误，不能包含其他符号，请直接输入合理的数字。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Radius (V-axis direction) format error. It cannot contain other symbols. Please enter a valid number directly. | 半径（VV轴方向）格式错误，不能包含其他符号，请直接输入合理的数字。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Edges Count  cannot contain Chinese characters. | 边数不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Start Point cannot contain Chinese characters. | 起始点不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The number of sides cannot be empty. If it is a variable, please ensure the variable exists. | 边的个数不能为空，若为变量则请确保变量存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | The starting point cannot be empty. If it is a variable, please ensure the variable exists. | 起始点不能为空，若为变量则请确保变量存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | The starting point cannot be the origin. | 起始点不能是原点。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Vertices cannot contain Chinese characters. | 顶点不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Vertex format error. The correct format is: x, y. | 顶点格式错误，正确格式：x，y。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | '%1' cannot contain Chinese characters. | '%1' 不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | t1 range error. t1_0 must be less than t1_1. | t1的范围错误，t1_0需 < t1_1。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | t2 range error. t1_0 must be less than t1_1. | t2的范围错误，t2_0必须小于t2_1。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | U,V,W format is incorrect, please check. | U,V,W 格式错误，请检查。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Ru cannot contain other characters. | Ru不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Rv cannot contain other characters. | Rv不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Rw cannot contain other characters. | Rw不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Ru cannot be empty. If it is a variable, please ensure the variable exists. | Ru不能为空，若为变量则请确保变量存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Rv cannot be empty. If it is a variable, please ensure the variable exists. | Rv不能为空，若为变量则请确保变量存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Rw cannot be empty. If it is a variable, please ensure the variable exists. | Rw不能为空，若为变量则请确保变量存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Corner points cannot contain Chinese characters. | 角点不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Corner point format error. The correct format is: x, y, z. | 角点格式错误，正确格式：x,y,z。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Length format error. The correct format is: l, w, h. | 长度格式错误，正确格式：l,w,h。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | The lower corner point cannot contain Chinese characters. | 下角点不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The upper corner point cannot contain Chinese characters. | 上角点不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Lower corner point format error. The correct format is: x, y, z. | 下角点格式错误，正确格式：x,y,z。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Upper corner point format error. The correct format is: x, y, z. | 上角点格式错误，正确格式：x,y,z。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | The distance between the upper and lower corner points in the x direction cannot be 0. | 上下角点在x方向上的距离不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The distance between the upper and lower corner points in the y direction cannot be 0. | 上下角点在y方向上的距离不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The distance between the upper and lower corner points in the z direction cannot be 0. | 上下角点在z方向上的距离不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The bottom radius cannot contain Chinese characters. | 底面半径不能包含中文。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_cad_Chinese.ts | QObject | The top radius cannot contain Chinese characters. | 顶面半径不能包含中文。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_cad_Chinese.ts | QObject | Height cannot contain Chinese characters. | 高度不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The number of sides cannot contain Chinese. | 边数不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The bottom radius cannot be empty. If it is a variable, please ensure the variable exists and its value must be greater than 0. | 底面半径不能为空，若为变量则请确保变量存在，且值必须>0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | The top radius cannot be empty. If it is a variable, please ensure the variable exists and its value must be greater than 0. | 顶面半径不能为空，若为变量则请确保变量存在，且值必须>0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | The height cannot be empty. If it is a variable, please ensure the variable exists and its value must be greater than 0. | 高度不能为空，若为变量则请确保变量存在，且值必须大于0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | The number of sides cannot be empty, if it is a variable, make sure the variable exists and the value must be >0. | 边数不能为空，若为变量则请确保变量存在，且值必须>0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | The bottom and top radius cannot be 0. | 底部和顶部的半径不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Major radius cannot contain Chinese characters. | 外圆半径不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Sub radius cannot contain Chinese characters. | 截面圆半径不能包含中文。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_cad_Chinese.ts | QObject | Major radius cannot be empty. If it is a variable, please ensure the variable exists and its value must be greater than 0. | 外圆半径不能为空，若为变量则请确保变量存在，且值必须>0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Sub radius cannot be empty. If it is a variable, please ensure the variable exists and its value must be greater than 0. | 截面圆半径不能为空，若为变量则请确保变量存在，且值必须>0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Outer major radius cannot contain Chinese characters. | 外椭圆半长轴不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Outer minor radius cannot contain Chinese characters. | 外椭圆半短轴不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Inner major radius cannot contain Chinese characters. | 外椭圆半长轴不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Inner minor radius cannot contain Chinese characters. | 外椭圆半短轴不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Angle1 cannot contain Chinese characters. | 角度1不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Angle2 cannot contain Chinese characters. | 角度2不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Outer major radius cannot be empty. If it is a variable, please ensure the variable exists and its value must be greater than 0. | 外椭圆半长轴不能为空，若为变量则请确保变量存在，且值必须>0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Outer minor radius cannot be empty. If it is a variable, please ensure the variable exists and its value must be greater than 0. | 外椭圆半短轴不能为空，若为变量则请确保变量存在，且值必须>0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Inner major radius cannot be empty. If it is a variable, please ensure the variable exists and its value must be greater than 0. | 内椭圆半长轴不能为空，若为变量则请确保变量存在，且值必须>0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Inner minor radius cannot be empty. If it is a variable, please ensure the variable exists and its value must be greater than 0. | 内椭圆半短轴不能为空，若为变量则请确保变量存在，且值必须>0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Angle1 cannot be empty. If it is a variable, please ensure the variable exists and its value must be greater than 0. | 角度1不能为空，若为变量则请确保变量存在，且值必须>=0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Angle2 cannot be empty. If it is a variable, please ensure the variable exists and its value must be greater than 0. | 角度2不能为空，若为变量则请确保变量存在，且值必须>=0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | The start angle and end angle cannot be the same. | 起始角度与终止角度不能相同。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The wire diameter cannot contain Chinese characters. | 线圈截面半径不能包含中文。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_cad_Chinese.ts | QObject | The starting circle radius cannot contain Chinese characters. | 起始圆半径不能包含中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | End The radius of the circle cannot contain Chinese characters. | 结束圆半径不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The helix section radius cannot contain Chinese characters. | 螺旋线截面半径不能包含中文。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_cad_Chinese.ts | QObject | The height cannot be empty. | 高度不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The value of height cannot be 0. | 高度的值不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The number of coils cannot be empty. | 线圈圈数不能为空。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_cad_Chinese.ts | QObject | The number of coils cannot include Chinese characters. | 线圈圈数不能包含中文。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_cad_Chinese.ts | QObject | The taper cannot contain Chinese characters. | 锥度不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The taper cannot contain other characters. | 锥度不能包含其他字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | '%1' cannot be null. | '%1' 不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | Error arc instruction: '%1'. Skip. | 错误的arc指令：'%1‘，跳过。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The error occurred when'%1' was loaded, replacing it with a 100x100x100 cube. | 错误发生在加载 '%1' 时，替换为一个100x100x100的正方体。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_cad_Chinese.ts | QObject | '%1'Encountered an error at the minimum parameter. | '%1' 在最小参数处遇到错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | '%1' Format error. It cannot contain other characters. | '%1' 形式错误。不能包含其他字符。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_cad_Chinese.ts | QObject | The twist cannot contain Chinese characters. | 扭曲不能包含中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_cad_Chinese.ts | QObject | The twist cannot contain other characters. | 扭曲不能包含其他字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The selected information is empty. Unable to create a lumped element. | 所选信息为空，不能创建集总元件。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Curved face cannot be used to create a lumped element. | 曲线无法用于创建集总元件。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Unable to create wave port during simulation. | 仿真过程中不允许创建波端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Failed to create wave port, the selected face is not a planar face. | 创建波端口失败，所选面不是平面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Failed to create wave port, the selected faces are not in the same plane. | 创建波端口失败，所选面不在同一平面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | The wave port is disabled and the mode cannot be viewed! | 波端口已被禁用，模式无法查看！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Unable to create boundary condition during simulation. | 仿真过程中不允许创建边界面。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | QObject | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | snp file suffix error | snp文件后缀错误 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Data format error! | 数据格式错误！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Wrong point selection, please select a point. | 选点错误，请选择一个点。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | Failed to parse the point source file, please re-import. | 解析点源文件失败，请重新导入。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | File save failed. | 文件保存失败。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Line receiver selection point error, please select two points. | 线接收器选点错误，请选择两个点。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | The file is empty! | 文件为空 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | The selected information is empty. Unable to create a lumped port. | 所选信息为空，无法创建集成端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | The selected unable to create a lumped port. | 所选对象不能创建集总端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | The selected unable to create a lumped element. | 所选对象不能创建集总元件。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Failed to create lumped port, the selected face is not a planar face. | 创建集总元件失败，所选面不在同一平面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Failed to create lumped element, the selected face is not a planar face. | 创建集总元件失败，所选面非平面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Failed to create lumped port, the selected faces are not in the same plane. | 创建集总端口失败，所选面不在同一平面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Failed to create lumped element, the selected faces are not in the same plane. | 创建集总元件失败，所选面不在同一平面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Curved face cannot be used to create a lumped port. | 所选曲面无法创建集总端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Selections can't create lumped port! Lumped port face must be rect or ring. | 所有几何不能创建集总端口，端口必须是矩形或圆环。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Create Face Lumped Port | 不能创建集总面端口 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | The selected information is empty. Unable to create a wave port. | 所选信息为空。不能创建波端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Selections can't create wave port! | 选择的面不能创建波端口！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | The project name is empty. Please enter a valid name. | 工程名称为空，请输入有效的名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Please check whether the project path already exists. | 请检查工程路径是否已存在。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | The group name is empty, please enter a valid name. | 组名称为空，请输入有效的名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | " is in use and cannot be deleted. Please exit. | 已经被使用，不能删除。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | " is being used, can't be deleted, quit. | " 已经被使用，不能删除，退出。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The default boundary condition cannot be deleted. Please double-click to modify the boundary condition. | 默认边界不能删除，请双击修改边界条件。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | After deleting the snapshot frequency point, the snapshot results will be cleared and the operation cannot be undone. Do you want to continue? | 删除快照频点后，快照结果将被清空且无法撤回该操作，是否继续？ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Selections can't create lumped port! | 所选对象无法创建集总端口！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Selections can't create lumped element! | 所选对象无法创建集总元件！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Filter Error Messages | 过滤错误信息 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Filter Warning Messages | 筛选警告信息 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Export figure failed. Path: %1.(%2) | 导出图形失败：%1.(%2) | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | variable Name format error | 变量名称格式错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Variable name can't start with "or" | 变量名不能以“or"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Variable name can't start with "and" | 变量名不能以“and"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Variable name can't start with "xor" | 变量名不能以“xor"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The variable can not be evaluated, please check the input. | 该变量无法计算，请检查输入。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Variable name format error | 变量名称格式错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Unknown error, unable to obtain LCS. | 位置错误，不能获取LCS坐标。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Offset surface operations are not allowed in the simulation. | 仿真中不允许偏移面操作。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | QObject | Blend is not allowed in simulation. | 转圆角不允许。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | QObject | Chamfer is not allowed in simulation. | 倒角不能包含中文。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | QObject | Parameter error | 参数错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | is empty or variable not exist or format error. | 为空，变量不存在或格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | is empty or variable not exist or format error. | 为空，变量不存在或格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | format error. | 格式错误格式为 x, y | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | format error. | 格式错误格式为 x, y, z | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | format error. | 格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | contains unparseable string. | 包含无法解析的字符串。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The compressed file path is empty, please select a new path. | 压缩文件路径不存在。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Import failed, material already exists. | 导入失败，材料已存在。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Preview failed. | 预览失败。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Center format error | 中点格式错误格式 = u, v, w | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Center format error | 中心格式错误，格式为u, v | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The angle range of arc is error, fabs(theta0 - theta1) should be in the range of [1e-4, 360]. | 圆弧的角度范围错误，theta0-theta1的绝对值应该在[1e-1,360]范围内。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Grouping based on material failed, maybe the child node does not belong to root node | 按材料分组失败，子节点可能不属于根节点 | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | QObject | The center parameter is wrong. | 中心格式错误，正确的格式应该是(u,v) | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | range of t1 error | t1范围错误，需满足 t1_0 < t1_1 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | range of t2 error | t2范围错误，需满足 t2_0 < t2_1 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Corner is not allowed to contain Chinese characters. | 角度不允许填写中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Length is not allowed to contain Chinese characters. | 长度不允许填写中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The corner parameter is wrong. | 角参数错误，正确的格式应该为（x,y,z）。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The length parameter is wrong. | 长度格式错误，正确的格式应该是(x,y,z)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The length parameter is wrong. | 长度参数错误，长度值必须大于0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Lower corner is not allowed to contain Chinese characters. | 角落坐标不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Upper corner is not allowed to contain Chinese characters. | 角落坐标不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Lower corner input format is wrong. | 角落参数错误，正确的格式应该为（x,y,z） | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Upper corner input format is wrong. | 角落参数错误，正确的格式应该为（x,y,z） | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The minimum value on the x-axis cannot be equal to the maximum value. | x轴方向最小坐标值不能等于最大坐标值。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The minimum value on the y-axis cannot be equal to the maximum value. | y轴方向最小坐标值不能等于最大坐标值。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The minimum value on the z-axis cannot be equal to the maximum value. | z轴方向最小坐标值不能等于最大坐标值。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The center parameters is wrong. The correct format should be (u, v, w) | 中心格式错误，正确的格式应该是(u,v,w) | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Ru is not allowed to contain Chinese characters. | Ru不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Rv is not allowed to contain Chinese characters. | Rv不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Rw is not allowed to contain Chinese characters. | Rw不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Bottom center is not allowed to contain Chinese characters. | 底部中心值不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Bottom radius is not allowed to contain Chinese characters. | 底部半径不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Top radius is not allowed to contain Chinese characters. | 顶部半径不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Height is not allowed to contain Chinese characters. | 高度不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Corn edge is not allowed to contain Chinese characters. | 不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The bottom center parameters is wrong. The correct format should be (u, v, w) | 底部中心格式错误，正确的格式应该是(u,v,w) | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The ratio of radius to height cannot exceed 1e6:1, please modify the radius or height. | 半径与高度之比不能大于1e6，请修正半径或者高度。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Outer major radius is not allowed to contain Chinese characters. | 内部的长半径不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Outer minor radius is not allowed to contain Chinese characters. | 外部的短半径不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Inner major radius is not allowed to contain Chinese characters. | 内部的长半径不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Inner minor radius is not allowed to contain Chinese characters. | 内部的短半径不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Angle is not allowed to contain Chinese characters. | 角度不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Outer major radius is empty or variable not exist or value is less than 0. | 外主半径为空或者值不存在或者值小于0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Outer minor radius is empty or variable not exist or value is less than 0. | 外次半径为空或者值不存在或者值小于0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Inner major radius is empty or variable not exist or value is less than 0. | 内主半径为空或者值不存在或者值小于0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Inner minor radius is empty or variable not exist or value is less than 0. | 外次半径为空或者值不存在或者值小于0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Center is empty or variable not exist. | 中心值为空或者值不存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Height is empty or variable not exist or value is 0. | 中心值为空或者值不存在或者值为0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Angle is empty or variable not exist or value is less than 0. | 角度为空或者值不存在或者值小于0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Arc angles cannot be the same. | 弧角不能一样。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Major radius is not allowed to contain Chinese characters. | 主半径不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Sub radius is not allowed to contain Chinese characters. | 半径不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Origin is not allowed to contain Chinese characters. | 原点不允许填写中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | U axis is not allowed to contain Chinese characters. | U轴不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | V axis is not allowed to contain Chinese characters. | V轴不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The origin parameters is wrong. | 初始参量错误，正确的格式应该是(u,v,w) | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The U axis parameters is wrong. | U轴格式错误，正确的格式应该是 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The v axis parameters is wrong. The correct format should be | V轴格式错误，正确的格式应该是 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Unable to create during simulation. | 仿真过程中无法创建。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | QObject | There is no path curve, please check the number of cuves. | 无路径曲线，请检查曲线数量。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Fail in covering edges to a face. | 从线生面失败。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | The selected curves can't build a continuous path, quit. | 所选曲线无法构建连续路径，退出操作。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Unable to create surface during simulation. | 仿真过程中不允许创建面。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | QObject | Selections can't make rect! | 所选不能创造矩形！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Connection failed, please check. | 连接失败，请检查。 | 连接/许可 | 检查许可证服务、网络连接、软件配置路径和服务是否运行。 |
+| st_Chinese.ts | QObject | Solid (%1) separating failed, unknown reason. | 实体(%1)分离失败，原因未知。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | The object cannot be split | 该物体不能被分割 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | Two points cannot be on the same solid. | 两点不能位于同一物体上。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | Can't split port face. | 无法切割端口面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Restore failed, please check if the objects are external import files. | 恢复失败，请检查模型是否为外部导入。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | The number of corner 1 parameters is wrong. | 角1参量值错误，正确格式应该是（数值1，数值2） | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The number of corner 2 parameters is wrong. | 角2参量值错误，正确格式应该是（数值1，数值2） | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The length is not allowed to contain Chinese characters. | 长度不允许包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The width is not allowed to contain Chinese characters. | 宽度不允许包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The length input format is wrong. | 长度输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The width input format is wrong. | 宽度输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The ratio of length to width cannot exceed 1e6:1, please modify the length or width. | 长度和宽度比例不能超过1e6：1，请修改长或宽。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The length of the rectangle cannot be 0. | 矩形的长不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The number of corner 1 parameters is wrong. | 角1参量值错误，正确格式应该是（数值1，数值2） | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The number of corner 2 parameters is wrong. | 角2参量值错误，正确格式应该是（数值1，数值2） | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The width of the rectangle cannot be 0. | 矩形的宽不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The center parameter is wrong. | 中心格式错误，正确的格式应该是(u,v,w). | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Radius (in U axis) is not allowed to contain Chinese characters. | U轴上半径不允许包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Radius (in V axis) is not allowed to contain Chinese characters. | V轴上半径不允许包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Start angle of arc is not allowed to contain Chinese characters | 弧线的起始角不允许包含中文 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | End angle of arc is not allowed to contain Chinese characters. | 弧线的终止角不允许包含中文。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | Radius (in U axis) input format is wrong. | U轴上半径输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Radius (in V axis) input format is wrong. | V轴上半径输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The ratio of radius R to V cannot exceed 1e6:1, please modify the radius R or V. | R与V的搬进执笔不允许超过1e6，请修改R或者V。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Start angle of arc input format is wrong. | 弧度初始值输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | End angle of arc input format is wrong. | 弧度终止值输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Edges Count is not allowed to contain Chinese characters. | 棱边数量不能保存中文 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Start Point is not allowed to contain Chinese characters. | 起始点不允许包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Edges Count is empty or variable not exist. | 棱边数量为空或变量不存在 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Start Point is empty or variable not exist. | 起始点为空或者值不存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The starting point cannot be the origin. | 起始点不能是原点。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Vertex is not allowed to contain Chinese characters. | 顶点数据不能包含中文 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The vertex parameters is wrong. The correct format should be (value 1, value 2). | 顶点参数错误，正确的格式为 (值1， 值2) | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Vertex coordinates cannot be consistent (line | 顶点坐标不能一致（line） | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | These vertices cannot create a polygon, please make sure the vertices are on the same plane. | 这些顶点无法创建一个多边形，请确认顶点在同一平面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | Center is not allowed to contain Chinese characters. | 中心不允许填写中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The center parameters is wrong. The correct format should be (u, v). | 中心格式错误，正确的格式应该是(u,v)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Radius is not allowed to contain Chinese characters. | 半径不允许填写中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Width is not allowed to contain Chinese characters. | 宽度不允许填写中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Start angle of arc is not allowed to contain Chinese characters. | 弧线的起始角不允许包含中文。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | The radius input format is wrong. | 半径输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Position is not allowed to contain Chinese characters. | 坐标不允许填写中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The position parameters is wrong.The correct format should be(u, v). | 坐标参量错误，正确的格式应该是(u,v,w)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Font Size is not allowed to contain Chinese characters. | 字号不允许包含中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Font Size input format is wrong. | 字号输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Cutoff Ratio is not allowed to contain Chinese characters. | 曲线半径不能输入中文 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Curve Radius is not allowed to contain Chinese characters. | 曲线半径不能输入中文 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Width input format is wrong. | 宽度格式输入错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Cutoff Ratio input format is wrong. | 截止值输入格式错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Curve Radius input format is wrong. | 曲线半径输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The center parameters is wrong.The correct format should be(u, v). | 中心格式错误，正确的格式应该是(u,v,w)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | is not allowed to contain Chinese characters. | 不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | input format is wrong. | 格式输入错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | can not analysis formula | 无法分析结构，检查U，V，W轴是否正交 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The vertex parameter is wrong. | 顶点参量值错误，正确格式应该是（数值1，数值2）。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Ru is empty or variable not exist | Ru为空或变量不存在 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Rv is empty or variable not exist | Rv为空或变量不存在 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Rw is empty or variable not exist | Rw为空或变量不存在 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Bottom radius is empty or variable not exist or value <= 0 | 底半径为空，或变量不存在，或值<= 0 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Top radius is empty or variable not exist or value < 0 | 顶部半径为空，或变量不存在，或值<0 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Height is empty or variable not exist or value = 0 | 高度为空，或变量不存在/值0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Corn edge is empty or variable not exist or value < 0 | 圆锥边缘为空或者变量不存在/值小于0 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The ratio of the maximum to minimum cannot exceed 1e6. | 最大值与最小值的比值不能超过1e6。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Major radius is empty or variable not exist or value <= 0 | 半长轴为空，或变量不存在，或值<= 0 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Sub radius is empty or variable not exist or value <= 0 | 半短轴为空，或变量不存在，或值<= 0 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Solid does not exist | 物体不存在 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | Failed to obtain point coordinates. | 获取点的坐标失败。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Variable %1 does not exist. | 变量%1不存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Plane wave exist in the project. The result cannot be viewed. | 项目中已存在平面波。无法查看结果。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | The far-fields simulation frequency points does not exist. | 远场仿真频率点不存在。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | QObject | The far-field simulation result failed to be read because the far-field simulation data was deleted or was not generated. | 读取远场仿真结果失败，请检查远场仿真数据是否被删除，或未生成远场仿真数据。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | QObject | Incorrect chart selection. | 图表选择错误。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | The data format must be consistent. | 数据格式不一致，请检查。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Failed to read observer simulation results. Possible reasons: Observer simulation data was deleted or not generated. | 读取接收器仿真结果失败，原因可能是：接收器仿真数据被删除，或未生成接收器仿真数据。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | QObject | Cannot export to column format, ensure all data series share the same X-axis array. | 无法导出为列格式，请确保所有的数据序列共享相同的X轴数组。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | [%1] Format error. | [%1] 格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Imported data has been deleted. | 导入的数据已被删除，请检查。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Failed to read port simulation results. Possible reasons: Port simulation data was deleted or not generated. | 读取端口仿真结果失败，原因可能是：端口仿真数据被删除，或未生成端口仿真数据。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Failed to read the imported file, please check the file format. | 导入文件读取失败，请检查文件格式。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | The interpolation method cannot view the receiver results. | 插值方法无法直接查看接收结果。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The name is empty, please re-enter it. | 名称为空，请重新输入。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Failed to extract far-field data from simulation results. | 从仿真结果中提取远场数据失败。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | QObject | File Open Fail | 文件打开失败 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Create Dimension Line | 写入几何数据失败 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | Height is empty or variable not exist. | 高度值为空或者值不存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Minimum frequency and maximum frequency cannot be the same. | 最大最小频率不能相同。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The S-parameter result does not exist. Please check whether the S-parameter result file is deleted or no S-parameter result is generated. | S参数结果不存在，请检查S参数结果文件是否被删除，或未生成S参数结果。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Exporting S parameter failed! S parameter size is 0, unable to export. | S参数导出失败！S参数数据为0，无法导出。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Failed to import mesh: | 导入网格错误： | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Wave port meshing failed, please check the port. | 波端口网格划分失败，请检查端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Unkonwn error! | 未知错误！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | The integration line's positive pole is empty or the format is incorrect, please input the coordinates of a point as the positive pole. | 积分线正极为空或者格式错误，请输入适当的点作为正极。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The integration line's negative pole is empty or the format is incorrect, please input the coordinates of a point as the negative pole. | 积分线负极为空或者格式错误，请输入适当的点作为负极。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The two integral lines are not perpendicular to each other. | 两条积分线不能相互垂直。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | Copy failed. | 复制失败。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Paste failed. | 粘贴失败。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Paste failed, | 粘贴失败， | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | failed to write geometry data | 错误写几何数据 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | variables are not allowed to be pasted into the same project | 变量不允许被粘贴到同个项目内 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | create variable error | 创建变量错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | materials are not allowed to be pasted into the same project | 材料不允许被粘贴到同个项目内 | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | QObject | create material error | 创建材料错误 | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | QObject | create source error | 创建源错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | create observer error | 创建接收器错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | create curve error | 创建线错误 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | create face error | 创建面错误 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | create solid error | 创建体错误 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | create pad error | 创建焊盘错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | create footprint error | 封装错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Please enter a valid category label. Category labels cannot contain Spaces. | 请输入有效的分类标签，分类标签不能包含空格。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Please enter a valid category label, which cannot contain any of the following symbols (~#; ,\|/\$" ? ). | 请输入有效的分类标签，分类标签不能包含 (~#; ,\|/\$" ? )。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Fitting frequency range error. | 拟合频率范围错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Failed to fit the dispersion material. | 拟合色散材料失败。 | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | QObject | The data in the figure is too small to export | 图片数据过小，无法导出 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | The minimum frequency cannot be empty. Please enter the minimum frequency. | 频率最小值不能为空，请输入频率最小值 。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Frequency minimums cannot be converted to numerical values. | 频率最小值不能转化为数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The maximum frequency cannot be empty. Please enter the maximum frequency. | 频率最大值不能为空，请输入频率最大值 。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The maximum frequency cannot be converted to a numerical value. | 频率最大值不能转化为数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The format of the imported receiver file is incorrect. | 导入的接收器文件格式错误。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | The input value cannot contain Chinese. | 输入值不能包含中文。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Input values that cannot be converted to numeric values. | 输入值，不能转化为数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The input value cannot be less than or equal to 0. | 输入值不能小于等于0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The input value cannot be less than 0. | 输入值不能小于0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | File does not exist. | 文件不存在。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Failed to create json file! | 无法创建json文件！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Project file cannot be written, the save path may not exist. | 工程文件无法写入，保存路径可能不存在。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Couldn't open json tsp file! | 无法打开json tsp文件！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Couldn't open xml tsp file! | 无法打开xml tsp文件！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Fail to load project file! please check file format. | 无法加载工程文档！请检查文件形式。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Can't allocate memory for the new project, quit! | 无法为新项目分配内存，请退出！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Couldn't get physic type info in file content! | 无法在文件内容中获得物理类型的信息！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Failed to save imported model data. | 保存导入模型数据失败。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Project file cannot be written, the file may be read-only. | 工程文件无法写入，文件可能为只读。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Content is invalid, missing project node! | 内容无效，丢失工程文件节点！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Content is invalid, have one line error! | 内容无效，存在一行错误！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Content is invalid, please check file first! | 内容无效，请先检查文件！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Fail to create source backup file! | 创建源备份文件失败！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Fail to load doc from json data! | 无法从json数据加载文档！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Fail to create focus project object! | 创建焦点项目对象失败！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Fail to open import file pcb! | 无法打开导入的pcb文件！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Fail to load doc from json pcb! | 无法从json数据加载文档！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing key of boardoutline,please check! | 缺少boardoutline的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing key of keepouts,please check! | 缺少keepputs的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing key of objects,please check! | 缺少对象的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing key of layersinfo,please check! | 缺少层信息的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing key of name,please check! | 缺少名字的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing key of ports,please check! | 缺少端口的关键字，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Missing key of options,please check! | 缺少选项的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing array of boardoutline,please check! | 缺少板边界数组，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing array of objects,please check! | 缺少对象数组，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing array of layersinfo,please check! | 缺少层信息数组，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing string type of name,please check! | 缺少名称的字符串类型，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing array of ports,please check! | 缺少端口数组，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Missing ports of signal net,please check! | 信号网的端口丢失，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | That is not one xy value in signal net port,please check! | 在信号网络端口中没有一个xy值，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Missing array of options,please check! | 缺少选项数组，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Start frequnce too small,please check! | 起始频率太小，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Stop frequnce too small,please check! | 终止频率太小，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Count of point is too less, please check! | 点数太少，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Degree beyond 180, this is abnormal data, please check! | 角度超过180，这是一个异常数据，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing the net [GND] in ports or in objects, please check! | 在端口或对象中缺少GND，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Missing the layer [Top Layer] in layersInfo or objects, please check! | 在顶部层信息或对象中缺少层，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing the layer [Bottom Layer] in layersInfo or objects, please check! | 在底部层信息或对象中缺少层，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing the field startTime in TDR param list, please check! | TDR参数列表中缺少起始时间，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Missing the field stopTime in TDR param list, please check! | TDR参数列表中缺少终止时间，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Missing the field delay in TDR param list, please check! | TDR参数列表中缺少字段延迟，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Missing the field samplePoints in TDR param list, please check! | TDR参数列表中缺少samplePoints，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Missing the field resultType in TDR param list, please check! | TDR参数列表中缺少结果类型，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Missing the field respondType in TDR param list, please check! | TDR参数列表中缺少响应类型，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Missing the field window in TDR param list, please check! | TDR参数列表中缺少窗口，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Missing the field riseTime in TDR param list, please check! | TDR参数列表中缺少riseTime，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The step too small(less than 1e-18) due to sample points error in TDR param calculate, please check! | 由于采样点错误，步长过小（小于1e-18），导致TDR参数计算错误，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The window value error in TDR param list, please check! | TDR参数列表中窗口值错误，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The sample count less 3 or beyond 10000 in TDR param list, please check! | TDR参数列表中的采样数量小于3或超过10000，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The sample Time long error (stop minus start less than 1e-18) in TDR param calculate, please check! | 采样时间过长错误（停止时间与起始时间之差小于1e-18），请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing key of projectId,please check! | 缺少项目ID的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing key of NO-SIM,please check! | 缺少NO-SIM的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing key of layer in port,please check! | 端口中缺少层的关键字，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Missing key of nets in port,please check! | 端口中缺少网络的关键字，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Missing key of name in port, please check! | 端口中缺少名字的关键字，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Missing string type of projectId,please check! | 缺少项目ID的字符串类型，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing int type of NO-SIM,please check! | 缺少NO-SIM整数类型，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Fail to create tdr file,please check! | 创建tdr文件失败，请检查！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Missing key of timestampSim,please check! | 缺少timestampSim的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Missing int type of timestampSim,please check! | 缺少timestampSim的整数类型，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Fail to sperate one face to sub-face! | 无法从一个面分割为一个子面！ | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | QObject | unknown error | 未知错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Rmax is not allowed to contain Chinese characters. | Rmax不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Ri radius is not allowed to contain Chinese characters. | Ri的半径不允许包含中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | H1 is not allowed to contain Chinese characters. | h1不允许包含中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | H2 is not allowed to contain Chinese characters. | H2不允许包含中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Rmax is empty or variable not exist or value <= 1e-7 | Rmax为空，变量不存在或值＜＝1e-7 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | R1 is empty or variable not exist or value <= 1e-7 | R1为空，变量不存在或值＜＝1e-7 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | h1 is empty or variable not exist or value <= 0 | h1为空，变量不存在或数值＜＝0 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | h2 is empty or variable not exist or value <= 0 | h2为空，变量不存在或数值＜＝0 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | The snapshot simulation frequency points does not exist. | 快照仿真频率点不存在。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | QObject | Port label is empty, idenify ports by label failed | 端口标签为空，按标签识别端口失败 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | There are identical port labels, idenify ports by label failed | 存在重复的端口标签，按标签识别端口失败 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | QObject | Far-field result does not exist, far-field data is missing or not generated. | 远场结果不存在，可能是数据丢失或没有生成。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Snapshot result does not exist, snapshot data is missing or not generated. | 快照结果不存在，可能是数据丢失或没有生成。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Observer result does not exist, observer data is missing or not generated. | 接收器结果不存在，可能是数据丢失或没有生成。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | source are not allowed to be pasted into different project | 不允许将激励源粘贴到不同的项目中 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Interpolation method cannot be used for snapshot. | 插值方法不能用于快照。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | QObject | Lower corner input format is wrong. | 角落坐标格式输入错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Upper corner input format is wrong. | 角落坐标格式输入错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | QObject | Couldn't open xml file! | 无法打开xml文件 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | QObject | Importing %1 mesh failed. | 导入%1网格失败 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StAdaptiveMeshSettingDialog | Multi-Frequencies error | 多频点错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StAdaptiveMeshSettingDialog | Frequency points error | 频率点数错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StAdaptiveMeshSettingDialog | Frequency steps error | 频率步长错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StAdaptiveMeshSettingDialog | Multi-Frequencies format error. | 多频点设置格式错误。格式为：f1, f2, f3 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StAdaptiveMeshSettingDialog | Frequency error. | 频率错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StAdaptiveMeshSettingDialog | Maxinum number of iterations error | 最大迭代次数错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StAdaptiveMeshSettingDialog | Residual tolerance error | 残差容限错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StAdaptiveMeshSettingDialog | Theta error | Theta错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StAddPadDialog | Pad cannot be inserted, suitable layer is required | 焊盘不能插入，需要合适的层。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StAddPadDialog | Pad cannot be inserted, suitable layer is required. | 焊盘不能插入，需要合适的层。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StArchimedeanSpiralDialog | The origin is wrong, please input a correct value. | 原点错误，请输入正确值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StArchimedeanSpiralDialog | The U axis is wrong, please input a correct value. | U轴错误，请输入正确值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StArchimedeanSpiralDialog | The V axis is wrong, please input a correct value. | V轴错误，请输入正确值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StArchimedeanSpiralDialog | The start radius is wrong, please input a value >= 0. | 起始半径错误，请输入一个≥0的值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StArchimedeanSpiralDialog | The end radius is wrong, please input a value >= 0. | 终止半径错误，请输入一个≥0的值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StArchimedeanSpiralDialog | The spiral cross-section radius is wrong, please input a value >= 0. | 螺旋横截面半径错误，请输入一个≥0的值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StArchimedeanSpiralDialog | The spiral wire cross-section radius is wrong, please input a reasonalbe value < start and end radius. | 该螺旋线横截面半径错误，请输入一个合理的值，该值应＜起始和终止半径。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StArchimedeanSpiralDialog | The height is empty, please input a correct value. | 高度为空，请输入正确的值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StArchimedeanSpiralDialog | The height is wrong. | 高度错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StArchimedeanSpiralDialog | The turns is empty, please input a correct value. | 该线圈为空，请输入一个正确的值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StArchimedeanSpiralDialog | The turns is wrong, please input a value >= 1e-3. | 该线圈错误，请输入一个≥1e-3的值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StArchimedeanSpiralDialog | The spiral name is empty. | 该螺旋线名称为空。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StBackgroundEditor | The thickness of the medium layer is formatted incorrectly and cannot be converted to numerical values. | 介质层的厚度格式错误，不能转换为数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBackgroundEditor | Media layer position formatting errors cannot be converted to numeric values. | 介质层位置格式错误不能转换为数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBackgroundEditor | Layer medium thickness error. | 介质层厚度错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StBackgroundEditor | Select a uniform medium for simulation background. The default is air. | 仿真背景请选择均匀介质，默认为空气。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | StBackgroundEditor | Invalid start position. | 无效的起始位置。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StBasePlot | Cannot export to column format, ensure all data series share the same X-axis array. | 无法按列格式导出，请确保所有数据序列共享相同的X轴数组。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StBcsDialog | The number of user-defined faces is empty, please select a face. | 用户定义的面数量为空，请选择一个面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StBcsDialog | The boundary condition name is empty, please enter a name. | 边界条件名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBcsEmDialog | The number of user-defined faces is empty, please select a face. | 用户定义的面数量为空，请选择一个面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StBcsEmDialog | The number of user-defined edges is empty, please select a edge. | 用户自定义的边数量为空，请选择一条边。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StBcsEmDialog | The number of user-defined points is empty, please select a point. | 用户自定义点数量为空，请选择一个点。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StBcsEmDialog | The boundary condition name is empty, please enter a name. | 边界条件名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBcsEmDialog | The PEC material can not be the material of impedance boundary condition! | 理想电导体材料不能作为阻抗边界条件的材料！ | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StBcsEmDialog | The PMC material can not be the material of impedance boundary condition! | 完美磁导体材料不能作为阻抗边界条件的材料！ | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StBcsEmDialog | Resistance and reactance cannot both be zero! | 电阻和电抗不能同时为零！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StBcsEmDialog | The PEC material can not be the material of surface current boundary condition! | 理想电导体材料不能作为表面电流边界条件的材料！ | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StBcsEmDialog | The PMC material can not be the material of surface current boundary condition! | 理想磁导体材料不能作为表面电流边界条件的材料！ | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StBcsMechDialog | The number of user-defined faces is empty, please select a face. | 用户定义的面数量为空，请选择一个面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StBcsMechDialog | The number of user-defined edges is empty, please select a edge. | 用户自定义的边数量为空，请选择一条边。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StBcsMechDialog | The number of user-defined points is empty, please select a point. | 用户自定义点数量为空，请选择一个点。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StBcsMechDialog | The boundary condition name is empty, please enter a name. | 边界条件名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBcsThermalDialog | The number of user-defined faces is empty, please select a face. | 用户定义的面数量为空，请选择一个面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StBcsThermalDialog | The number of user-defined edges is empty, please select a edge. | 用户自定义线数量为空，请选择一条边。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StBcsThermalDialog | The number of user-defined points is empty, please select a point. | 用户自定义点数量为空，请选择一个点。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StBcsThermalDialog | The boundary condition name is empty, please enter a name. | 边界条件名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBlendEdgeDialog | Not support or parameter error | 不支持或参数错误 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StBodySnapshotDialog | The snapshot name is empty. | 快照名称为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StBodySnapshotDialog | The origin is wrong, please input a correct value. | 原点错误，请输入正确值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBodySnapshotDialog | The center is wrong, please input a correct value. | 中心参数错误，请输入正确的数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBodySnapshotDialog | The U axis is wrong, please input a correct value. | U轴错误，请输入正确值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBodySnapshotDialog | The V axis is wrong, please input a correct value. | V轴错误，请输入正确值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBodySnapshotDialog | The corner 1 is wrong, please input correct values. | 角点1参数错误，请输入正确的数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBodySnapshotDialog | The corner 2 is wrong, please input correct values. | 角点2参数错误，请输入正确的数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBodySnapshotDialog | The szie of box is wrong, please check and input correct values. | 盒子尺寸错误，请检查并输入正确的数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBodySnapshotDialog | The radius is wrong, please input correct values. | 半径参数错误，请输入正确的数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StBodySnapshotDialog | There is not record field, please correct them. | 未找到场的结果，请检查。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCanvasMenuManager | Show JacobianError Element | 显示雅可比误差单元 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCanvasMenuManager | Solid (%1) separation failed, unknown reason. | 体(%1)分离失败，原因未知。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StCanvasMenuManager | Cannot paste while simulating or meshing. | 正在仿真或者剖分网格中，不能粘贴。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_Chinese.ts | StCheckViewSparameter | S parameter file path is empty. | S参数文件路径为空。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StCheckViewSparameterDialog | S parameter file path is empty. | S参数文件路径为空。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StCircuitErrorDialog | Circuit Error | 电路错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCircuitErrorDialog | Total number of errors: | 错误总数： | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCircuitErrorDialog | error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCircuitGraphic | selectComponent  is NULL. | 所选元件为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCircuitProjTree | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCircuitProjTree | The first letter of the component is incorrent. | 元件的第一个字符错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCircuitProjTree | The parameter of the component is empty. | 该元件的参数为空。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StCircuitProjTree | model error. | 模型错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCircuitProjectActManager | The subcircuit can't  be simulated. | 该子电路无法进行仿真。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | StCircuitProjectActManager | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCircuitProjectActManager | The file path is incorrect! | 生成的网表路径不存在！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StCircuitProjectActManager | Netlist is not exist | 网表不存在 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCircuitProjectUIManager | The variable list is empty, please check if the variables have been added. | 变量表为空，请检查变量是否添加。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StCircuitProjectUIManager | Sweep is empty. | 扫描为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCommonProjTree | Only solids are allowed to align X plane. Please check if points, lines, and faces have been selected. | 仅体可对齐 X 平面，请检查是否选择了点、线或面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StCommonProjTree | Only solids are allowed to align Y plane. Please check if points, lines, and faces have been selected. | 仅体可对齐 Y 平面，请检查是否选择了点、线或面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StCommonProjTree | Only solids are allowed to align Z plane. Please check if points, lines, and faces have been selected. | 仅体可对齐 Z 平面，请检查是否选择点、线或面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StCommonProjTree | Only faces are allowed be thickened. Please check if other points, lines, or bodies have been selected. | 仅面可加厚，请检查是否选择点、线或体。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StCommonProjTree | The project name is empty. Please enter a valid name. | 工程名称为空，请输入有效的名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StCommonProjTree | Solid separation failed, unknown reason. | 体分离失败，原因未知。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StCommonProjTree | Face separation failed, unknown reason. | 面分离失败，原因未知。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StCommonProjTree | Cannot paste while simulating or meshing. | 正在仿真或者剖分网格中，不能粘贴。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_Chinese.ts | StCommonProjTree | The point observer cannot be moved to the root node! | 点接收器不能被移动到根节点！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCommonProjTree | Cannot copy group and objects at the same time. | 不能同时复制组和物体。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StCommonProjTree | It is working, can not change the project name | 项目正在运行，无法修改项目名称。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCommonProjTree | Current project is working, can not change the project name | 当前项目正在运行，无法修改项目名称 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCommonProjTree | It is working, can not change the project name. | 项目正在运行，无法修改名称。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCommonProjTree | Current project is working, can not change the project name. | 当前项目正在运行，不能修改名称。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StComponentBaseDialog | Circuit component name cannot be empty. | 电路元件名字不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StComponentBaseDialog | Circuit component name cannot contain Chinese characters. | 电路元件名字不能包含中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StComponentBaseDialog | Circuit component name cannot contain whitespace characters. | 电路元件名字不能包含空白字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StConvertCurveToFaceDialog | The face name is empty. | 面名称为空。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StConvertCurveToFaceDialog | The width is empty. | 宽度为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StConvertCurveToFaceDialog | The width is invalid, please input a value > 1e-7. | 宽度无效，请输入大于1e-7的数。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StConvertCurveToFaceDialog | The plane position is empty. | 平面位置为空。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StConvertCurveToFaceDialog | The plane position is invalid, please input a valid position. | 平面位置无效，请输入一个有效位置。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StConvertCurveToFaceDialog | The plane normal is empty. | 平面法线为空。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StConvertCurveToFaceDialog | The plane normal is invalid, please input a valid normal. | 平面发现无效，请输入一个有效值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StConvertCurveToPipeDialog | The face name is empty. | 面名称为空。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StConvertCurveToPipeDialog | The radius is empty. | 半径为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StConvertCurveToPipeDialog | The radius is invalid, please input a value > 1e-7. | 半径无效，请输入大于1e-7的数。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StConvertCurveToPipeDialog | The polygon edge number is empty. | 多边形边数量为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StConvertCurveToPipeDialog | The polygon edge number is invalid, please input a value in the range of [3, 360] | 多边形边数量无效，请输入[3, 360]范围内的数值 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StConvertCurveToPipeDialog | The curves can't build a continuous path, quit. | 曲线不能创建一个连续路径，退出。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StConvertObjectDialog | Cannot convert | 无法转换 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StConvertObjectDialog | Conversion failed | 转换失败 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StConvertParameterDialog | Edge count is empty | 边数为空 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StConvertParameterDialog | Edge count format error | 边数格式错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StConvertProjTool | warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StConvertProjTool | is wrong, please check. | 错误，请检查。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StConvertSettingDialog | Parameter error | 参数错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StConvertSettingDialog | File format error. | 文件格式错误。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StConvertSettingDialog | Warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StConvertSettingDialog | warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCookieCutterDialog | warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCreateNetDialog | The net name is empty. Please enter a net name. | 网络名称为空，请输入网络名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StCreateNetDialog | The net name is being used, please change to other name. | 网络名为空，请输入网络名。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StCreateNetDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCreateTraceFromCurveDialog | The name is empty, please input a valid name. | 名称为空，请输入有效名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StCreateTraceFromCurveDialog | The name cannot contain "::part". | 名称不能包含”：：part“。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCurveEditorDialog | The curve name is empty. | 该曲线名称为空。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StCurveObserverDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCurveObserverDialog | Name is empty, please input name. | 名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StCurveObserverDialog | The start and end points of the linear observer cannot be the same, it is recommended to use a point observer instead. | 这个线接收器的起点与终点名称不能相同，建议使用一个点接收器来代替。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StCurveObserverDialog | Ellipse angle 1 and angle 2 cannot be the same. | 椭圆角度1和角度2不能相同. | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StCuttingPlaneDialog | The input parameter is incorrect, the correct format is: x,y,z. | 输入参数错误，正确格式为：x,y,z。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StDdmHybridMeshDialog | Boolean Operation Relative Error | 布尔操作关联错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StDetailsLogDialog | Relative Error | 相关错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StDetailsLogWidget | Relative Error |  | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StDetailsLogWidget | Adaptive Error Convergence Curve |  | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StDispersionDialog | Import file reading failed, please check the file format. | 导入文件读取失败，请检查文件格式。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StDispersionDialog | Input dispersion parameter num is error! | 色散参数数量输入错误！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StDispersionDialog | Input format is error. | 输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StDispersionDialog | is wrong, please correct it. | 输入错误，请修正。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StDispersionDialog | is empty, please correct it. | 输入为空，请修正。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StDispersionDialog | Error Limit | 误差限值 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StDispersionDialog | Final Error | 最终误差 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StDispersionDialog | Input dispersion parameter num is empty! | 色散参数数量为空！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StDrawLayoutTool | Pad can not be inserted, need to define the hole layer. | 焊盘不能插入，需要定义过孔层。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StDrawLayoutTool | Wirebond can not be inserted, need to define the wirebond layer. | 键合线不能插入，需要定义键合线层。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StEMProjTree | Cannot paste while simulating or meshing. | 正在仿真或者剖分网格中，不能粘贴。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_Chinese.ts | StEMProjTree | Only faces can be converted into face excitation sources. Please check if points, lines, and faces have been selected. | 仅面可转换为面激励源，请检查是否选择了点、线或面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StEMProjTree | Only curves can be selected in reverse. Please check if points, lines, and faces have been selected. | 仅曲线可反选，请检查是否选择了点、线或面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StEMProjTree | Only curves can enclose faces. Please check if points, lines, and faces have been selected. | 仅曲线可围成面，请检查是否选择了点、线或面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StEMProjTree | Only faces are allowed be thickened. Please check if other points, lines, or bodies have been selected. | 仅面可加厚，请检查是否选择点、线或体。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StEMProjectActManager | No calculation area exists. | 不存在计算区域。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StEMProjectActManager | Total: %1 warnings. | 总计：%1个警告。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StEMProjectActManager | Parameters validation failed before simulation. | 仿真前参数验证失败。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | StEMProjectActManager | Total: %1 errors, %2 warnings. | 总计：%1个错误，%2个警告。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StEMProjectUIManager | Show Jacobian Error Element | 显示雅可比错误单元 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StEMProjectUIManager | Direction format error.Format= x,y,z. | 方向格式错误，格式应为x，y，z。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StEMProjectUIManager | Jacobian Error | 雅可比错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StEMProjectUIManager | JacobianError |  | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StEditLayoutQfnDialog | Name is empty. Please enter a lead layer name. | 名称为空，请输入引线层名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StEditorDialog | This is an align LCS, cannot be edited. | 对齐操作后的LCS无法编辑。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StEditorDialog | This is merging solid faces, cannot be edited. | 合并操作后的面无法编辑。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StEquationDefineDeviceDialog | solver error | 求解器错误 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | StEquationDefineDeviceDialog | Parsing error: %1 | 解析错误：%1 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StEquationDefineDeviceDialog | Formular Parser | 解析失败 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StEquationDefineDeviceDialog | [%1] Format error. | [%1] 格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StEquationDefineDeviceDialog2 | [%1] Format error. | [%1] 格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StEquationDefineDeviceDialog2 | Parsing error: %1 | 解析错误：%1 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StEquationDefineDeviceDialog2 | Formular Parser | 解析失败 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StExcitationDialog | Failed to read the excitation file. | 读取激励文件失败。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StExcitationDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StExcitationDialog | There is no one excitation in project. | 项目中不存在激励。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StExcitationDialog | The amplitude of the excitation source cannot be converted to a numerical value, or is less than 0. | 激励源的幅度无法转化为数值，或者小于0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StExcitationDialog | The phase of the excitation source cannot be converted to a numerical value, or is less than 0. | 激励源的相位无法转化为数值，或者小于0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StExportFigureDialog | The file name does not exist, please set the file name. | 文件名不存在，请设置文件名。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StExportFigureDialog | The file suffix does not exist, please set the file suffix. | 文件后缀不存在，请设置文件后缀。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StExportFigureDialog | The file path does not exist, please set the file path. | 文件路径不存在，请设置文件路径。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StExportFigureDialog | The file directory path does not exist, please set the file directory path. | 文件目录路径不存在，请设置文件目录路径。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StExtrudeFaceDialog | Extrude fail, may be parameter error | 推出操作失败，参数错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFaceDialog | Resistance and reactance cannot both be zero! | 电阻和电抗不能同时为零！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFaceDialog | The name is empty, please input a valid name. | 名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFaceDialog | The name cannot contain "::part". | 名字不能包含“::part”. | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFaceEditorDialog | The name is empty, please input a valid name. | 名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFaceEditorDialog | The name cannot contain "::part". | 名字不能包含“::part”. | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFaceEditorDialog | Resistance and reactance cannot both be zero! | 电阻和电抗不能同时为零！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFaceSnapshotDialog | The snapshot name is empty, please enter a name. | 快照名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFaceSnapshotDialog | The starting point is wrong, please enter the correct value, such as (X1, Y1, Z1). | 起始点错误，请输入一个正确的值，如(X1, Y1, Z1)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFaceSnapshotDialog | The center point is wrong, please enter the correct value, such as (X1, Y1, Z1). | 中心点错误，请输入正确的值，如(X1, Y1, Z1)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFaceSnapshotDialog | The U axis is wrong, please enter the correct value, such as (X1, Y1, Z1). | U轴错误，请输入一个正确的值，如(X1, Y1, Z1)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFaceSnapshotDialog | The V axis is wrong, please enter the correct value, such as (X1, Y1, Z1). | V轴错误，请输入一个正确的值，如(X1, Y1, Z1)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFaceSnapshotDialog | The corner 1 parameter is wrong, please enter a valid value and do not include Chinese characters. | 角点1的参数错误，请输入有效值，不能包含中文字符。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFaceSnapshotDialog | The corner 2 parameter is wrong, please enter a valid value and do not include Chinese characters. | 角点2的参数错误，请输入有效值，不能包含中文字符。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFaceSnapshotDialog | Rectangle size is wrong, please enter a valid value and do not include Chinese characters. | 矩形尺寸错误，请输入一个有效的值，不能包含中文字符。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFaceSnapshotDialog | Radius is wrong, please enter a valid value and do not include Chinese characters. | 半径错误，请输入有效值，不能包含中文字符。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFaceSnapshotDialog | There is not record field, please correct them. | 未找到场的结果，请检查。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFaceThickenDialog | Thickness is wrong, please re-enter. | 厚度错误，请重新输入。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFarFieldAngleDialog | You cannot set an Angle other than the value in the drop-down box. Select the correct Angle from the drop-down box. | 不能设置下拉框中数值以外的角度，请从下拉列表框中选择正确的角度。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFarFieldDialog | Frequency parameters error. | 频率参数错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFarFieldReportDialog | Can't plot graphs with more than 2 data types. | 无法绘制包含2种以上数据类型的图表。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFarFieldReportDialog | Far-field file does not exist. | 远场结果不存在。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StFarFieldReportDialog | The far-field simulation result failed to be read because the far-field simulation data was deleted or was not generated. | 读取远场仿真结果失败，请检查远场仿真数据是否被删除，或未生成远场仿真数据。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | StFarFieldReportDialog | Far-field result does not exist, far-field data is missing or not generated. | 远场结果不存在，可能是数据丢失或没有生成。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFarFieldReportDialog2 | Can't plot graphs with more than 1 data types. | 无法绘制超过1种数据类型的图表。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFarFieldWindow | Export failed! Please check if the file path has write permissions. | 导出失败！请检查该文件路径是否有写入权限。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StFarFieldWindow | The FFmpeg path does not exist, please set it first. | FFmpeg路径不存在，请先设置。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StFarFieldWindow | The FFmpeg executable does not exist, please check. | FFmpeg可执行文件不存在，请检查。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StFarFieldWindow | Phase cannot be equal to zero. | 相位不能为零。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFiguresWindow | Export snp error | 导出snp错误 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StFiguresWindow | S-parameters not found. The reason may be: the S-parameter file has been deleted or S-parameter results have not been generated. | S参数不存在。原因可能是：S参数文件被删除或S参数结果未产生。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StFiguresWindow | Port name is empty. | 端口名称为空。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StFiguresWindow | The port name cannot be empty. | 端口的名称不能为空。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StFiguresWindow | Failed to read the imported file, please check the file format. | 导入文件读取失败，请检查文件格式。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StFiguresWindow | The copied data and the data type drawn in the original image are different, please check. | 拷贝数据和原图中绘制的数据类型不同，请检查。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFiguresWindow | Cannot export to column format, ensure all data series share the same X-axis array. | 无法导出为列格式，请确保所有数据系列共享相同的X轴数组。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StFiguresWindow | [%1] Cannot paste | [%1] 不能粘贴 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFiguresWindow | No Smith chart data found. | 不存在史密斯图数据。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFiguresWindow | Formula parsing error in the circuit result diagram: | 电路结果图中的公式解析错误： | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFiguresWindow | Formular Parser | 解析失败 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFiguresWindow | Linked marker point naming cannot use its own marker point name. Please input a different marker point name. | 联动标记点命名不允许输入自身标记点名称，请输入其他标记点名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFootprintTemplateDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFourierDialog | Time range is wrong, please make sure that the end time scale is greater than the start time. | 时间范围输入错误，请确保结束时间大于起始时间。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFourierDialog | Frequency range is wrong, please re-enter. | 频率范围错误，请重新输入。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFourierDialog | All the data within this range are 0, cannot be viewed in dB. | 范围内所有数据都为0，无法查看dB形式。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqDomainWidget | Error Tolerance | 插值误差 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqDomainWidget | The start frequency imput format is wrong. | 起始频率输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFreqDomainWidget | Multi-frequency format error. | 多频点格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFreqDomainWidget | Frequency Error | 频率错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqDomainWidget | The frequency parameter is incorrectly set. | 频率参数设置错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFreqDomainWidget | Start frequency and end frequency is same, please change it. | 起始频点和终止频点不能相等，请改变它们。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqDomainWidget | Wavelength Error |  | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqPulseDialog | Error Tolerance: | 插值误差 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqPulseDialog | The minimum or maximum frequency value cannot be negative, please make sure to enter a non-negative frequency value. | 最小和最大频率不能小于0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqPulseDialog | Multi-Frequencies error | 多频点错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqPulseDialog | Frequency points error | 频率点数错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqPulseDialog | Frequency steps error | 频率步长错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqPulseDialog | Error Tolerance | 插值误差 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqPulseDialog | The start frequency imput format is wrong. | 起始频率输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFreqPulseDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqPulseDialog | The time factor is incorrectly set. | 时间因子设置错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqPulseDialog | File format error. | 文件格式错误。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StFreqPulseDialog | Failed to obtain the maximum and minimum frequency from the data. Please check the source data. | 从数据中获取最大最小频率失败，请检查源数据。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqPulseDialog | warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqPulseDialog | The frequency parameter is incorrectly set. | 频率参数设置错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFreqPulseDialog | The time step cannot exceed 100,000 | 时间步长不能超过十万 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StFreqPulseDialog | Data format error! | 数据格式错误！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFreqPulseDialog | Time Factor set error, please set again! | 时间因子设置错误，请重新输入！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StFreqPulseDialog | Frequency Error | 频率错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StGraphHandleDialog | The curve name is already in empty, please re-enter a new curve name. | 曲线名称为空，请重新输入新的曲线名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StGraphHandleDialog | Axis tick can't  <= 0 or >= 360 | 轴刻度不能≤0或≥360 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StGraphHandleDialog | Radial axis range minimum and maximum cannot be identical. | 径向轴范围最小值与最大值不能相同。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StGraphHandleDialog | X-axis range minimum and maximum cannot be identical. | X轴范围最小值与最大值不能相同。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StGraphHandleDialog | Y-axis range minimum and maximum cannot be identical. | Y轴范围最小值与最大值不能相同。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StGraphHandleDialog | Y-axis2 range minimum and maximum cannot be identical. | Y2轴范围最小值与最大值不能相同。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StGraphPlot | Plot Data is invalid. | 绘图数据无效。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StGraphPlot | Calculate The Curve Error | 计算曲线误差 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StGraphPlot | Calcuate The Curve Error | 计算曲线误差 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StGraphPlot | Curve Error Comparison | 比较曲线差异 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StGraphicsTmpTextItem | Circuit component name cannot be empty. | 电路元件名字不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StGraphicsTmpTextItem | Circuit component name cannot contain Chinese characters. | 电路元件名字不能包含中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StGraphicsTmpTextItem | Circuit component name cannot contain whitespace characters. | 电路元件名字不能包含空白字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StHybridMeshDialog | Boolean Operation Relative Error | 布尔操作关联错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StIBISSettingDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StIBISSettingDialog | The circuit component name is empty. | 电路元件名称为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StIBISSettingDialog | Component name cannot contain Chinese characters. | 元件名不能包含中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StIBISSettingDialog | Component names cannot contain whitespace. | 元件名中不能包含空格。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StIBISSettingDialog | Duplicate component names, please check and modify the component names. | 元件名称重复，请检查并修改元件名。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StImageModelCourPointItem | The number of points in the outline is less than the required number, and further removal of points is not allowed. | 轮廓中的点数小于所需数量，不允许继续删除点。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StImageModelDialog | open is failed | 打开失败 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StImportMeshDialog | Relative Error | 相对误差 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StImportMeshWidget | Relative Error |  | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StInitValueDialog | Failed to add a solid initial value. Please select a solid | 无法为实体添加初始值，请选择一个实体 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StInitValueDialog | The initial value is empty, please enter a valid value. | 初始值为空，请输入有效值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StInitValueDialog | The initial value name is empty, please enter a name. | 初始值名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StInsertLayerDialog | warning! | 警告！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StInsertLayerDialog | Name cannot be empty! | 名称不能为空！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StInsertLayerDialog | Thickness cannot be empty! | 厚度不能为空！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLayoutCanvasMenuManager | Cannot paste while simulating or meshing. | 正在仿真或者剖分网格中，不能粘贴。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_Chinese.ts | StLayoutComponentDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLayoutComponentEditorDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLayoutComponentWidget | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLayoutPartDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLayoutPartDialog | Part name is empty, please give a part name. | 器件名称为空，请输入器件名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StLayoutProjTree | Cannot paste while simulating or meshing. | 正在仿真或者剖分网格中，不能粘贴。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_Chinese.ts | StLayoutProjTree | Wire Bond cannot be inserted because there are no wire bond layer definitions availabled. | 键合线不能插入，因为没有定义可用的键合线层。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StLayoutWavePortDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLineCaculationDialog | Failed to save file. | 文件保存失败。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StLineCaculationDialog | Failed to open file. | 打开文件失败。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StLineCaculationDialog | Invalid JSON format. | 无效的JSON格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StLinePropertyDialog | Can't plot graphs with more than 2 datatypes or 2 yaxis. | 无法绘制超过2种数据类型或2个Y轴的图表。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLinePropertyDialog | Can't plot graphs with more than 2 data types. | 无法绘制超过2种数据类型的图表。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLinePropertyDialog | Waring | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLinePropertyDialog | Port name is empty. | 端口名称为空。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StLoadDXFDialog | Red mean no layer information or polygon point error | 红色表示没有层信息或多边形点错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StLoadDXFDialog | Red mean no layer info or polygon error | 红色表示没有层信息或多边形错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLoadDxfLayoutDialog | Red mean no layer information or polygon point error | 红色表示没有层信息或多边形点错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StLoadDxfLayoutDialog | wrong layer tech file. | 层工艺文件错误。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StLoadDxfLayoutDialog | wrong die tech file. | 芯片工艺文件错误。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StLoadGDSDialog | Red mean no layer information or polygon point error | 红色表示没有层信息或多边形点错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StLoadGDSDialog | Red mean no layer info or polygon error | 红色表示没有层信息或多边形错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLoadGdsLayoutDialog | Red mean no layer information or polygon point error | 红色表示没有层信息或多边形点错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StLoadGdsLayoutDialog | wrong layer tech file. | 层工艺文件错误。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StLoadGdsLayoutDialog | wrong die tech file. | 芯片工艺文件错误。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StLoadGerberDialog | wrong layer tech file. | 层工艺文件错误。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StLoadGerberDialog | wrong die tech file. | 芯片工艺文件错误。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StLoadGerberLayoutDialog | Red mean no layer info or polygon error | 红色表示没有层信息或多边形错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLoadGerberLayoutDialog | Red mean no layer information or polygon point error | 红色表示没有层信息或多边形点错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StLoadGerberLayoutDialog | wrong layer tech file. | 层工艺文件错误。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StLoadGerberLayoutDialog | wrong die tech file. | 芯片工艺文件错误。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StLoadLayoutDxfDialog | Red mean no layer info or polygon error | 红色表示没有层信息或多边形错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLoadMaterialMatrixDialog | Expression is error. | 表达式错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLoadlayoutGdsDialog | Red mean no layer info or polygon error | 红色表示没有层信息或多边形错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StLoftBodyDialog | The name is empty, please input a valid name. | 名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StLumpedPortDialog | The lumped port name cannot be empty. Please enter a name. | 集总端口名称不能为空，请输入名称。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StLumpedPortDialog | The %1 name cannot be empty. Please enter a name. | 该%1的名称不能为空，请输入一个名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMaterialEditor | Anisotropic thermal conductivity dimensions are incorrect. | 各向异性热导率维数错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMaterialEditor | Matrix dimension error. The matrix must be in 3*3 format. | 矩阵维数错误，矩阵必须是3*3的格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMaterialEditor | The material name is empty. Please input a material name. | 材料名称为空，请输入材料名。 | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StMaterialEditor | Anisotropic relative permittivity dimensions are incorrect. | 各向异性相对介电常数维数错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMaterialEditor | Anisotropic electrical conductivity dimensions are incorrect. | 各向异性电导率维数错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMaterialEditor | Anisotropic relative permittivity format check error. | 各向异性相对介电常数检查格式错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMaterialEditor | Anisotropic magnetic permeability dimensions are incorrect. | 各向异性磁导率维数错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMaterialEditor | Elastic material density may be wrong! | 声波材料密度错误！ | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StMaterialEditor | Acoustic material is wrong! Vp is too small! | 声波材料错误！Vp太小了！ | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StMaterialEditor | Elastic material is wrong! Vp is too small! | 弹性力学材料错误！Vp太小了！ | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StMaterialEditor2 | Anisotropic thermal conductivity dimensions are incorrect. | 各向异性热导率维数错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMatrixDialog | The parameter sweeping value cannot be empty. | 参数扫描值不能为空。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMesh2DDialog | Boundary Name is empty, please input name. | 边界名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMesh3DLocalSizeDialog | (If the size <= 0, it will not be used) | (若网格尺寸<=0 将被视为无效） | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_Chinese.ts | StMesh3dDialog | Boolean Operation Relative Error | 布尔操作相对错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMesh3dDialog | Please input a valid data file name. | 输入的文件名不能为空。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMesh3dDialog | Boolean Operation Relative Error | 布尔操作相对误差 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Failed to read the imported file, please check the file format. | 导入文件读取失败，请检查文件格式。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | The copied graph data is empty. | 复制的图形数据为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Excitation information can't contain Chinese. | 激励信息不能包含中文。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Variable "%1" not allowed. | 变量 "%1"不允许。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Variable "%1" can't start with "or" | 变量 "%1"不能以 "or"开始 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Variable "%1" can't start with "and" | 变量 "%1"不能以 "and"开始 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Variable "%1" can't start with "xor" | 变量 "%1"不能以 "xor"开始 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The group name is empty, please enter a valid name. | 组名称为空，请输入有效的名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | " is in use and cannot be deleted. Please exit. | 已经被使用，不能删除。请退出。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | " is being used, can't be deleted, quit. | 已经被使用，不能删除。请退出。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Component's pad can't be deleted. | 无法删除元件的焊盘。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The default boundary condition cannot be deleted. Please double-click to modify the boundary condition. | 默认边界不能删除，请双击修改边界条件。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | After deleting the snapshot frequency point, the snapshot results will be cleared and the operation cannot be undone. Do you want to continue? | 删除快照频点后，快照结果将被清空且无法撤回该操作，是否继续？ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | This pad template is used, cannot change pad type. | 此焊盘模板已使用，无法更改焊盘类型。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Failed to read tgz file! | 无法读取tgz文件！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | Failed to cover file! | 无法覆盖文件！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | Solid separation failed, unknown reason. | 体分离失败，原因未知。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | Face separation failed, unknown reason. | 面分离失败，原因未知。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | Cannot paste while simulating or meshing. | 正在仿真或者剖分网格中，不能粘贴。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_Chinese.ts | StMessageBox | The point observer cannot be moved to the root node! | 点接收器不能被移动到根节点！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Cannot copy group and objects at the same time. | 不能同时复制组和物体。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | Cannot copy empty group. | 无法复制空组。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Do not disabled all physics fields. | 不能禁用所有物理场。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Pad cannot be inserted because there are no pad stack definitions availabled. | 无法插入焊盘，因为没有可用的焊盘堆叠结构定义。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Wire Bond cannot be inserted because there are no wire bond profile definitions availabled. | 键合线不能插入，因为没有可用的引线键合配置文件定义。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | Wire Bond cannot be inserted because there are no wire bond layer definitions availabled. | 键合线不能插入，因为没有定义可用的键合线层。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | Wire Bond cannot be inserted because there are no die layer definitions availabled. | 键合线不能插入，因为没有定义可用的裸片层。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | Component is in use by port, cannot be deleted. | 元件正在被端口使用，无法删除。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | File opening failure. | 文件打开失败。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | The pad profile in row %1 is invalid. | %1中的焊盘配置文件无效。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | The pad layer in row %1 is invalid. | %1中的焊盘层无效。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The cutting reference face must not be transform and boolean. | 切割参考面不能被变换和布尔操作。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | These objects' boundingbox is not valid. | 这些物体的边界框无效。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | Polygon expansion failed. | 多边形扩展失败。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Formula is empty. | 公式为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The material name is empty. Please input a material name. | 材料名称为空，请输入材料名。 | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StMessageBox | Anisotropic relative permittivity dimensions are incorrect. | 各向异性相对介电常数维数错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Anisotropic electrical conductivity dimensions are incorrect. | 各向异性电导率维数错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Anisotropic  Imaginary part of the permittivity dimensions are incorrect. | 各向异性相对介电常数虚部维数错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Anisotropic relative permittivity format check error. | 各向异性相对介电常数检查格式错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Anisotropic magnetic permeability dimensions are incorrect. | 各向异性相对导磁率维数错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Anisotropic  Imaginary part of the magnetic permittivity dimensions are incorrect. | 各向异性相对导磁率虚部维数错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Failed to add a solid source. Please select a solid | 添加体源失败，请选择一个体 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | is empty or variable not exist or format error. | 变量为空或不存在或格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Name cannot be empty! | 名称不能为空！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Height cannot be empty! | 高度不能为空！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Thickness cannot be empty! | 厚度不能为空！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Die Thickness cannot be empty! | 裸片厚度不能为空！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Total thickness cannot be less than die thickness! | 总厚度不能小于裸片厚度！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Some layers did not find their corresponding layers.Please check tech file. | 一些层没有找到相应的层，请检查技术文件。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | The pin port layer can not be same with reference plane. | 引脚端口层不能与参考平面相同。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | The data is empty. | 数据为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Variable is empty. | 变量为空。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Die Thickness cannot be empty. | 裸片厚度不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Total Thickness cannot be less than die thickness. | 总厚度不能小于裸片厚度。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The maximum and minimum frequencies are the same, making it impossible to perform Fourier transform. | 最大和最小频率相同，使得无法执行傅里叶变换。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Phase cannot be 0. | 相位不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Setup failed | 设置失败 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | File not exists, it has been deleted、 renamed or moved! | 文件不存在，它已被删除、重命名或移动！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | fail to copy the data foler from installed path to user home path! | 安装文件夹的数据文件复制到用户文件夹失败！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | the sourceFile does not exist! | 该激励源的文件不存在！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | Unable to copy file! | 文件不可复制！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | copy file doesn't exist! | 复制文件不存在！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | The name "%1" format error. | “%1”名称形式错误。规则：1、只能包含字母、数字和下划线。2、不能以数字开头。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | After deleting the snapshot plane will permanently delete the results. This action cannot be undone. Do you want to continue? | 删除snapshot面将永久删除结果。此操作无法撤销。是否要继续？ | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | " is being used, can't be deleted. | ”已经被使用，不能删除。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The number of ports in differential net %1 is not one for each, making it impossible to create differential pair ports. | 差分网络%1中的端口数量不是每个端口一个，因此无法创建差分对端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | This pin is used by port, can not be deleted. | 该引脚被端口使用，无法删除。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | The radius in row %1 is invalid. | 行%1中的半径无效。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The name is empty.please give a name | 名称为空，请输入名称 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The positive node and negative node can not be same. | 正节点和负节点不能相同。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The number of corner 1 parameters is wrong. | 角1参量值错误，正确格式应该是（数值1，数值2） | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The number of corner 2 parameters is wrong. | 角2参量值错误，正确格式应该是（数值1，数值2） | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The ratio of the maximum to minimum cannot exceed 1e6. | 最大值与最小值的比值不能超过1e6。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The length is not allowed to contain Chinese characters. | 长度不允许包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The width is not allowed to contain Chinese characters. | 宽度不允许包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The length input format is wrong. | 长度输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The width input format is wrong. | 宽度输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The ratio of length to width cannot exceed 1e6:1, please modify the length or width. | 长度和宽度比例不能超过1e6：1，请修改长或宽。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The length of the rectangle cannot be 0. | 矩形的长不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The number of corner 1 parameters is wrong. | 角1参量值错误，正确格式应该是（数值1，数值2） | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The number of corner 2 parameters is wrong. | 角2参量值错误，正确格式应该是（数值1，数值2） | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The width of the rectangle cannot be 0. | 矩形的宽不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The center parameter is wrong. | 中心格式错误，正确的格式应该是(u,v,w)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The center parameter is wrong. | 中心格式错误，正确的格式应该是(u,v)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Radius (in U axis) is not allowed to contain Chinese characters. | U轴上半径不允许包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Radius (in V axis) is not allowed to contain Chinese characters. | V轴上半径不允许包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Start angle of arc is not allowed to contain Chinese characters | 弧线的起始角不允许包含中文 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | End angle of arc is not allowed to contain Chinese characters. | 弧线的终止角不允许包含中文。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | Radius (in U axis) input format is wrong. | U轴上半径输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Radius (in V axis) input format is wrong. | V轴上半径输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The ratio of radius R to V cannot exceed 1e6:1, please modify the radius R or V. | R与V的搬进执笔不允许超过1e6，请修改R或者V。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Start angle of arc input format is wrong. | 弧度初始值输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | End angle of arc input format is wrong. | 弧度终止值输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The angle range of arc is error, fabs(theta0 - theta1) should be in the range of [1e-4, 360]. | 圆弧的角度范围错误，theta0-theta1的绝对值应该在[1e-1,360]范围内。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Edges Count is not allowed to contain Chinese characters. | 棱边数量不能保存中文。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | Start Point is not allowed to contain Chinese characters. | 起始点不允许包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Edges Count is empty or variable not exist. | 棱边数量为空或变量不存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Start Point is empty or variable not exist. | 起始点为空或者值不存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The starting point cannot be the origin. | 起始点不能是原点。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Vertex is not allowed to contain Chinese characters. | 顶点数据不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The vertex parameters is wrong. The correct format should be (value 1, value 2). | 顶点参数错误，正确的格式为 (值1， 值2)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Vertex coordinates cannot be consistent (line | 顶点坐标不能一致（line | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | These vertices cannot create a polygon, please make sure the vertices are on the same plane. | 这些顶点无法创建一个多边形，请确认顶点在同一平面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | Center is not allowed to contain Chinese characters. | 中心不允许填写中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The center parameters is wrong. The correct format should be (u, v). | 中心格式错误，正确的格式应该是(u,v)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Radius is not allowed to contain Chinese characters. | 半径不允许填写中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Width is not allowed to contain Chinese characters. | 宽度不允许填写中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Start angle of arc is not allowed to contain Chinese characters. | 弧线的起始角不允许包含中文。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | The radius input format is wrong. | 半径输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Position is not allowed to contain Chinese characters. | 坐标不允许填写中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The position parameters is wrong.The correct format should be(u, v). | 坐标参量错误，正确的格式应该是(u,v,w)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Font Size is not allowed to contain Chinese characters. | 字号不允许包含中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Font Size input format is wrong. | 字号输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Cutoff Ratio is not allowed to contain Chinese characters. | 曲线半径不能输入中文。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Curve Radius is not allowed to contain Chinese characters. | 曲线半径不能输入中文。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Width input format is wrong. | 宽度格式输入错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Cutoff Ratio input format is wrong. | 截止值输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Curve Radius input format is wrong. | 曲线半径输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The center parameters is wrong.The correct format should be(u, v). | 中心格式错误，正确的格式应该是(u,v)。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | is not allowed to contain Chinese characters. | 不允许填入中文字符。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | input format is wrong. | 格式输入错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | range of t1 error | t1范围错误，需满足 t1_0 < t1_1 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | range of t2 error | t2范围错误，需满足 t2_0 < t2_1 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | can not analysis formula | 无法分析结构，检查U，V，W轴是否正交 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The vertex parameter is wrong. | 顶点参量值错误，正确格式应该是（数值1，数值2）。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | created port, can not create agian. | 创建端口，不能重复创建。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | The number of corner 1 parameters is wrong. | 角1参量值错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The number of corner 2 parameters is wrong. | 角2参量值错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The center parameter is wrong. | 中心格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | input format is wrong. | 格式输入错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | range of t1 error, | t1范围错误， | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | range of t2 error, | t2范围错误， | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | can not analysis formula, | 无法分析结构， | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The vertex parameter is wrong. | 顶点参量值错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The corner parameter is wrong. | 角参数错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The length parameter is wrong. | 长度参数错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The origin parameters is wrong. | U轴格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The U axis parameters is wrong. | U轴格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Failed to parse the point source file, please re-import. | 解析点源文件失败，请重新导入。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | File save failed. | 文件保存失败。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | Line receiver selection point error, please select two points. | 线接收器选点错误，请选择两个点。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | The selected information is empty. Unable to create a lumped port. | 所选信息为空，无法创建集总端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | The selected information is empty. Unable to create a lumped element. | 所选信息为空，不能创建集总元件。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Failed to create lumped port, the selected face is not a planar face. | 创建集总元件失败，所选面不在同一平面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Failed to create lumped element, the selected face is not a planar face. | 创建集总元件失败，所选面非平面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Failed to create lumped port, the selected faces are not in the same plane. | 创建集总端口失败，所选面不在同一平面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Failed to create lumped element, the selected faces are not in the same plane. | 创建集总元件失败，所选面不在同一平面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | The selected unable to create a lumped port. | 所选对象不能创建集总端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | The selected unable to create a lumped element. | 所选对象不能创建集总元件。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Curved face cannot be used to create a lumped port. | 所选曲面无法创建集总端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Curved face cannot be used to create a lumped element. | 曲线无法用于创建集总元件。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Selections can't create lumped port! | 所选对象无法创建集总端口！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Selections can't create lumped element! | 所选对象无法创建集总元件！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | The selected information is empty. Unable to create a bridge port. |  | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Failed to create bridge port, the selected face not rectangle. |  | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Failed to create lumped element, the selected face not rectangle. |  | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | Failed to create bridge port, the selected face not connect with metal. |  | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Failed to create lumped element, the selected face not connect with metal. |  | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | Unable to create wave port during simulation. | 仿真过程中不允许创建波端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Failed to create wave port, the selected face is not a planar face. | 创建波端口失败，所选面不是平面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Failed to create wave port, the selected faces are not in the same plane. | 创建波端口失败，所选面不在同一平面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | The selected information is empty. Unable to create a wave port. | 所选信息为空，不能创建波端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Selections can't create wave port! | 选择的面不能创建波端口！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Unable to create boundary condition during simulation. | 仿真过程中不允许创建边界面。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | StMessageBox | The project name is empty. Please enter a valid name. | 工程名称为空，请输入有效的名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Please check whether the project path already exists. | 请检查工程路径是否已存在。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StMessageBox | variable Name format error | 变量名称格式错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Variable name can't start with "or" | 变量名不能以“or"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Variable name can't start with "and" | 变量名不能以“and"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Variable name can't start with "xor" | 变量名不能以“xor"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The variable can not be evaluated, please check the input. | 该变量无法计算，请检查输入。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Variable name format error | 变量名称格式错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Multi-Frequencies format error. | 多频点设置格式错误。格式为：f1, f2, f3 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Frequency error. | 频率错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The number of user-defined faces is empty, please select a face. | 用户定义的面数量为空，请选择一个面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | The number of user-defined points is empty, please select a point. | 用户自定义点数量为空，请选择一个点。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StMessageBox | The boundary condition name is empty, please enter a name. | 边界条件名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The PEC material can not be the material of impedance boundary condition! | 理想电导体材料不能作为阻抗边界条件的材料！ | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StMessageBox | The PMC material can not be the material of impedance boundary condition! | 完美磁导体材料不能作为阻抗边界条件的材料！ | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StMessageBox | Resistance and reactance cannot both be zero! | 电阻和电抗不能同时为零！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The PEC material can not be the material of surface current boundary condition! | 理想电导体材料不能作为表面电流边界条件的材料！ | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StMessageBox | The PMC material can not be the material of surface current boundary condition! | 理想磁导体材料不能作为表面电流边界条件的材料！ | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StMessageBox | Matrix dimension error. The matrix must be in 3*3 format. | 矩阵维数错误，矩阵必须是3*3的格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Matrix dimension error. The matrix must be in 3*6 format. | 矩阵维数错误，矩阵必须是3*3的格式。 {3*6 ?} | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Elastic material Wrong! Vp is too small! |  | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StMessageBox | Elastic material Wrong! Vp < 1.155 * VS! |  | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_Chinese.ts | StMessageBox | Anisotropic thermal conductivity dimensions are incorrect. | 各向异性热导率维数错误，必须是{1,0,0,0,1,0,0,0,1}格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The port label cannot be empty, because results identify ports is by port label. | 端口标签不能为空，因为结果通过端口标签识别端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | There are identical port labels, idenify ports by label failed. |  | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Matrix dimension error. The matrix must be in 6*6 format. | 矩阵维数错误，矩阵必须是3*3的格式。 {6*6 ?} | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Expression is error. | 表达式错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The data is error. | 数据错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | The frequency weight of the heat source cannot be less than 0. | 热源频率权重不能小于0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StMessageBox | Thermal expansivity are incorrect. The matrix must be in 3*3 format. | 热膨胀系数错误，矩阵必须为3*3格式。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | Failed to create bridge port, the selected face cannot be metallic. | 创建桥端口失败，所选面的材料不能为金属。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Failed to create lumped element, the selected face cannot be metallic. | 创建集总端口失败，所选面的材料不能为金属。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StMessageBox | Part name is empty, please give a part name. | 器件名称为空，请输入器件名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StMessageBox | The pad name is empty.please enter pad name. | 焊盘名称为空，请输入焊盘名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StModelAnalysisDialog | Repair All Error Objects | 修复所有错误物体 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StModelAnalysisDialog | There are no error object here. | 这里没有错误对象。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StModelRepairDialog | FixAbnormalDegenerated | 修复异常退化 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StNetEditDialog | The network is in use and cannot be deleted. | 该网络正在使用，不能被删除。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StNewParameterDialog | Variable name can't start with "or" | 变量名不能以“or"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StNewParameterDialog | Variable name can't start with "and" | 变量名不能以“and"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StNewParameterDialog | Variable name can't start with "xor" | 变量名不能以“xor"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StOpenGLLayoutCanvas | Bounding box is invalid | 边界盒子尺寸无效 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StOpenGLLayoutCanvas | The selected points cannot form a valid closed polygon face. | 所选择的点不能形成有效的闭合多边形面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StOpenGLMainCanvas | Bounding box is invalid | 边界盒子尺寸无效 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StOpenGLMainCanvas | The selected points cannot form a valid closed polygon face. | 所选择的点不能形成有效的闭合多边形面。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StPadDialog | The pad name is empty.please enter pad name. | 焊盘名称为空，请输入焊盘名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPadDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPadEditorDialog | Pad name is empty, please enter pad name. | 焊盘名称为空，请输入焊盘名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPadTemplateDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPadTemplateDialog | The pad name is empty. Please enter the footprint name. | 焊盘名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPadstackDialog | warning! | 警告！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPadstackDialog | Name cannot be empty! | 名称不能为空！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPadstackDialog | Drill hole Diameter cannot be empty! | 钻孔直径不能为空！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPadstackDialog | Sleeve thickness cannot be empty! | 套筒厚度不能为空！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StParametricAnalysisDialog | Parameter value Input is null. | 参数值输入为空。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricAnalysisDialog | Arbitrary point error | 任意点错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StParametricAnalysisDialog | This parameter does not exist. Check whether it has been deleted or is not create. | 该参数不存在，请检查该参数是否已被删除或未创建该参数 。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricAnalysisDialog | The parameterized scan step cannot be 0. | 参数化扫描步长不能为0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricAnalysisDialog | The number of parameterized scans cannot be 0. | 参数化扫描次数不能为0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricAnalysisDialog | The number of parameterized scans cannot be a non-integer. | 参数化扫描次数不能为非整数。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricAnalysisDialog | " is an equation and cannot participate in parametric scanning. | ”是一个方程，不能参与参数扫描。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricCurveDialog | The curve name cannot be empty. | 曲线名称不能为空。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StParametricCurveDialog | The t0 value cannot be empty. Please enter a t0 value. | t0值不能为空，请输入t0值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricCurveDialog | The t0 value is formatted incorrectly and cannot be converted to a numeric value. | t0值格式错误，不能转换为数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricCurveDialog | The t1 value cannot be empty. Please enter a t1 value. | t1值不能为空，请输入t1值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricCurveDialog | The t1 value is in an incorrect format and cannot be converted to a numeric value. | t1值格式错误，不能转换为数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricCurveDialog | The definition of U(t) cannot be empty, please enter the definition of U(t). | U(t)的定义不能为空，请输入U(t)的定义。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricCurveDialog | The definition of U(t) is formatted incorrectly and cannot be converted to a number. | U(t)的定义格式错误，不能转换为数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricCurveDialog | The definition of V(t) cannot be empty, please enter the definition of V(t). | V(t)的定义不能为空，请输入V(t)的定义。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricCurveDialog | The definition of V(t) is formatted incorrectly and cannot be converted to a number. | V(t)的定义格式错误，不能转换为数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricCurveDialog | The definition of W(t) cannot be empty, please enter the definition of W(t). | W(t)的定义不能为空，请输入W(t)的定义。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricCurveDialog | The definition of W(t) is formatted incorrectly and cannot be converted to a numeric value. | W(t)的定义格式错误，不能转换为数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricCurveDialog | Failed to generate curve, unknown reason. | 生成曲线失败，未知原因。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StParametricCurveDialog | The thickness cannot be empty. | 厚度不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StParametricCurveDialog | The thickness cannot be less than or equal to 0, please enter a value greater than 0. | 厚度不能小于等于0，请输入一个大于0的值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StParametricCurveDialog | The curve name cannot contain "::part". | 曲线名称不能包含：：部分。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StPinGroupPortDialog | The name is empty.please give a name | 名称为空，请输入名称 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPinGroupPortDialog | The component port type can not be changed. | 无法更改元件端口类型。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StPinPortDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPinPortDialog | Pin port name is empty, please give a pin port name. | 引脚端口名字为空，请输入名称。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StPlaneWaveDialog | Reference axis setting error | 参考轴设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | Emajor setting error | Emajor设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | Eminor setting error | Eminor设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | Emajor or Eminor setting error | Emajor或Eminor设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | The theta and phi cannot be set as a variable. | theta和phi不能作为变量。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPlaneWaveDialog | Spherical theta error | 球坐标系theta值错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | Spherical phi error | 球坐标系phi值错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | Magnitude setting error | 幅度设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | H (TE) magnitude and V (TM) magnitude cannot all be 0. | H（TE）幅度和V（TM）幅度不能都是0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | V (TM) magnitude cannot be 0. | V（TM）幅度不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | H (TE) magnitude must be greater than 0. | H（TE）幅度不能大于0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | Incident direction error | 入射方向错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | The step of phi setting is incorrect. | phi的步长设置错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | The step of theta setting is incorrect. | theta的步长设置错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | Incident direction warning | 入射方向警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | The direction of incident cannot be in line with the reference axis. Please reset reference axis | 入射方向不能与参考轴一致，请重置参考轴 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | H (TE) magnitude setting error | H（TE）幅度设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | V (TM) magnitude setting error | V（TM）幅度设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | HV Phase Difference setting error | HV相位差设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlaneWaveDialog | HV Phase Difference cannot be 0. | HV相位差不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlotCurveErrorDialog | Relative Error: | 相对误差： | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPlotCurveErrorDialog | Curve Error List | 曲线误差列表 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StPlotCurveErrorDialog | StPlotCurveErrorDialog |  | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StPlotDialog | The limit cannot be empty. Please enter the limit value. | 极限不能为空，请输入极限值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPlotDialog | The limit value is invalid, either because it exceeds the computable range or because another invalid character was entered. | 极限值无效，原因可能是：超过可计算的范围，或输入了其他无效字符。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPlotDialog | The variable cannot be empty. Please enter the limit value. | 变量不能为空，请输入限制值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPlotDialog | The variable value is invalid, either because it exceeds the computable range or because another invalid character was entered. | 变量值无效，可能是因为超出了可计算范围，也可能是因为输入了另一个无效字符。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPlotDialog | Expression does not contain variable " | 表达不能包含变量“ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPointArrayDialog | Point selection error. Please choose only one point! | 选点错误，请仅选择一个点！ | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StPointArrayDialog | The rotation axis cannot be zero! | 旋转轴不能为0！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPointArrayDialog | The start angle and the end angle cannot be the same! | 开始角度和结束角度不能相同！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolarPlot | Error plot type! | 误差图类型！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolarPlot | No polar data can be exported! | 无法导出极坐标数据！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StPolarPlot | Calculate The Curve Error | 计算曲线误差 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StPolarPlot | Calcuate The Curve Error | 计算曲线误差 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StPolarPlot | Curve Error Comparison | 比较曲线差异 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StPolarizationSettingDialog | H (TE) magnitude setting error | H（TE）幅度设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolarizationSettingDialog | V (TM) magnitude setting error | V (TM)幅值设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolarizationSettingDialog | HV Phase Difference setting error | HV相位差设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolarizationSettingDialog | HV Phase Difference cannot be 0. | HV相位差不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolarizationSettingDialog | Emajor setting error | Emajor设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolarizationSettingDialog | Eminor setting error | Eminor设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolarizationSettingDialog | Emajor or Eminor setting error | Emajor或Eminor设置错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolylineDialog | The file format is incorrect. Please refer to the template file. | 文件格式错误，请参考模板文件。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StPolylineDialog | The curve name cannot be empty. | 曲线名称不能为空。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StPolylineDialog | is empty or incorrectly formatted. Please confirm. | 为空或格式不正确。请确认。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPolylineDialog | cannot be the same. | 不能相同。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolylineDialog | cannot be the same. | 不能相同。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolylineDialog | The thickness cannot be empty. | 厚度不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolylineDialog | The thickness cannot be less than 0. | 厚度不能小于0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPolylineDialog | The curve name cannot contain "::part". | 曲线名称不能包含”：：部分“。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StProjectCommonActManager | The variable '%1' can not be evaluated, please check the input. | 变量%1不能被计算，请检查输入。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StProjectCommonActManager | Error: | 错误： | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StProjectCommonActManager | Warning: | 警告： | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StProjectCommonActManager | variable Name: %1 format error | 变量名称：%1格式错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StProjectCommonActManager | Variable name can't start with "or" | 变量名不能以“or"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StProjectCommonActManager | Variable name can't start with "and" | 变量名不能以“and"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StProjectCommonActManager | Variable name can't start with "xor" | 变量名不能以“xor"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StProjectCommonActManager | File opening failed! | 文件打开失败！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StProjectCommonActManager | File does not exist. | 文件不存在。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StPulseDialog | User defined pulse,time Factor set error, please set again! | 使用定义脉冲，时间因子设置错误，请重新设置！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPulseDialog | The pulse name is empty, please enter a name. | 脉冲名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPulseDialog | The minimum or maximum frequency value cannot be negative, please make sure to enter a non-negative frequency value. | 最小和最大频率不能为负数，请确保输入一个非负频率值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StPulseDialog | The time factor is incorrectly set. | 时间因子设置错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StPulseDialog | User defined pulse,file format error. | 使用定义脉冲，文件格式错误。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StPulseDialog | Failed to obtain the maximum and minimum frequency from the data. Please check the source data. | 从数据中获取最大最小频率失败，请检查源数据。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StReportDialog | Warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StReportDialog | The port simulation result does not exist. Check whether the port simulation result is cleared or not generated. | 端口仿真结果数据不存在，请检查端口仿真结果是否被清除，或未生成端口仿真结果。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StReportDialog | The selected data cannot be empty, please add at least one data for curve drawing. | 选择的数据不能为空，请至少添加一条数据以进行曲线绘制。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StReportDialog | does not exist. Check whether the port simulation result is cleared or not generated. | 请勿关闭，请检查端口仿真结果是否被清除，或未生成端口仿真结果。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StReportDialog | The observer simulation result does not exist, please check whether the receiver simulation result is cleared, or the receiver simulation result is not generated. | 接收器仿真结果不存在，请检查接收器仿真结果是否被清除，或未生成接收器仿真结果。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | StReportDialog | The port simulation result does not exist. The possible cause is that the port simulation result is cleared or not generated. | 端口仿真结果数据不存在，原因可能是：端口仿真结果被清除，或未生成端口仿真结果。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StReportDialog | The current and voltage simulation results cannot be obtained by interpolation sweep method. | 插值扫频方法无法获取电流和电压仿真结果。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | StReportDialog | Can't plot graphs with more than 2 data types. | 无法绘制超过2种数据类型的图形。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StReportDialog | Port result does not exist, port data is missing or not generated. | 端口结果不存在，可能是数据丢失或没有生成。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StResultPortDialog | Port name cannot be empty. | 端口名称不能为空。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StResultSweepDialog | Parameter value Input is null. | 参数值输入为空。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StResultSweepDialog | Arbitrary point error | 任意点错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StResultSweepDialog | This parameter does not exist. Check whether it has been deleted or is not create. | 该参数不存在，请检查该参数是否已被删除或未创建该参数 。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StResultSweepDialog | The parameterized scan step cannot be 0. | 参数化扫描步长不能为0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StResultSweepDialog | The number of parameterized scans cannot be 0. | 参数化扫描次数不能为0。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StResultSweepDialog | The number of parameterized scans cannot be a non-integer. | 参数化扫描次数不能为非整数。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StResultSweepDialog | " is an equation and cannot participate in parametric scanning. | ”是一个方程，不能参与参数扫描。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StRingSourceDialog | The time factor is incorrectly set. | 时间因子设置错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StRingSourceDialog | Name is empty, please input name. | 名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StRunEMSimulationDialog | Error Tolerance: | 插值误差： | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StRunEMSimulationDialog | The start frequency imput format is wrong. | 起始频率输入格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StRunEMSimulationDialog | Multi-frequency format error. | 多频点格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StRunEMSimulationDialog | Frequency Error | 频率错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StRunEMSimulationDialog | The frequency parameter is incorrectly set. | 频率参数设置错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSetDifferentialPairsDialog | The value of Ref.Z is not valid. | Ref.Z的数值无效。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSetDifferentialPairsDialog | Lumped port does not exist! | 集总端口不存在！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StSetDifferentialPairsDialog | Wave port does not exist! | 波端口不存在！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StShowLayoutModelDialog | Warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSimulatorDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSmithDialog | error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSmithPlot | No smith data can be exported! | 无法导出史密斯圆图数据！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StSmithPlot | Smith data format error. | 史密斯圆图数据格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSnPDialog | S parameter file path is empty. | S参数文件路径为空。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StSnPDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSnapshotWindow | FFmepeg path does not exist, please reset it. | FFmepeg 路径不存在，请重新设置。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StSnapshotWindow | Phase cannot be 0. | 相位不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSnapshotWindow | Snapshot result does not exist, snapshot data is missing or not generated. | 快照结果不存在，可能是数据丢失或没有生成。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSolderBallDialog | Warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSolidDialog | The name is empty, please input a valid name. | 名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSolidDialog | The name cannot contain "::part". | 名称不能包含“::部分”。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSolidEditorDialog | The name is empty, please input a valid name. | 名称为空，请输入名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSolidEditorDialog | The name cannot contain "::part". | 名称不能包含"::部分"。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSolidEditorDialog | This is an imported solid, cannot be edited. | 导入的面无法编辑。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StSolverArraysettingDialog | The domain of row %1 is empty. | 计算区域的域%1为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSourceDialog | Point selection error. Select only one point from the canvas as the source location! | 选点错误，仅能选择一个点作为激励源位置！ | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StSplineBondwireDlalog | Starting point error. Please input a valid value. | 起点错误，请输入正确的值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplineBondwireDlalog | Ending point error. Please input a valid value. | 终点错误，请输入正确的值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplineBondwireDlalog | The height value is empty. Please input a valid value. | 高度值为空，请输入正确值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplineBondwireDlalog | Height error, Please input a non-zero value. | 高度错误，请输入一个非零数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplineBondwireDlalog | The bondwire name is empty. | 键合线名称不能为空。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StSplineBondwireDlalog | The origin is wrong, please input a correct value. | 原点错误，请输入正确值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplineBondwireDlalog | The U axis is wrong, please input a correct value. | U轴错误，请输入正确值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplineBondwireDlalog | The V axis is wrong, please input a correct value. | V轴错误，请输入正确值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplineBondwireDlalog | The wirebond diameter cannot be empty. Please input a valid value. | 键合线的线径不能为空，请输入一个正确的值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplineBondwireDlalog | Failed to create geometry, unreasonable model parameters. | 创建几何图形失败，模型参数不合理。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplitMeshToolWidget | Origin format error. The correct format is: x,y,z. | 原点格式错误，正确格式为：x, y, z。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplitMeshToolWidget | Origin format can't has variables. | 原点格式不能有变量。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplitMeshToolWidget | Normal format error. The correct format is: x,y,z. | 法向格式错误，正确格式为：x, y, z。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplitMeshToolWidget | Normal format can't has variables. | 法向格式不能有变量。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSplitMeshToolWidget | Normal can't be zero. | 法向不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StStatusBarTabManager | warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StStatusBarTabManager | The page does not have enough width to add the table,please reduce the table's name or close other tables. | 页面宽度不足，无法添加表，请减小表名或关闭其他表。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StSubCircuitDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSubCircuitDialog | Subcircuit parsing error. Please check if the format of the subcircuits in the file is correct, or if the file contains multiple unrecited subcircuits. | 子电路解析出错。请检查文件中的子电路的格式是否正确，或者文件中包含多个未引用的子电路。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StSubParameterDialog | Variable setting error! | 变量设置错误！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSubParameterDialog | Warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSubStrateDialog | warning! | 警告！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSubStrateDialog | Cannot delete last substrate layer! | 不能删除最后的介质层！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSubStrateDialog | Thickness cannot be empty! | 厚度不能为空！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSweepAlongAxisDialog | The plane cannot be perpendicular to the rotation axis. | 平面不能垂直于旋转轴。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StSweepAlongAxisDialog | Sweep failed, Result model is invalid. | 扫描失败，结果无效。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StSweepAlongAxisDialog | Rotation angle error. Please input a value with an absolute value ≧ 1e-3. | 旋转角度错误，请输入一个绝对值大于等于1e-3的值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StSweepAlongPathDialog | Sweep failed, Result model is invalid. | 扫描失败，结果无效。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTimeDomainWidget | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTimeDomainWidget | Snapshot Recording Interval is empty. | 快照记录间隔为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTimeDomainWidget | Receiver Recording Interval is empty. | 接收器记录间隔为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StToroidalSpiralDialog | The starting point is wrong. Please enter a correct value. | 起始点错误，请输入一个正确的值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StToroidalSpiralDialog | The U axis is wrong, please input a correct value. | U轴错误，请输入正确值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StToroidalSpiralDialog | The V axis is wrong, please input a correct value. | V轴错误，请输入正确值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StToroidalSpiralDialog | The outer radius of the toroidal spiral is wrong, please enter a value greater than 0. | 环形螺旋线圈的外半径错误，请输入大于0的数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StToroidalSpiralDialog | The inner radius of the toroidal spiral is wrong, please enter a value greater than 0. | 环形螺旋线圈的内半径错误，请输入大于0的数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StToroidalSpiralDialog | The cross-sectional radius of the toroidal spiral coil is wrong, please enter a value greater than 0. | 环形螺旋线圈的横截面积错误，请输入大于0的数值。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StToroidalSpiralDialog | The cross-sectional radius of the toroidal spiral coil is wrong, please confirm that the input value is less than the inner and outer radius. | 环形螺旋线圈的横截面积错误，请确认输入值小于内外半径。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StToroidalSpiralDialog | The number of toroidal spiral coil turns is empty, please enter the number of coil turns. | 环形螺旋线圈的线圈匝数为空，请输入线圈匝数。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StToroidalSpiralDialog | The number of toroidal spiral coil turns is wrong, please confirm that the input value is greater than 1e-3. | 环形螺旋线圈的线圈匝数错误，请确保输入数值大于1e-3。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StToroidalSpiralDialog | The toroidal spiral name is empty. | 环形螺旋名称为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StToroidalSpiralDialog | The starting angle is wrong | 起始角度错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StToroidalSpiralDialog | The ending angle is wrong, | 终止角度错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTouchstoneDialog | parameter is not exist. | 参数不存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StTouchstoneDialog | This mode can't use renormalize. | 此模式不能使用重归一化。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTransformLocalCoordinateSystemDialog | Move U error. | 移动U轴错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTransformLocalCoordinateSystemDialog | Move V error. | 移动V轴错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTransformLocalCoordinateSystemDialog | Move W error. | 移动W轴错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTransformLocalCoordinateSystemDialog | Rotate U error. | 旋转U轴错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTransformLocalCoordinateSystemDialog | Rotate V error. | 旋转V轴错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTransformLocalCoordinateSystemDialog | Rotate W error. | 旋转W轴错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTransformationDialog | The name suffix cannot be empty. | 名称后缀不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTransformationDialog | The disk array name already exists. Enter a new one. | 阵列名称不能重复使用，该阵列名称已存在，请重新输入。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StTransformationDialog | The plane normal vector cannot be less than or equal to 1e-6. | 平面法向向量不能小于等于1e-6 。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StTransformationDialog | The normal vector of the coordinate axis cannot be less than or equal to 1e-6. | 坐标轴法向向量不能小于等于1e-6 。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StTransformationDialog | Selected face can't split target | 所选面无法分割目标 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StTransformationDialog | Face magnification failure, unknown reason | 面放大失败，未知原因 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StVariablesDialog | The variable "%1" is being used by other variables, or geometry, or SEM solver setup, etc., can not be deleted | 变量%1正被其他变量、几何体或SEM求解器设置等使用，无法删除 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_Chinese.ts | StVariablesDialog | variable Name: %1 format error | 变量名称：%1格式错误 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StVariablesDialog | The variable '%1' can not be evaluated, please check the input. | 变量%1不能被计算，请检查输入。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StVariablesDialog | Variable name can't start with "or" | 变量名不能以“or"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StVariablesDialog | Variable name can't start with "and" | 变量名不能以“and"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StVariablesDialog | Variable name can't start with "xor" | 变量名不能以“xor"开头 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDA | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Failed to create json file! | 无法创建json文件！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | Couldn't open json tsp file! | 无法打开json tsp文件！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | Couldn't open xml tsp file! | 无法打开xml tsp文件！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | Fail to load project file! please check file format. | 无法加载工程文档！请检查文件形式。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | Can't allocate memory for the new project, quit! | 无法为新项目分配内存，请退出！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Couldn't get physic type info in file content! | 无法在文件内容中获得物理类型的信息！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | Failed to save imported model data. | 保存导入模型数据失败。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavEDA | Project file cannot be written, the file may be read-only. | 无法写入项目文件，该文件可能是只读的。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | Content is invalid, missing project node! | 内容无效，丢失工程文件节点！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | Content is invalid, have one line error! | 内容无效，存在一行错误！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Content is invalid, please check file first! | 内容无效，请先检查文件！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | Project file version error, application support | 工程文件版本错误，应用程序支持 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavEDA | Fail to create source backup file! | 创建源备份文件失败！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | Fail to load doc from json data! | 无法从json数据加载文档！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Fail to create focus project object! | 创建焦点项目对象失败！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Fail to open import file pcb! | 无法打开导入的pcb文件！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavEDA | Fail to load doc from json pcb! | 无法从json数据加载文档！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing key of boardoutline,please check! | 缺少boardoutline的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing key of keepouts,please check! | 缺少keepputs的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing key of objects,please check! | 缺少对象的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing key of layersinfo,please check! | 缺少层信息的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing key of name,please check! | 缺少名字的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing key of ports,please check! | 缺少端口的关键字，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavEDA | Missing key of options,please check! | 缺少选项的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing array of boardoutline,please check! | 缺少板边界数组，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing array of objects,please check! | 缺少对象数组，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing array of layersinfo,please check! | 缺少层信息数组，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing string type of name,please check! | 缺少名称的字符串类型，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing array of ports,please check! | 缺少端口数组，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavEDA | Missing ports of signal net,please check! | 信号网的端口丢失，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavEDA | That is not one xy value in signal net port,please check! | 在信号网络端口中没有一个xy值，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavEDA | Missing array of options,please check! | 缺少选项数组，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Start frequnce too small,please check! | 起始频率太小，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Stop frequnce too small,please check! | 终止频率太小，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Count of point is too less, please check! | 点数太少，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Degree beyond 180, this is abnormal data, please check! | 角度超过180，这是一个异常数据，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing the net [GND] in ports or in objects, please check! | 在端口或对象中缺少GND，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavEDA | Missing the layer [Top Layer] in layersInfo or objects, please check! | 在顶部层信息或对象中缺少层，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing the layer [Bottom Layer] in layersInfo or objects, please check! | 在底部层信息或对象中缺少层，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing the field startTime in TDR param list, please check! | TDR参数列表中缺少起始时间，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDA | Missing the field stopTime in TDR param list, please check! | TDR参数列表中缺少终止时间，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDA | Missing the field delay in TDR param list, please check! | TDR参数列表中缺少字段延迟，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDA | Missing the field samplePoints in TDR param list, please check! | TDR参数列表中缺少samplePoints，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDA | Missing the field resultType in TDR param list, please check! | TDR参数列表中缺少结果类型，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDA | Missing the field respondType in TDR param list, please check! | TDR参数列表中缺少响应类型，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDA | Missing the field window in TDR param list, please check! | TDR参数列表中缺少窗口，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDA | Missing the field riseTime in TDR param list, please check! | TDR参数列表中缺少riseTime，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDA | The step too small(less than 1e-18) due to sample points error in TDR param calculate, please check! | 由于采样点错误，步长过小（小于1e-18），导致TDR参数计算错误，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDA | The window value error in TDR param list, please check! | TDR参数列表中窗口值错误，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDA | The sample count less 3 or beyond 10000 in TDR param list, please check! | TDR参数列表中的采样数量小于3或超过10000，请检查！ | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDA | The sample Time long error (stop minus start less than 1e-18) in TDR param calculate, please check! | 采样时间过长错误（停止时间与起始时间之差小于1e-18），请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing key of projectId,please check! | 缺少项目ID的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing key of NO-SIM,please check! | 缺少NO-SIM的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing key of layer in port,please check! | 端口中缺少层的关键字，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavEDA | Missing key of nets in port,please check! | 端口中缺少网络的关键字，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavEDA | Missing key of name in port, please check! | 端口中缺少名字的关键字，请检查！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavEDA | Missing string type of projectId,please check! | 缺少项目ID的字符串类型，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing int type of NO-SIM,please check! | 缺少NO-SIM整数类型，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Fail to create tdr file,please check! | 创建tdr文件失败，请检查！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | Missing key of timestampSim,please check! | 缺少timestampSim的关键字，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Missing int type of timestampSim,please check! | 缺少timestampSim的整数类型，请检查！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Fail to sperate one face to sub-face! | 无法从一个面分割为一个子面！ | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_Chinese.ts | StWavEDA | Circuit projects with higher version cannot be opened. Please install the lastest version. | 无法打开高版本的电路文件，请安装最新版本。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | unknown error | 未知错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Auto save error, please reslove the problem, then turn on the Auto save again. | 自动保存错误，请解决问题，然后重新打开自动保存。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | Locked-project, maybe being used by another user or some abnormal!                            open (OK) or DO NOT open(Cancel)? | 锁定的项目，可能正被其他用户或某些异常用户使用！                             打开（确认）或不打开（取消）？ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDA | Project file cannot be written, the save path may not exist. | 无法写入项目文件，保存路径可能不存在。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDA | Warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDAProjectWindow | Setup failed | 设置失败 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDAProjectWindow | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDAProjectWindow | Server IP is empty. | 服务器IP为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavEDAProjectWindow | Server IP is format error. | 服务器IP格式错误。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWavEDAProjectWindow | AutoSave Time is format error. | 自动保存时间格式错误。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDAProjectWindow | File not exists, it has been deleted、 renamed or moved! | 文件不存在，它已被删除、重命名或移动！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDAProjectWindow | fail to copy the data foler from installed path to user home path! | 安装文件夹的数据文件复制到用户文件夹失败！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDAProjectWindow | the sourceFile does not exist! | 该激励源的文件不存在！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDAProjectWindow | Unable to copy file! | 文件不可复制！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDAProjectWindow | copy file doesn't exist! | 复制文件不存在！ | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavEDASolverDialog | False | 错误的 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavePortWindow | Export failed! Please check if the file path has write permissions. | 导出失败！请检查该文件路径是否有写入权限。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavePortWindow | The FFmpeg path does not exist, please set it first. | FFmpeg路径不存在，请重新设置。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_Chinese.ts | StWavePortWindow | The FFmpeg executable does not exist, please check. | 可执行FFmpeg不存在，请检查。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavePortWindow | Phase cannot be equal to zero. | 相位不能为0。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavePortsDialog | Posteriori Error Target | 后验误差目标 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_Chinese.ts | StWavePortsDialog | The coordinate input for the wave port surface is incorrect. Please create a rectangle parallel to the xoy/yoz/xoz plane. | 波端口面的坐标输入错误，请建立平行于xoy/yoz/xoz平面的矩形。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavePortsDialog | The port label cannot be empty, because results identify ports is by port label. | 端口标签不能为空，因为结果通过端口标签识别端口。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWavelengthCalculateDialog | Import failed, material already exists. | 导入失败，材料已存在。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_Chinese.ts | StWireBondTemplateDialog | input value cannot be less than or equal to | 输入值不能小于或等于 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWireBondTemplateDialog | input value cannot be greater than or equal to | 输入值不能大于或等于 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWireBondTemplateDialog | The wirebond template name is empty. Please enter the wirebond template name. | 键合线模板名称为空，请输入键合线模板名称。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_Chinese.ts | StWireBondTemplateDialog | Error | 错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | The number of component pins is incorrect. | 组件引脚数量错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Component pin Id is abnormal. (Line id is abnormal) | 组件引脚Id异常。(线的id异常) | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | The 'Model' name selected for the component does not exist. Please check the existing 'Model' component name or select a new 'Model' component. | 组件选择的'Model'名称不存在，请检查当前已存在的‘Model’组件名称或重新选择一个'Model'组件。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | The sweep type of the simulation control is incorrect and exceeds the selectable range. | 仿真控件的扫频类型错误，超出可选择范围。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_core_Chinese.ts | QObject | Subcircuit analysis failed. The file contains multiple sub circuits or no sub circuits, and the software only supports identifying the unique corresponding sub circuit. | 子电路解析失败。文件中包含多个子电路或无子电路，软件只支持识别唯一对应的子电路。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | The number of points cannot be 1. | 点数不能为1. | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Snp file parse error. | SNP文件解析失败。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_core_Chinese.ts | QObject | [%1] Parsing failed. | [%1]解析失败. | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | The 'model' of [%1] is named [%2], please check and define the corresponding 'Model'. | [%1]的'model'被命名为[%2]，请检查并定义对应的'Model'。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | The 'Model' of [%1] is unnamed. Please check and name the corresponding 'Model'. | [%1]的'Model'未命名，请检查并命名对应的'Model'。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | The resistor[%1] AC cannot be empty. | 电阻[%1] AC参数不能为空。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_core_Chinese.ts | QObject | Copy subcircuit file error from [%1] to [%2] . | 电路从[%1]复制到[%2],复制失败。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_core_Chinese.ts | QObject | Failed to retrieve SNP file, the file at that path does not exist. | 获取所有snp路径，检查后以下文件不存在。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_core_Chinese.ts | QObject | [%1]component model is missing. Please check and define the corresponding 'Model'. | [%1]的'Model'未找到，请检查并定义对应的'Model'。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Multiple lines named %1. Please check and modify duplicate node names. | 多条线的节点名%1重复，请检查并修改重复的节点名。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | One component's name is empty. | 存在一个组件的名称为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Observer data does not exist. | 接收器结果不存在。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | %1 data does not exist. | %1数据不存在。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Frequency,voltage and current data calculation failed. | 频率，电压和电流数据计算失败。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Frequency, voltage and current data calculation failed. | 频率电压和电流数据计算失败。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | S parameter calculation failed. | S parameter计算失败。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_core_Chinese.ts | QObject | Lumped port cannot pass through PEC or conductor. | 集总端口不能穿过完美电导体(PEC)或者导体。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | Lumped element cannot pass through PEC or conductor. | 集总元件不能穿过完美电导体(PEC)或者导体。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | Lumped element validation failed. | 集总元件校验失败。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | Far-field file does not exist. | 远场结果文件不存在。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_core_Chinese.ts | QObject | Mesh type is invalid. | 网格类型无效。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_core_Chinese.ts | QObject | Node numbering error. | 节点编号错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Edge numbering error. | 边编号错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | the Jacobian matrix is singular. | 雅可比矩阵奇异, 请检查网格质量。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_core_Chinese.ts | QObject | enlarge PML elements error. | 放大PML单元错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Share face error! | 共享面错误！ | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | check edge dof error. | 检查边自由度错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | check node dof error. | 检查点自由度错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | remove bound edge id error. | 移除边界ID错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | faild to assemble coupled solid - fuid model. | 装配固液耦合模式失败。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | vector fitting error. | 矢量拟合错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | init Bd face faild. | 初始化边界面失败。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | search lumped port node1 faild. | 搜索集总端口节点1失败。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | search lumped port node2 faild. | 搜索集总端口节点2失败。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | The dipole can not be placed on a port ! | 偶极子不能放在端口上！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | waveport multiconductor has too many modes for degeneracy correnction. | 波端口多导体包含的模式过多，无法进行简并校验。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | Wave port material error! | 波端口材料错误！ | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | Unpaired mesh cannot set in fluid material. | 未配对的网格不能设置在流体材料内。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_core_Chinese.ts | QObject | the Index of  Max value in interp SweepFreq error. | 插值扫描频率中最大值索引错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | import Mesh, read Mesh File error . | 导入网格时，读取网格文件错误。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | Conductor number detection error. | 导体编号检测错误。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | arpack solve KO. | arpck求解器失败。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_core_Chinese.ts | QObject | Please check the Bloch boundary type : 1 or 2 ! | 请检查Bloch边界类型：1或2！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | An error occurred in the posterior error estimation. | 后验误差计算时出现错误，请检查激励源是否设置正确。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Please choose the type of Bloch(1 or 2) ! | 请检查Bloch边界类型（1或2）！ | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Amplitude of Plane wave should not be zero or nonexistent ! | 平面波的赋值不能为0或不存在！ | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | Parameters validation failed before simulation. | 仿真前参数校验失败。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_core_Chinese.ts | QObject | Total: %1 errors, %2 warnings. | 总计：%1错误，%2警告。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Total: %1 warnings. | 总计：%1警告。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | port face hole is not PEC or PMC, it is not allowed for OPEN B.C. setting. | 端口面上孔不是PEC或PMC，不允许用于开发边界条件设置。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | Failed to read far-field simulation data. Check whether far-field simulation data is deleted or not generated. | 读取远场仿真数据失败，请检查远场仿真数据是否被删除，或未生成远场仿真数据。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_core_Chinese.ts | QObject | The following variables do not exist: | 以下变量不存在： | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_core_Chinese.ts | QObject | '%1' cannot be null. | ‘%1’不能为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | '%1' cannot contain Chinese characters. | ‘%1’不能包含中文。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Init formula error. | 初始化公式错误。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | The selected field type does not exist and cannot be plotted. | 所选场类型不存在，无法绘制。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | %1:Unparseable string. | %1： 无法解析的字符串。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | The component pin can not change name. | 元件引脚不能更改名称。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Observer result does not exist, observer data is missing or not generated. | 接收器结果不存在。接收器数据丢失或者未生成。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | failed to assemble coupled solid - fluid model. | 装配固液耦合模式失败。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | sFdFarFile open failed. |  | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_core_Chinese.ts | QObject | init Bd face failed. |  | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | search lumped port node1 failed. | 搜索集总端口节点1失败。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | search lumped port node2 failed. | 搜索集总端口节点2失败。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | getTriPhysToRefs failed. |  | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | The number of source, lumped-port and wave-port is 0 or they are all invalid for electromagnetic physics. | 对于电磁场，源、集总端口和波端口的数量为０，或者它们全都无效。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | %1 %2: positive and negative is empty. | %1 %2：正极负极都为空。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | %1 %2: path %3. The line lumped port cannot be set on the surface of the computation domian. | %1 %2：path %3线集总端口不能设置在计算区域的外表面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | %1 %2: path %3 cannot be set on the surface of the wave port. | %1 %2：path %3不能设置在波端口的外表面。 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |
+| st_core_Chinese.ts | QObject | %1 cannot pass through PEC or conductor. | %1不能穿过完美电导体(PEC)或者导体。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | Solid %1: material is invalid. | 体%1：材料是无效的。 | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_core_Chinese.ts | QObject | Internal error, the material of the solid is non-conductive, but it is treated as an IBC body. | 内部错误，物体的材料是非导体，但被当作阻抗边界(IBC)体。 | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_core_Chinese.ts | QObject | Face %1: material is invalid. | 面%1：材料是无效的。 | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_core_Chinese.ts | QObject | Curve %1: material is invalid. | 线%1：材料是无效的。 | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_core_Chinese.ts | QObject | Background material cannot be PEC or PMC. | 背景材料不能是完美电导体或者完美磁导体。 | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_core_Chinese.ts | QObject | Material validation failed, using pec material in Electric current field | 材料验证失败，在电流场内使用PEC材料 | 材料 | 检查材料名称是否重复、材料模块是否支持当前物理场、参数格式和损耗设置是否正确。 |
+| st_core_Chinese.ts | QObject | Piecewise pulse time interval is unvalid. | 分段脉冲的时间间隔无效。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | Periodic Boundary validation failed. | 周期边界校验失败。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | QObject | The set boundary conditions cannot eliminate rigid body displacement, resulting in singular matrices and non convergent solutions. | 设置的边界条件无法消除刚体位移，导致矩阵歧义且不收敛。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_core_Chinese.ts | QObject | The set excitation source or boundary conditions cannot bring the temperature to a stable, resulting in singular matrices and non convergent solutions. | 设置的激励或边界条件无法使得温度到达稳定，导致矩阵歧义且不收敛。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | StLinkFaceTool | Warning | 警告 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_core_Chinese.ts | StNgspiceThread | run fault | 运行错误 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_mesher_Chinese.ts | QObject | Parameters validation failed before meshing. | 网格剖分前参数校验失败。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | Mesh failed. | 网格剖分失败. | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | ------------------------  warning  ----------------------------- | ------------------------  警告  ----------------------------- | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_mesher_Chinese.ts | QObject | Failed to generating volume mesh. | 创建体网格失败。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | Failed to generate volume mesh. | 创建体网格失败。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | Warning: There is a pathological tetrahedral grid. | 警告：存在病态四面体网格。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | -------- Warnings in grid profiling -------- | --------网格剖分中的警告信息-------- | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | Warning, the determinant of the mesh is less than 1e-9. | 警告，网格的行列式小于1e-9。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | Failed to parse file parameters. | 解析文件参数失败。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_mesher_Chinese.ts | QObject | '%1'Variable does not exist. | '%1'变量不存在。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_mesher_Chinese.ts | QObject | Failed to synchronize the variable. | 变量同步失败。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_mesher_Chinese.ts | QObject | Failed to load file. | 加载文件失败。 | 文件/导入导出 | 检查文件路径、后缀、权限、文件是否为空或被占用；导入数据时检查格式与分隔符。 |
+| st_mesher_Chinese.ts | QObject | Failed to generate prism mesh. | 创建棱柱网格失败。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | Mesh post-process failed. | 网格后处理失败. | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | Failed in Generating Prism Mesh. | 创建棱柱网格失败。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | Failed to Generating Tetrahedron Mesh. | 创建四面体网格失败。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | Failed to Generating Prism Mesh | 创建棱柱网格失败 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | Failed to Generate Tetrahedron Mesh | 创建四面体网格失败 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | xxx Fail in generating hexahedron mesh. | xxx生成六面体网格失败。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_mesher_Chinese.ts | QObject | Unkwon reason : Unable to recover some edge. | 未知原因：无法复原一些边。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_mesher_Chinese.ts | QObject | Some error in periodic surface. Please check Periodic setting. | 周期边界错误，请检查周期边界设置。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_mesher_Chinese.ts | QObject | Some error in Curved Face. | 曲面存在错误。 | 几何/选择 | 检查当前选择模式和对象类型；面/线/点数量是否满足操作要求，曲面、非共面或非闭合曲线常会导致失败。 |
+| st_mesher_Chinese.ts | QObject | Could not recover boundary, try to cancel multiple pass meshing. | 不能复原边界，尝试减少网格剖分次数。 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_simulator_Chinese.ts | QObject | Frequency voltage and current data calculation failed. | 频率电压和电流数据计算失败。 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_simulator_Chinese.ts | QObject | S parameter calculation failed. | S参数计算失败。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_simulator_Chinese.ts | QObject | Parameters validation failed. | 参数验证失败。 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_simulator_Chinese.ts | QObject | Parameters validation failed before simulation. | 仿真前参数校验失败。 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_simulator_Chinese.ts | QObject | error:parameter invalid | 错误：参数无效 | 参数/输入格式 | 按提示检查输入格式，例如坐标 `(u,v,w)`、数值范围、变量名和单位；不要在非单位界面额外带单位。 |
+| st_simulator_Chinese.ts | QObject | error:failed to prepare simulation parameter | 错误：准备仿真参数失败 | 仿真/求解 | 先运行验证，检查频率、求解器、Domain、材料、端口/激励是否完整；查看详细日志定位失败阶段。 |
+| st_simulator_Chinese.ts | QObject | error:unknown | 错误：未知 | 其他 | 结合原始提示、当前操作阶段和帮助文档限制进一步排查。 |
+| st_simulator_Chinese.ts | QObject | error:The grid type and the solver type are different | 错误：网格类型和求解器不一致 | 网格 | 检查网格类型、求解器是否匹配，查看病态网格；适当调整 3D 网格、波端口网格或自适应网格参数。 |
+| st_simulator_Chinese.ts | QObject | Wave port %1 meshing failed | 波端口%1网格剖分失败 | 端口/激励 | 检查端口创建时的选择对象、端口面是否为平面、是否贴合 Domain、导体数量/电势设置是否变化；必要时重新创建端口或重新运行波端口。 |

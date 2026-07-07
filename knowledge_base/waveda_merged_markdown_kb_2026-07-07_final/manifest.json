@@ -1,0 +1,1399 @@
+{
+  "generated": "2026-07-07",
+  "output_folder": "D:\\RAGGG\\exports\\waveda_merged_markdown_kb_2026-07-07_final",
+  "zip_path": "D:\\RAGGG\\exports\\waveda_merged_markdown_kb_2026-07-07_final.zip",
+  "total_documents": 173,
+  "sources": {
+    "current_user_dropbox": 1,
+    "current_waveda_agent_kb": 160,
+    "new_teaching_agent_ted": 1,
+    "new_waveda_rag": 11
+  },
+  "skipped": [],
+  "entries": [
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "00_README.md",
+      "output": "sources\\current_waveda_agent_kb\\00_README.md",
+      "title": "WavEDA 使用教导 Agent 知识库（第一版）",
+      "kind": "markdown",
+      "sha256": "7687c335bc3de4087f845a6fd22e60674e9c7b5c8695b27e78ceb461c1aed12f"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "01_agent_usage_guide.md",
+      "output": "sources\\current_waveda_agent_kb\\01_agent_usage_guide.md",
+      "title": "Agent 使用指南",
+      "kind": "markdown",
+      "sha256": "a9cd35233b04e8050b101e89137eff6f77a59b4cbfc570f3fcec9fc53f1fbecd"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "02_non_document_source_inventory.md",
+      "output": "sources\\current_waveda_agent_kb\\02_non_document_source_inventory.md",
+      "title": "WavEDA 非 documentation 资源蒸馏盘点",
+      "kind": "markdown",
+      "sha256": "cac9c2db2d05be8aad1759d11c5916560151c4de6148b9e0609f866afc963159"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Boundary.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Boundary.md",
+      "title": "边界",
+      "kind": "markdown",
+      "sha256": "bebcca42f2bee163b100d61dece4c30e9a64a8ee2b3ebe3493063eb7787f1b63"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Create_A_New_RCLD.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Create_A_New_RCLD.md",
+      "title": "Circuit",
+      "kind": "markdown",
+      "sha256": "f8a50c6044520b68fb51787f5a7136d11932d8da07662deeac23a232ca71e687"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/EM_Results.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\EM_Results.md",
+      "title": "电磁结果",
+      "kind": "markdown",
+      "sha256": "3e2b73a3cdaa16cb31d01e5c68b7bf505e39f69f0cdcb6994fddab3685734372"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Far_field.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Far_field.md",
+      "title": "远场",
+      "kind": "markdown",
+      "sha256": "3d2b1af9e3311df0d0009e98de2447dd7264ac95268057351a2b51feb8d5d17f"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Field_Result.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Field_Result.md",
+      "title": "场结果",
+      "kind": "markdown",
+      "sha256": "a4b575ac0a9ad783ac098a3b19bd2ca71eb0ead3f75a79552a571905cc37ee9d"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/HotKey.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\HotKey.md",
+      "title": "快捷键",
+      "kind": "markdown",
+      "sha256": "24e5ce03eb0a88990f15b06fbedf5a8882670212ab75f36724e5cd455ef2fb80"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Observer/Create_Line_Observer.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Observer\\Create_Line_Observer.md",
+      "title": "创建线接收器",
+      "kind": "markdown",
+      "sha256": "11b776347f7f45e618c379205c89c35affab8c2d68458b916c99c5c080a6c20f"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Observer/Create_Point_Observer.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Observer\\Create_Point_Observer.md",
+      "title": "创建点接收器",
+      "kind": "markdown",
+      "sha256": "497348fd21e229e86168486297bafd89210114c8511b37306bc38d1bcfecf24b"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Observer/Observer.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Observer\\Observer.md",
+      "title": "接收器",
+      "kind": "markdown",
+      "sha256": "4b4083f688023016be4ff43efbcd8ede96986ceff4de6f15def7a63585d9858a"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Snapshot.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Snapshot.md",
+      "title": "快照",
+      "kind": "markdown",
+      "sha256": "56bf58f5afccb64571d43c6d1703ff226507a27e0882079df4b5e0f2dc028589"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Sweep_Along_Axis.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Sweep_Along_Axis.md",
+      "title": "沿轴扫描",
+      "kind": "markdown",
+      "sha256": "43fc82b607fdac3f2d09d09c08398994644209a16c765154f3aefac19cb47cb4"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Sweep_Along_Path.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Sweep_Along_Path.md",
+      "title": "沿路径扫描",
+      "kind": "markdown",
+      "sha256": "1b3a6409a39b20307b8e31112991d48b39b7d0ba36ec827eaabf3a9b5b5ca43f"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Tree_Curves.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Tree_Curves.md",
+      "title": "线节点",
+      "kind": "markdown",
+      "sha256": "18b17fc3d890eb3b960cf591678b51b5232ed87289f8af674697f0b67f7c8270"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Tree_Faces.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Tree_Faces.md",
+      "title": "面节点",
+      "kind": "markdown",
+      "sha256": "97e8bc3de6f0d43ffc18a1a795e2d1c647f22b1e3b96b1f6bc3c7fef699c73f8"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/EM_Project/Tree_Solids.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\EM_Project\\Tree_Solids.md",
+      "title": "体节点",
+      "kind": "markdown",
+      "sha256": "9cbe53e8d12cf97c781056056de441019eaef5a7122bd65ea3ed0c3d2d0ccb64"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/File/File.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\File\\File.md",
+      "title": "文件",
+      "kind": "markdown",
+      "sha256": "85ec5b48496112f32ee65706122dfb364f9df51ac8f2f68d52572d0757840470"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/File/Homepage.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\File\\Homepage.md",
+      "title": "主页",
+      "kind": "markdown",
+      "sha256": "150ad1926b36abd1ac1940db20fc86b9e795d063d855a997430ee479349990be"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/File/Options.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\File\\Options.md",
+      "title": "选项",
+      "kind": "markdown",
+      "sha256": "072d5c58a323e83b36ce822c849d6ff0bdcc40f8dfc70b8179bce47b62ac77f5"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Introduction.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Introduction.md",
+      "title": "介绍",
+      "kind": "markdown",
+      "sha256": "2a6a22f5fc6249846870cf12c81207bf88dbd88007957dab3e6becf653138dea"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Invalid_Doc.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Invalid_Doc.md",
+      "title": "帮助文档暂未提供",
+      "kind": "markdown",
+      "sha256": "e24fcc2a9d4b707ef6822ada3988133c3e1e33a6222cc19e087ef77942d2bc61"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Mesh/3D_Mesh.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Mesh\\3D_Mesh.md",
+      "title": "3D网格",
+      "kind": "markdown",
+      "sha256": "03ae5c98029c6295a21c4fc7ba2317fb2c843b85841f0ec58d6d243982340ea8"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Mesh/Adaptive_Mesh.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Mesh\\Adaptive_Mesh.md",
+      "title": "自适应网格",
+      "kind": "markdown",
+      "sha256": "dca8b129be0ed0b55d7a5943ea9aebe39b2f673ce260ea7aa0410b532551a9d7"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Mesh/Import_Adaptive_Mesh.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Mesh\\Import_Adaptive_Mesh.md",
+      "title": "导入自适应网格",
+      "kind": "markdown",
+      "sha256": "be69e584f75715bc60fc260a0845bf4bd1cb3ca6fb0bd1059e62d827c32ab388"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Mesh/Import_Mesh.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Mesh\\Import_Mesh.md",
+      "title": "导入网格",
+      "kind": "markdown",
+      "sha256": "cb2710174556ff9bdaa4a7973b027644a5faf5b37a5b3864a075bfe51d22390d"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Mesh/Mesh.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Mesh\\Mesh.md",
+      "title": "网格",
+      "kind": "markdown",
+      "sha256": "d6cb5dd0be7294a6a86029aa153d5794172a3af4efa761070bec250992348c7e"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Mesh/Show_Mesh.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Mesh\\Show_Mesh.md",
+      "title": "显示网格",
+      "kind": "markdown",
+      "sha256": "30a72bbd7ca4727fa376e477eaf455de6fe9939704bd60dd82e298b631e2456e"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Mesh/Waveport_Mesh.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Mesh\\Waveport_Mesh.md",
+      "title": "波端口网格",
+      "kind": "markdown",
+      "sha256": "bc8e7e3485b68f9768d7033595e89d16ecc460b83751480518e0cbea6151624e"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Bkg_Mat/Background.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Bkg_Mat\\Background.md",
+      "title": "背景",
+      "kind": "markdown",
+      "sha256": "56c6cb0b5abad52a5f3bcf337b22a180d7727d698ae9ddb446918b5e8bed3fad"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Bkg_Mat/Dielectric_Dispersion.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Bkg_Mat\\Dielectric_Dispersion.md",
+      "title": "电色散材料",
+      "kind": "markdown",
+      "sha256": "21b0de4dd8fa7c01738dea4a4740fd3f923eee88de33c0f96805dd7b8fe3146e"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Bkg_Mat/Magnetic_Dispersion.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Bkg_Mat\\Magnetic_Dispersion.md",
+      "title": "磁色散材料",
+      "kind": "markdown",
+      "sha256": "3b5805e55cf58b6e25b8792227932d15c8178ad5b2d5673cc3b3bb5626c6d464"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Bkg_Mat/Materials.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Bkg_Mat\\Materials.md",
+      "title": "材料",
+      "kind": "markdown",
+      "sha256": "271c72fc4cbddd230167a3ef1cce0ffe2039ee438b558865a9fcabe3ae2e7115"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_3D_Geometry/Archimedean_Spiral.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_3D_Geometry\\Archimedean_Spiral.md",
+      "title": "阿基米德螺旋线",
+      "kind": "markdown",
+      "sha256": "c69a6d4447a484f02132828e268f646a598c0d700f47f65c7be7dff151eb27ee"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_3D_Geometry/Bondwire.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_3D_Geometry\\Bondwire.md",
+      "title": "键合线",
+      "kind": "markdown",
+      "sha256": "1b048f2ed72d41afee24e7cafe1c36be68e711618130db2530fbd388187af4c2"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_3D_Geometry/Box.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_3D_Geometry\\Box.md",
+      "title": "长方体",
+      "kind": "markdown",
+      "sha256": "c2f6d9ae2be0754930a55e9a2ee308d2bc3fe0c675c43be33edbce6a4cc846ed"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_3D_Geometry/Cone.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_3D_Geometry\\Cone.md",
+      "title": "圆锥/棱锥",
+      "kind": "markdown",
+      "sha256": "91b1fa08f6dcbf04d3a5208c677942dce4fd84bfaf89280cbdb584df1a715179"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_3D_Geometry/Cylinder.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_3D_Geometry\\Cylinder.md",
+      "title": "圆柱",
+      "kind": "markdown",
+      "sha256": "f2a9e7ffbd4e731900e6c2c812d68f33771a3d637ca004637665309b672ae092"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_3D_Geometry/History_Tree_Solid.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_3D_Geometry\\History_Tree_Solid.md",
+      "title": "历史树-体",
+      "kind": "markdown",
+      "sha256": "d7bd71716ab3b6f2e25ca072244a80e24ec511391c1a1573ddcd081792a862e0"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_3D_Geometry/Prism.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_3D_Geometry\\Prism.md",
+      "title": "棱柱",
+      "kind": "markdown",
+      "sha256": "1930ea4a8dfbb817410b1a0cc00666c4358d553bac307c5fcc0d8b0bbe139b1c"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_3D_Geometry/Solid_Intersection.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_3D_Geometry\\Solid_Intersection.md",
+      "title": "物体相交",
+      "kind": "markdown",
+      "sha256": "866e0d5dc0baa7052777e98b5b60640e10312bba3c051d5b27a82ae59f7ad7e5"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_3D_Geometry/Sphere.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_3D_Geometry\\Sphere.md",
+      "title": "sphere",
+      "kind": "markdown",
+      "sha256": "20224ec8e0895935ed4c13c8760db41ea6c4b9fc618a6aff642f7b40cd23dbab"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_3D_Geometry/Toroidal_Spiral.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_3D_Geometry\\Toroidal_Spiral.md",
+      "title": "环形螺旋线圈",
+      "kind": "markdown",
+      "sha256": "44616716156c3f82deab4df4e8481db985c23bcfa1dd6dfebb96f7c18f31f2fa"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_3D_Geometry/Torus.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_3D_Geometry\\Torus.md",
+      "title": "环",
+      "kind": "markdown",
+      "sha256": "23d182883bee03eec1dedfc49d1d1873b97afc394c120bd9ec86268f7e7da682"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Curve/Circular_Arc.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Curve\\Circular_Arc.md",
+      "title": "弧线",
+      "kind": "markdown",
+      "sha256": "2aef8559641cfe4f818f4223a047a13de6c153ab9eb23992e83449eaea45849b"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Curve/History_Tree_Curve.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Curve\\History_Tree_Curve.md",
+      "title": "历史树-线",
+      "kind": "markdown",
+      "sha256": "8d810e584c08f4251d6ca72632ce2ff1edb4b24d8fed01dd83192d027f177eb6"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Curve/Line.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Curve\\Line.md",
+      "title": "直线",
+      "kind": "markdown",
+      "sha256": "2eafcc11d09e18a0e6cd0a53bc9aa3436fb52a76ed4e1559850b10c3ed8d9eea"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Curve/Parametric_Curve.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Curve\\Parametric_Curve.md",
+      "title": "3D参数曲线",
+      "kind": "markdown",
+      "sha256": "8c8fdf525db21558e5d8991fe9d5a41eb2ae4315cf5955b511246d9f107bfd0c"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Curve/Polyline.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Curve\\Polyline.md",
+      "title": "折线",
+      "kind": "markdown",
+      "sha256": "f41f4697393bc4bc3cfc1358de27054ebed9b182180dd01efdc2cd1dbd1ca9b5"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Face/Cone_Face.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Face\\Cone_Face.md",
+      "title": "圆锥面",
+      "kind": "markdown",
+      "sha256": "b7915a4559d86d62b8e8965ccfc57b0c267b6b0de53a860815865f5cbc65c326"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Face/Edit_Polygon.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Face\\Edit_Polygon.md",
+      "title": "编辑多边形面",
+      "kind": "markdown",
+      "sha256": "373a65c29f9d9d69e0b2c1994762feda82e6dcc4f1fcfbd1c08eab9db9cf4814"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Face/Ellipse.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Face\\Ellipse.md",
+      "title": "椭圆",
+      "kind": "markdown",
+      "sha256": "414064eca65532093f9a334d00207709136333c3cc62f7227ae8344eb5805b5e"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Face/History_Tree_Face.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Face\\History_Tree_Face.md",
+      "title": "历史树-面",
+      "kind": "markdown",
+      "sha256": "94fc2771236ba163ba7d430f5bd0adefd98349c8d6c37f4c1d8315e1bbc99da3"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Face/Parametric_Face.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Face\\Parametric_Face.md",
+      "title": "参数面",
+      "kind": "markdown",
+      "sha256": "4912892235ef74c804068c037430736f07b9c224ca5e90b88a200ddf6e6021be"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Face/Polygon.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Face\\Polygon.md",
+      "title": "多边形面",
+      "kind": "markdown",
+      "sha256": "3ce4408172aa3a19ffc0303f55d756674c11cc8432c3ee0be41ea79944419a8d"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Face/Rectangle.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Face\\Rectangle.md",
+      "title": "矩形",
+      "kind": "markdown",
+      "sha256": "48af651aaed217e7f8c4a653b40a5fe2e73d2178e0ccb12527a25492770fee33"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Create_Face/Semiellipsoid_Face.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Create_Face\\Semiellipsoid_Face.md",
+      "title": "半椭球面",
+      "kind": "markdown",
+      "sha256": "ae53413d847782cfd72048953343eb340c3f79bb46272bcbdc78912b3d290056"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Design/Domain.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Design\\Domain.md",
+      "title": "计算区域",
+      "kind": "markdown",
+      "sha256": "adda02b029130896b1d0ea970606f5bcf0e57b76c08daf04b7ada177a1bb30ac"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Design/Frequency.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Design\\Frequency.md",
+      "title": "频率",
+      "kind": "markdown",
+      "sha256": "bb1acd718e3d431f290e047d54a50e37c221dc509d7cdc96cd7e22fcfb73f4c9"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Design/Solver.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Design\\Solver.md",
+      "title": "求解器",
+      "kind": "markdown",
+      "sha256": "d55a6e9e4e4e5b0de8080b12be5e5b10d027c83955620dfdff6cf0db979725c4"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Design/Unit.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Design\\Unit.md",
+      "title": "单位",
+      "kind": "markdown",
+      "sha256": "6cb50fa575e3102e778933bc459e45398e079688e9d25327591a4b52e3fdfda7"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Import_Export.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Import_Export.md",
+      "title": "导入/导出",
+      "kind": "markdown",
+      "sha256": "e12621bba74dc4ac3f76192c0b97a7e09898d904527363d094a20a122b422338"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/LCS.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\LCS.md",
+      "title": "局部坐标系",
+      "kind": "markdown",
+      "sha256": "dba93498521752f39eaccafe60c92496cf511690270c136159ba266ab33e1779"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Align.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Align.md",
+      "title": "与坐标系平面对齐",
+      "kind": "markdown",
+      "sha256": "2ea982b65db6a9f1af0eb8fc768a7aa167ddace300ff99e88c873acccca42821"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Array_Copy.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Array_Copy.md",
+      "title": "阵列复制",
+      "kind": "markdown",
+      "sha256": "df7f35235ee2225896739fa354145903e28fe282e6add7332c3b9ec11db95687"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Blend_Edges.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Blend_Edges.md",
+      "title": "倒圆角",
+      "kind": "markdown",
+      "sha256": "ed21de96af2ffd822397cd789bc13597bb3a93f18e90cfd540769e729b392696"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Boolean.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Boolean.md",
+      "title": "布尔操作",
+      "kind": "markdown",
+      "sha256": "210d42df877cac9254e0922cd88c1f3a65fe4d60948c0e0e4068ff9410e0dc5e"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Chamfer_Edges.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Chamfer_Edges.md",
+      "title": "倒斜角",
+      "kind": "markdown",
+      "sha256": "10d6a17e7ce9ffa92f40ed2c90dbd0c0814d95917f63bcc7da9dc874bc29f407"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Enlarge.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Enlarge.md",
+      "title": "扩大面",
+      "kind": "markdown",
+      "sha256": "27f5aaa810219f558da993c24acc981f6cf1b46a23267a23be1d28bb7bdda97d"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Extended_Operations.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Extended_Operations.md",
+      "title": "扩展操作",
+      "kind": "markdown",
+      "sha256": "d71542a1882da74fa4eca66a9c3e71a29d541a8789afa0f34b2a65c8c54e3eb4"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Extrusion.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Extrusion.md",
+      "title": "从现有面拉伸成体",
+      "kind": "markdown",
+      "sha256": "834540f099b916ffe642125ee07814f4a0d8e6799c0a24bc1a8d96bac50bc547"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Face_Thicken.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Face_Thicken.md",
+      "title": "加厚面",
+      "kind": "markdown",
+      "sha256": "af02e91ba0943237ed537c7e1ba595a744d6af0c8d263d9cf40b0dbbf0e085ab"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Mirror.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Mirror.md",
+      "title": "镜像",
+      "kind": "markdown",
+      "sha256": "2376a7a4480c408fbe3e0e5f1308877e7fc613db49b4ece8552dd6d76c02e374"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Move_Face_To_Modify_Solid.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Move_Face_To_Modify_Solid.md",
+      "title": "面平移调整",
+      "kind": "markdown",
+      "sha256": "85f912d873fa8fae8d3db13869a8b308aedc623e6ad696fd5c1d5190d99a54aa"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Rotate.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Rotate.md",
+      "title": "旋转",
+      "kind": "markdown",
+      "sha256": "01962f1655f45e1f9ebc4bd3b03675e0bba750f04c9520ee41c7acf2d6fc3a72"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Scale.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Scale.md",
+      "title": "缩放",
+      "kind": "markdown",
+      "sha256": "9fae6a0eff5410b7b464f3c0cfbf5298e7bb6414c94770114e283e237b286ed9"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Shell.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Shell.md",
+      "title": "挖空",
+      "kind": "markdown",
+      "sha256": "28b70ee034a79d4fd9c2e8ce4730c18320ca80b6d718775590c811c3fe8d615c"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Split.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Split.md",
+      "title": "切割",
+      "kind": "markdown",
+      "sha256": "dedd1b77a2a13df6fb3a107b23a46548673e43ed4c5776becdd6e0838805e65b"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Model_Editing/Translate.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Model_Editing\\Translate.md",
+      "title": "移动",
+      "kind": "markdown",
+      "sha256": "fcc80137109e4f8112f1b4cbfe29b0eec9861fbd20dc55214a17465de06e09eb"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Modeling.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Modeling.md",
+      "title": "建模",
+      "kind": "markdown",
+      "sha256": "a55c8ac5e35e4b4ac60e12f16b896b067c208b4d7f12e28a13ddd5ffcbb6bace"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Stimulate/Create_Point_Source.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Stimulate\\Create_Point_Source.md",
+      "title": "点激励源",
+      "kind": "markdown",
+      "sha256": "aecee37b95e234ccefd83e7d1377082f17234dcc0a8e56dd93f8841576cae030"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Stimulate/Integration_Line.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Stimulate\\Integration_Line.md",
+      "title": "波端口积分线",
+      "kind": "markdown",
+      "sha256": "de50b9aa881d2adb13c7313c3b2e81163622a5fea2dcdcb746c18293c801b475"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Stimulate/Lumped_Port.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Stimulate\\Lumped_Port.md",
+      "title": "集总端口",
+      "kind": "markdown",
+      "sha256": "a51874d90ed7d4e01cbb809469d7c6bca9506681375673647ec35aa19e43ad63"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Stimulate/Multi_Conductors.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Stimulate\\Multi_Conductors.md",
+      "title": "Multi_Conductors",
+      "kind": "markdown",
+      "sha256": "a09073295f34998ba9e3e21363292e261086b5bb19eb238d5e1dc4ebe8c0772b"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Stimulate/Plane_Wave.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Stimulate\\Plane_Wave.md",
+      "title": "平面波",
+      "kind": "markdown",
+      "sha256": "1282c03ff2652ed44986156636fa7f22a82a30e8c191538d2ac4f1a686152bce"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Modeling/Stimulate/Wave_Port.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Modeling\\Stimulate\\Wave_Port.md",
+      "title": "波端口",
+      "kind": "markdown",
+      "sha256": "48a0af242d562ae5e0be93f0b37c20d2484cd4fcea5797efdc62a6134a5bdd9f"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Post_Processing/New_Observers.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Post_Processing\\New_Observers.md",
+      "title": "新建接收器结果",
+      "kind": "markdown",
+      "sha256": "8e60014edbf7b716467e933fb87ab35477efc49988f837568e94ddcde3ddae29"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Post_Processing/New_Port.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Post_Processing\\New_Port.md",
+      "title": "新建端口结果",
+      "kind": "markdown",
+      "sha256": "476f659299fae54dc86448d5d8fb44750e8d73b262df7995f235892b5631d711"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Post_Processing/Post_Processing.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Post_Processing\\Post_Processing.md",
+      "title": "后处理",
+      "kind": "markdown",
+      "sha256": "7cb667642b13262fa7326236d5636f67fd76ade674486d5a6c369d0a5d7c8d7e"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Simulation/Parameter_Sweep.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Simulation\\Parameter_Sweep.md",
+      "title": "Parameter Sweep",
+      "kind": "markdown",
+      "sha256": "695e83c9a2c6245d763f3d0fc99ddffbf0f82343f9e040107b2758a5bc3860f9"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Simulation/Simulation.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Simulation\\Simulation.md",
+      "title": "仿真",
+      "kind": "markdown",
+      "sha256": "4b4317ae77dcfc91bfb21e4714e8350e1f4a5ca3e656894ac33f3ebd9ffbdb04"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Tool/Design_Setting.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Tool\\Design_Setting.md",
+      "title": "设计设置",
+      "kind": "markdown",
+      "sha256": "c408ea0579652c10932b6e33c90ca38b0957a906ab1c08a80b73ba26cf84342c"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Tool/Details_logs.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Tool\\Details_logs.md",
+      "title": "详细日志",
+      "kind": "markdown",
+      "sha256": "249cfad660d42883afd014d611f50a6c123d7694293756c21a51ead707b1e835"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Tool/Export_Figure.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Tool\\Export_Figure.md",
+      "title": "导出图像",
+      "kind": "markdown",
+      "sha256": "ed12eb9ded4cfac4015927cee3418a5e1980ac2ff48292f74c7fc358596b4784"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Tool/Export_Snp.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Tool\\Export_Snp.md",
+      "title": "导出Snp",
+      "kind": "markdown",
+      "sha256": "ebdb3668c245d2122b7046dc9dcb85e63c23067234fd3696a8304f47f69dd552"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Tool/Tool.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Tool\\Tool.md",
+      "title": "工具",
+      "kind": "markdown",
+      "sha256": "cdce87042b31f14e8a49710a00bef14e5e3296cba8ee470ca21a402e4ac5e19a"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Tool/Variables.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Tool\\Variables.md",
+      "title": "变量",
+      "kind": "markdown",
+      "sha256": "ec2c909624660fc005fd7fef99fb38842be253b4e35f1f914d8a2ce396cb48a0"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/Tool/Vector_Fitting.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\Tool\\Vector_Fitting.md",
+      "title": "矢量拟合",
+      "kind": "markdown",
+      "sha256": "e270c7419ad37eaf22029e48ccd8d330a5e750d3179e75d565060178b80f207d"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/View/Design_list.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\View\\Design_list.md",
+      "title": "设计列表",
+      "kind": "markdown",
+      "sha256": "6bcf35729b44ed819dd6e072ede1de26beb17da4099e83df05ac41b9b284a839"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "10_extracted_pages/View/View.md",
+      "output": "sources\\current_waveda_agent_kb\\10_extracted_pages\\View\\View.md",
+      "title": "视图",
+      "kind": "markdown",
+      "sha256": "dd7d4f993b9ee4cb1ac1d423180680a290126689ac1612530164f643233ae8d4"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "20_indexes/button_location_function_index.md",
+      "output": "sources\\current_waveda_agent_kb\\20_indexes\\button_location_function_index.md",
+      "title": "按钮/入口/功能索引",
+      "kind": "markdown",
+      "sha256": "16d865a5f5c4f98227d5c506b0bb6bd929a36f3975fd331eb7678881643b9860"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "20_indexes/constraint_warning_index.md",
+      "output": "sources\\current_waveda_agent_kb\\20_indexes\\constraint_warning_index.md",
+      "title": "限制、注意与疑似故障原因索引",
+      "kind": "markdown",
+      "sha256": "17a995675c09dc3d2fafcba002c6557938ed5e2ae705cd1438a572bc78b060db"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "20_indexes/knowledge_map.md",
+      "output": "sources\\current_waveda_agent_kb\\20_indexes\\knowledge_map.md",
+      "title": "知识地图",
+      "kind": "markdown",
+      "sha256": "1769e2e7555f13d842361033e71beb0480a280753c5bfe6938bd51a3a3866c71"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "20_indexes/module_capability_index.md",
+      "output": "sources\\current_waveda_agent_kb\\20_indexes\\module_capability_index.md",
+      "title": "模块能力索引",
+      "kind": "markdown",
+      "sha256": "3f5925358205785f86d360d35bb60fc905a5e69f4b1a21a93a4fb2690c8e36d6"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "20_indexes/module_page_index.md",
+      "output": "sources\\current_waveda_agent_kb\\20_indexes\\module_page_index.md",
+      "title": "模块与页面索引",
+      "kind": "markdown",
+      "sha256": "f6f8ca9c22d6655eff72f130655fdca0ebf33776999792f76753920c27e05721"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "30_topic_cards/beginner_simulation_workflow.md",
+      "output": "sources\\current_waveda_agent_kb\\30_topic_cards\\beginner_simulation_workflow.md",
+      "title": "新手仿真流程卡",
+      "kind": "markdown",
+      "sha256": "98374f9737c2d2e382c6e01b019ef2f572a5d0c222ee8218edea7986b18b07d6"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "30_topic_cards/module_selection_guide.md",
+      "output": "sources\\current_waveda_agent_kb\\30_topic_cards\\module_selection_guide.md",
+      "title": "WavEDA 模块选择指南",
+      "kind": "markdown",
+      "sha256": "5ce91965e67253019e8002e79c7fb1efaf1a05520604db6732cc9681aeddf009"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "30_topic_cards/ports_and_excitations.md",
+      "output": "sources\\current_waveda_agent_kb\\30_topic_cards\\ports_and_excitations.md",
+      "title": "端口与激励选择卡",
+      "kind": "markdown",
+      "sha256": "4a367e070665053d4d9789c5ddd3e6fe5b010121d6bce3946b5d8e3559b76372"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "30_topic_cards/post_processing_results.md",
+      "output": "sources\\current_waveda_agent_kb\\30_topic_cards\\post_processing_results.md",
+      "title": "后处理与结果查看卡",
+      "kind": "markdown",
+      "sha256": "0e8563ca9342dafe12e618986d36a6d08f18c999603a647417fba2f481020bf8"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "30_topic_cards/simulation_methods_comparison.md",
+      "output": "sources\\current_waveda_agent_kb\\30_topic_cards\\simulation_methods_comparison.md",
+      "title": "仿真方法对比卡",
+      "kind": "markdown",
+      "sha256": "461529c5aa589e221a310ab3fe4585c402f8def1f3965a822a4cce0cdc33c440"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "30_topic_cards/troubleshooting_and_constraints.md",
+      "output": "sources\\current_waveda_agent_kb\\30_topic_cards\\troubleshooting_and_constraints.md",
+      "title": "排错与约束卡",
+      "kind": "markdown",
+      "sha256": "20e0f1d147b544cc745e003abca9e7d049441556a276b0c2d39f9d1b7bb40308"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_error_cases/error_message_index.md",
+      "output": "sources\\current_waveda_agent_kb\\40_error_cases\\error_message_index.md",
+      "title": "真实 UI 报错/警告文案索引",
+      "kind": "markdown",
+      "sha256": "6ce3a5b3eabd118ceb6f6a0e23ff4d57d16ec481025d84269c8cd7ece4afb959"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Circuit/Filter/Filter/Filter.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Circuit\\Filter\\Filter\\Filter.md",
+      "title": "WavEDA",
+      "kind": "markdown",
+      "sha256": "289c3727a56aa6eaca217320495abf16fc0a278f09bb887018aa84b1f4fd5e78"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Circuit/LC_LPF/LC_LPF/LC_LPF.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Circuit\\LC_LPF\\LC_LPF\\LC_LPF.md",
+      "title": "LC低通滤波器",
+      "kind": "markdown",
+      "sha256": "0c83996e620aee95b7d106a58c564589507404ccb51766f0eb3537ff0e673e6d"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Circuit/Wilkinson power divider/Wilkinson power divider/Wilkinson power divider.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Circuit\\Wilkinson power divider\\Wilkinson power divider\\Wilkinson power divider.md",
+      "title": "威尔金森功分器",
+      "kind": "markdown",
+      "sha256": "95ace43a508237acbf38c91a151e95e7ba92679fb942f4117f6130d186c90d35"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/Antenna/dual_band_antenna/dual_band_antenna.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\Antenna\\dual_band_antenna\\dual_band_antenna.md",
+      "title": "双频带微带天线",
+      "kind": "markdown",
+      "sha256": "585cfac7c0c465e0aa1e0b6e256bfccc12b9007da7572bc0c0184addda9e2ee1"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/Antenna/patch_array_ant/patch_array_ant.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\Antenna\\patch_array_ant\\patch_array_ant.md",
+      "title": "阵列贴片天线",
+      "kind": "markdown",
+      "sha256": "e98495cd03762fb4d1da430d063ce1e785b6a23251f00ea2f73227789a9e7c96"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/Antenna/Wideband_slot_antenna/Wideband_slot_antenna.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\Antenna\\Wideband_slot_antenna\\Wideband_slot_antenna.md",
+      "title": "超宽带缝隙形天线",
+      "kind": "markdown",
+      "sha256": "210653c54a42cbae24de0c862dea4988f32fa3d5d2771840341786de7ac56d4e"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/Coupler/HMSIW_Coupler/HMSIW_coupler.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\Coupler\\HMSIW_Coupler\\HMSIW_coupler.md",
+      "title": "基片集成波导耦合器",
+      "kind": "markdown",
+      "sha256": "f9d5b6e75c00a1a87aff2f74983cae32e6898babdc23e8558248098d53c09d99"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/Coupler/Tight_Coupled_coupler/Tight_Coupled_coupler.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\Coupler\\Tight_Coupled_coupler\\Tight_Coupled_coupler.md",
+      "title": "紧耦合定向耦合器",
+      "kind": "markdown",
+      "sha256": "ff59ceb9b24b92161d8dea02be2b81d4bcd144b96acdfa38c4a3c7d5a483979a"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/Divider/triband_power_divider/triband_power_divider.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\Divider\\triband_power_divider\\triband_power_divider.md",
+      "title": "三频带功分器",
+      "kind": "markdown",
+      "sha256": "453def3dc289fb68e9fb4c9f46fa19151337efbf73d98e0847e096a66875b3a8"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/Filter/4-2_DR/4-2_DR.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\Filter\\4-2_DR\\4-2_DR.md",
+      "title": "双腔介质波导滤波器",
+      "kind": "markdown",
+      "sha256": "74360e8c726cfb1de8eaa33eebeb0b69b60ecd5ae2fce4566a2ba8d151f89a20"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/Filter/mmwave_bpf_IPD/mmwave_bpf_IPD.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\Filter\\mmwave_bpf_IPD\\mmwave_bpf_IPD.md",
+      "title": "毫米波IPD滤波器",
+      "kind": "markdown",
+      "sha256": "d6f37555f6e565b7c5c2796df040c536b030d948f8c44fbae349333bfecfa8e4"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/Filter/SIW_dual_band_filter/SIW_dual_band_filter.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\Filter\\SIW_dual_band_filter\\SIW_dual_band_filter.md",
+      "title": "SIW双频带滤波器",
+      "kind": "markdown",
+      "sha256": "ee32509c983aea2a9818c2b0a755191ee671c524a6c30bc83e8ab7a756eef12f"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/geological exploration/porous_medium/porosity_medium.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\geological exploration\\porous_medium\\porosity_medium.md",
+      "title": "孔隙介质",
+      "kind": "markdown",
+      "sha256": "f557bb0db1c8e7c5c47d2b62d0c07ef1d06fb2c6035a597d2b49ece835ab6485"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/PBC/AMC/AMC.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\PBC\\AMC\\AMC.md",
+      "title": "人工磁体单元胞",
+      "kind": "markdown",
+      "sha256": "e1bb2e745cb47e478fb878144799d926fb5011c646ec8e7367f8a8e17a346a0c"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/PBC/Antenna/microstrip_patch_antenna.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\PBC\\Antenna\\microstrip_patch_antenna.md",
+      "title": "微带贴片天线",
+      "kind": "markdown",
+      "sha256": "e839cd1eb36cc2b7ecb4521c0e50a59ac80b6a32a5477b371ad4c91acfaa62a0"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/PBC/FSS/FSS_unit.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\PBC\\FSS\\FSS_unit.md",
+      "title": "频率选择表面",
+      "kind": "markdown",
+      "sha256": "d3494827d7fa55f05e03af62e27476501ee9028d62353733052bca4d02c5b988"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/Plane Wave/Sphere/sphere.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\Plane Wave\\Sphere\\sphere.md",
+      "title": "球",
+      "kind": "markdown",
+      "sha256": "ecbdc5ffbcd50571d79afdc2e4564b784060f4a9533f1d4a3ae6a4fcf894e972"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/EM/SI_PI/Commom-Mode_Filter/Commom-Mode_Filter.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\EM\\SI_PI\\Commom-Mode_Filter\\Commom-Mode_Filter.md",
+      "title": "蘑菇形共模低通滤波器",
+      "kind": "markdown",
+      "sha256": "f7e07085f8f7ffd43e4ad8444ec74ec736f7b7b7810827d41637a67a298a50fb"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/index.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\index.md",
+      "title": "示例案例索引",
+      "kind": "markdown",
+      "sha256": "eee58e463f86b3ce8166aa587377e0447421a99166560ba1f4150e9eb4ebe49b"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Mech/Bolt/Bolt/Bolt.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Mech\\Bolt\\Bolt\\Bolt.md",
+      "title": "螺栓",
+      "kind": "markdown",
+      "sha256": "774af21e19c356bde469be4104b1b597b42f01c7f1a5f5107e7f13a8f70f528f"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Mech/ruler/ruler/ruler.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Mech\\ruler\\ruler\\ruler.md",
+      "title": "梯面尺",
+      "kind": "markdown",
+      "sha256": "80f438b6862b9b73afdce694aaa88fb6b0f7c46ccc58d972b404f1a97c11afbf"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Mech/Stool/Stool/Stool.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Mech\\Stool\\Stool\\Stool.md",
+      "title": "凳子模型",
+      "kind": "markdown",
+      "sha256": "63a6e4f4729d03d7ab95a07b61176b968db924d940f9c7d927b3656f218d4205"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Multi-Physics/Gis insulator/Gis insulator/Gis insulator.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Multi-Physics\\Gis insulator\\Gis insulator\\Gis insulator.md",
+      "title": "GIS insulator 仿真模型介绍",
+      "kind": "markdown",
+      "sha256": "0b89fae9cf1427aa6920e09ff1bf16d876e969f7da2eb0cacca7245eda1e0440"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Multi-Physics/PBGA/PBGA/PBGA.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Multi-Physics\\PBGA\\PBGA\\PBGA.md",
+      "title": "PBGA封装热力仿真",
+      "kind": "markdown",
+      "sha256": "8dae086bafe5391fe3b2e9119e7e399bdead7c2a8b29b1e7797b4b3a8e0bbafc"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Multi-Physics/PKG_WB_Model/PKG_WB_Model/PKG_WB_Model.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Multi-Physics\\PKG_WB_Model\\PKG_WB_Model\\PKG_WB_Model.md",
+      "title": "PKG_WB封装电热力仿真",
+      "kind": "markdown",
+      "sha256": "fe694247261ca71c6bbe2fbca61c1838d894481e70ec8c29c8c92a5776c0996a"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Multi-Physics/Quarter_Chip_Layout_Pillar_Model/Quarter_Chip_Layout_Pillar_Model/Quarter_Chip_Layout_Pillar_Model.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Multi-Physics\\Quarter_Chip_Layout_Pillar_Model\\Quarter_Chip_Layout_Pillar_Model\\Quarter_Chip_Layout_Pillar_Model.md",
+      "title": "QCLP_Model 仿真模型介绍",
+      "kind": "markdown",
+      "sha256": "5585c14411f2c25a8c94333b809896843cd9268aab0b42227f92f4c162dbfa4c"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Multi-Physics/Resistor/Resistor/Resistor.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Multi-Physics\\Resistor\\Resistor\\Resistor.md",
+      "title": "贴片电阻模型",
+      "kind": "markdown",
+      "sha256": "a0c2e2d7414e9420b91517b4f2b6d2026249d53f22f880e2fe832cdbd23c5f46"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Multi-Physics/Wirebonds_model/Wirebonds_model/Wirebonds_model.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Multi-Physics\\Wirebonds_model\\Wirebonds_model\\Wirebonds_model.md",
+      "title": "Wirebonds model",
+      "kind": "markdown",
+      "sha256": "dafa74b5fe4a630dcd59ac0fda7f8c211fc8873e380eff57eb089ce72338f9d9"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Thermal/Light_bulb/Light_bulb/Light_bulb.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Thermal\\Light_bulb\\Light_bulb\\Light_bulb.md",
+      "title": "灯泡模型",
+      "kind": "markdown",
+      "sha256": "10f13138332782d22d817cc93c2210ac4948a303d941ebfa4a7668d2dd7964e3"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Thermal/Radiator/Radiator/Radiator.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Thermal\\Radiator\\Radiator\\Radiator.md",
+      "title": "散热器",
+      "kind": "markdown",
+      "sha256": "463e46ded1a5ed9d9ef1dbc663628932cbf2762980f87ee2e09259201057474f"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/Thermal/Silicon_sub_copper_pillar_array/Silicon_sub_copper_pillar_array/Silicon_sub_copper_pillar_array.md",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\Thermal\\Silicon_sub_copper_pillar_array\\Silicon_sub_copper_pillar_array\\Silicon_sub_copper_pillar_array.md",
+      "title": "硅基板-铜柱阵列结构模型",
+      "kind": "markdown",
+      "sha256": "7a345cf46477639ef489b23c4eca0355562b8a29c66bc71bf51bae48fb30d896"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "50_material_library/material_selection_guide.md",
+      "output": "sources\\current_waveda_agent_kb\\50_material_library\\material_selection_guide.md",
+      "title": "材料选择指南",
+      "kind": "markdown",
+      "sha256": "3ac26e159ca58971f3d6c67a60c7e96b49e4940d80e18eda95b9f520c80fe5db"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "50_material_library/materials.md",
+      "output": "sources\\current_waveda_agent_kb\\50_material_library\\materials.md",
+      "title": "WavEDA 内置材料库索引",
+      "kind": "markdown",
+      "sha256": "0a126225b9aaaaad06985505d1ac6acbcc582da20ea52c6b9f1b4e4a95a9b682"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "60_circuit_components/component_index.md",
+      "output": "sources\\current_waveda_agent_kb\\60_circuit_components\\component_index.md",
+      "title": "电路组件与图标索引",
+      "kind": "markdown",
+      "sha256": "5dd522b9617b1a06ad0ef657eb3f230c108562881a74e77112eb9208632526f5"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "70_ui_icons/toolbar_icon_index.md",
+      "output": "sources\\current_waveda_agent_kb\\70_ui_icons\\toolbar_icon_index.md",
+      "title": "工具栏图标索引",
+      "kind": "markdown",
+      "sha256": "7c0f93193c2f4b94490b2f52dbf6fb093100a0a1bc3a1a3eb33d8fba3ad6dd12"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "90_maintenance_templates/beginner_task_flow_template.md",
+      "output": "sources\\current_waveda_agent_kb\\90_maintenance_templates\\beginner_task_flow_template.md",
+      "title": "新手任务流程补充模板",
+      "kind": "markdown",
+      "sha256": "3d59804a190463a0312e180ee72ff6203601b94fd05453afc55551001532dce2"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "90_maintenance_templates/button_entry_template.md",
+      "output": "sources\\current_waveda_agent_kb\\90_maintenance_templates\\button_entry_template.md",
+      "title": "按钮/入口补充模板",
+      "kind": "markdown",
+      "sha256": "37b1c3958a1944ed0311ea8161f356b717ffb96d224ef66ef48b46acea32b54e"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "90_maintenance_templates/error_case_template.md",
+      "output": "sources\\current_waveda_agent_kb\\90_maintenance_templates\\error_case_template.md",
+      "title": "报错案例补充模板",
+      "kind": "markdown",
+      "sha256": "166eff0fd48366231493e79bac8c055ca30910df45b63f7b2c09253d92f019d1"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_error_cases/error_message_index.csv",
+      "output": "sources\\current_waveda_agent_kb\\40_error_cases\\error_message_index.csv.md",
+      "title": "error_message_index",
+      "kind": "csv_as_markdown",
+      "sha256": "e9e73679bed47b536b8bfa19d83a2fc2a4eae077decfa47d60f2943c84cfc8aa"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_error_cases/raw_ui_messages.csv",
+      "output": "sources\\current_waveda_agent_kb\\40_error_cases\\raw_ui_messages.csv.md",
+      "title": "raw_ui_messages",
+      "kind": "csv_as_markdown",
+      "sha256": "ed67047a9edaecf71521d7b1c60bcb70fe3f11c3a636358c64c5795e62f04696"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "40_example_cases/example_manifest.csv",
+      "output": "sources\\current_waveda_agent_kb\\40_example_cases\\example_manifest.csv.md",
+      "title": "example_manifest",
+      "kind": "csv_as_markdown",
+      "sha256": "ab4c1b531bb8a7de26e0a79cdb39468d3c5e100dcc7bf914793cbab15fc3d045"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "50_material_library/material_index.csv",
+      "output": "sources\\current_waveda_agent_kb\\50_material_library\\material_index.csv.md",
+      "title": "material_index",
+      "kind": "csv_as_markdown",
+      "sha256": "5f815193c8c2d9aa36ca820a85022b320db5ec9361549dc1399d6d9398573f95"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "60_circuit_components/component_icon_index.csv",
+      "output": "sources\\current_waveda_agent_kb\\60_circuit_components\\component_icon_index.csv.md",
+      "title": "component_icon_index",
+      "kind": "csv_as_markdown",
+      "sha256": "11f883bb1f95f721683e01346ad5602cca96ebb6d11d10b133539b22d6a093ae"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "70_ui_icons/toolbar_icon_index.csv",
+      "output": "sources\\current_waveda_agent_kb\\70_ui_icons\\toolbar_icon_index.csv.md",
+      "title": "toolbar_icon_index",
+      "kind": "csv_as_markdown",
+      "sha256": "1919560225aee992c60350c5354f5794b74dc99861c671c3250c406d76abe012"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "_extra_extraction_summary.json",
+      "output": "sources\\current_waveda_agent_kb\\_extra_extraction_summary.json.md",
+      "title": "_extra_extraction_summary",
+      "kind": "json_as_markdown",
+      "sha256": "438782dcb9051684be7983ff02a16cbbee5da19b38f6c66a04cc3d85815c80b7"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "_generation_summary.json",
+      "output": "sources\\current_waveda_agent_kb\\_generation_summary.json.md",
+      "title": "_generation_summary",
+      "kind": "json_as_markdown",
+      "sha256": "caa047c81b3fe6c2fb8820f5e709951ba016f087207b273f13a01ebbd14320d6"
+    },
+    {
+      "source": "current_waveda_agent_kb",
+      "relative_path": "_source_manifest.jsonl",
+      "output": "sources\\current_waveda_agent_kb\\_source_manifest.jsonl.md",
+      "title": "_source_manifest",
+      "kind": "jsonl_as_markdown",
+      "sha256": "fa02dc538602a84650f59b55e00626532fe74f91c20dc21fc9b64e02990e5587"
+    },
+    {
+      "source": "current_user_dropbox",
+      "relative_path": "SFgen_prcv.pdf",
+      "output": "sources\\current_user_dropbox\\SFgen_prcv.pdf.md",
+      "title": "Symbol and Footprint Database",
+      "kind": "pdf_as_markdown",
+      "sha256": "af6facdc91dbd11327f1721c084288678fe9088b9a8e14fca54bfc164a2cf284"
+    },
+    {
+      "source": "new_waveda_rag",
+      "relative_path": "00_软件概述.md",
+      "output": "sources\\new_waveda_rag\\00_软件概述.md",
+      "title": "wavEDA 软件概述",
+      "kind": "markdown",
+      "sha256": "b5a5f185ca51865b3cc684e93aa2fcca3f2d9a0a8e8b958839e14a54b45a163c"
+    },
+    {
+      "source": "new_waveda_rag",
+      "relative_path": "01_快速入门.md",
+      "output": "sources\\new_waveda_rag\\01_快速入门.md",
+      "title": "快速入门",
+      "kind": "markdown",
+      "sha256": "3c181d3f3fc161c257d64c65d1d121a57b6feb6c4a67d8aa3fbb104cd556a7c7"
+    },
+    {
+      "source": "new_waveda_rag",
+      "relative_path": "03_常见问题FAQ.md",
+      "output": "sources\\new_waveda_rag\\03_常见问题FAQ.md",
+      "title": "常见问题 FAQ",
+      "kind": "markdown",
+      "sha256": "4aea5744905315d0c723dd1e97f8e555707f462fa9609560aa5a41cd164ca66c"
+    },
+    {
+      "source": "new_waveda_rag",
+      "relative_path": "04_错误排查指南.md",
+      "output": "sources\\new_waveda_rag\\04_错误排查指南.md",
+      "title": "错误排查指南",
+      "kind": "markdown",
+      "sha256": "cda782e7ad9f6c0c89ba7fb89f31a62f0464779ba10f34f664e24e0e6ce352e4"
+    },
+    {
+      "source": "new_waveda_rag",
+      "relative_path": "tutorials/02_电磁模块/01_端口设置.md",
+      "output": "sources\\new_waveda_rag\\tutorials\\02_电磁模块\\01_端口设置.md",
+      "title": "端口设置",
+      "kind": "markdown",
+      "sha256": "7cf131e471cdd21e7aa3af21acbdacec0b63cddf1aa92f8fa1c15a565ec6967e"
+    },
+    {
+      "source": "new_waveda_rag",
+      "relative_path": "tutorials/02_电磁模块/02_激励源配置.md",
+      "output": "sources\\new_waveda_rag\\tutorials\\02_电磁模块\\02_激励源配置.md",
+      "title": "激励源配置",
+      "kind": "markdown",
+      "sha256": "ab551e41b1a41f22c80f5c5304fe51c399b447b4f6d6ecadbaf5fc11b2218567"
+    },
+    {
+      "source": "new_waveda_rag",
+      "relative_path": "tutorials/02_电磁模块/03_边界条件.md",
+      "output": "sources\\new_waveda_rag\\tutorials\\02_电磁模块\\03_边界条件.md",
+      "title": "边界条件",
+      "kind": "markdown",
+      "sha256": "80921504b7f42135671fe6e0b8edf254d57dfcd06e52269e6abfe42ae9cccead"
+    },
+    {
+      "source": "new_waveda_rag",
+      "relative_path": "tutorials/02_电磁模块/04_求解器设置.md",
+      "output": "sources\\new_waveda_rag\\tutorials\\02_电磁模块\\04_求解器设置.md",
+      "title": "求解器设置",
+      "kind": "markdown",
+      "sha256": "f15c48481954278507d25d7bc15d7b3e7cb543fc30152b94daed2d254e4e56ed"
+    },
+    {
+      "source": "new_waveda_rag",
+      "relative_path": "tutorials/02_电磁模块/05_结果后处理.md",
+      "output": "sources\\new_waveda_rag\\tutorials\\02_电磁模块\\05_结果后处理.md",
+      "title": "结果后处理",
+      "kind": "markdown",
+      "sha256": "d94e70991db097716f81edc6c19103a2085612826aeae06b1cba723836948751"
+    },
+    {
+      "source": "new_waveda_rag",
+      "relative_path": "tutorials/03_案例/01_微环谐振器仿真.md",
+      "output": "sources\\new_waveda_rag\\tutorials\\03_案例\\01_微环谐振器仿真.md",
+      "title": "案例教程：微环谐振器仿真",
+      "kind": "markdown",
+      "sha256": "1a93b099d0eda6e9a32e68488e56f41d702a6babfddcc56aeb9b6703a9dd85eb"
+    },
+    {
+      "source": "new_waveda_rag",
+      "relative_path": "tutorials/03_案例/02_Y分支波导仿真.md",
+      "output": "sources\\new_waveda_rag\\tutorials\\03_案例\\02_Y分支波导仿真.md",
+      "title": "案例教程：Y 分支波导仿真",
+      "kind": "markdown",
+      "sha256": "bcbf4a1de2652562670ae5fd3c2f28dcb4bfbdd4baa87db6153063a0669d3f23"
+    },
+    {
+      "source": "new_teaching_agent_ted",
+      "relative_path": "user_experience_sources/WavEDA_操作教学型Agent_知识库.md",
+      "output": "sources\\new_teaching_agent_ted\\user_experience_sources\\WavEDA_操作教学型Agent_知识库.md",
+      "title": "WavEDA 操作教学型 Agent 知识库",
+      "kind": "markdown",
+      "sha256": "76daf935e08994ba250888f0f0bd1148c44e6993473badf0e3621370986d31ff"
+    }
+  ]
+}
