@@ -3,6 +3,7 @@ config/.env
 .env
 
 # Knowledge index manifests (generated, not tracked)
+data/index/
 data/processed_chunks.json
 data/raw_manifest.json
 

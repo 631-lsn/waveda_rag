@@ -46,24 +46,15 @@ class Settings:
         values = dict(os.environ if env is None else env)
         project_root = Path(values.get("RAGGG_PORTABLE_ROOT", str(PROJECT_ROOT)))
         values.setdefault("WAVEDA_HELP_ROOT", "wavEDA_docs/helpHtml/helpHtml")
-        values.setdefault(
-            "OBSIDIAN_VAULT_ROOT",
-            "knowledge_base/waveda_merged_markdown_kb_2026-07-07_final/sources",
-        )
+        values.setdefault("OBSIDIAN_VAULT_ROOT", "knowledge_base")
         return cls(
             project_root=project_root,
             waveda_help_root=_resolve_path(
-                values.get(
-                    "WAVEDA_HELP_ROOT",
-                    r"D:\Program Files (x86)\documentation\helpHtml",
-                ),
+                values.get("WAVEDA_HELP_ROOT", "wavEDA_docs/helpHtml/helpHtml"),
                 project_root,
             ),
             obsidian_vault_root=_resolve_path(
-                values.get(
-                    "OBSIDIAN_VAULT_ROOT",
-                    r"D:\暑期实践\多物理场仿真知识库",
-                ),
+                values.get("OBSIDIAN_VAULT_ROOT", "knowledge_base"),
                 project_root,
             ),
             data_dir=_resolve_path(values.get("RAG_DATA_DIR", "data"), project_root),

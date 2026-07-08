@@ -4,11 +4,11 @@
 
 ## 第一次使用
 
-Windows 用户按下面两步来：
+Windows 用户按下面三步来：
 
 1. 双击 `setup_env.bat`
-   - 自动创建本地 Python 虚拟环境 `.venv`
-   - 自动安装 `numpy` 和 `PySide6`
+   - 优先使用项目内置的 `runtime/python`
+   - 如果没有内置 Python，才会自动创建本地虚拟环境 `.venv` 并安装依赖
    - 自动构建本地知识库索引 `data/index`
    - 最后会跑一次基础问答验证
 
@@ -27,10 +27,10 @@ Windows 用户按下面两步来：
 ## 需要提前准备什么
 
 - Windows 10/11
-- 能联网安装 Python 依赖
-- 本机需要有 Python 启动器 `py`
+- 正常从 GitHub 下载完整仓库时，不需要提前安装 Python
+- 如果你的版本里缺少 `runtime/python`，则需要安装 Python 3.11 或更新版本，并确保本机有 Python 启动器 `py`
 
-如果双击 `setup_env.bat` 时提示找不到 `py`，请先安装 Python 3.11 或更新版本，并勾选 “Add python.exe to PATH” 或安装 Python Launcher。
+如果双击 `setup_env.bat` 时提示找不到内置 Python，也找不到 `py`，请先安装 Python 3.11 或更新版本，并勾选 “Add python.exe to PATH” 或安装 Python Launcher。
 
 ## 能做什么
 
@@ -79,7 +79,7 @@ waveda_rag/
 当前主要知识库位于：
 
 ```text
-knowledge_base/waveda_merged_markdown_kb_2026-07-07_final/sources
+knowledge_base/
 ```
 
 它融合了：
@@ -96,10 +96,16 @@ knowledge_base/waveda_merged_markdown_kb_2026-07-07_final/sources
 如果新增或修改了知识库文档，运行：
 
 ```powershell
+.\runtime\python\python.exe -B scripts\build_knowledge_base.py
+```
+
+如果当前版本没有 `runtime/python`，但已经通过 `setup_env.bat` 创建了 `.venv`，也可以运行：
+
+```powershell
 .\.venv\Scripts\python.exe -B scripts\build_knowledge_base.py
 ```
 
-或者重新双击 `setup_env.bat`，它会重新构建索引。
+最简单的方式仍然是重新双击 `setup_env.bat`，它会重新构建索引。
 
 ## 常见问题
 
@@ -109,7 +115,7 @@ knowledge_base/waveda_merged_markdown_kb_2026-07-07_final/sources
 
 ### setup_env.bat 安装依赖失败
 
-通常是网络问题。可以换网络后再运行一次。脚本会先使用默认 pip 源，失败后自动尝试清华 PyPI 镜像。
+如果项目内置的 `runtime/python` 存在，通常不会走联网安装依赖。只有缺少内置 Python、需要创建 `.venv` 时，才可能因为网络问题安装失败。可以换网络后再运行一次；脚本会先使用默认 pip 源，失败后自动尝试清华 PyPI 镜像。
 
 ### 没有 API Key 能不能用
 
