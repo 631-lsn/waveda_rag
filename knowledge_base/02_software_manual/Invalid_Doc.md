@@ -1,25 +1,24 @@
 ---
 title: "帮助文档暂未提供"
-merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Invalid_Doc.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Invalid_Doc.md"
 content_kind: "markdown"
-merged_at: "2026-07-07"
+updated_at: "2026-07-08"
+source_relative_path: "Invalid_Doc.html"
 ---
 
 # 帮助文档暂未提供
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Invalid_Doc.html`
-- 原始相对路径: `Invalid_Doc.html`
-- 知识模块: `基础介绍`
-
-## 正文抽取
-## 帮助文档暂未提供！
-
 当前功能尚未关联帮助文档。
 
-###### 可能原因：
+## 可能原因
 
-- 帮助文档尚未编写 - 帮助文档未建立链接
+- 该功能的帮助文档尚未编写。
+- 帮助文档已经存在，但软件中的帮助链接尚未建立。
+- 当前版本的帮助系统没有收录该页面。
 
-请联系相关负责人完善帮助文档。
+## 给用户的建议
+
+如果在 WavEDA 中点击帮助后进入本页，说明当前功能暂时没有可用说明。可以先查看相邻功能文档、团队教程或常见问题，也可以联系相关负责人补充帮助文档。
+
+## 图片说明
+
+本页没有有效图片资源需要提炼。

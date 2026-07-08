@@ -1,15 +1,13 @@
 ---
 title: "参数面"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Create_Face/Parametric_Face.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Create_Face\Parametric_Face.md"
+source_relative_path: "Modeling/Create_Face/Parametric_Face.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 参数面
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_Face\Parametric_Face.html`
 - 原始相对路径: `Modeling/Create_Face/Parametric_Face.html`
 - 知识模块: `建模总览`
 
@@ -18,8 +16,7 @@ merged_at: "2026-07-07"
 
 此对话框用于创建参数面。参数面可使用数字或变量(变量表达式)定义， 其位置支持全局坐标以及局部坐标定义。 每个参数面将被赋予一种材料，同时也会被赋予该材料的颜色属性。 参数面的名称为其唯一标识符，一旦一个新的参数面被定义，将在树-面这一栏中列出。下图为参数面的示意图：
 
-> 图片: `./images/Parametric_Face_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_Face\images\Parametric_Face_1.png`
+> 图示要点：`Parametric_Face_1.png` 展示“参数面”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 名称
 
@@ -57,10 +54,6 @@ merged_at: "2026-07-07"
 
 矩形， 椭圆， 多边形， 半椭球面， 圆锥面。
 
-## 图片资源
-
-1. `./images/Parametric_Face_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_Face\images\Parametric_Face_1.png`
-
 ## 页内/相关链接
 
 - 此对话框用于创建参数面。参数面可使用数字或变量: `../../Tool/Variables.html`
@@ -71,3 +64,10 @@ merged_at: "2026-07-07"
 - 矩形， 椭圆， 多边形: `./Polygon.html`
 - 矩形， 椭圆， 多边形， 半椭球面: `./Semiellipsoid_Face.html`
 - 矩形， 椭圆， 多边形， 半椭球面， 圆锥面: `./Cone_Face.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Parametric_Face_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_Face/images/Parametric_Face_1.png` | 展示“参数面”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

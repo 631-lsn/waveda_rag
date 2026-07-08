@@ -1,15 +1,13 @@
 ---
 title: "快捷键"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/EM_Project/HotKey.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\EM_Project\HotKey.md"
+source_relative_path: "EM_Project/HotKey.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 快捷键
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\HotKey.html`
 - 原始相对路径: `EM_Project/HotKey.html`
 - 知识模块: `EM设计与结果`
 
@@ -24,8 +22,7 @@ merged_at: "2026-07-07"
 
 最左边六个快捷键是选择切换快捷键，你可以调整WavEDA内光标对模型的选择类型。包括选择体、选择面、选择线、选择点、不同选择模式下WavEDA将提供不同的操作。
 
-> 图片: `./images/Shortcut_Key_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Shortcut_Key_1.png`
+> 图示要点：`Shortcut_Key_1.png` 展示“选择切换”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 选择体
 
@@ -55,8 +52,7 @@ merged_at: "2026-07-07"
 
 中间四个快捷键是视角切换捷键，可以调整模型模型在窗口的视角。包括重置视角、视图合适所选物体、放大、缩小。
 
-> 图片: `./images/Shortcut_Key_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Shortcut_Key_2.png`
+> 图示要点：`Shortcut_Key_2.png` 展示“视角切换”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 重置视角
 
@@ -78,8 +74,7 @@ merged_at: "2026-07-07"
 
 右边的五个快捷键是旋转切换快捷键，用户可以调整WavEDA内旋转方式。包括绕中心旋转、水平旋转、垂直旋转、微旋转、以及90°逆时针旋转。
 
-> 图片: `./images/Shortcut_Key_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Shortcut_Key_3.png`
+> 图示要点：`Shortcut_Key_3.png` 展示“旋转切换”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 绕中心旋转
 
@@ -101,14 +96,17 @@ merged_at: "2026-07-07"
 
 点击“90°逆时针旋转”，右击鼠标，WavEDA内模型旋转方式将转为90°逆时针旋转。
 
-## 图片资源
-
-1. `./images/Shortcut_Key_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Shortcut_Key_1.png`
-2. `./images/Shortcut_Key_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Shortcut_Key_2.png`
-3. `./images/Shortcut_Key_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Shortcut_Key_3.png`
-
 ## 页内/相关链接
 
 - - 选择切换: `#选择切换`
 - - 选择切换 - 视角切换: `#视角切换`
 - - 选择切换 - 视角切换 - 旋转切换: `#旋转切换`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Shortcut_Key_1.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Shortcut_Key_1.png` | 展示“选择切换”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Shortcut_Key_2.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Shortcut_Key_2.png` | 展示“视角切换”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Shortcut_Key_3.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Shortcut_Key_3.png` | 展示“旋转切换”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

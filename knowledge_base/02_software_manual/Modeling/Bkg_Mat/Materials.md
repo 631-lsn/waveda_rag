@@ -1,15 +1,13 @@
 ---
 title: "材料"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Bkg_Mat/Materials.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Bkg_Mat\Materials.md"
+source_relative_path: "Modeling/Bkg_Mat/Materials.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 材料
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\Materials.html`
 - 原始相对路径: `Modeling/Bkg_Mat/Materials.html`
 - 知识模块: `建模总览`
 
@@ -22,8 +20,7 @@ merged_at: "2026-07-07"
 
 ### 常规
 
-> 图片: `./images/Materials_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Materials_1.png`
+> 图示要点：`Materials_1.png` 展示“常规”相关的操作界面或示例，后续审查通过后再补图。
 
 在此界面中，可以设置基础的材料信息。
 
@@ -43,8 +40,7 @@ merged_at: "2026-07-07"
 
 - 用户色板：可以将常用的颜色保存到色板中，以便以后快速使用。
 
-> 图片: `./images/Materials_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Materials_2.png`
+> 图示要点：`Materials_2.png` 展示“材料类型”相关的操作界面或示例，后续审查通过后再补图。
 
 ##### 欧拉角
 
@@ -64,20 +60,17 @@ merged_at: "2026-07-07"
 
 - 检索：键入材料关键字，软件会根据字母关联度顺序弹出相关的材料。
 
-> 图片: `./images/Materials_7.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Materials_7.png`
+> 图示要点：`Materials_7.png` 展示“材料库”相关的操作界面或示例，后续审查通过后再补图。
 
 - 信息栏：选中材料后会在选项框右边信息栏中显示材料的具体属性参数。
 
-> 图片: `./images/Materials_8.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Materials_8.png`
+> 图示要点：`Materials_8.png` 展示“材料库”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 电磁
 
 如图所示，点击材料选项进入材料设置界面后，可点击电磁设置电磁仿真相关的材料参数。
 
-> 图片: `./images/Materials_5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Materials_5.png`
+> 图示要点：`Materials_5.png` 展示“电磁”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 常规材料
 
@@ -93,8 +86,7 @@ merged_at: "2026-07-07"
 
 - 矩阵编辑框输入矩阵：支持对角矩阵、对称矩阵和非对称矩阵输入，在左上角的下拉菜单中进行切换。双击要修改的矩阵位置，重新编辑该参数修改。
 
-> 图片: `./images/Materials_6.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Materials_6.png`
+> 图示要点：`Materials_6.png` 展示“相对介电常数”相关的操作界面或示例，后续审查通过后再补图。
 
 ##### 电导率
 
@@ -158,15 +150,6 @@ merged_at: "2026-07-07"
 
 用户根据需求设置相对磁导率、磁导率、磁损耗角正切。
 
-## 图片资源
-
-1. `./images/Materials_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Materials_1.png`
-2. `./images/Materials_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Materials_2.png`
-3. `./images/Materials_7.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Materials_7.png`
-4. `./images/Materials_8.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Materials_8.png`
-5. `./images/Materials_5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Materials_5.png`
-6. `./images/Materials_6.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Materials_6.png`
-
 ## 页内/相关链接
 
 - - 常规: `#常规`
@@ -182,3 +165,15 @@ merged_at: "2026-07-07"
 - 磁导率的各向异性：在下拉菜单选择各向异性，输入各向异性材料的矩阵。 矩阵的输入请参考相对介电常数: `#相对介电常数`
 - 在不同频率下展现出不同电磁性质的材料，主要表现为介电常数随频率的变化，在不同的频段中表现出不同的特性。 软件支持使用预设的色散模型或手动输入介电常数的频率依赖性。 单击“电介质色散”进入电介质色散材料设置。具体设置步骤查看电介质色散材料: `./Dielectric_Dispersion.html`
 - 磁响应随频率变化的材料。这类材料的磁特性不仅取决于外加磁场的强度，还与频率有关，通常表现为磁导率（μ）的频率依赖性。具体设置步骤查看磁介质色散材料: `./Magnetic_Dispersion.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Materials_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Materials_1.png` | 展示“常规”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Materials_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Materials_2.png` | 展示“材料类型”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Materials_7.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Materials_7.png` | 展示“材料库”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Materials_8.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Materials_8.png` | 展示“材料库”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Materials_5.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Materials_5.png` | 展示“电磁”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Materials_6.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Materials_6.png` | 展示“相对介电常数”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

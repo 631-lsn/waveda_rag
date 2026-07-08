@@ -1,15 +1,13 @@
 ---
 title: "设计列表"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/View/Design_list.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\View\Design_list.md"
+source_relative_path: "View/Design_list.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 设计列表
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\View\Design_list.html`
 - 原始相对路径: `View/Design_list.html`
 - 知识模块: `视图`
 
@@ -18,53 +16,48 @@ merged_at: "2026-07-07"
 
 视图选项框下设计列表选项包含模型、源、接收器集总端口、波端口、电路、边界信息，具备模型设计列表查看的功能
 
-> 图片: `./images/Design_list_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_1.png`
+> 图示要点：`Design_list_1.png` 展示“设计列表”相关的操作界面或示例，后续审查通过后再补图。
 
 设计列表选项功能介绍：
 
-> 图片: `./images/Design_list_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_2.png`
+> 图示要点：`Design_list_2.png` 展示“设计列表”相关的操作界面或示例，后续审查通过后再补图。
 
 - 模型：模型中单元名称、颜色、显示情况、材料、类型的展示
 
-> 图片: `./images/Design_list_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_3.png`
+> 图示要点：`Design_list_3.png` 展示“设计列表”相关的操作界面或示例，后续审查通过后再补图。
 
 - 激励源：模型中激励源名称、类型、描述的展示
 
-> 图片: `./images/Design_list_4.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_4.png`
+> 图示要点：`Design_list_4.png` 展示“设计列表”相关的操作界面或示例，后续审查通过后再补图。
 
 - 接收器：模型中接收器名称、类型、描述的展示
 
-> 图片: `./images/Design_list_5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_5.png`
+> 图示要点：`Design_list_5.png` 展示“设计列表”相关的操作界面或示例，后续审查通过后再补图。
 
 - 集总端口：模型中集总端口名称、类型、描述的展示
 
-> 图片: `./images/Design_list_6.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_6.png`
+> 图示要点：`Design_list_6.png` 展示“设计列表”相关的操作界面或示例，后续审查通过后再补图。
 
 - 波端口：模型中波导端口名称、类型、描述的展示
 
-> 图片: `./images/Design_list_7.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_7.png`
+> 图示要点：`Design_list_7.png` 展示“设计列表”相关的操作界面或示例，后续审查通过后再补图。
 
 - 电路：模型中电路器件名称、类型、描述的展示
 
-> 图片: `./images/Design_list_8.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_8.png`
+> 图示要点：`Design_list_8.png` 展示“设计列表”相关的操作界面或示例，后续审查通过后再补图。
 
 - 边界：模型中边界条件名称、类型、描述的展示
 
-## 图片资源
 
-1. `./images/Design_list_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_1.png`
-2. `./images/Design_list_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_2.png`
-3. `./images/Design_list_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_3.png`
-4. `./images/Design_list_4.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_4.png`
-5. `./images/Design_list_5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_5.png`
-6. `./images/Design_list_6.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_6.png`
-7. `./images/Design_list_7.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_7.png`
-8. `./images/Design_list_8.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\Design_list_8.png`
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Design_list_1.png | `wavEDA_docs/helpHtml/helpHtml/View/images/Design_list_1.png` | 展示“设计列表”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Design_list_2.png | `wavEDA_docs/helpHtml/helpHtml/View/images/Design_list_2.png` | 展示“设计列表”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Design_list_3.png | `wavEDA_docs/helpHtml/helpHtml/View/images/Design_list_3.png` | 展示“设计列表”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Design_list_4.png | `wavEDA_docs/helpHtml/helpHtml/View/images/Design_list_4.png` | 展示“设计列表”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Design_list_5.png | `wavEDA_docs/helpHtml/helpHtml/View/images/Design_list_5.png` | 展示“设计列表”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Design_list_6.png | `wavEDA_docs/helpHtml/helpHtml/View/images/Design_list_6.png` | 展示“设计列表”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Design_list_7.png | `wavEDA_docs/helpHtml/helpHtml/View/images/Design_list_7.png` | 展示“设计列表”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Design_list_8.png | `wavEDA_docs/helpHtml/helpHtml/View/images/Design_list_8.png` | 展示“设计列表”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

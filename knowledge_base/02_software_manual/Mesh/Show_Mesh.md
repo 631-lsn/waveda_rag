@@ -1,80 +1,80 @@
 ---
 title: "显示网格"
-merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Mesh/Show_Mesh.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Mesh\Show_Mesh.md"
 content_kind: "markdown"
-merged_at: "2026-07-07"
+updated_at: "2026-07-08"
+source_relative_path: "Mesh/Show_Mesh.html"
 ---
 
 # 显示网格
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\Show_Mesh.html`
-- 原始相对路径: `Mesh/Show_Mesh.html`
-- 知识模块: `网格`
+显示网格功能用于查看模型或局部对象的网格剖分情况，帮助判断网格是否过粗、过密、质量较差，或是否需要局部加密。
 
-## 正文抽取
-## 显示网格
+## 显示/隐藏网格入口
 
-#### 显示|隐藏网格
+### Show_Mesh_1.png：显示网格类型入口
 
-> 图片: `./images/Show_Mesh_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_1.png`
+图中展示“显示/隐藏网格”的几个入口：
 
-- 体积：选中“体积”选项，选中体结构即可查看网格剖分情况；右击左侧树上的“体”节点并点击“显示网格”则可以查看空气盒子的网格剖分情况
+- 体积：查看体结构或空气盒子的体网格剖分。
+- 表面：查看面结构网格，通常用于金属面等表面网格。
+- 路径：查看集总端口积分路径、直线或曲线上的网格划分。
+- 病态：检查网格质量较差的区域，用于定位可能影响仿真精度的位置。
 
-- 表面：选中“表面”选项，选中面即可查看面结构的网格，只可查看金属面的网格；
+## 病态网格检查
 
-- 路径：选中“路径”选项，可查看集总面端口积分路径及直/曲线上的网格划分情况；
+### Show_Mesh_2.png：病态网格分布
 
-- 病态：选中“病态”选项，用于检查测试模型网格剖分质量，查看网格剖分质量较差的区域，此部分网格倾斜度接近1，便于定位网格剖分质量较差的体/面，并在3D网格对其进行局部加密或在自适应网格界面调整自适应网格参数设置，以消除关键结构处病态网格，得到准确仿真结果。
+图中展示金属体上的病态网格分布。病态网格容易出现在小尺寸缝隙、小倒角、不光滑边界等局部结构处。若病态网格集中在关键电磁区域，可能需要在 3D 网格中做局部加密，或在自适应网格中调整参数。
 
-下图显示了一块金属体上病态网格（蓝色网格）分布情况，病态网格容易出现在小尺寸凹槽、小尺寸及不光滑倒角等结构处。
+## 显示网格窗口
 
-> 图片: `./images/Show_Mesh_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_2.png`
+### Show_Mesh_3.png：显示网格窗口
 
-在主界面或树上选中需要查看网格的体/面，右击，选中“显示网格”选项，即进入显示窗口界面。显示网格窗口左下角的文字信息标识当前窗口显示网格物体的数量已所显示物体网格的数量，可在此窗口的右下角选择显示或隐藏物体。
+图中展示进入显示网格窗口后的界面。用户可在主界面或工程树中选中需要查看的体、面或路径，右键选择“显示网格”。窗口左下角会显示当前窗口中网格对象和物体数量，右下角可选择显示或隐藏物体。
 
-> 图片: `./images/Show_Mesh_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_3.png`
+## 视图控制按钮
 
-> 图片: `./images/Show_Mesh_4.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_4.png`
+### Show_Mesh_4.png：上方左侧视图按钮
 
-> 图片: `./images/Show_Mesh_5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_5.png`
+图中按钮依次用于：
 
-> 图片: `./images/Show_Mesh_6.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_6.png`
+- 放大视图
+- 缩小视图
+- 重置或调整视图方向
+- 按当前视角逆时针旋转 90 度
+- 切换六个方向视图，便于从不同方向查看网格
 
-> 图片: `./images/Show_Mesh_7.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_7.png`
+### Show_Mesh_5.png：上方右侧显示按钮
 
-> 图片: `./images/Show_Mesh_8.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_8.png`
+图中按钮用于控制辅助显示：
 
-> 图片: `./images/Show_Mesh_9.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_9.png`
+- 显示或隐藏坐标轴
+- 显示或隐藏背景网格线
+- 显示或隐藏比例尺
+- 使用切割工具后重置网格显示
 
-#### 相关文档
+## 切割工具
 
-## 图片资源
+### Show_Mesh_6.png 与 Show_Mesh_7.png：切割查看内部网格
 
-1. `./images/Show_Mesh_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_1.png`
-2. `./images/Show_Mesh_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_2.png`
-3. `./images/Show_Mesh_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_3.png`
-4. `./images/Show_Mesh_4.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_4.png`
-5. `./images/Show_Mesh_5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_5.png`
-6. `./images/Show_Mesh_6.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_6.png`
-7. `./images/Show_Mesh_7.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_7.png`
-8. `./images/Show_Mesh_8.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_8.png`
-9. `./images/Show_Mesh_9.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Show_Mesh_9.png`
+图中展示切割工具界面。点击“更新工具”后，可通过设置原点、法向量和过滤器位置来切割物体，从而查看内部网格剖分情况。拖动滑动条可改变切割位置；点击“设置”可修改滑动条的大步长和小步长。
 
-## 页内/相关链接
+切割工具适合检查实体内部网格是否过密、是否存在局部畸变，以及关键结构内部网格是否足够精细。
 
-- 病态：选中“病态”选项，用于检查测试模型网格剖分质量，查看网格剖分质量较差的区域，此部分网格倾斜度接近1，便于定位网格剖分质量较差的体/面，并在3D网格: `./3D_Mesh.html`
-- 病态：选中“病态”选项，用于检查测试模型网格剖分质量，查看网格剖分质量较差的区域，此部分网格倾斜度接近1，便于定位网格剖分质量较差的体/面，并在3D网格对其进行局部加密或在自适应网格: `./Adaptive_Mesh.html`
-- 3D网格: `../Mesh/3D_Mesh.html`
-- 3D网格， 自适应网格: `../Mesh/Adaptive_Mesh.html`
-- 3D网格， 自适应网格， 导入自适应网格: `../Mesh/Import_Adaptive_Mesh.html`
+## 网格质量显示
+
+### Show_Mesh_8.png 与 Show_Mesh_9.png：按接受率或纵横比显示
+
+图中展示按网格质量指标着色的界面。勾选“以接受率显示”可以查看当前物体的网格剖分质量，颜色条用于表示不同质量范围。点击“查看图表”可查看不同质量区间下的网格数量分布。
+
+纵横比表示网格最大边长与最小边长的比值。一般来说，纵横比越小，网格形状越接近规则，网格质量越好。
+
+## 新手注意
+
+- 显示网格只是查看工具，不会直接改变仿真设置。
+- 如果病态网格出现在关键结构处，应回到 3D 网格或自适应网格中处理。
+- 小模型长时间卡在网格阶段时，可以用显示网格或病态网格检查来定位局部问题。
+
+## 后续图片补充
+
+图片资源位于官方帮助目录的 `Mesh/images/` 下，后续可将 `Show_Mesh_1.png` 到 `Show_Mesh_9.png` 加入知识库图片资源目录，并插入到本文对应小节。

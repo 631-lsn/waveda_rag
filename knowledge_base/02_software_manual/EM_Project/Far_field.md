@@ -1,139 +1,100 @@
 ---
-title: "远场"
-merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/EM_Project/Far_field.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\EM_Project\Far_field.md"
+title: "远场设置与结果查看"
 content_kind: "markdown"
-merged_at: "2026-07-07"
+updated_at: "2026-07-08"
+source_relative_path: "EM_Project/Far_field.html"
 ---
 
-# 远场
+# 远场设置与结果查看
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Far_field.html`
-- 原始相对路径: `EM_Project/Far_field.html`
-- 知识模块: `EM设计与结果`
+远场功能用于在仿真前设置远场监视频点，并在仿真后查看远场方向图、增益、轴比、功率和效率等结果。新手可以先把远场理解为“天线、辐射、散射类问题的后处理入口”。
 
-## 正文抽取
-## 远场
+通常仿真前只需要完成远场监视频点设置；端口激励组合既可以在仿真前设置，也可以在仿真后根据需要修改。仿真后修改远场端口激励组合时，通常可以立即查看对应结果，不需要重新运行整套仿真。
 
-- 远场 - 添加远场频点 - 编辑端口激励 - 删除所有结果 - 禁用远场仿真 - 添加轴比、增益频率曲线对应的监视频点与角度 - 远场仿真后结果查看
+## 常用流程
 
-这里主要用于仿真前添加远场场监视设置，以便仿真后能查看远场分布，仿真前一般只需要设置添加远场监视频点；仿真后可以根据需要编辑端口激励（也可以仿真前设置），主要分为以下步骤：
+1. 在工程树中找到远场节点。
+2. 右键远场节点，添加远场监视频点。
+3. 根据需要编辑端口激励组合。
+4. 可选：添加轴比或增益随频率变化的监视角度。
+5. 运行仿真。
+6. 在电磁结果的远场部分查看 3D 方向图、2D/1D 曲线、轴比、增益、功率、效率等结果。
 
-- 添加监视频点；
+## 远场入口
 
-- 编辑端口激励；
+远场入口通常位于左侧工程树的电磁相关节点下方。对远场节点右键，可以进入远场相关设置，例如添加远场频点、编辑端口激励、删除结果、禁用远场仿真等。
 
-- 删除所有结果；
+新手注意：如果没有设置远场监视频点，仿真结束后可能无法查看期望的远场结果。
 
-- 禁用远场仿真；
+## 添加远场监视频点
 
-- 添加轴比、增益频率曲线对应的监视频点与角度；
+右键远场节点后选择“添加远场频点”或类似选项，会进入远场监视频点设置对话框。常见频点设置方式包括：
 
-- 结果查看。
+- 单频点：只监视一个频率点。
+- 按步长取点：设置起始频率、结束频率和步长，例如 2.4 GHz 到 3 GHz，步长 0.2 GHz。
+- 按点数平均取点：设置起始频率、结束频率和频点数量，由软件按数量生成监视频点。
 
-### 远场
+输入需要的频点后点击“添加”，频点会出现在对话框右侧列表中。确认无误后点击“完成”。
 
-> 图片: `images/far_field1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field1.png`
+## 编辑端口激励
 
-如上图，在工程树左下方可以找到远场标识，对其右键可以进行相关设置。
+“编辑端口激励”用于设置远场计算时采用的端口激励组合。对话框中通常可设置每个端口或模式的幅度和相位。
 
-### 添加远场频点
+- 幅度默认单位一般为 W。
+- 幅度填 0 表示该端口或模式不参与激励。
+- 相位默认单位一般为度，也可以设置为其他角度。
+- 多端口或多模式时，可以通过不同幅度和相位组合观察不同激励条件下的远场。
 
-> 图片: `images/far_field2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field2.png`
+这部分设置和快照激励类似，主要影响远场后处理使用的激励组合。仿真后修改组合通常可以直接刷新查看对应远场结果。
 
-如图，在工程树上选中远场，右键，然后点击添加远场频点，进入如下对话框：
+## 删除结果与禁用远场
 
-> 图片: `images/far_field3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field3.png`
+“删除所有结果”会清除已经添加或生成的远场结果。执行前要确认是否还需要保留已有远场数据。
 
-在此对话框中可以根据需要添加对应的远场监视频点，先选择扫频方法，包括单频点，步长和频点数；
+“禁用远场仿真”表示关闭远场功能。禁用后，工程树中的远场标识通常会变暗；如果后续还需要远场结果，需要重新启用并确认监视频点设置。
 
-- 单频点表示只监视一个频点；
+## 轴比与增益频率曲线
 
-- 间隔取频点需要设定起始频点、结束频点，以及步长，比如添加2.4-3 GHz，步长为0.2 GHz；
+如果需要查看轴比或增益随频率变化的曲线，需要在已有远场监视频点基础上，进一步设置观察角度。
 
-- 另外平均取频点需要设定起始频点、结束频点，以及点数；
+常见设置包括：
 
-如上图，待输入需要的监视频点后，点击添加，此时远场监视频点就出现在对话框的右边方框内，之后点击下方完成，同时自动关闭该对话框。
+- 选择一个或多个频点。
+- 设置观察方向，例如 `phi = 30°`、`theta = 0°`。
+- 点击“添加”，再点击“完成”。
 
-### 编辑端口激励
+轴比-频率曲线和增益-频率曲线的设置方式相似，区别主要是最终查看的物理量不同。角度设置很重要：同一个结构在不同方向上的增益、轴比可能差异很大。
 
-> 图片: `images/far_field4.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field4.png`
+## 远场结果查看
 
-如图，点击编辑端口激励，进入如下对话框，在此可以设置需要的端口激励组合，其中幅度默认为1 W，幅度填0表示不进行激励；相位默认为0度，也可以设置其他角度，添加好激励组合后，可以点击完成，同时关闭该对话框。
+仿真完成后，在左侧工程树的“电磁结果”中找到远场部分。常见查看方式包括：
 
-> 图片: `images/far_field5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field5.png`
+- 点击远场结果节点查看已有频点。
+- 双击某个远场频点生成 3D 远场方向图。
+- 右键远场结果查看功率、效率、轴比、增益等相关曲线。
+- 对于平面波仿真，可查看 RCS 或散射相关结果。
 
-说明：上述该激励端口对话框的设置，可以在仿真运行前设置，也可以在仿真运行后设置（常用一般在仿真设置即可，并且运行后每次更改设置后，都可以立刻查看对应的远场结果，而不需要重新点击仿真运行）。
+如果结果列表为空，优先检查是否在仿真前添加了远场监视频点，是否启用了远场仿真，以及仿真是否正常完成。
 
-### 删除所有结果
+## 新手注意
 
-> 图片: `images/far_field6.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field6.png`
+- 远场适合天线、辐射、散射和开放空间问题；普通端口 S 参数问题不一定需要远场。
+- 添加频点越多，远场后处理数据越多，计算和存储开销也会增加。
+- 修改端口激励组合通常不需要重新仿真，但前提是相关远场数据已经在仿真中生成。
+- 查看轴比或增益频率曲线前，要确认频点和观察角度已经提前添加。
 
-如图，点击删除所有结果，则将刚才添加的远场监视频点删除。
+## 待补图片清单
 
-### 禁用远场仿真
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
 
-> 图片: `images/far_field7.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field7.png`
-
-如图，点击禁用远场仿真后，表示该功能关闭，相应的远场标识也变暗。
-
-> 图片: `images/far_field8.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field8.png`
-
-### 添加轴比、增益频率曲线对应的监视频点与角度
-
-> 图片: `images/far_field18.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field18.png`
-
-如图，点击增加轴比，进入如下对话框：
-
-> 图片: `images/far_field17.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field17.png`
-
-由于前面已经添加了远场监视频点，在该对话框中需要进一步添加轴比频率曲线需要查看的频点与对应的角度，如图，选择了4个频点，角度选取phi=30度,theta=0度, 然后点击添加，最后点击完成，如上图：
-
-另外添加增益频率曲线方法与上述添加轴比曲线相同。
-
-### 结果查看
-
-> 图片: `images/far_field9.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field9.png`
-
-如上图，经过前面提到仿真前添加远场监视频点后，仿真后可以在工程树左下角，找到电磁结果的远场部分，点击远场可以查看对应的远场结果； 直接双击远场结果各个频点，可以生成远场3D方向图，如下图，另外关于远场结果查看该部分的详细说明可以查看 电磁结果查看(远场部分）文档。
-
-> 图片: `images/far_field10.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field10.png`
-
-## 图片资源
-
-1. `images/far_field1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field1.png`
-2. `images/far_field2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field2.png`
-3. `images/far_field3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field3.png`
-4. `images/far_field4.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field4.png`
-5. `images/far_field5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field5.png`
-6. `images/far_field6.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field6.png`
-7. `images/far_field7.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field7.png`
-8. `images/far_field8.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field8.png`
-9. `images/far_field18.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field18.png`
-10. `images/far_field17.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field17.png`
-11. `images/far_field9.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field9.png`
-12. `images/far_field10.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\far_field10.png`
-
-## 页内/相关链接
-
-- - 远场: `#length`
-- - 远场 - 添加远场频点: `#F`
-- - 远场 - 添加远场频点 - 编辑端口激励: `#a`
-- - 远场 - 添加远场频点 - 编辑端口激励 - 删除所有结果: `#b`
-- - 远场 - 添加远场频点 - 编辑端口激励 - 删除所有结果 - 禁用远场仿真: `#c`
-- - 远场 - 添加远场频点 - 编辑端口激励 - 删除所有结果 - 禁用远场仿真 - 添加轴比、增益频率曲线对应的监视频点与角度: `#m`
-- - 远场 - 添加远场频点 - 编辑端口激励 - 删除所有结果 - 禁用远场仿真 - 添加轴比、增益频率曲线对应的监视频点与角度 - 远场仿真后结果查看: `#d`
-- 如上图，经过前面提到仿真前添加远场监视频点后，仿真后可以在工程树左下角，找到电磁结果的远场部分，点击远场可以查看对应的远场结果； 直接双击远场结果各个频点，可以生成远场3D方向图，如下图，另外关于远场结果查看该部分的详细说明可以查看 电磁结果查看(远场部分）: `./EM_Results.html`
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| far_field1.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field1.png` | 展示工程树中的远场节点入口。 |
+| far_field2.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field2.png` | 展示右键远场节点后的菜单，适合说明“添加远场频点”的入口。 |
+| far_field3.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field3.png` | 展示添加远场监视频点对话框，包含单频点、步长和点数设置。 |
+| far_field4.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field4.png` | 展示“编辑端口激励”的菜单入口。 |
+| far_field5.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field5.png` | 展示端口激励组合设置窗口，适合说明幅度、相位和端口组合。 |
+| far_field7.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field7.png` | 展示禁用远场仿真的菜单入口。 |
+| far_field17.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field17.png` | 展示轴比/增益频率曲线的频点和角度设置窗口。 |
+| far_field9.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field9.png` | 展示仿真后在电磁结果中查看远场结果的入口。 |
+| far_field10.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field10.png` | 展示远场 3D 方向图结果，可作为最终效果示例。 |

@@ -1,15 +1,13 @@
 ---
 title: "与坐标系平面对齐"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Model_Editing/Align.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Model_Editing\Align.md"
+source_relative_path: "Modeling/Model_Editing/Align.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 与坐标系平面对齐
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\Align.html`
 - 原始相对路径: `Modeling/Model_Editing/Align.html`
 - 知识模块: `建模总览`
 
@@ -18,8 +16,7 @@ merged_at: "2026-07-07"
 
 物体基于目标坐标系平面（如XOY、YOZ、XOZ平面），支持修改坐标系平面的位置对齐物体。用于调整对象的方向或位置，使其与特定坐标平面对齐。
 
-> 图片: `./images/Align_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Align_1.png`
+> 图示要点：`Align_1.png` 展示“与坐标系平面对齐”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 与YOZ平面对齐
 
@@ -37,10 +34,6 @@ merged_at: "2026-07-07"
 
 阵列复制， 移动， 镜像， 旋转， 缩放， 切割， 挖空。
 
-## 图片资源
-
-1. `./images/Align_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Align_1.png`
-
 ## 页内/相关链接
 
 - 阵列复制: `../Model_Editing/Array_Copy.html`
@@ -50,3 +43,10 @@ merged_at: "2026-07-07"
 - 阵列复制， 移动， 镜像， 旋转， 缩放: `../Model_Editing/Scale.html`
 - 阵列复制， 移动， 镜像， 旋转， 缩放， 切割: `../Model_Editing/Split.html`
 - 阵列复制， 移动， 镜像， 旋转， 缩放， 切割， 挖空: `../Model_Editing/Shell.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Align_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Align_1.png` | 展示“与坐标系平面对齐”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

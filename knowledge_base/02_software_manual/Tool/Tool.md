@@ -1,15 +1,13 @@
 ---
 title: "工具"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Tool/Tool.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Tool\Tool.md"
+source_relative_path: "Tool/Tool.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 工具
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Tool\Tool.html`
 - 原始相对路径: `Tool/Tool.html`
 - 知识模块: `工具`
 
@@ -20,8 +18,7 @@ merged_at: "2026-07-07"
 
 该页主要介绍各种常用的工具操作。
 
-> 图片: `./images/Tool.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Tool.png`
+> 图示要点：`Tool.png` 展示“工具”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 变量
 
@@ -47,10 +44,6 @@ merged_at: "2026-07-07"
 
 主要通过有理函数逼近频域响应曲线，以极点和零点的形式来表征传递函数的特征。 详细操作可以查看 矢量拟合文档。
 
-## 图片资源
-
-1. `./images/Tool.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Tool.png`
-
 ## 页内/相关链接
 
 - - 变量: `#变量`
@@ -65,3 +58,10 @@ merged_at: "2026-07-07"
 - 查看仿真过程中的详细日志与网格信息。 详细操作可以查看 详细日志: `./Details_Logs.html`
 - 用于仿真前对有损电介质的频率属性进行设置 详细操作可以查看 设计设置: `./Design_Setting.html`
 - 主要通过有理函数逼近频域响应曲线，以极点和零点的形式来表征传递函数的特征。 详细操作可以查看 矢量拟合: `./Vector_Fitting.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Tool.png | `wavEDA_docs/helpHtml/helpHtml/Tool/images/Tool.png` | 展示“工具”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

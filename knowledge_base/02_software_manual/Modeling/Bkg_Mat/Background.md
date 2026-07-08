@@ -1,15 +1,13 @@
 ---
 title: "背景"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Bkg_Mat/Background.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Bkg_Mat\Background.md"
+source_relative_path: "Modeling/Bkg_Mat/Background.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 背景
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\Background.html`
 - 原始相对路径: `Modeling/Bkg_Mat/Background.html`
 - 知识模块: `建模总览`
 
@@ -20,30 +18,30 @@ merged_at: "2026-07-07"
 
 背景选项可对计算区域内材料进行设置。
 
-> 图片: `./images/Background_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Background_1.png`
+> 图示要点：`Background_1.png` 展示“背景”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 均匀介质材料
 
 该处可设置计算区域为均匀材料，默认为均匀空气材料，可根据需要修改材料，可新建材料或选择材料库中材料。
 
-> 图片: `./images/Background_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Background_2.png`
+> 图示要点：`Background_2.png` 展示“均匀介质材料”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 层介质设置
 
 对计算区域可进行分层介质的设置，如图所示，点击层介质设置后，进行起始位置、堆叠方向、层厚度选择创建多层背景材料。
 
-> 图片: `./images/Background_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Background_3.png`
-
-## 图片资源
-
-1. `./images/Background_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Background_1.png`
-2. `./images/Background_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Background_2.png`
-3. `./images/Background_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Background_3.png`
+> 图示要点：`Background_3.png` 展示“层介质设置”相关的操作界面或示例，后续审查通过后再补图。
 
 ## 页内/相关链接
 
 - - 均匀介质材料: `#均匀介质材料`
 - - 均匀介质材料 - 层介质设置: `#层介质设置`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Background_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Background_1.png` | 展示“背景”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Background_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Background_2.png` | 展示“均匀介质材料”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Background_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Background_3.png` | 展示“层介质设置”步骤的菜单或参数界面，便于新人按界面完成操作。 |

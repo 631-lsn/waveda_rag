@@ -1,15 +1,13 @@
 ---
 title: "主页"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/File/Homepage.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\File\Homepage.md"
+source_relative_path: "File/Homepage.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 主页
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\File\Homepage.html`
 - 原始相对路径: `File/Homepage.html`
 - 知识模块: `文件与主页`
 
@@ -18,8 +16,7 @@ merged_at: "2026-07-07"
 
 主页的功能介绍，如下图示意，左侧的矩形框内包含着WavEDA文件的快捷键，每个快捷键表示菜单中的一个可用命令。初始功能（打开/导入，关闭，保存，另存为）提供了用于添加和打开项目，选择求解器，查看案例或者寻求帮助。右侧的矩形框内包含历史文件。单击文件名后，中间的矩形框内是图像显示窗口会显示文件对应模型。 点击后可以快速进入。底部的矩形框包含着WavEDA文件的仿真模块。
 
-> 图片: `./images/Homepage_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\File\images\Homepage_2.png`
+> 图示要点：`Homepage_2.png` 展示“主页”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 打开
 
@@ -49,11 +46,14 @@ merged_at: "2026-07-07"
 
 点击帮助，可打开WavEDA的帮助文档。
 
-## 图片资源
-
-1. `./images/Homepage_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\File\images\Homepage_2.png`
-
 ## 页内/相关链接
 
 - 点击选项: `../File/Options.html`
 - 点击帮助: `../Introduction.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Homepage_2.png | `wavEDA_docs/helpHtml/helpHtml/File/images/Homepage_2.png` | 展示“主页”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

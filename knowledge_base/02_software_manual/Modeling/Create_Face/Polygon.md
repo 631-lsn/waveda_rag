@@ -1,15 +1,13 @@
 ---
 title: "多边形面"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Create_Face/Polygon.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Create_Face\Polygon.md"
+source_relative_path: "Modeling/Create_Face/Polygon.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 多边形面
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_Face\Polygon.html`
 - 原始相对路径: `Modeling/Create_Face/Polygon.html`
 - 知识模块: `建模总览`
 
@@ -18,8 +16,7 @@ merged_at: "2026-07-07"
 
 此对话框用于创建多边形面。多边形尺寸可使用数字或变量(变量表达式)输入， 其位置支持全局坐标以及变量定义。 每个多边形将被赋予一种材料，同时也会被赋予该材料的颜色属性。 多边形的名称为其唯一标识符，一旦一个新的多边形被定义，将在树-面这一栏中列出。下图为多边形的示意图：
 
-> 图片: `./images/Polygon_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_Face\images\Polygon_1.png`
+> 图示要点：`Polygon_1.png` 展示“多边形”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 名称
 
@@ -45,8 +42,7 @@ merged_at: "2026-07-07"
 
 如下图所示，若勾选该规则多边形复选框，则底部建模为正多边形。
 
-> 图片: `./images/Polygon_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_Face\images\Polygon_2.png`
+> 图示要点：`Polygon_2.png` 展示“规则多边形复选框”相关的操作界面或示例，后续审查通过后再补图。
 
 反之若需创建底面为非正多边形面，可点击编辑多边形，进入编辑多边形窗口窗口。
 
@@ -66,11 +62,6 @@ merged_at: "2026-07-07"
 
 矩形， 椭圆， 参数面， 半椭球面， 圆锥面。
 
-## 图片资源
-
-1. `./images/Polygon_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_Face\images\Polygon_1.png`
-2. `./images/Polygon_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_Face\images\Polygon_2.png`
-
 ## 页内/相关链接
 
 - 此对话框用于创建多边形面。多边形尺寸可使用数字或变量: `../../Tool/Variables.html`
@@ -82,3 +73,11 @@ merged_at: "2026-07-07"
 - 矩形， 椭圆， 参数面: `./Parametric_Face.html`
 - 矩形， 椭圆， 参数面， 半椭球面: `./Semiellipsoid_Face.html`
 - 矩形， 椭圆， 参数面， 半椭球面， 圆锥面: `./Cone_Face.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Polygon_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_Face/images/Polygon_1.png` | 展示“多边形”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Polygon_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_Face/images/Polygon_2.png` | 展示“规则多边形复选框”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

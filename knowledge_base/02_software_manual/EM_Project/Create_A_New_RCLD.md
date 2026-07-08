@@ -1,66 +1,72 @@
 ---
-title: "Circuit"
-merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/EM_Project/Create_A_New_RCLD.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\EM_Project\Create_A_New_RCLD.md"
+title: "创建集总元件 RCLD"
 content_kind: "markdown"
-merged_at: "2026-07-07"
+updated_at: "2026-07-08"
+source_relative_path: "EM_Project/Create_A_New_RCLD.html"
 ---
 
-# Circuit
+# 创建集总元件 RCLD
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Create_A_New_RCLD.html`
-- 原始相对路径: `EM_Project/Create_A_New_RCLD.html`
-- 知识模块: `EM设计与结果`
+本页说明如何在 EM 仿真前添加电路器件，使后续仿真结果包含场路联合效应。常见集总元件包括电阻、电感和电容。
 
-## 正文抽取
-## 创建集总元件
+## 使用场景
 
-- 集总元件添加
+当模型中需要在两个选定点之间加入等效电路器件时，可以使用 RCL/RCLD 类集总元件。它常用于把局部结构和电路行为关联起来，例如在两个端点之间加入电阻、电感或电容。
 
-这里主要用于在进行EM仿真前添加电路器件；
+## 图示要点
 
-### 集总元件添加
+### circuit0.png：工程树中的 RCL 入口
 
-> 图片: `images/circuit0.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\circuit0.png`
+图中展示左侧工程树的“电路”节点，节点下方有 `RCL` 项。新建集总元件通常从该电路模块下的 RCL 入口开始。
 
-如下图：右键电路模块下方RCL，可以创建电阻、电感、电容元件；
+### circuit1.png：RCL 右键菜单
 
-> 图片: `images/circuit1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\circuit1.png`
+图中展示在 `RCL` 上右键后的菜单，可选择：
 
-在此注意：如果直接点击创建电阻、电感、电容元件则出现如下提示警告：
+- 创建电阻元件
+- 创建电感元件
+- 创建电容元件
 
-> 图片: `images/circuit2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\circuit2.png`
+这说明 RCL 入口不是单一元件，而是用于创建多类集总电路器件。
 
-因此类似创建集总端口一样，需要先选择两个点（比如，下图中选择1,2两点表示在这两个点之间进行器件添加），然后如上述右键电路RCL进入创建器件，或者如下图：直接在选两点后，模型窗口中右键，选择创建电路器件进行添加；
+### circuit2.png：未选择两个点时的警告
 
-> 图片: `images/circuit3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\circuit3.png`
+图中提示：“请选择两个点可创建 RLC 元件。”这表示创建集总元件前必须先在模型中选定两个端点，否则软件无法确定元件连接位置和电流方向。
 
-比如，如上图，点击需要创建电感元件，进入如下对话框：
+### circuit3.png：选中两个点后的右键创建方式
 
-> 图片: `images/circuit4.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\circuit4.png`
+图中展示了在模型窗口中选中两个点后右键的菜单。可以从“创建端口”相关菜单进入，并选择创建电阻、电感或电容元件。图中的点 1 和点 2 表示元件连接在这两个点之间。
 
-在此可以添加或者更改设置端口器件类型、器件值大小、单位等，同时可以预览（如下图），最后点击完成，同时关闭对话框；
+### circuit4.png：编辑集总元件参数
 
-> 图片: `images/circuit5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\circuit5.png`
+图中展示“编辑集总元件”对话框。可设置内容包括：
 
-经过以上在仿真前完成添加电路器件后，之后仿真运行得到的结果就是场路联合的结果。
+- 名称，例如 `L_1`
+- 类型，例如电阻、电感、电容
+- 元件数值，例如电感值 `50`
+- 单位，例如 `nH`
+- 电流方向，表格中包含正极和负极坐标
+- 预览、完成、取消和帮助按钮
 
-## 图片资源
+### circuit5.png：预览集总元件
 
-1. `images/circuit0.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\circuit0.png`
-2. `images/circuit1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\circuit1.png`
-3. `images/circuit2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\circuit2.png`
-4. `images/circuit3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\circuit3.png`
-5. `images/circuit4.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\circuit4.png`
-6. `images/circuit5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\circuit5.png`
+图中展示点击“预览”后的状态。预览用于确认元件位置、电流方向和正负端点是否符合预期。确认无误后点击“完成”，并关闭对话框。
 
-## 页内/相关链接
+## 操作流程
 
-- - 集总元件添加: `#length`
+1. 在模型中选择两个端点。
+2. 在工程树的“电路 -> RCL”上右键，或在模型窗口中右键打开创建菜单。
+3. 选择创建电阻、电感或电容元件。
+4. 在编辑对话框中设置元件名称、类型、数值、单位和方向。
+5. 点击“预览”检查元件连接关系。
+6. 点击“完成”保存设置。
+
+## 新手注意
+
+- 必须先选择两个点，否则会出现“请选择两个点可创建 RLC 元件”的警告。
+- 集总元件连接方向由两个端点决定，预览时要确认正负极是否符合物理预期。
+- 添加电路器件后，仿真结果会体现 EM 场和电路元件共同作用的结果。
+
+## 后续图片补充
+
+图片资源位于官方帮助目录的 `EM_Project/images/` 下，后续可将 `circuit0.png` 到 `circuit5.png` 加入知识库图片资源目录，并在本文对应图示要点处插入。

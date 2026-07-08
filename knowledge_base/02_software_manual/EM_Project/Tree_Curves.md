@@ -1,15 +1,13 @@
 ---
 title: "线节点"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/EM_Project/Tree_Curves.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\EM_Project\Tree_Curves.md"
+source_relative_path: "EM_Project/Tree_Curves.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 线节点
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Tree_Curves.html`
 - 原始相对路径: `EM_Project/Tree_Curves.html`
 - 知识模块: `EM设计与结果`
 
@@ -20,8 +18,7 @@ merged_at: "2026-07-07"
 
 这里是线的右击功能介绍，如下图示意，右击程序树上的线内可触发一些快捷键，每个快捷键表示菜单中的一个可用命令。
 
-> 图片: `./images/Curves_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Curves_1.png`
+> 图示要点：`Curves_1.png` 展示“线节点”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 创建线
 
@@ -35,15 +32,13 @@ merged_at: "2026-07-07"
 
 创建线段后，在右击该线段，出现如下方的菜单栏，可对该线段进行编辑。属性栏向右继续衍生内可对该线段的三维尺寸、材料、网格尺寸进行修改。
 
-> 图片: `./images/Curves_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Curves_2.png`
+> 图示要点：`Curves_2.png` 展示“属性”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 以所选曲线围成面
 
 以所选曲线围成面仅针对闭合曲线，右击该功能，闭合的曲线将生成一个面。同时程序树上线内的子节点将被删除，生成的面将被放置到程序树下面的子节点内。过程如下图，左图的闭合曲线可以通过该功能得到右图的面。
 
-> 图片: `./images/Curves_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Curves_3.png`
+> 图示要点：`Curves_3.png` 展示“以所选曲线围成面”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 沿轴扫描
 
@@ -56,12 +51,6 @@ merged_at: "2026-07-07"
 ### 其他功能
 
 除上述功能外，右击线还有其他的快捷功能，支持删除所有线段、复制粘贴线段、是否显示或隐藏部分线段。以及建模窗口上部的所有转换移动操作均可以在右击菜单栏内使用。
-
-## 图片资源
-
-1. `./images/Curves_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Curves_1.png`
-2. `./images/Curves_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Curves_2.png`
-3. `./images/Curves_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Curves_3.png`
 
 ## 页内/相关链接
 
@@ -78,3 +67,12 @@ merged_at: "2026-07-07"
 - 右击线可看见展开的几个节点，创建线内包括创建直线、创建弧线、创建折线、创建参数曲线: `../Modeling/Create_Curve/Parametric_Curve.html`
 - 线段生成面可以使用沿轴扫描: `./Sweep_Along_Axis.html`
 - 线段生成面可以使用沿路径扫描: `./Sweep_Along_Path.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Curves_1.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Curves_1.png` | 展示“线节点”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Curves_2.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Curves_2.png` | 展示“属性”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Curves_3.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Curves_3.png` | 展示“以所选曲线围成面”的结果入口或查看界面，便于新人确认后处理位置。 |

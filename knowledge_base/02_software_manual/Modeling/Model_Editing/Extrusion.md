@@ -1,23 +1,20 @@
 ---
 title: "从现有面拉伸成体"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Model_Editing/Extrusion.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Model_Editing\Extrusion.md"
+source_relative_path: "Modeling/Model_Editing/Extrusion.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 从现有面拉伸成体
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\Extrusion.html`
 - 原始相对路径: `Modeling/Model_Editing/Extrusion.html`
 - 知识模块: `建模总览`
 
 ## 正文抽取
 ## 从现有面拉伸成体
 
-> 图片: `./images/Extrusion_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_1.png`
+> 图示要点：`Extrusion_1.png` 展示“从现有面拉伸成体”相关的操作界面或示例，后续审查通过后再补图。
 
 此功能可以将面转换成体，同时也可以转换成特定的锥体。可以在界面上方修改拉伸体的名称。
 
@@ -25,8 +22,7 @@ merged_at: "2026-07-07"
 
 选择要拉伸的二维形状，可以是一个简单的轮廓（如矩形、圆形、多边形等）。软件只支持对单个面进行突出。 切换到选面模式，选择要应用面突出的面。选中主菜单栏“建模”->“形状”下的“从现有面拉伸成体”
 
-> 图片: `./images/Extrusion_7.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_7.png`
+> 图示要点：`Extrusion_7.png` 展示“激活拉伸功能”相关的操作界面或示例，后续审查通过后再补图。
 
 图标。
 
@@ -34,26 +30,21 @@ merged_at: "2026-07-07"
 
 设置参数为选中的面拉伸成体的高度。以长方体为示例操作，选择长方体的顶面作为操作面。
 
-> 图片: `./images/Extrusion_6.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_6.png`
+> 图示要点：`Extrusion_6.png` 展示“高度”相关的操作界面或示例，后续审查通过后再补图。
 
 设置高度为200，原始模型高度为100，点击“预览”，可以看到拉伸后的模型高度为原始模型的两倍。
 
-> 图片: `./images/Extrusion_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_1.png`
+> 图示要点：`Extrusion_1.png` 展示“高度”相关的操作界面或示例，后续审查通过后再补图。
 
-> 图片: `./images/Extrusion_5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_5.png`
+> 图示要点：`Extrusion_5.png` 展示“高度”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 锥形化
 
 此参数是将面拉伸成锥体需要转换的角度，设置后可以得到以选中面为底面，高度为200，推出锥形化角度为45°的锥体。
 
-> 图片: `./images/Extrusion_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_2.png`
+> 图示要点：`Extrusion_2.png` 展示“锥形化”相关的操作界面或示例，后续审查通过后再补图。
 
-> 图片: `./images/Extrusion_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_3.png`
+> 图示要点：`Extrusion_3.png` 展示“锥形化”相关的操作界面或示例，后续审查通过后再补图。
 
 注意：可以选择矩形和圆形拉伸成锥体，但是不规则的多边形不支持使用该功能，锥形化只能为默认参数0。
 
@@ -69,18 +60,20 @@ merged_at: "2026-07-07"
 
 倒斜角， 面平移调整， 倒圆角。
 
-## 图片资源
-
-1. `./images/Extrusion_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_1.png`
-2. `./images/Extrusion_7.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_7.png`
-3. `./images/Extrusion_6.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_6.png`
-4. `./images/Extrusion_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_1.png`
-5. `./images/Extrusion_5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_5.png`
-6. `./images/Extrusion_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_2.png`
-7. `./images/Extrusion_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extrusion_3.png`
-
 ## 页内/相关链接
 
 - 倒斜角: `../Model_Editing/Chamfer_Edges.html`
 - 倒斜角， 面平移调整: `../Model_Editing/Move_Face_To_Modify_Solid.html`
 - 倒斜角， 面平移调整， 倒圆角: `../Model_Editing/Blend_Edges.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Extrusion_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Extrusion_1.png` | 展示“从现有面拉伸成体”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Extrusion_7.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Extrusion_7.png` | 展示“激活拉伸功能”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Extrusion_6.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Extrusion_6.png` | 展示“高度”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Extrusion_5.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Extrusion_5.png` | 展示“高度”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Extrusion_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Extrusion_2.png` | 展示“锥形化”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Extrusion_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Extrusion_3.png` | 展示“锥形化”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

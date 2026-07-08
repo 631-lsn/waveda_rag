@@ -1,15 +1,13 @@
 ---
 title: "扩展操作"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Model_Editing/Extended_Operations.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Model_Editing\Extended_Operations.md"
+source_relative_path: "Modeling/Model_Editing/Extended_Operations.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 扩展操作
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\Extended_Operations.html`
 - 原始相对路径: `Modeling/Model_Editing/Extended_Operations.html`
 - 知识模块: `建模总览`
 
@@ -24,8 +22,7 @@ merged_at: "2026-07-07"
 
 步骤：在选面模式下选中现有模型几何上的面，右击菜单栏中选择“面操作”->“在选中的面上创建一个面”。此时可以在工程树上面节点下，查看到创建的新的面"face_1"。
 
-> 图片: `./images/Extended_Operations_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extended_Operations_1.png`
+> 图示要点：`Extended_Operations_1.png` 展示“在选定面上创建一个面”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 加厚面
 
@@ -37,8 +34,7 @@ merged_at: "2026-07-07"
 
 步骤：在选面模式下，选中特征操作的几何上的面，右击菜单栏中选择“面操作”->“移除特征”。此时可以看到该面上的特征操作（示例中的倒圆角面）被删除。
 
-> 图片: `./images/Extended_Operations_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extended_Operations_2.png`
+> 图示要点：`Extended_Operations_2.png` 展示“移除特征”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 在选定面上挖空体
 
@@ -50,8 +46,7 @@ merged_at: "2026-07-07"
 
 步骤：在选面模式下，选中第一个体（工具体）上的一个面，再选择第二体（基体）的一个面作为参考面，右击菜单栏中选择“面操作”->“在选定面上对齐体”。可以看到两个体分别以选中的两个目标面的中点为中心，并以第二个体的面为参考面对齐在一起。
 
-> 图片: `./images/Extended_Operations_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extended_Operations_3.png`
+> 图示要点：`Extended_Operations_3.png` 展示“在选定面上对齐体”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 连接
 
@@ -59,15 +54,13 @@ merged_at: "2026-07-07"
 
 步骤：在选面模式下，选中第一个体上的一个面，再选择第二体的一个面，右击菜单栏中选择“连接两个面创建一个体”。可以看到两个目标面的连接起来生成一个体。
 
-> 图片: `./images/Extended_Operations_4.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extended_Operations_4.png`
+> 图示要点：`Extended_Operations_4.png` 展示“连接”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 基于LCS(UV)切割物体
 
 开启局部坐标系，根据局部坐标系的UV轴切割物体。可以修改局部坐标系的方向以及位置来确定切割平面。
 
-> 图片: `./images/Extended_Operations_5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extended_Operations_5.png`
+> 图示要点：`Extended_Operations_5.png` 展示“基于LCS(UV)切割物体”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 分割
 
@@ -80,14 +73,6 @@ merged_at: "2026-07-07"
 #### 沿路径扫描
 
 沿路径扫描得到的几何，通过两条线用于生成面，且原始线的起点和终点将作为生成面的其中一条边。具体操作可以查看沿路径扫描。
-
-## 图片资源
-
-1. `./images/Extended_Operations_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extended_Operations_1.png`
-2. `./images/Extended_Operations_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extended_Operations_2.png`
-3. `./images/Extended_Operations_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extended_Operations_3.png`
-4. `./images/Extended_Operations_4.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extended_Operations_4.png`
-5. `./images/Extended_Operations_5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Extended_Operations_5.png`
 
 ## 页内/相关链接
 
@@ -105,3 +90,14 @@ merged_at: "2026-07-07"
 - 通过选定体上的目标面，给定挖空后物体的厚度以及挖空后物体的延伸方向进行挖空。延伸方向可选择向内、向外或者两边均延伸。具体操作可以查看 挖空: `./Shell.html`
 - 用于创建体，在设置窗口进行旋转轴以及旋转角度的设置。具体操作可以查看沿轴扫描: `../../EM_Project/Sweep_Along_Axis.html`
 - 沿路径扫描得到的几何，通过两条线用于生成面，且原始线的起点和终点将作为生成面的其中一条边。具体操作可以查看沿路径扫描: `../../EM_Project/Sweep_Along_Path.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Extended_Operations_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Extended_Operations_1.png` | 展示“在选定面上创建一个面”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Extended_Operations_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Extended_Operations_2.png` | 展示“移除特征”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Extended_Operations_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Extended_Operations_3.png` | 展示“在选定面上对齐体”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Extended_Operations_4.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Extended_Operations_4.png` | 展示“连接”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Extended_Operations_5.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Extended_Operations_5.png` | 展示“基于LCS(UV)切割物体”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

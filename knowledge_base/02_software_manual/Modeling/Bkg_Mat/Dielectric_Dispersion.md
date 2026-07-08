@@ -1,15 +1,13 @@
 ---
 title: "电色散材料"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Bkg_Mat/Dielectric_Dispersion.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Bkg_Mat\Dielectric_Dispersion.md"
+source_relative_path: "Modeling/Bkg_Mat/Dielectric_Dispersion.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 电色散材料
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\Dielectric_Dispersion.html`
 - 原始相对路径: `Modeling/Bkg_Mat/Dielectric_Dispersion.html`
 - 知识模块: `建模总览`
 
@@ -22,8 +20,7 @@ merged_at: "2026-07-07"
 
 ### 电介质色散
 
-> 图片: `./images/Dielectric_Dispersion_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Dielectric_Dispersion_1.png`
+> 图示要点：`Dielectric_Dispersion_1.png` 展示“电介质色散”相关的操作界面或示例，后续审查通过后再补图。
 
 - 选择色散模型或是用户自定义。
 
@@ -37,23 +34,24 @@ merged_at: "2026-07-07"
 
 ### 拟合
 
-> 图片: `./images/Dielectric_Dispersion_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Dielectric_Dispersion_2.png`
+> 图示要点：`Dielectric_Dispersion_2.png` 展示“拟合”相关的操作界面或示例，后续审查通过后再补图。
 
 - 列表 频率(GHz)：该列是色散材料的频率，需要指定频率范围。 软件允许用户为材料的色散特性指定一个频率范围，在此范围内，软件将计算材料的介电常数，并根据频率依赖关系更新介电常数。 注意此处的频率支持支以GHz为单位的色散材料频率范围。 Eps′：表示材料的介电常数的实部，是材料的储能能力，决定了电场传播的速度。高Eps′的材料可以较慢地传播电磁波。 Eps′′：表示材料的介电常数的虚部，与材料的损耗相关，反映了材料对电磁波的吸收。 插入行：用户自定义色散参数，根据需要插入合适的行数。 删除行：根据需要删除不需要的行，选中目标行，点击“删除行”，完成删除行。 清除列表：点击此处清空列表所有内容。 导入文件：支持导入预设的色散模型，只支持txt格式导入。 导出文件：支持列表中的数据导出到外部文件。支持txt格式导出。
 
-> 图片: `./images/Dielectric_Dispersion_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Dielectric_Dispersion_3.png`
+> 图示要点：`Dielectric_Dispersion_3.png` 展示“拟合”相关的操作界面或示例，后续审查通过后再补图。
 
 - 拟合结果图 根据左侧列表输入的参数，点击“更新结果”，软件提供拟合工具，通过最小化残差来优化这些参数，确保模型与实验数据尽可能吻合。 在拟合结果图中，你可以看到四条曲线，分别是初始的Eps′曲线、拟合后的Eps′曲线、初始的Eps′曲线和拟合后的Eps′′曲线。 拟合频率：设置用户想要查看的拟合范围，点击“更新结果”，可以看到用户自定义的拟合曲线。
-
-## 图片资源
-
-1. `./images/Dielectric_Dispersion_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Dielectric_Dispersion_1.png`
-2. `./images/Dielectric_Dispersion_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Dielectric_Dispersion_2.png`
-3. `./images/Dielectric_Dispersion_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Dielectric_Dispersion_3.png`
 
 ## 页内/相关链接
 
 - - 电介质色散: `#电介质色散`
 - - 电介质色散 - 拟合: `#拟合`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Dielectric_Dispersion_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Dielectric_Dispersion_1.png` | 展示“电介质色散”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Dielectric_Dispersion_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Dielectric_Dispersion_2.png` | 展示“拟合”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Dielectric_Dispersion_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Dielectric_Dispersion_3.png` | 展示“拟合”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

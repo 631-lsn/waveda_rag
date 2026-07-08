@@ -1,15 +1,13 @@
 ---
 title: "阵列复制"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Model_Editing/Array_Copy.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Model_Editing\Array_Copy.md"
+source_relative_path: "Modeling/Model_Editing/Array_Copy.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 阵列复制
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\Array_Copy.html`
 - 原始相对路径: `Modeling/Model_Editing/Array_Copy.html`
 - 知识模块: `建模总览`
 
@@ -18,8 +16,7 @@ merged_at: "2026-07-07"
 
 阵列复制可用于将物体进行多方向上（单次最多在三个方向上）等间距多次复制，该功能只能在选中物体后才会被激活， 且可通过预览按钮检查阵列复制的正确性。
 
-> 图片: `./images/Array_Copy_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Array_Copy_1.png`
+> 图示要点：`Array_Copy_1.png` 展示“阵列复制”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 阵列名称
 
@@ -29,8 +26,7 @@ merged_at: "2026-07-07"
 
 如下图所示，WavEDA默认启用方向一方向的阵列复制。
 
-> 图片: `./images/Array_Copy_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Array_Copy_2.png`
+> 图示要点：`Array_Copy_2.png` 展示“阵列属性”相关的操作界面或示例，后续审查通过后再补图。
 
 启用方向后，可通过“位移”和“复制数量”确定阵列复制属性。其中“位移”可通过选点确定，在选点模式下选中两点，点击“选点”按钮即可。
 
@@ -42,18 +38,11 @@ merged_at: "2026-07-07"
 
 球体向X和Y方向同时阵列复制十次，效果如下图。
 
-> 图片: `./images/Array_Copy_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Array_Copy_3.png`
+> 图示要点：`Array_Copy_3.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 相关文档
 
 移动， 镜像， 旋转， 缩放， 切割， 与坐标系平面对齐， 挖空。
-
-## 图片资源
-
-1. `./images/Array_Copy_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Array_Copy_1.png`
-2. `./images/Array_Copy_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Array_Copy_2.png`
-3. `./images/Array_Copy_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Array_Copy_3.png`
 
 ## 页内/相关链接
 
@@ -64,3 +53,12 @@ merged_at: "2026-07-07"
 - 移动， 镜像， 旋转， 缩放， 切割: `../Model_Editing/Split.html`
 - 移动， 镜像， 旋转， 缩放， 切割， 与坐标系平面对齐: `../Model_Editing/Align.html`
 - 移动， 镜像， 旋转， 缩放， 切割， 与坐标系平面对齐， 挖空: `../Model_Editing/Shell.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Array_Copy_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Array_Copy_1.png` | 展示“阵列复制”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Array_Copy_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Array_Copy_2.png` | 展示“阵列属性”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Array_Copy_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Array_Copy_3.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

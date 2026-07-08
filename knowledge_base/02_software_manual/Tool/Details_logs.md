@@ -1,15 +1,13 @@
 ---
 title: "详细日志"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Tool/Details_logs.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Tool\Details_logs.md"
+source_relative_path: "Tool/Details_logs.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 详细日志
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Tool\Details_logs.html`
 - 原始相对路径: `Tool/Details_logs.html`
 - 知识模块: `工具`
 
@@ -40,8 +38,7 @@ merged_at: "2026-07-07"
 
 - 仿真时间（包括仿真起始、终止、网格剖分、求解过程等时间）；
 
-> 图片: `images/Details_logs1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Details_logs1.png`
+> 图示要点：`Details_logs1.png` 展示“详细信息”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 网格
 
@@ -57,8 +54,7 @@ merged_at: "2026-07-07"
 
 如下图：
 
-> 图片: `images/Details_logs2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Details_logs2.png`
+> 图示要点：`Details_logs2.png` 展示“网格”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 网格数量
 
@@ -66,17 +62,19 @@ merged_at: "2026-07-07"
 
 图中左边显示物体名称，右边显示对应的网格数量，如下图：
 
-> 图片: `images/Details_logs3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Details_logs3.png`
-
-## 图片资源
-
-1. `images/Details_logs1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Details_logs1.png`
-2. `images/Details_logs2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Details_logs2.png`
-3. `images/Details_logs3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Details_logs3.png`
+> 图示要点：`Details_logs3.png` 展示“网格数量”相关的操作界面或示例，后续审查通过后再补图。
 
 ## 页内/相关链接
 
 - - 详细信息: `#详细信息`
 - - 详细信息 - 网格: `#网格`
 - - 详细信息 - 网格 - 网格数量: `#网格数量`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Details_logs1.png | `wavEDA_docs/helpHtml/helpHtml/Tool/images/Details_logs1.png` | 展示“详细信息”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Details_logs2.png | `wavEDA_docs/helpHtml/helpHtml/Tool/images/Details_logs2.png` | 展示“网格”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Details_logs3.png | `wavEDA_docs/helpHtml/helpHtml/Tool/images/Details_logs3.png` | 展示“网格数量”的结果入口或查看界面，便于新人确认后处理位置。 |
