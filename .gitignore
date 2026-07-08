@@ -1,16 +1,20 @@
-# API密钥 - 不要提交到Git
+﻿# Local secrets
 config/.env
+.env
 
-# 知识库索引（本地重建，不需要Git追踪）
+# Generated knowledge index and manifests
 data/index/
 data/processed_chunks.json
+data/raw_manifest.json
 
-# Python环境
+# Local Python environments and temporary files
 runtime/
+.venv/
+.tmp/
 __pycache__/
 *.pyc
 *.pyo
 
-# 系统文件
+# System files
 .DS_Store
 Thumbs.db

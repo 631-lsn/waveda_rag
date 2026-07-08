@@ -1,42 +1,10 @@
-# waveda_rag 便携版使用说明
+﻿# Portable / 分享版说明
 
-这是 `WavEDA + 多物理场笔记 RAG` 的 Windows 便携版。
+当前项目统一使用 `README.md` 作为主说明文档。
 
-## 怎么启动
+给新用户分享时，让对方按这两个文件操作即可：
 
-双击：
+1. 第一次使用：双击 `setup_env.bat`
+2. 日常启动：双击 `start.bat`
 
-```text
-start.bat
-```
-
-或在命令行中运行：
-
-```powershell
-cd /d 这个文件夹
-start.bat
-```
-
-## 便携能力
-
-- 内置 Python 运行时。
-- 内置 PySide6 和 numpy。
-- 内置已经构建好的知识库索引。
-- 可以复制整个文件夹到其他 Windows 位置后直接运行。
-- 不需要目标电脑预先安装 Python。
-
-## 注意事项
-
-- `config\.env` 中包含 API Key，请不要公开分享。
-- 如果目标电脑无法联网，仍可检索本地来源；但模型生成回答需要联网访问 DeepSeek。
-- 当前便携包主要用于使用已构建好的知识库。如果要重新构建知识库，需要把原始 WavEDA helpHtml 和 Obsidian 笔记一起带过去，并修改 `config\.env` 中的源路径。
-
-## 验证
-
-双击：
-
-```text
-run_smoke_test.bat
-```
-
-它会运行三条基础问答，确认知识库和模型调用是否可用。
+如果要做真正“免安装依赖”的便携包，需要额外打包 `runtime/python/` 和已经生成好的 `data/index/`。当前 Git 协作仓库默认不提交这两个运行时产物。
