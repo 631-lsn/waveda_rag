@@ -12,64 +12,71 @@ cd /d "%RAGGG_PORTABLE_ROOT%"
 if not exist ".tmp" mkdir ".tmp"
 
 echo.
-echo [1/5] Checking Python...
-where py >nul 2>nul
-if errorlevel 1 (
-    echo [ERROR] Cannot find Python launcher "py".
-    echo Please install Python 3.11 or newer, then run setup_env.bat again.
-    pause
-    exit /b 1
-)
-
-echo.
-echo [2/5] Creating local virtual environment...
-if not exist ".venv\Scripts\python.exe" (
-    py -m venv .venv
+echo [1/5] Checking Python runtime...
+if exist "runtime\python\python.exe" (
+    echo Using bundled portable Python runtime.
+    set "PYTHON=%RAGGG_PORTABLE_ROOT%runtime\python\python.exe"
+    set "USING_BUNDLED_PYTHON=1"
+) else (
+    where py >nul 2>nul
     if errorlevel 1 (
-        echo [ERROR] Failed to create .venv.
+        echo [ERROR] Cannot find bundled Python runtime or Python launcher "py".
+        echo Please install Python 3.11 or newer, then run setup_env.bat again.
         pause
         exit /b 1
     )
+
+    echo.
+    echo [2/5] Creating local virtual environment...
+    if not exist ".venv\Scripts\python.exe" (
+        py -m venv .venv
+        if errorlevel 1 (
+            echo [ERROR] Failed to create .venv.
+            pause
+            exit /b 1
+        )
+    ) else (
+        echo .venv already exists, skipping creation.
+    )
+
+    set "PYTHON=%RAGGG_PORTABLE_ROOT%.venv\Scripts\python.exe"
+)
+
+if defined USING_BUNDLED_PYTHON (
+    echo.
+    echo [2/5] Skipping virtual environment creation.
+    echo.
+    echo [3/5] Using bundled Python dependencies.
 ) else (
-    echo .venv already exists, skipping creation.
-)
-
-set "PYTHON=%RAGGG_PORTABLE_ROOT%.venv\Scripts\python.exe"
-
-echo.
-echo [3/5] Installing Python dependencies...
-"%PYTHON%" -m ensurepip --upgrade --default-pip
-if errorlevel 1 (
-    echo [ERROR] Failed to initialize pip.
-    pause
-    exit /b 1
-)
-
-"%PYTHON%" -m pip install -r requirements.txt
-if errorlevel 1 (
-    echo Default pip source failed. Trying Tsinghua PyPI mirror...
-    "%PYTHON%" -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+    echo.
+    echo [3/5] Installing Python dependencies...
+    "%PYTHON%" -m ensurepip --upgrade --default-pip
     if errorlevel 1 (
-        echo [ERROR] Failed to install dependencies.
+        echo [ERROR] Failed to initialize pip.
         pause
         exit /b 1
     )
+
+    "%PYTHON%" -m pip install -r requirements.txt
+    if errorlevel 1 (
+        echo Default pip source failed. Trying Tsinghua PyPI mirror...
+        "%PYTHON%" -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+        if errorlevel 1 (
+            echo [ERROR] Failed to install dependencies.
+            pause
+            exit /b 1
+        )
+    )
 )
 
 echo.
-echo [4/5] Checking knowledge index...
-if exist "data\index\chunks.json" if exist "data\index\vectors.npy" (
-    echo   Index already exists, skipping rebuild.
-    echo   To force rebuild, delete data\index\ and re-run setup_env.bat.
-) else (
-    echo   Building local knowledge index...
-    "%PYTHON%" -B scripts\build_knowledge_base.py
-    if errorlevel 1 (
-        echo [WARNING] Knowledge index build failed.
-        echo   This is expected if external paths (Obsidian vault, WavEDA help)
-        echo   are not available on this machine. The existing index from Git
-        echo   will be used instead. You can still use the app normally.
-    )
+echo [4/5] Building local knowledge index...
+"%PYTHON%" -B scripts\build_knowledge_base.py
+if errorlevel 1 (
+    echo [ERROR] Failed to build knowledge index.
+    echo Please check whether the project files are complete, then run setup_env.bat again.
+    pause
+    exit /b 1
 )
 
 echo.
