@@ -5,41 +5,38 @@
 # ============================================================
 
 sources:
-  # ---- 团队自编教程 (Markdown) ----
-  - path: ./knowledge_base/
+  # ---- 团队自编教程 ----
+  - path: ./knowledge_base/01_team_tutorials/
     type: markdown
     desc: "团队自编教程与FAQ"
     recursive: true
 
-  - path: ./knowledge_base/tutorials/
+  # ---- 软件功能手册（从官方HTML帮助提取） ----
+  - path: ./knowledge_base/02_software_manual/
     type: markdown
-    desc: "分模块操作教程"
+    desc: "wavEDA软件功能手册"
     recursive: true
 
-  # ---- wavEDA 软件文档 ----
-  - path: ./wavEDA_docs/extracted_pages/
-    type: markdown
-    desc: "wavEDA帮助文档（已提取为Markdown）"
-    recursive: true
-
-  - path: ./wavEDA_docs/helpHtml/
-    type: html
-    desc: "wavEDA官方HTML帮助文档"
-    recursive: true
-
-  # ---- 案例与排错 ----
-  - path: ./wavEDA_docs/examples/
+  # ---- 仿真案例 ----
+  - path: ./knowledge_base/03_examples/
     type: markdown
     desc: "仿真案例库"
     recursive: true
 
-  - path: ./wavEDA_docs/error_cases/
+  # ---- 错误排查 ----
+  - path: ./knowledge_base/04_error_cases/
     type: markdown
-    desc: "错误案例库"
+    desc: "错误案例与排查指南"
     recursive: true
 
-  # ---- 理论笔记 (Obsidian) ----
-  - path: ./knowledge_base/theory_notes/
+  # ---- 参考资料 ----
+  - path: ./knowledge_base/05_reference/
     type: markdown
-    desc: "多物理场理论笔记"
+    desc: "参考材料（索引/专题/材料库/模板）"
+    recursive: true
+
+  # ---- 理论笔记 ----
+  - path: ./knowledge_base/06_theory_notes/
+    type: markdown
+    desc: "多物理场理论笔记（Obsidian vault内容）"
     recursive: true
