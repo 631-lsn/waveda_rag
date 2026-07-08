@@ -57,12 +57,19 @@ if errorlevel 1 (
 )
 
 echo.
-echo [4/5] Building local knowledge index...
-"%PYTHON%" -B scripts\build_knowledge_base.py
-if errorlevel 1 (
-    echo [ERROR] Failed to build knowledge index.
-    pause
-    exit /b 1
+echo [4/5] Checking knowledge index...
+if exist "data\index\chunks.json" if exist "data\index\vectors.npy" (
+    echo   Index already exists, skipping rebuild.
+    echo   To force rebuild, delete data\index\ and re-run setup_env.bat.
+) else (
+    echo   Building local knowledge index...
+    "%PYTHON%" -B scripts\build_knowledge_base.py
+    if errorlevel 1 (
+        echo [WARNING] Knowledge index build failed.
+        echo   This is expected if external paths (Obsidian vault, WavEDA help)
+        echo   are not available on this machine. The existing index from Git
+        echo   will be used instead. You can still use the app normally.
+    )
 )
 
 echo.
