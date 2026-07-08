@@ -1,0 +1,81 @@
+@echo off
+setlocal EnableExtensions
+chcp 65001 >nul
+
+set "RAGGG_PORTABLE_ROOT=%~dp0"
+set "PYTHONPATH=%RAGGG_PORTABLE_ROOT%src"
+set "PYTHONUTF8=1"
+set "TMP=%RAGGG_PORTABLE_ROOT%.tmp"
+set "TEMP=%RAGGG_PORTABLE_ROOT%.tmp"
+
+cd /d "%RAGGG_PORTABLE_ROOT%"
+if not exist ".tmp" mkdir ".tmp"
+
+echo.
+echo [1/5] Checking Python...
+where py >nul 2>nul
+if errorlevel 1 (
+    echo [ERROR] Cannot find Python launcher "py".
+    echo Please install Python 3.11 or newer, then run setup_env.bat again.
+    pause
+    exit /b 1
+)
+
+echo.
+echo [2/5] Creating local virtual environment...
+if not exist ".venv\Scripts\python.exe" (
+    py -m venv .venv
+    if errorlevel 1 (
+        echo [ERROR] Failed to create .venv.
+        pause
+        exit /b 1
+    )
+) else (
+    echo .venv already exists, skipping creation.
+)
+
+set "PYTHON=%RAGGG_PORTABLE_ROOT%.venv\Scripts\python.exe"
+
+echo.
+echo [3/5] Installing Python dependencies...
+"%PYTHON%" -m ensurepip --upgrade --default-pip
+if errorlevel 1 (
+    echo [ERROR] Failed to initialize pip.
+    pause
+    exit /b 1
+)
+
+"%PYTHON%" -m pip install -r requirements.txt
+if errorlevel 1 (
+    echo Default pip source failed. Trying Tsinghua PyPI mirror...
+    "%PYTHON%" -m pip install -r requirements.txt -i https://pypi.tuna.tsinghua.edu.cn/simple
+    if errorlevel 1 (
+        echo [ERROR] Failed to install dependencies.
+        pause
+        exit /b 1
+    )
+)
+
+echo.
+echo [4/5] Building local knowledge index...
+"%PYTHON%" -B scripts\build_knowledge_base.py
+if errorlevel 1 (
+    echo [ERROR] Failed to build knowledge index.
+    pause
+    exit /b 1
+)
+
+echo.
+echo [5/5] Running smoke test...
+"%PYTHON%" -B scripts\smoke_test.py
+if errorlevel 1 (
+    echo [ERROR] Smoke test failed. Please check the message above.
+    pause
+    exit /b 1
+)
+
+echo.
+echo Setup complete.
+echo You can now double-click start.bat to launch WavEDA Knowledge Workbench.
+pause
+endlocal

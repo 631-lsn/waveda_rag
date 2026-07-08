@@ -45,6 +45,11 @@ class Settings:
     def from_env(cls, env: Mapping[str, str] | None = None) -> "Settings":
         values = dict(os.environ if env is None else env)
         project_root = Path(values.get("RAGGG_PORTABLE_ROOT", str(PROJECT_ROOT)))
+        values.setdefault("WAVEDA_HELP_ROOT", "wavEDA_docs/helpHtml/helpHtml")
+        values.setdefault(
+            "OBSIDIAN_VAULT_ROOT",
+            "knowledge_base/waveda_merged_markdown_kb_2026-07-07_final/sources",
+        )
         return cls(
             project_root=project_root,
             waveda_help_root=_resolve_path(
