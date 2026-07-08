@@ -1,15 +1,13 @@
 ---
 title: "键合线"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Create_3D_Geometry/Bondwire.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Create_3D_Geometry\Bondwire.md"
+source_relative_path: "Modeling/Create_3D_Geometry/Bondwire.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 键合线
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\Bondwire.html`
 - 原始相对路径: `Modeling/Create_3D_Geometry/Bondwire.html`
 - 知识模块: `建模总览`
 
@@ -18,8 +16,7 @@ merged_at: "2026-07-07"
 
 此对话框用于创建键合线形状物体。键合线尺寸可使用数字或变量(变量表达式)输入， 其位置支持全局坐标以及局部坐标定义。 每个键合线将被赋予一种材料，同时也会被赋予该材料的颜色属性。 键合线的名称为其唯一标识符，一旦一个新的键合线被定义，将在树-体这一栏中列出。下图为键合线的示意图：
 
-> 图片: `./images/Bondwire_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\Bondwire_1.png`
+> 图示要点：`Bondwire_1.png` 展示“键合线”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 名称
 
@@ -45,17 +42,11 @@ merged_at: "2026-07-07"
 
 键合线的直径在此设置。若勾选设为曲线勾选框，则生成一条穿过键合线中心，与键合线形状一样的弧线。 设为曲线操作不可逆，若设为曲线，阻抗边界勾选框会开启。
 
-> 图片: `./images/Bondwire_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\Bondwire_2.png`
+> 图示要点：`Bondwire_2.png` 展示“其他”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 相关文档
 
 长方体， 球，圆锥/棱锥， 环，圆柱， 棱柱，环形螺旋线圈， 阿基米德螺旋线。
-
-## 图片资源
-
-1. `./images/Bondwire_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\Bondwire_1.png`
-2. `./images/Bondwire_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\Bondwire_2.png`
 
 ## 页内/相关链接
 
@@ -70,3 +61,11 @@ merged_at: "2026-07-07"
 - 长方体， 球，圆锥/棱锥， 环，圆柱， 棱柱: `./Prism.html`
 - 长方体， 球，圆锥/棱锥， 环，圆柱， 棱柱，环形螺旋线圈: `./Toroidal_spiral.html`
 - 长方体， 球，圆锥/棱锥， 环，圆柱， 棱柱，环形螺旋线圈， 阿基米德螺旋线: `./Archimedean_spiral.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Bondwire_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/Bondwire_1.png` | 展示“键合线”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Bondwire_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/Bondwire_2.png` | 展示“其他”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

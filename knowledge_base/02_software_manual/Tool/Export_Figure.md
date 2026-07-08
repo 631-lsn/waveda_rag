@@ -1,15 +1,13 @@
 ---
 title: "导出图像"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Tool/Export_Figure.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Tool\Export_Figure.md"
+source_relative_path: "Tool/Export_Figure.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 导出图像
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Tool\Export_Figure.html`
 - 原始相对路径: `Tool/Export_Figure.html`
 - 知识模块: `工具`
 
@@ -26,9 +24,11 @@ merged_at: "2026-07-07"
 
 - 点击保存，完成导出。
 
-> 图片: `images/export_figure.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\export_figure.png`
+> 图示要点：`export_figure.png` 展示“导出图像”相关的操作界面或示例，后续审查通过后再补图。
 
-## 图片资源
 
-1. `images/export_figure.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\export_figure.png`
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| export_figure.png | `wavEDA_docs/helpHtml/helpHtml/Tool/images/export_figure.png` | 展示“导出图像”步骤的菜单或参数界面，便于新人按界面完成操作。 |

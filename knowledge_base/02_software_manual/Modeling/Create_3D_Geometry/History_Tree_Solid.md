@@ -1,15 +1,13 @@
 ---
 title: "历史树-体"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Create_3D_Geometry/History_Tree_Solid.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Create_3D_Geometry\History_Tree_Solid.md"
+source_relative_path: "Modeling/Create_3D_Geometry/History_Tree_Solid.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 历史树-体
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\History_Tree_Solid.html`
 - 原始相对路径: `Modeling/Create_3D_Geometry/History_Tree_Solid.html`
 - 知识模块: `建模总览`
 
@@ -18,15 +16,13 @@ merged_at: "2026-07-07"
 
 双击编辑后的体，在体的属性窗口中记录体的所有操作步骤，即体的历史树。 WavEDA的体-历史树支持模型编辑和历史操作撤回等操作，下面将逐一介绍。
 
-> 图片: `./images/History_Tree_Solid_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_1.png`
+> 图示要点：`History_Tree_Solid_1.png` 展示“历史树-体”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 布尔操作
 
 在历史树中可直接对该模型与列出的几何形状进行布尔运算。
 
-> 图片: `./images/History_Tree_Solid_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_2.png`
+> 图示要点：`History_Tree_Solid_2.png` 展示“布尔操作”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 操作步骤：
 
@@ -42,30 +38,25 @@ merged_at: "2026-07-07"
 
 - 双击正方体，打开历史树。
 
-> 图片: `./images/History_Tree_Solid_7.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_7.png`
+> 图示要点：`History_Tree_Solid_7.png` 展示“操作步骤：”相关的操作界面或示例，后续审查通过后再补图。
 
 - 选中相加布尔操作，点击圆，填入尺寸。
 
-> 图片: `./images/History_Tree_Solid_4.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_4.png`
+> 图示要点：`History_Tree_Solid_4.png` 展示“操作步骤：”相关的操作界面或示例，后续审查通过后再补图。
 
 - 点击预览查看效果，点击完成。
 
-> 图片: `./images/History_Tree_Solid_5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_5.png`
+> 图示要点：`History_Tree_Solid_5.png` 展示“操作步骤：”相关的操作界面或示例，后续审查通过后再补图。
 
 - 此时即完成了在历史树中完成一次布尔操作的操作，且该此操作加在了历史树中。
 
-> 图片: `./images/History_Tree_Solid_6.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_6.png`
+> 图示要点：`History_Tree_Solid_6.png` 展示“操作步骤：”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 撤销操作
 
 选中之前对模型的编辑操作，可进行撤销，还原等操作。图中依次为删除，解除关联以及恢复操作。
 
-> 图片: `./images/History_Tree_Solid_8.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_8.png`
+> 图示要点：`History_Tree_Solid_8.png` 展示“撤销操作”相关的操作界面或示例，后续审查通过后再补图。
 
 - 删除：选中操作，点击删除，即可删除操作。
 
@@ -73,12 +64,15 @@ merged_at: "2026-07-07"
 
 - 恢复：将原始物体恢复。
 
-## 图片资源
 
-1. `./images/History_Tree_Solid_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_1.png`
-2. `./images/History_Tree_Solid_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_2.png`
-3. `./images/History_Tree_Solid_7.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_7.png`
-4. `./images/History_Tree_Solid_4.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_4.png`
-5. `./images/History_Tree_Solid_5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_5.png`
-6. `./images/History_Tree_Solid_6.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_6.png`
-7. `./images/History_Tree_Solid_8.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\History_Tree_Solid_8.png`
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| History_Tree_Solid_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/History_Tree_Solid_1.png` | 展示“历史树-体”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| History_Tree_Solid_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/History_Tree_Solid_2.png` | 展示“布尔操作”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| History_Tree_Solid_7.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/History_Tree_Solid_7.png` | 展示“操作步骤：”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| History_Tree_Solid_4.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/History_Tree_Solid_4.png` | 展示“操作步骤：”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| History_Tree_Solid_5.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/History_Tree_Solid_5.png` | 展示“操作步骤：”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| History_Tree_Solid_6.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/History_Tree_Solid_6.png` | 展示“操作步骤：”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| History_Tree_Solid_8.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/History_Tree_Solid_8.png` | 展示“撤销操作”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

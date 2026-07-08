@@ -1,15 +1,13 @@
 ---
 title: "导入/导出"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Import_Export.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Import_Export.md"
+source_relative_path: "Modeling/Import_Export.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 导入/导出
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Import_Export.html`
 - 原始相对路径: `Modeling/Import_Export.html`
 - 知识模块: `建模总览`
 
@@ -18,23 +16,23 @@ merged_at: "2026-07-07"
 
 WavEDA支持stp，step，igs，iges以及brep五种3D模型文件的导入导出，支持gds，gerber以及dxf三种2D模型文件的导入。点击导出背景可单独将Domain导出。
 
-> 图片: `./images/Import_Export_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\images\Import_Export_1.png`
+> 图示要点：`Import_Export_1.png` 展示“导入/导出”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 导入文件
 
 选择导入，可进入CAD文件导入设置窗口，赋予物体一个唯一的名称，选择材料后，在常规设置中，给出了导入模型的边界尺寸以及文件和工程的单位。 用户可自定义模型缩放因子，同时可点击预览按键，查看模型。
 
-> 图片: `./images/Import_Export_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\images\Import_Export_2.png`
+> 图示要点：`Import_Export_2.png` 展示“导入文件”相关的操作界面或示例，后续审查通过后再补图。
 
 在选项窗口，若勾选合并实体面复选框，可以将存在交叠的实体面合成一个面导入。
 
-> 图片: `./images/Import_Export_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\images\Import_Export_3.png`
+> 图示要点：`Import_Export_3.png` 展示“导入文件”相关的操作界面或示例，后续审查通过后再补图。
 
-## 图片资源
 
-1. `./images/Import_Export_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\images\Import_Export_1.png`
-2. `./images/Import_Export_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\images\Import_Export_2.png`
-3. `./images/Import_Export_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\images\Import_Export_3.png`
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Import_Export_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/Import_Export_1.png` | 展示“导入/导出”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Import_Export_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/Import_Export_2.png` | 展示“导入文件”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Import_Export_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/Import_Export_3.png` | 展示“导入文件”步骤的菜单或参数界面，便于新人按界面完成操作。 |

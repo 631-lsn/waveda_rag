@@ -1,15 +1,13 @@
 ---
 title: "快照"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/EM_Project/Snapshot.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\EM_Project\Snapshot.md"
+source_relative_path: "EM_Project/Snapshot.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 快照
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Snapshot.html`
 - 原始相对路径: `EM_Project/Snapshot.html`
 - 知识模块: `EM设计与结果`
 
@@ -28,15 +26,13 @@ merged_at: "2026-07-07"
 
 ### 快照（Snapshot）
 
-> 图片: `images/Snapshot1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot1.png`
+> 图示要点：`Snapshot1.png` 展示“快照（Snapshot）”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 快照设置
 
 如图，在工程树上选中快照设置，双击，进入如下对话框：
 
-> 图片: `images/Snapshot3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot3.png`
+> 图示要点：`Snapshot3.png` 展示“快照设置”相关的操作界面或示例，后续审查通过后再补图。
 
 在该对话框中需要设置：
 
@@ -50,13 +46,11 @@ merged_at: "2026-07-07"
 
 ### 面快照
 
-> 图片: `images/Snapshot5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot5.png`
+> 图示要点：`Snapshot5.png` 展示“面快照”相关的操作界面或示例，后续审查通过后再补图。
 
 如图，选中面快照，右键，点击新建面快照，进入如下图对话框（定义监视面）：
 
-> 图片: `images/Snapshot6.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot6.png`
+> 图示要点：`Snapshot6.png` 展示“面快照”相关的操作界面或示例，后续审查通过后再补图。
 
 在该对话框中需要设置：
 
@@ -72,18 +66,15 @@ merged_at: "2026-07-07"
 
 面快照建立后会自动生成节点，选中该节点右键，可以对其进行二次编辑与修改、删除以及调整其视图。
 
-> 图片: `images/Snapshot7.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot7.png`
+> 图示要点：`Snapshot7.png` 展示“面快照”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 体快照
 
-> 图片: `images/Snapshot8.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot8.png`
+> 图示要点：`Snapshot8.png` 展示“体快照”相关的操作界面或示例，后续审查通过后再补图。
 
 如图，选中面快照，右键，点击新建体快照，进入如下图对话框（定义监视体）：
 
-> 图片: `images/Snapshot9.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot9.png`
+> 图示要点：`Snapshot9.png` 展示“体快照”相关的操作界面或示例，后续审查通过后再补图。
 
 在该对话框中需要设置 ：
 
@@ -99,31 +90,15 @@ merged_at: "2026-07-07"
 
 如图，体快照建立后会自动生成节点，选中该节点右键，可以对其进行二次编辑与修改、删除以及调整其视图。
 
-> 图片: `images/Snapshot10.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot10.png`
+> 图示要点：`Snapshot10.png` 展示“体快照”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 快照结果查看
 
-> 图片: `images/Snapshot11.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot11.png`
+> 图示要点：`Snapshot11.png` 展示“快照结果查看”相关的操作界面或示例，后续审查通过后再补图。
 
 如图，在电磁结果中点击快照，可以查看面快照与体快照结果；如点击面快照前面小黑三角形，则可以将面快照展开，且看到它下面的节点名称（face_snapshot_2），双击该节点则可以进入查看该面快照结果（场分布），如下图，另外关于该部分快照结果查看的详细说明，也可以参考 快照结果查看文档。
 
-> 图片: `images/Snapshot12.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot12.png`
-
-## 图片资源
-
-1. `images/Snapshot1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot1.png`
-2. `images/Snapshot3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot3.png`
-3. `images/Snapshot5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot5.png`
-4. `images/Snapshot6.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot6.png`
-5. `images/Snapshot7.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot7.png`
-6. `images/Snapshot8.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot8.png`
-7. `images/Snapshot9.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot9.png`
-8. `images/Snapshot10.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot10.png`
-9. `images/Snapshot11.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot11.png`
-10. `images/Snapshot12.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Snapshot12.png`
+> 图示要点：`Snapshot12.png` 展示“快照结果查看”相关的操作界面或示例，后续审查通过后再补图。
 
 ## 页内/相关链接
 
@@ -135,3 +110,19 @@ merged_at: "2026-07-07"
 - 形状（支持矩形、圆/椭圆）以及设置各类形状面对应的坐标、尺寸等，具体关于如何建面的操作介绍可以参考 如何建面: `../Modeling/Create_Face/Rectangle.html`
 - 体形状对应的坐标、尺寸等，具体关于如何建面的操作介绍可以参考 如何建体: `../Modeling/Create_3D_Geometry/Box.html`
 - 如图，在电磁结果中点击快照，可以查看面快照与体快照结果；如点击面快照前面小黑三角形，则可以将面快照展开，且看到它下面的节点名称（face_snapshot_2），双击该节点则可以进入查看该面快照结果（场分布），如下图，另外关于该部分快照结果查看的详细说明，也可以参考 快照结果查看: `./EM_Results.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Snapshot1.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot1.png` | 展示“快照（Snapshot）”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot3.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot3.png` | 展示“快照设置”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Snapshot5.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot5.png` | 展示“面快照”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot6.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot6.png` | 展示“面快照”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot7.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot7.png` | 展示“面快照”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot8.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot8.png` | 展示“体快照”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot9.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot9.png` | 展示“体快照”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot10.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot10.png` | 展示“体快照”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot11.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot11.png` | 展示“快照结果查看”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot12.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot12.png` | 展示“快照结果查看”的结果入口或查看界面，便于新人确认后处理位置。 |

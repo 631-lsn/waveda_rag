@@ -1,15 +1,13 @@
 ---
 title: "历史树-线"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Create_Curve/History_Tree_Curve.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Create_Curve\History_Tree_Curve.md"
+source_relative_path: "Modeling/Create_Curve/History_Tree_Curve.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 历史树-线
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_Curve\History_Tree_Curve.html`
 - 原始相对路径: `Modeling/Create_Curve/History_Tree_Curve.html`
 - 知识模块: `建模总览`
 
@@ -18,13 +16,15 @@ merged_at: "2026-07-07"
 
 双击编辑后的线，在线的属性窗口中记录面的所有操作步骤，即线的历史树。 WavEDA的线-历史树支持模型编辑和历史操作撤回等操作，其功能与面-历史树一样， 具体可参考历史树-面。
 
-> 图片: `./images/History_Tree_Curve_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_Curve\images\History_Tree_Curve_1.png`
-
-## 图片资源
-
-1. `./images/History_Tree_Curve_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_Curve\images\History_Tree_Curve_1.png`
+> 图示要点：`History_Tree_Curve_1.png` 展示“历史树-线”相关的操作界面或示例，后续审查通过后再补图。
 
 ## 页内/相关链接
 
 - 双击编辑后的线，在线的属性窗口中记录面的所有操作步骤，即线的历史树。 WavEDA的线-历史树支持模型编辑和历史操作撤回等操作，其功能与面-历史树一样， 具体可参考历史树-面: `../Create_Face/History_Tree_Face.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| History_Tree_Curve_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_Curve/images/History_Tree_Curve_1.png` | 展示“历史树-线”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

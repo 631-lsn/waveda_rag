@@ -1,15 +1,13 @@
 ---
 title: "磁色散材料"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Bkg_Mat/Magnetic_Dispersion.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Bkg_Mat\Magnetic_Dispersion.md"
+source_relative_path: "Modeling/Bkg_Mat/Magnetic_Dispersion.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 磁色散材料
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\Magnetic_Dispersion.html`
 - 原始相对路径: `Modeling/Bkg_Mat/Magnetic_Dispersion.html`
 - 知识模块: `建模总览`
 
@@ -22,8 +20,7 @@ merged_at: "2026-07-07"
 
 ### 磁介质色散
 
-> 图片: `./images/Magnetic_Dispersion_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Magnetic_Dispersion_1.png`
+> 图示要点：`Magnetic_Dispersion_1.png` 展示“磁介质色散”相关的操作界面或示例，后续审查通过后再补图。
 
 - 选择色散模型或是用户自定义。
 
@@ -39,12 +36,15 @@ merged_at: "2026-07-07"
 
 该处拟合内容与电色散材料相同，具体查看电色散材料文档中有关拟合章节描述。
 
-## 图片资源
-
-1. `./images/Magnetic_Dispersion_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Bkg_Mat\images\Magnetic_Dispersion_1.png`
-
 ## 页内/相关链接
 
 - - 磁介质色散: `#磁介质色散`
 - - 磁介质色散 - 拟合: `#拟合`
 - 该处拟合内容与电色散材料相同，具体查看电色散材料: `./Dielectric_Dispersion.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Magnetic_Dispersion_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Bkg_Mat/images/Magnetic_Dispersion_1.png` | 展示“磁介质色散”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

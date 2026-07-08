@@ -1,15 +1,13 @@
 ---
 title: "沿轴扫描"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/EM_Project/Sweep_Along_Axis.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\EM_Project\Sweep_Along_Axis.md"
+source_relative_path: "EM_Project/Sweep_Along_Axis.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 沿轴扫描
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Sweep_Along_Axis.html`
 - 原始相对路径: `EM_Project/Sweep_Along_Axis.html`
 - 知识模块: `EM设计与结果`
 
@@ -18,8 +16,7 @@ merged_at: "2026-07-07"
 
 沿轴扫描是用线段生成面的快捷方法。同样，部分面也可以通过该方式生成体。
 
-> 图片: `./images/Sweep_Along_Axis_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Sweep_Along_Axis_1.png`
+> 图示要点：`Sweep_Along_Axis_1.png` 展示“沿轴扫描”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 名称
 
@@ -39,8 +36,7 @@ merged_at: "2026-07-07"
 
 旋转轴方向输入一个三维矢量，该线段将以输入矢量方向为旋转中心得到几何， 例如输入（0,0,1）,则该线段将绕Z轴旋转得到几何。
 
-> 图片: `./images/Sweep_Along_Axis_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Sweep_Along_Axis_2.png`
+> 图示要点：`Sweep_Along_Axis_2.png` 展示“扫描参数”相关的操作界面或示例，后续审查通过后再补图。
 
 - 旋转角度
 
@@ -50,7 +46,10 @@ merged_at: "2026-07-07"
 
 勾选删除原物体后，则沿轴扫描功能只生成得到的面。不勾选该功能，软件将保留原有的新线段，并生成新的面。
 
-## 图片资源
 
-1. `./images/Sweep_Along_Axis_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Sweep_Along_Axis_1.png`
-2. `./images/Sweep_Along_Axis_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\Sweep_Along_Axis_2.png`
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Sweep_Along_Axis_1.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Sweep_Along_Axis_1.png` | 展示“沿轴扫描”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Sweep_Along_Axis_2.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Sweep_Along_Axis_2.png` | 展示“扫描参数”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

@@ -1,161 +1,131 @@
 ---
-title: "电磁结果"
-merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/EM_Project/EM_Results.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\EM_Project\EM_Results.md"
+title: "电磁结果查看"
 content_kind: "markdown"
-merged_at: "2026-07-07"
+updated_at: "2026-07-08"
+source_relative_path: "EM_Project/EM_Results.html"
 ---
 
-# 电磁结果
+# 电磁结果查看
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\EM_Results.html`
-- 原始相对路径: `EM_Project/EM_Results.html`
-- 知识模块: `EM设计与结果`
+电磁结果用于查看仿真完成后的接收器、端口、快照和远场结果。新手最常用的是端口结果和 S 参数；如果提前设置了 snapshot 或远场监视，也可以查看场分布和远场方向图。
 
-## 正文抽取
-## 电磁结果
+## 结果类型总览
 
-- 接收器 - 端口 - 快照 - 远场
+| 结果类型 | 主要用途 | 常见前提 |
+| --- | --- | --- |
+| 接收器 | 查看接收器监测到的结果信息。 | 模型中提前创建了接收器。 |
+| 端口 | 查看 S 参数、Smith 圆图、Y 参数、TDR/TDT、电压电流等。 | 模型中设置了端口并成功完成仿真。 |
+| 快照 | 查看 E/H/D/B 场分布、面快照或体快照。 | 仿真前设置了 snapshot，且扫频算法支持快照。 |
+| 远场 | 查看远场方向图、功率、效率、轴比、增益、RCS 等。 | 仿真前设置了远场频点或相关远场监视项。 |
 
-电磁结果选项支持接收器、端口、快照、远场结果查看。
+## 接收器结果
 
-### 接收器
+如果模型中涉及接收器，仿真完成后可在电磁结果中查看接收器对应信息。接收器结果通常用于观察指定点、线、面或区域上的响应。具体创建方式可参考“新建接收器”相关文档。
 
-模型中涉及接收器时，可查看接收器结果信息，具体查看新建接收器文档。
+## 端口结果
 
-### 端口
+端口结果是最常用的后处理入口。仿真完成后，在左侧工程树中找到“电磁结果 -> 端口”，右键可选择新建端口结果、新建 Smith 圆图、导出 SNP 文件、删除所有结果等操作。
 
-仿真结束后，查看端口结果的功能，可以在3D模型仿真完成后查看仿真端口结果和史密斯圆图，如图所示，通过工程树电磁结果端口处点击鼠标右键进行仿真结果的选择。
+### 新建端口结果
 
-> 图片: `./images/EM_Result_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_1.png`
+新建端口结果用于查看端口相关曲线和参数。常见可查看内容包括：
 
-图中所示，具备新建端口、新建史密斯圆图、导出snp文件、删除所有结果选项功能。
+- S 参数
+- 差分对结果
+- Z 参数、Y 参数
+- TDR、TDT
+- 电压、电流
+- 波端口下的线阻抗、Gamma 参数等
 
-端口结果选项功能介绍：
+通常流程是：选择想看的结果类型和单位，添加曲线，然后在右侧绘图区域显示对应曲线。生成后的端口结果会出现在工程树下，右键该结果可进行重命名、绘制、编辑、导入、导出或删除。
 
-> 图片: `./images/EM_Result_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_2.png`
+### 新建 Smith 圆图
 
-> 图片: `./images/EM_Result_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_3.png`
+Smith 圆图用于查看端口阻抗匹配和反射相关信息。生成 Smith 圆图后，工程树中会出现对应结果节点，右键可进行重命名、绘制、编辑、导入、导出或删除。
 
-- 新建端口结果：具备查看端口信息功能。 新建端口结果选项卡可查看端口S参数、差分对、Z参数、TDR、TDT、电压、电流参数；波端口下还可查看Y参数，线阻抗，Gamma参数信息，通过添加曲线，选择想要的单位，然后右侧绘制曲线显示要绘制的曲线输出想要的端口结果信息，具体查看新建端口结果文档。 端口信息绘制完成后，工程树会显示相应的信息，可通过点击鼠标右键进行重命名、绘制、编辑、粘贴、导入、导出、删除功能选择。
+### 导出 SNP 文件
 
-> 图片: `./images/EM_Result_4.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_4.png`
+端口结果菜单中可以导出 SNP 文件。SNP/Touchstone 文件适合导入其他电路或 EDA 工具继续分析。若在 GUI 中没有找到需要的文件，也可以到工程文件同路径下查找工程结果目录，通常会有与端口 EM SNP 相关的结果文件夹。
 
-- 新建史密斯圆图：具备查看端口史密斯圆图功能。 端口史密斯圆图绘制完成后，工程树会显示相应的信息，可通过点击鼠标右键进行重命名、绘制、编辑、粘贴、导入、导出、删除功能选择。
+### 删除端口结果
 
-> 图片: `./images/EM_Result_5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_5.png`
+“删除所有结果”会删除当前端口下生成的结果曲线或图表。删除前要确认是否已经导出需要的数据。
 
-- 导出snp文件：模型仿真完成后可导出snp文件，具体内容查看导出snp文件文档。
+## 快照结果
 
-- 删除所有结果：具备删除所有端口信息结果的功能。
+快照结果用于查看场分布。若仿真前设置了面快照或体快照，仿真完成后可以在电磁结果中双击对应快照结果查看。
 
-### 快照
+进入快照查看界面后，通常可以查看：
 
-快照结果选项具备面或体快照查看功能，可以在设置面快照后进行面快照结果查看，可以选择查看E、H、D、B场信息。
+- E 场
+- H 场
+- D 场
+- B 场
+- 不同单位或显示方式下的场分布
+- 时谐场或频点对应的场分布
 
-> 图片: `./images/EM_Result_6.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_6.png`
+注意：插值扫频不支持快照。如果需要查看某个频点的场分布，建议使用离散扫频或确认当前求解方式支持 snapshot。
 
-如图所示，可以双击鼠标左键查看面或体快照结果。 进入面快照查看页面后，可以进行E、H、D、B场结果的查看，可根据不同需求调节场单位，显示等信息，同时可查看时谐场，具体操作信息详见场结果操作文档。
+## 远场结果
 
-> 图片: `./images/EM_Result_7.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_7.png`
+远场结果需要提前设置远场监视频点。仿真完成后，可在电磁结果中的远场部分右键查看远场相关信息。常见功能包括：
 
-### 远场
+- 绘制接收功率曲线
+- 绘制辐射功率曲线
+- 绘制辐射效率曲线
+- 绘制总效率曲线
+- 绘制辐射效率和总效率曲线
+- 绘制单站雷达散射截面 RCS
+- 查看平均功率
+- 查看轴比
+- 查看轴比-频率曲线
+- 查看增益-频率曲线
+- 查看远场 3D/2D/1D 增益图和轴比图
 
-如图所示，模型仿真前进行了相应的远场设置后，仿真结束，点击鼠标右键可以查看远场相关信息，包括绘制接收功率曲线、绘制辐射功率曲线、绘制辐射效率曲线、绘制总效率曲线、绘制单站雷达散射截面、查看平均功率、查看轴比、查看轴比-频率曲线、查看远场3D、2D、1D增益图和轴比。
+### 功率和效率曲线
 
-> 图片: `./images/EM_Result_9.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_9.png`
+接收功率、辐射功率、辐射效率、总效率等结果通常以频率曲线形式展示。它们适合评估天线或辐射结构在不同频率下的能量转换表现。
 
-> 图片: `./images/EM_Result_10.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_10.png`
+### RCS 结果
 
-- 绘制接收功率曲线：具备查看端口接收功率信息功能。
+单站雷达散射截面 RCS 通常用于平面波仿真。需要先设置平面波，再运行模型仿真，仿真结束后可查看频率-RCS 曲线。
 
-- 绘制辐射功率曲线：具备查看端口辐射功率信息功能，结果图与上图类似。
+### 平均功率
 
-- 绘制辐射效率曲线：具备查看端口辐射效率信息功能，结果图与上图类似。
+平均功率功能用于设置频率范围，并查看范围内的平均接收功率、平均辐射功率、平均辐射效率和平均总效率。
 
-- 绘制总效率曲线：具备查看端口总效率信息功能，结果图与上图类似。
+### 轴比和增益频率曲线
 
-- 绘制辐射和总效率曲线：具备查看端口辐射效率和总效率信息功能，结果图与上图类似。
+轴比-频率曲线和增益-频率曲线需要在远场设置中提前选择频点和观察角度。查看时要注意结果对应的 theta/phi 角度；同一结构在不同方向上的轴比和增益可能不同。
 
-> 图片: `./images/EM_Result_11.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_11.png`
+### 远场方向图
 
-- 绘制单站雷达散射截面：针对平面波仿真，设置好平面波后，进行平面波模型的仿真，仿真结束后可查看单站雷达散射界面(频率-RCS)曲线。
+远场结果可查看指定频点下的 3D 远场方向图，也可查看某个 phi 或 theta 平面上的 2D/1D 增益图、轴比图、方向性结果或极坐标结果。结果图通常支持右键设置图表、导出图表、导出数据、复制图像、转换为 dB 数据图和标记点等操作。
 
-> 图片: `./images/EM_Result_12.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_12.png`
+## 新手排查
 
-- 查看平均功率：具备通过设置频率范围查看范围内平均接收功率、平均辐射功率、平均辐射效率、平均总效率的功能。
+- 看不到端口结果：检查端口是否设置完成、仿真是否正常结束、是否在正确的“电磁结果 -> 端口”节点右键。
+- 看不到快照结果：检查是否提前设置 snapshot，以及扫频算法是否支持快照。
+- 看不到远场结果：检查是否提前添加远场监视频点，远场仿真是否被禁用。
+- 导出数据找不到：先确认是否已经生成结果图，再在结果图上右键导出，或到工程同路径的结果目录中查找 SNP 文件。
 
-> 图片: `./images/EM_Result_13.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_13.png`
+## 待补图片清单
 
-- 查看轴比-频率曲线：通过在远场处设置要查看的轴比-频率图，具体操作信息详见远场文档，仿真完成后可查看设置频率范围和设定点上的的轴比-频率曲线图，这里仅查看了theta=0°，phi=0°的值，通过设置可查看不同角度的值。
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
 
-> 图片: `./images/EM_Result_14.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_14.png`
-
-- 查看增益-频率曲线：通过在远场处设置要查看的增益-频率图，具体操作信息详见远场文档，仿真完成后可查看设置频率范围和设定点上的的增益-频率曲线图，这里仅查看了theta=0°，phi=0°的值，通过设置可查看不同角度的值。
-
-> 图片: `./images/EM_Result_15.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_15.png`
-
-> 图片: `./images/EM_Result_16.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_16.png`
-
-> 图片: `./images/EM_Result_17.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_17.png`
-
-> 图片: `./images/EM_Result_18.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_18.png`
-
-> 图片: `./images/EM_Result_19.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_19.png`
-
-## 图片资源
-
-1. `./images/EM_Result_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_1.png`
-2. `./images/EM_Result_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_2.png`
-3. `./images/EM_Result_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_3.png`
-4. `./images/EM_Result_4.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_4.png`
-5. `./images/EM_Result_5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_5.png`
-6. `./images/EM_Result_6.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_6.png`
-7. `./images/EM_Result_7.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_7.png`
-8. `./images/EM_Result_9.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_9.png`
-9. `./images/EM_Result_10.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_10.png`
-10. `./images/EM_Result_11.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_11.png`
-11. `./images/EM_Result_12.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_12.png`
-12. `./images/EM_Result_13.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_13.png`
-13. `./images/EM_Result_14.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_14.png`
-14. `./images/EM_Result_15.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_15.png`
-15. `./images/EM_Result_16.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_16.png`
-16. `./images/EM_Result_17.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_17.png`
-17. `./images/EM_Result_18.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_18.png`
-18. `./images/EM_Result_19.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\images\EM_Result_19.png`
-
-## 页内/相关链接
-
-- - 接收器: `#接收器`
-- - 接收器 - 端口: `#端口`
-- - 接收器 - 端口 - 快照: `#快照`
-- - 接收器 - 端口 - 快照 - 远场: `#远场`
-- 模型中涉及接收器时，可查看接收器结果信息，具体查看新建接收器: `../Post_Processing/New_Observers.html`
-- 新建端口结果：具备查看端口信息功能。 新建端口结果选项卡可查看端口S参数、差分对、Z参数、TDR、TDT、电压、电流参数；波端口下还可查看Y参数，线阻抗，Gamma参数信息，通过添加曲线，选择想要的单位，然后右侧绘制曲线显示要绘制的曲线输出想要的端口结果信息，具体查看新建端口结果: `../Post_Processing/New_Port.html`
-- 导出snp文件：模型仿真完成后可导出snp文件，具体内容查看导出snp文件: `../Tool/Export_Snp.html`
-- 快照结果选项具备面或体快照查看功能，可以在设置面快照: `./Snapshot.html`
-- 如图所示，可以双击鼠标左键查看面或体快照结果。 进入面快照查看页面后，可以进行E、H、D、B场结果的查看，可根据不同需求调节场单位，显示等信息，同时可查看时谐场，具体操作信息详见场结果操作: `./Field_Result.html`
-- 如图所示，模型仿真前进行了相应的远场设置: `./Far_Field.html`
-- 绘制单站雷达散射截面：针对平面波仿真，设置好平面波: `../Modeling/Stimulate/Plane_Wave.html`
-- 查看轴比-频率曲线：通过在远场处设置要查看的轴比-频率图，具体操作信息详见远场: `./Far_Field.html`
-- 查看增益-频率曲线：通过在远场处设置要查看的增益-频率图，具体操作信息详见远场: `./Far_Field.html`
-- 查看远场结果：通过在远场处设置远场频点，仿真完成后右键要查看的远场频点结果可查看该频点的3D远场结果和设置方向平面上的增益图和轴比图。 如图，查看3D远场结果，相关具体操作查看场结果操作: `./Field_Result.html`
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| EM_Result_1.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_1.png` | 展示“电磁结果 -> 端口”右键菜单，是端口结果入口总览。 |
+| EM_Result_2.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_2.png` | 展示新建端口结果窗口，适合说明如何选择 S 参数、单位和曲线。 |
+| EM_Result_3.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_3.png` | 展示生成后的端口结果节点和右键操作。 |
+| EM_Result_4.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_4.png` | 展示 Smith 圆图相关结果，适合说明阻抗匹配查看。 |
+| EM_Result_5.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_5.png` | 展示 SNP 导出相关入口。 |
+| EM_Result_6.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_6.png` | 展示快照结果在工程树中的入口。 |
+| EM_Result_7.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_7.png` | 展示快照场图查看界面，适合说明 E/H/D/B 场结果。 |
+| EM_Result_9.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_9.png` | 展示远场结果右键菜单，是远场后处理入口总览。 |
+| EM_Result_10.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_10.png` | 展示功率/效率类曲线结果，适合作为曲线结果示例。 |
+| EM_Result_11.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_11.png` | 展示单站 RCS 结果，适合平面波/散射问题说明。 |
+| EM_Result_13.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_13.png` | 展示轴比-频率曲线，适合说明角度相关远场指标。 |
+| EM_Result_14.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_14.png` | 展示增益-频率曲线，适合说明远场增益随频率变化。 |
+| EM_Result_16.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_16.png` | 展示 3D 远场结果，可作为最终远场方向图示例。 |
+| EM_Result_19.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/EM_Result_19.png` | 展示结果图右键操作菜单，适合说明导出、复制和图表设置。 |

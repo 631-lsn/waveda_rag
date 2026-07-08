@@ -1,15 +1,13 @@
 ---
 title: "创建点接收器"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/EM_Project/Observer/Create_Point_Observer.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\EM_Project\Observer\Create_Point_Observer.md"
+source_relative_path: "EM_Project/Observer/Create_Point_Observer.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 创建点接收器
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\Create_Point_Observer.html`
 - 原始相对路径: `EM_Project/Observer/Create_Point_Observer.html`
 - 知识模块: `EM设计与结果`
 
@@ -22,13 +20,11 @@ merged_at: "2026-07-07"
 
 右键点击工程树上的接收器，可创建点接收器，可通过输入点坐标或阵列创建进行点接收器创建，同时支持导入.txt文件进行点接收器创建。
 
-> 图片: `./images/Create_Point_Observer_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\images\Create_Point_Observer_1.png`
+> 图示要点：`Create_Point_Observer_1.png` 展示“创建点接收器”相关的操作界面或示例，后续审查通过后再补图。
 
 点击之后，进入创建点接收器界面。
 
-> 图片: `./images/Create_Point_Observer_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\images\Create_Point_Observer_2.png`
+> 图示要点：`Create_Point_Observer_2.png` 展示“创建点接收器”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 输入接收器坐标
 
@@ -38,14 +34,7 @@ merged_at: "2026-07-07"
 
 点击阵列创建选项，即可进入阵列创建点接收器设置选项，具体内容可参考阵列创建。
 
-> 图片: `./images/Create_Point_Observer_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\images\Create_Point_Observer_3.png`
-
-## 图片资源
-
-1. `./images/Create_Point_Observer_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\images\Create_Point_Observer_1.png`
-2. `./images/Create_Point_Observer_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\images\Create_Point_Observer_2.png`
-3. `./images/Create_Point_Observer_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\images\Create_Point_Observer_3.png`
+> 图示要点：`Create_Point_Observer_3.png` 展示“阵列创建”相关的操作界面或示例，后续审查通过后再补图。
 
 ## 页内/相关链接
 
@@ -53,3 +42,12 @@ merged_at: "2026-07-07"
 - - 创建点接收器 - 输入接收器坐标: `#输入接收器坐标`
 - - 创建点接收器 - 输入接收器坐标 - 阵列创建: `#阵列创建`
 - 点击阵列创建选项，即可进入阵列创建点接收器设置选项，具体内容可参考阵列创建: `../../Modeling/Model_Editing/Array_Copy.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Create_Point_Observer_1.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/Observer/images/Create_Point_Observer_1.png` | 展示“创建点接收器”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Create_Point_Observer_2.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/Observer/images/Create_Point_Observer_2.png` | 展示“创建点接收器”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Create_Point_Observer_3.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/Observer/images/Create_Point_Observer_3.png` | 展示“阵列创建”步骤的菜单或参数界面，便于新人按界面完成操作。 |

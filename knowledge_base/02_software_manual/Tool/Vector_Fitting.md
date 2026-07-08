@@ -1,15 +1,13 @@
 ---
 title: "矢量拟合"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Tool/Vector_Fitting.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Tool\Vector_Fitting.md"
+source_relative_path: "Tool/Vector_Fitting.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 矢量拟合
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Tool\Vector_Fitting.html`
 - 原始相对路径: `Tool/Vector_Fitting.html`
 - 知识模块: `工具`
 
@@ -22,8 +20,7 @@ merged_at: "2026-07-07"
 
 1）如图，在软件窗口顶部工具栏里边点击矢量拟合：
 
-> 图片: `images/Vector_Fitting1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Vector_Fitting1.png`
+> 图示要点：`Vector_Fitting1.png` 展示“矢量拟合”相关的操作界面或示例，后续审查通过后再补图。
 
 2）点击矢量拟合，打开该功能对话框， 如下图：
 
@@ -31,34 +28,32 @@ merged_at: "2026-07-07"
 
 - 下拉dB >可以选择数据类型（dB、Real、Imag，Phase、Mag,默认为dB）；
 
-> 图片: `images/Vector_Fitting2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Vector_Fitting2.png`
+> 图示要点：`Vector_Fitting2.png` 展示“矢量拟合”相关的操作界面或示例，后续审查通过后再补图。
 
 3）再点击打开文件，并填入如图：
 
-> 图片: `images/Vector_Fitting3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Vector_Fitting3.png`
+> 图示要点：`Vector_Fitting3.png` 展示“矢量拟合”相关的操作界面或示例，后续审查通过后再补图。
 
 4）然后填入需要导入的文件，点击打开，生成如图：
 
-> 图片: `images/Vector_Fitting5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Vector_Fitting5.png`
+> 图示要点：`Vector_Fitting5.png` 展示“矢量拟合”相关的操作界面或示例，后续审查通过后再补图。
 
 5）点击顶部矢量拟合进行拟合并生成结果,如图（界面左侧下方可以选择需要的曲线）：
 
-> 图片: `images/Vector_Fitting6.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Vector_Fitting6.png`
+> 图示要点：`Vector_Fitting6.png` 展示“矢量拟合”相关的操作界面或示例，后续审查通过后再补图。
 
 6）最后，在窗口左上方文件树中同时选中原Snp文件以及矢量拟合生成的文件后，在窗口右侧会自动计算与显示二者数据误差，如图：
 
-> 图片: `images/Vector_Fitting7.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Vector_Fitting7.png`
+> 图示要点：`Vector_Fitting7.png` 展示“矢量拟合”相关的操作界面或示例，后续审查通过后再补图。
 
-## 图片资源
 
-1. `images/Vector_Fitting1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Vector_Fitting1.png`
-2. `images/Vector_Fitting2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Vector_Fitting2.png`
-3. `images/Vector_Fitting3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Vector_Fitting3.png`
-4. `images/Vector_Fitting5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Vector_Fitting5.png`
-5. `images/Vector_Fitting6.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Vector_Fitting6.png`
-6. `images/Vector_Fitting7.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Tool\images\Vector_Fitting7.png`
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Vector_Fitting1.png | `wavEDA_docs/helpHtml/helpHtml/Tool/images/Vector_Fitting1.png` | 展示“矢量拟合”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Vector_Fitting2.png | `wavEDA_docs/helpHtml/helpHtml/Tool/images/Vector_Fitting2.png` | 展示“矢量拟合”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Vector_Fitting3.png | `wavEDA_docs/helpHtml/helpHtml/Tool/images/Vector_Fitting3.png` | 展示“矢量拟合”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Vector_Fitting5.png | `wavEDA_docs/helpHtml/helpHtml/Tool/images/Vector_Fitting5.png` | 展示“矢量拟合”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Vector_Fitting6.png | `wavEDA_docs/helpHtml/helpHtml/Tool/images/Vector_Fitting6.png` | 展示“矢量拟合”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Vector_Fitting7.png | `wavEDA_docs/helpHtml/helpHtml/Tool/images/Vector_Fitting7.png` | 展示“矢量拟合”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

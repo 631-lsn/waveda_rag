@@ -1,36 +1,38 @@
 ---
 title: "波端口网格"
-merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Mesh/Waveport_Mesh.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Mesh\Waveport_Mesh.md"
 content_kind: "markdown"
-merged_at: "2026-07-07"
+updated_at: "2026-07-08"
+source_relative_path: "Mesh/Waveport_Mesh.html"
 ---
 
 # 波端口网格
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\Waveport_Mesh.html`
-- 原始相对路径: `Mesh/Waveport_Mesh.html`
-- 知识模块: `网格`
+WavEDA 支持对波端口单独进行网格划分。单独设置波端口网格可以提高端口模式分析的精度，使端口模式求解和后续仿真结果更稳定。
 
-## 正文抽取
-## 波端口网格
+## 图示要点
 
-WavEDA支持对波端口单独进行网格划分，使得波端口的模式分析更加精确，计算结果更加稳定。
+### Waveport_Mesh_1.png：波端口网格设置界面
 
-#### 波端口网格设置：
+图中展示波端口网格设置窗口，主要包含“常用”和“高级”两个页签。常用页签中可设置以下内容：
 
-> 图片: `./images/Waveport_Mesh_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Waveport_Mesh_1.png`
+- 网格设置：3D 波端口，即提取 3D 模型截面。
+- 端口范围：可选择“所有波端口”，也可选择“单个波端口”并在右侧下拉框指定目标端口。
+- 物理场类型：电磁；弹性波选项显示为不可用状态。
+- 网格剖分方法：默认为自动。
+- 网格控制参数：包括频率、网格采样率 PPW、网格增长率。
+- 网格类型：形状通常为三角形，可设置边缘阶数。
 
-- 网格设置：可以选择对所有端口或者单个端口进行网格剖分；
+## 参数含义
 
-- 网格控制参数：和3D网格中初始网格的设置原理一致，频率点和网格采样率越大剖分的波端口网格越密。
+- 频率：用于控制端口截面的网格尺度。频率越高，对网格分辨率要求越高。
+- 网格采样率 PPW：每个波长的采样数量。PPW 越大，端口网格越密，模式分析通常越精细，但计算量也更大。
+- 网格增长率：控制相邻网格尺寸变化速度。增长率越小，网格过渡越平滑。
+- 边缘阶数：影响边缘离散精度，新手一般保持默认。
 
-## 图片资源
+## 使用建议
 
-1. `./images/Waveport_Mesh_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Waveport_Mesh_1.png`
+新手通常保持默认设置即可。只有在端口模式异常、S 参数不稳定、端口处场分布不合理，或需要和其他软件精细对比时，才建议单独调整波端口网格。
 
-## 页内/相关链接
+## 后续图片补充
 
-- 网格控制参数：和3D网格: `./3D_Mesh.html`
+图片资源位于官方帮助目录的 `Mesh/images/Waveport_Mesh_1.png`。后续可将该图加入知识库图片资源目录，并插入到“图示要点”位置。

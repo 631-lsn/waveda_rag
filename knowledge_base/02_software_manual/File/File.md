@@ -1,15 +1,13 @@
 ---
 title: "文件"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/File/File.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\File\File.md"
+source_relative_path: "File/File.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 文件
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\File\File.html`
 - 原始相对路径: `File/File.html`
 - 知识模块: `文件与主页`
 
@@ -18,8 +16,7 @@ merged_at: "2026-07-07"
 
 本模块为文件的功能介绍，如下图示意，本模块内包含着四个快捷键，每个快捷键表示菜单中的一个可用命令。
 
-> 图片: `./images/File_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\File\images\File_1.png`
+> 图示要点：`File_1.png` 展示“文件”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 主页
 
@@ -33,18 +30,20 @@ merged_at: "2026-07-07"
 
 点击重置，弹出警告窗口后，模块功能会提醒你“重置该工程可能会清除所有数据，是否继续？”点击确认后，WavEDA将清除所有的模型及工程树内的数据。
 
-> 图片: `./images/File_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\File\images\File_2.png`
+> 图示要点：`File_2.png` 展示“重置”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 关闭
 
 点击关闭，当前的设计窗口将被关闭。只有一个设计窗口时，WavEDA将会切换到主页。 有多个设计窗口时，仅关闭当前的窗口。WavEDA将会切换到下一个设计窗口。
 
-## 图片资源
-
-1. `./images/File_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\File\images\File_1.png`
-2. `./images/File_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\File\images\File_2.png`
-
 ## 页内/相关链接
 
 - 点击主页: `./Homepage.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| File_1.png | `wavEDA_docs/helpHtml/helpHtml/File/images/File_1.png` | 展示“文件”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| File_2.png | `wavEDA_docs/helpHtml/helpHtml/File/images/File_2.png` | 展示“重置”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

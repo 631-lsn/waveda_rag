@@ -1,15 +1,13 @@
 ---
 title: "长方体"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Create_3D_Geometry/Box.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Create_3D_Geometry\Box.md"
+source_relative_path: "Modeling/Create_3D_Geometry/Box.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 长方体
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\Box.html`
 - 原始相对路径: `Modeling/Create_3D_Geometry/Box.html`
 - 知识模块: `建模总览`
 
@@ -18,8 +16,7 @@ merged_at: "2026-07-07"
 
 此对话框用于创建长方体形状物体。长方体尺寸可使用数字或变量(变量表达式)输入， 其位置支持全局坐标以及局部坐标定义。 每个长方体将被赋予一种材料，同时也会被赋予该材料的颜色属性。 长方体的名称为其唯一标识符，一旦一个新的长方体被定义，将在树-体这一栏中列出。下图为长方体的示意图：
 
-> 图片: `./images/Box_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\Box_1.png`
+> 图示要点：`Box_1.png` 展示“长方体”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 名称
 
@@ -41,15 +38,13 @@ merged_at: "2026-07-07"
 
 角点模式定义长方体的示意图如下，通过输入长方体在X方向最小值，Y方向最小值，Z方向最小值 以及X方向最大值，Y方向最大值，Z方向最大值来定义长方体的位置和尺寸。 注意一切均是基于原点(u, v, w)以及UVW轴所决定的坐标系下来定义的，默认为全局坐标系。
 
-> 图片: `./images/Box_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\Box_2.png`
+> 图示要点：`Box_2.png` 展示“角点模式”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 长度模式
 
 长度模式定义长方体的示意图如下，通过输入长方体在X方向最小值，Y方向最小值，Z方向最小值 以及X方向尺寸L，Y方向尺寸W，Z方向尺寸H来定义长方体的位置和尺寸。 注意一切均是基于原点(u, v, w)以及UVW轴所决定的坐标系下来定义的，默认为全局坐标系。
 
-> 图片: `./images/Box_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\Box_3.png`
+> 图示要点：`Box_3.png` 展示“长度模式”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 画图模式
 
@@ -58,12 +53,6 @@ merged_at: "2026-07-07"
 ### 相关文档
 
 球， 圆锥/棱锥， 环，圆柱， 棱柱， 阿基米德螺旋线， 环形螺旋线圈， 键合线 。
-
-## 图片资源
-
-1. `./images/Box_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\Box_1.png`
-2. `./images/Box_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\Box_2.png`
-3. `./images/Box_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Create_3D_Geometry\images\Box_3.png`
 
 ## 页内/相关链接
 
@@ -78,3 +67,12 @@ merged_at: "2026-07-07"
 - 球， 圆锥/棱锥， 环，圆柱， 棱柱， 阿基米德螺旋线: `./Archimedean_Spiral.html`
 - 球， 圆锥/棱锥， 环，圆柱， 棱柱， 阿基米德螺旋线， 环形螺旋线圈: `./Toroidal_Spiral.html`
 - 球， 圆锥/棱锥， 环，圆柱， 棱柱， 阿基米德螺旋线， 环形螺旋线圈， 键合线: `./Bondwire.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Box_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/Box_1.png` | 展示“长方体”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Box_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/Box_2.png` | 展示“角点模式”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Box_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/Box_3.png` | 展示“长度模式”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

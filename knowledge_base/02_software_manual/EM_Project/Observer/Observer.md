@@ -1,15 +1,13 @@
 ---
 title: "接收器"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/EM_Project/Observer/Observer.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\EM_Project\Observer\Observer.md"
+source_relative_path: "EM_Project/Observer/Observer.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 接收器
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\Observer.html`
 - 原始相对路径: `EM_Project/Observer/Observer.html`
 - 知识模块: `EM设计与结果`
 
@@ -20,22 +18,19 @@ merged_at: "2026-07-07"
 
 右键点击工程树上的接收器，可创建接收器，仿真完成后可查看接收器上的场信息。
 
-> 图片: `./images/Observer_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\images\Observer_1.png`
+> 图示要点：`Observer_1.png` 展示“接收器”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 创建点接收器
 
 点击创建点接收器，输入坐标，可建立点接收器，具体操作见创建点接收器文档。
 
-> 图片: `./images/Observer_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\images\Observer_2.png`
+> 图示要点：`Observer_2.png` 展示“创建点接收器”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 创建线接收器
 
 点击创建线接收器，输入坐标，可建立线接收器，具体操作见创建线接收器文档。
 
-> 图片: `./images/Observer_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\images\Observer_3.png`
+> 图示要点：`Observer_3.png` 展示“创建线接收器”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 创建新组
 
@@ -53,12 +48,6 @@ merged_at: "2026-07-07"
 
 除上述功能外，接收器选项还支持删除所有接收器、接收器的复制粘贴、展开或者折叠接收器分组的所有节点信息。
 
-## 图片资源
-
-1. `./images/Observer_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\images\Observer_1.png`
-2. `./images/Observer_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\images\Observer_2.png`
-3. `./images/Observer_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\EM_Project\Observer\images\Observer_3.png`
-
 ## 页内/相关链接
 
 - - 创建点接收器: `#创建点接收器`
@@ -69,3 +58,12 @@ merged_at: "2026-07-07"
 - - 创建点接收器 - 创建线接收器 - 创建新组 - 从文件导入接收器信息 - 导出接收器信息到文件 - 其他功能: `#其他功能`
 - 点击创建点接收器，输入坐标，可建立点接收器，具体操作见创建点接收器: `./Create_Point_Observer.html`
 - 点击创建线接收器，输入坐标，可建立线接收器，具体操作见创建线接收器: `./Create_Line_Observer.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Observer_1.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/Observer/images/Observer_1.png` | 展示“接收器”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Observer_2.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/Observer/images/Observer_2.png` | 展示“创建点接收器”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Observer_3.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/Observer/images/Observer_3.png` | 展示“创建线接收器”步骤的菜单或参数界面，便于新人按界面完成操作。 |

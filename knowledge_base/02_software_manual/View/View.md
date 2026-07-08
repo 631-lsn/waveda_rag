@@ -1,15 +1,13 @@
 ---
 title: "视图"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/View/View.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\View\View.md"
+source_relative_path: "View/View.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 视图
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\View\View.html`
 - 原始相对路径: `View/View.html`
 - 知识模块: `视图`
 
@@ -22,20 +20,17 @@ merged_at: "2026-07-07"
 
 如图所示，可通过视图工具栏来修改模型视图功能。
 
-> 图片: `./images/View_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_1.png`
+> 图示要点：`View_1.png` 展示“视图”相关的操作界面或示例，后续审查通过后再补图。
 
 除视图工具栏来修改模型视图功能外，还可通过建模窗口上方快捷键选择模型的主视图、后视图、左视图、右视图、俯视图和仰视图功能；还具备坐标系、网格、模型信息、边界盒子、物体的隐藏与显示快捷功能。
 
-> 图片: `./images/View_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_2.png`
+> 图示要点：`View_2.png` 展示“视图”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 隐藏
 
 隐藏选项具备隐藏目标功能。
 
-> 图片: `./images/View_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_3.png`
+> 图示要点：`View_3.png` 展示“隐藏”相关的操作界面或示例，后续审查通过后再补图。
 
 隐藏选项各功能介绍：
 
@@ -53,15 +48,13 @@ merged_at: "2026-07-07"
 
 还可通过建模窗口上方快捷键选择选中物体的隐藏功能。
 
-> 图片: `./images/View_4.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_4.png`
+> 图示要点：`View_4.png` 展示“隐藏”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 显示
 
 显示选项具备显示目标功能。
 
-> 图片: `./images/View_5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_5.png`
+> 图示要点：`View_5.png` 展示“显示”相关的操作界面或示例，后续审查通过后再补图。
 
 显示选项各功能介绍：
 
@@ -79,8 +72,7 @@ merged_at: "2026-07-07"
 
 - 还可通过建模窗口上方快捷键选择选中物体的显示功能。
 
-> 图片: `./images/View_6.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_6.png`
+> 图示要点：`View_6.png` 展示“显示”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 边界
 
@@ -88,13 +80,11 @@ merged_at: "2026-07-07"
 
 边界有两种方法选择隐藏与显示。
 
-> 图片: `./images/View_7.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_7.png`
+> 图示要点：`View_7.png` 展示“边界”相关的操作界面或示例，后续审查通过后再补图。
 
 - 点击视图菜单栏中的边界选择隐藏与显示
 
-> 图片: `./images/View_8.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_8.png`
+> 图示要点：`View_8.png` 展示“边界”相关的操作界面或示例，后续审查通过后再补图。
 
 - 点击模型上方快捷工具栏边界选择隐藏与显示
 
@@ -102,29 +92,25 @@ merged_at: "2026-07-07"
 
 激励源选项具备选择激励源的隐藏与显示功能。
 
-> 图片: `./images/View_9.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_9.png`
+> 图示要点：`View_9.png` 展示“激励源”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 接收器
 
 接收器选项具备选择接收器隐藏与显示功能。
 
-> 图片: `./images/View_10.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_10.png`
+> 图示要点：`View_10.png` 展示“接收器”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 端口
 
 端口选项具备选择端口隐藏与显示功能。
 
-> 图片: `./images/View_11.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_11.png`
+> 图示要点：`View_11.png` 展示“端口”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 剖面视角
 
 剖面视角选项具备切割平面看剖面视角的功能。
 
-> 图片: `./images/View_12.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_12.png`
+> 图示要点：`View_12.png` 展示“剖面视角”相关的操作界面或示例，后续审查通过后再补图。
 
 剖面视角选项功能介绍：
 
@@ -138,24 +124,7 @@ merged_at: "2026-07-07"
 
 这里是设计列表选项的介绍，具备模型设计列表查看的功能，具体信息查看设计列表介绍。
 
-> 图片: `./images/View_13.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_13.png`
-
-## 图片资源
-
-1. `./images/View_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_1.png`
-2. `./images/View_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_2.png`
-3. `./images/View_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_3.png`
-4. `./images/View_4.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_4.png`
-5. `./images/View_5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_5.png`
-6. `./images/View_6.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_6.png`
-7. `./images/View_7.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_7.png`
-8. `./images/View_8.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_8.png`
-9. `./images/View_9.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_9.png`
-10. `./images/View_10.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_10.png`
-11. `./images/View_11.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_11.png`
-12. `./images/View_12.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_12.png`
-13. `./images/View_13.png` -> `D:\Staid\app\waveda\documentation\helpHtml\View\images\View_13.png`
+> 图示要点：`View_13.png` 展示“设计列表”相关的操作界面或示例，后续审查通过后再补图。
 
 ## 页内/相关链接
 
@@ -168,3 +137,22 @@ merged_at: "2026-07-07"
 - - 隐藏 - 显示 - 边界 - 激励源 - 接收器 - 端口 - 剖面视角: `#Sectional View`
 - - 隐藏 - 显示 - 边界 - 激励源 - 接收器 - 端口 - 剖面视角 - 设计列表: `#Design List`
 - 这里是设计列表选项的介绍，具备模型设计列表查看的功能，具体信息查看设计列表: `./Design_list.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| View_1.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_1.png` | 展示“视图”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_2.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_2.png` | 展示“视图”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_3.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_3.png` | 展示“隐藏”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_4.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_4.png` | 展示“隐藏”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_5.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_5.png` | 展示“显示”的结果入口或查看界面，便于新人确认后处理位置。 |
+| View_6.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_6.png` | 展示“显示”的结果入口或查看界面，便于新人确认后处理位置。 |
+| View_7.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_7.png` | 展示“边界”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_8.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_8.png` | 展示“边界”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_9.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_9.png` | 展示“激励源”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_10.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_10.png` | 展示“接收器”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_11.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_11.png` | 展示“端口”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_12.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_12.png` | 展示“剖面视角”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_13.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_13.png` | 展示“设计列表”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

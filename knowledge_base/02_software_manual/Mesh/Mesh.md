@@ -1,23 +1,20 @@
 ---
 title: "网格"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Mesh/Mesh.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Mesh\Mesh.md"
+source_relative_path: "Mesh/Mesh.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 网格
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\Mesh.html`
 - 原始相对路径: `Mesh/Mesh.html`
 - 知识模块: `网格`
 
 ## 正文抽取
 ## 网格
 
-> 图片: `./images/Mesh_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Mesh_1.png`
+> 图示要点：`Mesh_1.png` 展示“网格”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 导入网格
 
@@ -47,6 +44,9 @@ merged_at: "2026-07-07"
 
 显示剖分网格结束后体网格、面网格、端口积路径上的网格及病态网格。
 
-## 图片资源
 
-1. `./images/Mesh_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Mesh\images\Mesh_1.png`
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Mesh_1.png | `wavEDA_docs/helpHtml/helpHtml/Mesh/images/Mesh_1.png` | 展示“网格”的结果入口或查看界面，便于新人确认后处理位置。 |

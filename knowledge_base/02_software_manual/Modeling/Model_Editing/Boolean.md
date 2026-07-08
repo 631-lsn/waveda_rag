@@ -1,15 +1,13 @@
 ---
 title: "布尔操作"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Model_Editing/Boolean.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Model_Editing\Boolean.md"
+source_relative_path: "Modeling/Model_Editing/Boolean.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 布尔操作
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\Boolean.html`
 - 原始相对路径: `Modeling/Model_Editing/Boolean.html`
 - 知识模块: `建模总览`
 
@@ -20,8 +18,7 @@ merged_at: "2026-07-07"
 
 布尔运算是创建和修改三维几何体的关键工具。下面详细介绍四种布尔运算：合并、相减、相交和印刻。WavEDA默认进行布尔操作时不保留原物体，可以点击‘Keep’按键保留被操作的原物体。
 
-> 图片: `./images/Boolean_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_1.png`
+> 图示要点：`Boolean_1.png` 展示“布尔操作”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 合并
 
@@ -39,18 +36,15 @@ merged_at: "2026-07-07"
 
 下面的黄色球体(形状B)将被合并到紫色长方体(形状A)上。先选择紫色长方体(A)，然后选择黄色球体(B)，点击合并按钮。
 
-> 图片: `./images/Boolean_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_2.png`
+> 图示要点：`Boolean_2.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 操作的结果将为以下形状：黄色球体(形状B)将被合并到紫色长方体(形状A)形成一个整体。
 
-> 图片: `./images/Boolean_3.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_3.png`
+> 图示要点：`Boolean_3.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 如果点击‘Keep’按键，可以看到被合并的球体（形状B）被保留。
 
-> 图片: `./images/Boolean_9.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_9.png`
+> 图示要点：`Boolean_9.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 相减
 
@@ -68,18 +62,15 @@ merged_at: "2026-07-07"
 
 下面的黄色球体(形状B)将从紫色长方体(形状A)中减去。先选择长方体(形状A)，然后选择球体(形状B)，然后单击减去按钮。
 
-> 图片: `./images/Boolean_4.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_4.png`
+> 图示要点：`Boolean_4.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 操作的结果将为以下形状：紫色长方体(形状A)减去黄色球体(形状B)部分。
 
-> 图片: `./images/Boolean_10.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_10.png`
+> 图示要点：`Boolean_10.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 如果点击‘Keep’按键，可以看到被减去的球体（形状B）被保留。
 
-> 图片: `./images/Boolean_5.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_5.png`
+> 图示要点：`Boolean_5.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 相交
 
@@ -97,18 +88,15 @@ merged_at: "2026-07-07"
 
 下面的黄色球体(形状B)与紫色长方体(形状A)相交。先选择长方体(形状A)，然后选择球体(形状B)，然后单击相交按钮。
 
-> 图片: `./images/Boolean_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_2.png`
+> 图示要点：`Boolean_2.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 操作的结果将为以下形状：紫色长方体(形状A)与黄色球体(形状B)相交的部分被保留。
 
-> 图片: `./images/Boolean_6.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_6.png`
+> 图示要点：`Boolean_6.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 如果点击‘Keep’按键，可以看到被相交的球体（形状B）被保留。
 
-> 图片: `./images/Boolean_11.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_11.png`
+> 图示要点：`Boolean_11.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 ### 印刻
 
@@ -126,34 +114,15 @@ merged_at: "2026-07-07"
 
 下图中黄色的正方体为基体(形状A)，绿色的圆面(形状B)为工具面，使用‘印刻’。
 
-> 图片: `./images/Boolean_7.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_7.png`
+> 图示要点：`Boolean_7.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 操作的结果将为以下形状：黄色正方体(形状A)上印刻出了圆形(形状B)的轮廓。
 
-> 图片: `./images/Boolean_8.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_8.png`
+> 图示要点：`Boolean_8.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 如果点击‘Keep’按键，可以看到被印刻的圆面（形状B）被保留。
 
-> 图片: `./images/Boolean_7.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_7.png`
-
-## 图片资源
-
-1. `./images/Boolean_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_1.png`
-2. `./images/Boolean_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_2.png`
-3. `./images/Boolean_3.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_3.png`
-4. `./images/Boolean_9.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_9.png`
-5. `./images/Boolean_4.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_4.png`
-6. `./images/Boolean_10.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_10.png`
-7. `./images/Boolean_5.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_5.png`
-8. `./images/Boolean_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_2.png`
-9. `./images/Boolean_6.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_6.png`
-10. `./images/Boolean_11.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_11.png`
-11. `./images/Boolean_7.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_7.png`
-12. `./images/Boolean_8.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_8.png`
-13. `./images/Boolean_7.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Boolean_7.png`
+> 图示要点：`Boolean_7.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 ## 页内/相关链接
 
@@ -161,3 +130,20 @@ merged_at: "2026-07-07"
 - - 合并 - 相减: `#相减`
 - - 合并 - 相减 - 相交: `#相交`
 - - 合并 - 相减 - 相交 - 印刻: `#印刻`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Boolean_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_1.png` | 展示“布尔操作”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_2.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_3.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_9.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_9.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_4.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_4.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_10.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_10.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_5.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_5.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_6.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_6.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_11.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_11.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_7.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_7.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_8.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_8.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

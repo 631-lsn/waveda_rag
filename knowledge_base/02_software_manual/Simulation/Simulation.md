@@ -1,15 +1,13 @@
 ---
 title: "仿真"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Simulation/Simulation.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Simulation\Simulation.md"
+source_relative_path: "Simulation/Simulation.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 仿真
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Simulation\Simulation.html`
 - 原始相对路径: `Simulation/Simulation.html`
 - 知识模块: `仿真`
 
@@ -18,8 +16,7 @@ merged_at: "2026-07-07"
 
 在建立模型、边界条件和设置激励后，可以开始模型的仿真操作。
 
-> 图片: `./images/Simulation_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Simulation\images\Simulation_1.png`
+> 图示要点：`Simulation_1.png` 展示“仿真”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 验证
 
@@ -53,11 +50,14 @@ merged_at: "2026-07-07"
 
 点击参数化扫描按钮可以查看到当前添加的参数化扫描结果。
 
-## 图片资源
-
-1. `./images/Simulation_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Simulation\images\Simulation_1.png`
-
 ## 页内/相关链接
 
 - 点击远场按钮可以查看到当前添加的远场: `../EM_Project/Far_Field.html`
 - 点击参数化扫描按钮可以查看到当前添加的参数化扫描: `../Simulation/Parameter_Sweep.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Simulation_1.png | `wavEDA_docs/helpHtml/helpHtml/Simulation/images/Simulation_1.png` | 展示“仿真”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

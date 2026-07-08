@@ -1,15 +1,13 @@
 ---
 title: "单位"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Design/Unit.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Design\Unit.md"
+source_relative_path: "Modeling/Design/Unit.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 单位
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Design\Unit.html`
 - 原始相对路径: `Modeling/Design/Unit.html`
 - 知识模块: `建模总览`
 
@@ -18,8 +16,7 @@ merged_at: "2026-07-07"
 
 - 长度 - 时间 - 频率 - 长度/频率单位变化选项
 
-> 图片: `./images/Unit_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Design\images\Unit_2.png`
+> 图示要点：`Unit_2.png` 展示“单位”相关的操作界面或示例，后续审查通过后再补图。
 
 在建模仿真之前，需要设置模型所需的几何和物理单位。在单位修改界面可以修改长度单位，时间单位以及频率单位。
 
@@ -27,8 +24,7 @@ merged_at: "2026-07-07"
 
 你可以通过点击上方主菜单栏中"设计"->"unit"图标打开对话框
 
-> 图片: `./images/Unit_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Design\images\Unit_1.png`
+> 图示要点：`Unit_1.png` 展示“单位”相关的操作界面或示例，后续审查通过后再补图。
 
 ，也可以通过双击左侧工程树"设计"->"单位"打开对话框。
 
@@ -50,14 +46,17 @@ merged_at: "2026-07-07"
 
 如果取消勾选，切换单位后模型大小会随着系统单位缩放。例如：选择厘米（cm）作为新的长度单位，结果是10毫米（mm）的尺寸变为10厘米（cm）。
 
-## 图片资源
-
-1. `./images/Unit_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Design\images\Unit_2.png`
-2. `./images/Unit_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Design\images\Unit_1.png`
-
 ## 页内/相关链接
 
 - - 长度: `#length`
 - - 长度 - 时间: `#Time`
 - - 长度 - 时间 - 频率: `#Frequency`
 - - 长度 - 时间 - 频率 - 长度/频率单位变化选项: `#长度/频率单位变化选项`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Unit_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Design/images/Unit_2.png` | 展示“单位”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Unit_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Design/images/Unit_1.png` | 展示“单位”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

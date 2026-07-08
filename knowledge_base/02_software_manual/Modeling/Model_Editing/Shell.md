@@ -1,15 +1,13 @@
 ---
 title: "挖空"
 merged_source: "current_waveda_agent_kb"
-source_relative_path: "10_extracted_pages/Modeling/Model_Editing/Shell.md"
-original_path: "D:\RAGGG\knowledge_sources\waveda_agent_kb\10_extracted_pages\Modeling\Model_Editing\Shell.md"
+source_relative_path: "Modeling/Model_Editing/Shell.html"
 content_kind: "markdown"
 merged_at: "2026-07-07"
 ---
 
 # 挖空
 
-- 来源 HTML: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\Shell.html`
 - 原始相对路径: `Modeling/Model_Editing/Shell.html`
 - 知识模块: `建模总览`
 
@@ -18,8 +16,7 @@ merged_at: "2026-07-07"
 
 给定挖空后物体的厚度以及挖空后物体的延伸方向可确定挖空属性。延伸方向可选择向内、向外或者两边均延伸。
 
-> 图片: `./images/Shell_1.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Shell_1.png`
+> 图示要点：`Shell_1.png` 展示“挖空”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 激活挖空功能
 
@@ -33,17 +30,11 @@ merged_at: "2026-07-07"
 
 以六棱柱选择顶面作为挖空面，向外挖空且物体厚度为15的效果如下。
 
-> 图片: `./images/Shell_2.png`  
-> 原始路径: `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Shell_2.png`
+> 图示要点：`Shell_2.png` 展示“例子”相关的操作界面或示例，后续审查通过后再补图。
 
 #### 相关文档
 
 阵列复制， 移动， 镜像， 旋转， 缩放， 切割， 与坐标系平面对齐， 扩大面。
-
-## 图片资源
-
-1. `./images/Shell_1.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Shell_1.png`
-2. `./images/Shell_2.png` -> `D:\Staid\app\waveda\documentation\helpHtml\Modeling\Model_Editing\images\Shell_2.png`
 
 ## 页内/相关链接
 
@@ -55,3 +46,11 @@ merged_at: "2026-07-07"
 - 阵列复制， 移动， 镜像， 旋转， 缩放， 切割: `../Model_Editing/Split.html`
 - 阵列复制， 移动， 镜像， 旋转， 缩放， 切割， 与坐标系平面对齐: `../Model_Editing/Align.html`
 - 阵列复制， 移动， 镜像， 旋转， 缩放， 切割， 与坐标系平面对齐， 扩大面: `../Model_Editing/Enlarge.html`
+
+
+## 待补图片清单
+以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+| 图片名称 | 当前资源路径 | 建议保留原因 |
+| --- | --- | --- |
+| Shell_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Shell_1.png` | 展示“挖空”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Shell_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Shell_2.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
