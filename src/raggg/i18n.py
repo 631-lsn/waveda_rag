@@ -53,8 +53,8 @@ TEXTS: dict[str, dict[str, str]] = {
         "en": "Reload Index",
     },
     "btn_api_settings": {
-        "zh": "API 设置",
-        "en": "API Settings",
+        "zh": "设置",
+        "en": "Settings",
     },
     "btn_favorites": {
         "zh": "收藏夹",
