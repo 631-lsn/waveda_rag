@@ -18,6 +18,7 @@ from PySide6.QtWidgets import (
     QComboBox,
     QDialog,
     QDialogButtonBox,
+    QFileDialog,
     QFormLayout,
     QFrame,
     QGridLayout,
@@ -34,6 +35,7 @@ from PySide6.QtWidgets import (
 
 from raggg.config import Settings, load_settings
 from raggg.pipeline.builder import BuildReport, build_knowledge_base
+from raggg.pipeline.ingestion import IngestReport, ingest_document
 from raggg.pipeline.rag_pipeline import RAGAnswer, RAGPipeline
 from raggg.retrieval.retriever import SearchResult
 
@@ -637,6 +639,10 @@ class WorkbenchWindow(QMainWindow):
         layout.addWidget(self.chunk_card)
         layout.addWidget(self.model_card)
 
+        self.import_button = self._button("导入资料入库", primary=True)
+        self.import_button.clicked.connect(self._import_document)
+        layout.addWidget(self.import_button)
+
         # 重建知识库按钮已移除 — 改用 scripts/add_document.py 追加文档
         self.reload_button = self._button("重新载入索引")
         self.reload_button.clicked.connect(self._load_pipeline_if_ready)
@@ -868,6 +874,40 @@ class WorkbenchWindow(QMainWindow):
             self._load_pipeline_if_ready()
             QMessageBox.information(self, "已保存", "API 设置已更新，重启应用后生效。")
 
+    def _import_document(self) -> None:
+        if self.is_busy:
+            return
+        path, _ = QFileDialog.getOpenFileName(
+            self,
+            "选择要入库的资料",
+            str(self._project_root),
+            "Documents (*.md *.markdown *.html *.htm *.txt)",
+        )
+        if not path:
+            return
+
+        self._set_busy(True, "正在导入资料并重建知识库")
+        worker = Worker(lambda: self._import_and_rebuild(path))
+        worker.signals.result.connect(self._on_import_done)
+        worker.signals.error.connect(lambda message: self._show_error("导入失败", message))
+        worker.signals.finished.connect(lambda: self._set_busy(False, "就绪"))
+        self._start_worker(worker)
+
+    def _import_and_rebuild(self, path: str) -> tuple[IngestReport, BuildReport]:
+        ingest_report = ingest_document(self.settings, path)
+        build_report = build_knowledge_base(self.settings)
+        return ingest_report, build_report
+
+    def _on_import_done(self, result: tuple[IngestReport, BuildReport]) -> None:
+        ingest_report, build_report = result
+        self.chunk_card.set_value(str(build_report.chunk_count), COLORS["warning"])
+        self._load_pipeline_if_ready()
+        QMessageBox.information(
+            self,
+            "导入完成",
+            f"已导入: {ingest_report.imported_path.name}\n知识块: {build_report.chunk_count}",
+        )
+
     def _rebuild_async(self) -> None:
         if self.is_busy:
             return
@@ -929,7 +969,7 @@ class WorkbenchWindow(QMainWindow):
         self.is_busy = busy
         self.activity_label.setText(text)
         self.activity_label.setStyleSheet(f"color: {COLORS['warning' if busy else 'accent']};")
-        for button in (self.ask_button, self.reload_button):
+        for button in (self.ask_button, self.reload_button, self.import_button):
             button.setDisabled(busy)
 
     def _append_user(self, question: str) -> None:
