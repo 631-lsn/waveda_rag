@@ -241,8 +241,8 @@ TEXTS: dict[str, dict[str, str]] = {
         "en": "No saved Q&A yet.",
     },
     "msg_api_saved": {
-        "zh": "API 设置已更新，重启应用后生效。",
-        "en": "API settings updated. Restart the app for changes to take effect.",
+        "zh": "设置已更新，重启应用后生效。",
+        "en": "Settings updated. Restart the app for changes to take effect.",
     },
 
     # ── 设置：API Tab ──────────────────────────────────
@@ -261,6 +261,32 @@ TEXTS: dict[str, dict[str, str]] = {
     "settings_api_key": {
         "zh": "API Key",
         "en": "API Key",
+    },
+
+    # ── 设置：WavEDA 路径 Tab ─────────────────────────
+    "settings_waveda_paths_tab": {
+        "zh": "WavEDA 路径",
+        "en": "WavEDA Paths",
+    },
+    "settings_waveda_paths_desc": {
+        "zh": "填写本机 WavEDA 的绝对路径后，agent 可以在回答中调用你电脑上的帮助文档和案例图片。推荐只填写 WavEDA 安装根目录。",
+        "en": "Set local WavEDA paths so the agent can use help and example images from this computer. Usually only the WavEDA install root is needed.",
+    },
+    "settings_waveda_root": {
+        "zh": "WavEDA 安装根目录",
+        "en": "WavEDA install root",
+    },
+    "settings_waveda_help_root": {
+        "zh": "帮助文档目录",
+        "en": "Help docs folder",
+    },
+    "settings_waveda_example_root": {
+        "zh": "案例目录",
+        "en": "Example folder",
+    },
+    "settings_waveda_paths_hint": {
+        "zh": "示例：D:\\Program Files\\WavEDA。保存后请重启应用，新的图片路径索引会自动生效。帮助文档和案例目录可留空，除非你的安装结构比较特殊。",
+        "en": "Example: D:\\Program Files\\WavEDA. Restart the app after saving; image paths will be re-indexed automatically. Help and Example folders can stay empty unless your install layout is unusual.",
     },
 
     # ── 设置：语言 Tab ──────────────────────────────────

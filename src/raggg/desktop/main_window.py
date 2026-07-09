@@ -524,7 +524,9 @@ class SettingsDialog(QDialog):
 
         # ── Tab 1: API 设置 ──
         self._build_api_tab()
-        # ── Tab 2: 语言 ──
+        # ── Tab 2: WavEDA 路径 ──
+        self._build_waveda_paths_tab()
+        # ── Tab 3: 语言 ──
         self._build_language_tab()
 
         buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
@@ -577,6 +579,49 @@ class SettingsDialog(QDialog):
         _, url, model = LLM_PROVIDERS[index]
         self.api_info_label.setText(f"URL: {url}   |   Model: {model}")
 
+    # ─── WavEDA Paths Tab ─────────────────────────
+    def _build_waveda_paths_tab(self) -> None:
+        tab = QWidget()
+        layout = QVBoxLayout(tab)
+        layout.setSpacing(14)
+
+        desc = QLabel(get_text("settings_waveda_paths_desc"))
+        desc.setStyleSheet(f"color:{COLORS['muted']};font-size:12px;")
+        desc.setWordWrap(True)
+        layout.addWidget(desc)
+
+        form = QFormLayout()
+        form.setSpacing(10)
+
+        self.waveda_root_edit = QLineEdit(self._display_path(self.settings.waveda_root))
+        self.waveda_root_edit.setPlaceholderText(r"D:\Program Files\WavEDA")
+        form.addRow(get_text("settings_waveda_root") + ":", self.waveda_root_edit)
+
+        self.waveda_help_root_edit = QLineEdit(self._display_path(self.settings.waveda_help_root))
+        self.waveda_help_root_edit.setPlaceholderText(r"D:\Program Files\WavEDA\documentation\helpHtml")
+        form.addRow(get_text("settings_waveda_help_root") + ":", self.waveda_help_root_edit)
+
+        self.waveda_example_root_edit = QLineEdit(self._display_path(self.settings.waveda_example_root))
+        self.waveda_example_root_edit.setPlaceholderText(r"D:\Program Files\WavEDA\Example")
+        form.addRow(get_text("settings_waveda_example_root") + ":", self.waveda_example_root_edit)
+
+        hint = QLabel(get_text("settings_waveda_paths_hint"))
+        hint.setStyleSheet(f"color:{COLORS['subtle']};font-size:11px;")
+        hint.setWordWrap(True)
+        form.addRow(hint)
+
+        layout.addLayout(form)
+        layout.addStretch()
+        self.tabs.addTab(tab, get_text("settings_waveda_paths_tab"))
+
+    def _display_path(self, path: Path | None) -> str:
+        if path is None:
+            return ""
+        try:
+            return str(path.relative_to(self.settings.project_root))
+        except ValueError:
+            return str(path)
+
     # ─── Language Tab ────────────────────────────
     def _build_language_tab(self) -> None:
         tab = QWidget()
@@ -614,11 +659,19 @@ class SettingsDialog(QDialog):
         for line in lines:
             if not any(line.startswith(k + "=") for k in (
                 "RAG_LLM_BASE_URL", "RAG_LLM_API_KEY", "RAG_LLM_MODEL",
+                "WAVEDA_ROOT", "WAVEDA_HELP_ROOT", "WAVEDA_EXAMPLE_ROOT",
             )):
                 new_lines.append(line)
         new_lines.append(f"RAG_LLM_BASE_URL={url}")
         new_lines.append(f"RAG_LLM_API_KEY={self.key_edit.text().strip()}")
         new_lines.append(f"RAG_LLM_MODEL={model}")
+
+        waveda_root = self.waveda_root_edit.text().strip()
+        waveda_help_root = self.waveda_help_root_edit.text().strip() or "wavEDA_docs/helpHtml/helpHtml"
+        waveda_example_root = self.waveda_example_root_edit.text().strip()
+        new_lines.append(f"WAVEDA_ROOT={waveda_root}")
+        new_lines.append(f"WAVEDA_HELP_ROOT={waveda_help_root}")
+        new_lines.append(f"WAVEDA_EXAMPLE_ROOT={waveda_example_root}")
 
         # 保存语言
         lang = self.lang_combo.currentData()

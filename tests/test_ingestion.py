@@ -13,7 +13,9 @@ from raggg.pipeline.ingestion import ingest_document
 def make_settings(root: Path) -> Settings:
     return Settings(
         project_root=root,
+        waveda_root=None,
         waveda_help_root=root / "wavEDA_docs" / "helpHtml" / "helpHtml",
+        waveda_example_root=None,
         obsidian_vault_root=root / "knowledge_base",
         data_dir=root / "data",
         embedding_model="local-hashed-vectors",
