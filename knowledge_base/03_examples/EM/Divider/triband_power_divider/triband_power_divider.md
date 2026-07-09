@@ -65,41 +65,37 @@ merged_at: "2026-07-07"
 
 整体模型尺寸为 35*32*1.6 mm，基底的介电常数为FR-4（介电常数为4.4，损耗角正切为0.02），微带线和接地板为PEC，边界条件为一阶吸收边界。
 
-> 图片: `./res/triband_power_divider_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Divider\triband_power_divider\res\triband_power_divider_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 1. 仿真频率 该模型使用集总面端口馈电。扫频范围在0.05 - 4.5 GHz，扫频方式选离散（插值/快速也适用）。 具体设置如下图：
 
-> 图片: `./res/triband_power_divider_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Divider\triband_power_divider\res\triband_power_divider_6.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 创建端口 三个端口均采用集总面端口，WavEDA支持自动创建积分线并识别端口面的方向，进入集总端口设置界面后可以点击预览查看，同时也可以对积分线方向反向。本案例中端口方向均从微带线指向金属地。
 
-> 图片: `./res/triband_power_divider_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Divider\triband_power_divider\res\triband_power_divider_2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 后处理
 
 1. 网格查看 网格剖分完成后，选中目标体或面，进入View Mesh窗口网格剖分情况。
 
-> 图片: `./res/triband_power_divider_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Divider\triband_power_divider\res\triband_power_divider_3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 仿真结果 仿真完成后，可以查看S参数结果，可以看到仿真结果符合功分器的效果，输入反射功率仅1.1%，匹配良好。插入损耗0.2 dB，接近理想均分。输出间泄漏功率约1.6%，满足多数WLAN系统需求。 如下图：
 
-> 图片: `./res/triband_power_divider_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Divider\triband_power_divider\res\triband_power_divider_5.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 参考文献
 
 [1] D. K. Choudhary, N. Mishra, P. K. Singh and A. Sharma, "Miniaturized Power Divider With Triple-Band Filtering Response Using Coupled Line," in IEEE Access, vol. 11, pp. 27602-27608, 2023, doi: 10.1109/ACCESS.2023.3257985.
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/triband_power_divider_1.png` -> `D:\Staid\app\waveda\Example\EM\Divider\triband_power_divider\res\triband_power_divider_1.png`
-2. `./res/triband_power_divider_6.png` -> `D:\Staid\app\waveda\Example\EM\Divider\triband_power_divider\res\triband_power_divider_6.png`
-3. `./res/triband_power_divider_2.png` -> `D:\Staid\app\waveda\Example\EM\Divider\triband_power_divider\res\triband_power_divider_2.png`
-4. `./res/triband_power_divider_3.png` -> `D:\Staid\app\waveda\Example\EM\Divider\triband_power_divider\res\triband_power_divider_3.png`
-5. `./res/triband_power_divider_5.png` -> `D:\Staid\app\waveda\Example\EM\Divider\triband_power_divider\res\triband_power_divider_5.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| triband_power_divider_1.png | `Example/EM/Divider/triband_power_divider/res/triband_power_divider_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| triband_power_divider_6.png | `Example/EM/Divider/triband_power_divider/res/triband_power_divider_6.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| triband_power_divider_3.png | `Example/EM/Divider/triband_power_divider/res/triband_power_divider_3.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| triband_power_divider_5.png | `Example/EM/Divider/triband_power_divider/res/triband_power_divider_5.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

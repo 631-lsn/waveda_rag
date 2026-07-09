@@ -36,37 +36,32 @@ merged_at: "2026-07-07"
 
 LC低通滤波器主要有LC器件组成，两端接有端口以进行S参数查看，放置SP控件仿真0.1-10 GHz的S参数，为增加高频抑制效果，通过并联谐振网络，结合WavEDA的电路调谐功能实时查看S参数结果，达到目标。电路示意图如下图所示：
 
-> 图片: `./res/LC_LPF_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Circuit\LC_LPF\LC_LPF\res\LC_LPF_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 1. 仿真控件设置 该电路模型仿真S参数，设置SP控件，类型为Linear，仿真范围为0.1-10 GHz，点数为401。具体设置如下图：
 
-> 图片: `./res/LC_LPF_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Circuit\LC_LPF\LC_LPF\res\LC_LPF_2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 变量设置 选择变量控件，添加变量C5、C6、C7，并设置C5=1、C6=0.5、C7=0.2，具体设置如下图：
 
-> 图片: `./res/LC_LPF_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Circuit\LC_LPF\LC_LPF\res\LC_LPF_3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 3. 参数化扫描设置 选择工具->参数化扫描，进入窗口后分别设置C5、C6、C7的变量范围为起始0.1，终止1.5，步长0.1；并启用变量扫描功能。
 
-> 图片: `./res/LC_LPF_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Circuit\LC_LPF\LC_LPF\res\LC_LPF_4.png`
 
 ### 后处理
 
 调谐调试S参数 电路创建完毕后，点击仿真->调谐后，弹出结果与调谐窗口，首先在结果窗口创建S参数，选择S11和S21创建结果；通过调谐窗口选择滑块移动改变C5、C6、C7的值实时查看S参数结果，以达到目标需求。
 
-> 图片: `./res/LC_LPF_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Circuit\LC_LPF\LC_LPF\res\LC_LPF_5.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/LC_LPF_1.png` -> `D:\Staid\app\waveda\Example\Circuit\LC_LPF\LC_LPF\res\LC_LPF_1.png`
-2. `./res/LC_LPF_2.png` -> `D:\Staid\app\waveda\Example\Circuit\LC_LPF\LC_LPF\res\LC_LPF_2.png`
-3. `./res/LC_LPF_3.png` -> `D:\Staid\app\waveda\Example\Circuit\LC_LPF\LC_LPF\res\LC_LPF_3.png`
-4. `./res/LC_LPF_4.png` -> `D:\Staid\app\waveda\Example\Circuit\LC_LPF\LC_LPF\res\LC_LPF_4.png`
-5. `./res/LC_LPF_5.png` -> `D:\Staid\app\waveda\Example\Circuit\LC_LPF\LC_LPF\res\LC_LPF_5.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| LC_LPF_1.png | `Example/Circuit/LC_LPF/LC_LPF/res/LC_LPF_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| LC_LPF_2.png | `Example/Circuit/LC_LPF/LC_LPF/res/LC_LPF_2.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| LC_LPF_3.png | `Example/Circuit/LC_LPF/LC_LPF/res/LC_LPF_3.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| LC_LPF_5.png | `Example/Circuit/LC_LPF/LC_LPF/res/LC_LPF_5.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

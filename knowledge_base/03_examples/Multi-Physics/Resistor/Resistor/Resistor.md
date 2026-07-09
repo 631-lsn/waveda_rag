@@ -46,29 +46,20 @@ merged_at: "2026-07-07"
 
 本模型为贴片电阻焊接在介质板的完整装配模型，通过多物理场仿真贴片电阻受热导致形变的情况。
 
-> 图片: `./res/Resistor_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 1. 多物理场设置 多物理场条件设置如下：五个电阻设置为热源，每个电阻的热量为 0.1 W；其余表面设置为对流热通量，介质板底面设置为固定约束。
 
-> 图片: `./res/Resistor_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/Resistor_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/Resistor_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_4.png`
 
-> 图片: `./res/Resistor_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_5.png`
 
 2. 仿真配置 选择热学、力学进行热膨胀仿真，仿真类型全部选择 Steady。具体设置如下图：
 
-> 图片: `./res/Resistor_12.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_12.png`
 
 ### 后处理
 
@@ -76,37 +67,18 @@ merged_at: "2026-07-07"
 
 温度结果
 
-> 图片: `./res/Resistor_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_6.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/Resistor_9.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_9.png`
 
 力学结果
 
-> 图片: `./res/Resistor_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_7.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/Resistor_10.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_10.png`
+## 待补图片清单
 
-> 图片: `./res/Resistor_8.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_8.png`
-
-> 图片: `./res/Resistor_11.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_11.png`
-
-## 图片资源
-
-1. `./res/Resistor_1.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_1.png`
-2. `./res/Resistor_2.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_2.png`
-3. `./res/Resistor_3.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_3.png`
-4. `./res/Resistor_4.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_4.png`
-5. `./res/Resistor_5.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_5.png`
-6. `./res/Resistor_12.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_12.png`
-7. `./res/Resistor_6.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_6.png`
-8. `./res/Resistor_9.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_9.png`
-9. `./res/Resistor_7.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_7.png`
-10. `./res/Resistor_10.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_10.png`
-11. `./res/Resistor_8.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_8.png`
-12. `./res/Resistor_11.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Resistor\Resistor\res\Resistor_11.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| Resistor_1.png | `Example/Multi-Physics/Resistor/Resistor/res/Resistor_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Resistor_2.png | `Example/Multi-Physics/Resistor/Resistor/res/Resistor_2.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Resistor_6.png | `Example/Multi-Physics/Resistor/Resistor/res/Resistor_6.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Resistor_7.png | `Example/Multi-Physics/Resistor/Resistor/res/Resistor_7.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

@@ -73,8 +73,7 @@ merged_at: "2026-07-07"
 
 采用耦合线和蘑菇谐振器的小型化共模低通滤波器，设置0.1-4.5 GHz频率范围仿真，查看共模S参数结果，模型示意图如下图所示。
 
-> 图片: `./res/Commom-Mode_Filter_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 该模型为4个蘑菇形单元组成，介质基板材料为RO4003C，厚度为68 mil。对于内部制造，采用双层平版蚀刻工艺，贴片嵌入到介质内部， 差分线在基板上方，边界条件为ABC。
 
@@ -82,52 +81,37 @@ merged_at: "2026-07-07"
 
 1. 仿真频率及网格设置 该模型仿真频率设置为0.1-4.5 GHz，扫频方式选择插值(离散/快速也适用)。 设置网格采样率为3 PPW，采用自适应网格进行剖分，自适应网格频率设置为2.5 GHz，残差设置为WavEDA默认值0.01，具体设置如下图：
 
-> 图片: `./res/Commom-Mode_Filter_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_2.png`
 
-> 图片: `./res/Commom-Mode_Filter_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_3.png`
 
 2. 创建端口 模型激励采用面集总端口馈电，如下图所示：
 
-> 图片: `./res/Commom-Mode_Filter_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_4.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 3. 差分对设置 对四个端口设置两组差分对，注意差分对结果属于后处理结果，可在仿真完成后再进行差分对设置，具体设置如下图所示：
 
-> 图片: `./res/Commom-Mode_Filter_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_5.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/Commom-Mode_Filter_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_6.png`
 
 ### 后处理
 
 1. 3D网格 仿真完成后，选中关键部分物体，进入查看网格窗口查看网格剖分情况。
 
-> 图片: `./res/Commom-Mode_Filter_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_7.png`
 
 2. 共模S参数结果 端口结果可从工程树端口处访问，添加S(Comm1，Comm1)、S(Comm2，Comm1)结果查看共模滤波器性能。
 
-> 图片: `./res/Commom-Mode_Filter_8.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_8.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/Commom-Mode_Filter_9.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_9.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 参考文献
 
 [1] B. -F. Su and T. -G. Ma, "Miniaturized Common-Mode Filter Using Coupled Synthesized Lines and Mushroom Resonators for High-Speed Differential Signals," in IEEE Microwave and Wireless Components Letters, vol. 25, no. 2, pp. 112-114, Feb. 2015, doi: 10.1109/LMWC.2014.2382650.
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/Commom-Mode_Filter_1.png` -> `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_1.png`
-2. `./res/Commom-Mode_Filter_2.png` -> `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_2.png`
-3. `./res/Commom-Mode_Filter_3.png` -> `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_3.png`
-4. `./res/Commom-Mode_Filter_4.png` -> `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_4.png`
-5. `./res/Commom-Mode_Filter_5.png` -> `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_5.png`
-6. `./res/Commom-Mode_Filter_6.png` -> `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_6.png`
-7. `./res/Commom-Mode_Filter_7.png` -> `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_7.png`
-8. `./res/Commom-Mode_Filter_8.png` -> `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_8.png`
-9. `./res/Commom-Mode_Filter_9.png` -> `D:\Staid\app\waveda\Example\EM\SI_PI\Commom-Mode_Filter\res\Commom-Mode_Filter_9.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| Commom-Mode_Filter_1.png | `Example/EM/SI_PI/Commom-Mode_Filter/res/Commom-Mode_Filter_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Commom-Mode_Filter_4.png | `Example/EM/SI_PI/Commom-Mode_Filter/res/Commom-Mode_Filter_4.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Commom-Mode_Filter_8.png | `Example/EM/SI_PI/Commom-Mode_Filter/res/Commom-Mode_Filter_8.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Commom-Mode_Filter_9.png | `Example/EM/SI_PI/Commom-Mode_Filter/res/Commom-Mode_Filter_9.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

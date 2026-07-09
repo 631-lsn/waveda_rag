@@ -140,19 +140,19 @@ merged_at: "2026-07-07"
 
 
 ## 待补图片清单
-以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
-| 图片名称 | 当前资源路径 | 建议保留原因 |
+以下图片暂不插入正文，路径为 WavEDA 帮助文档内部相对路径；运行时 agent 会按项目内帮助图片和用户本机 WavEDA 帮助目录进行查找。
+| 图片名称 | WavEDA 帮助相对路径 | 建议保留原因 |
 | --- | --- | --- |
-| View_1.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_1.png` | 展示“视图”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| View_2.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_2.png` | 展示“视图”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| View_3.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_3.png` | 展示“隐藏”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| View_4.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_4.png` | 展示“隐藏”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| View_5.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_5.png` | 展示“显示”的结果入口或查看界面，便于新人确认后处理位置。 |
-| View_6.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_6.png` | 展示“显示”的结果入口或查看界面，便于新人确认后处理位置。 |
-| View_7.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_7.png` | 展示“边界”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| View_8.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_8.png` | 展示“边界”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| View_9.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_9.png` | 展示“激励源”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| View_10.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_10.png` | 展示“接收器”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| View_11.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_11.png` | 展示“端口”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| View_12.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_12.png` | 展示“剖面视角”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| View_13.png | `wavEDA_docs/helpHtml/helpHtml/View/images/View_13.png` | 展示“设计列表”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_1.png | `View/images/View_1.png` | 展示“视图”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_2.png | `View/images/View_2.png` | 展示“视图”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_3.png | `View/images/View_3.png` | 展示“隐藏”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_4.png | `View/images/View_4.png` | 展示“隐藏”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_5.png | `View/images/View_5.png` | 展示“显示”的结果入口或查看界面，便于新人确认后处理位置。 |
+| View_6.png | `View/images/View_6.png` | 展示“显示”的结果入口或查看界面，便于新人确认后处理位置。 |
+| View_7.png | `View/images/View_7.png` | 展示“边界”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_8.png | `View/images/View_8.png` | 展示“边界”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_9.png | `View/images/View_9.png` | 展示“激励源”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_10.png | `View/images/View_10.png` | 展示“接收器”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_11.png | `View/images/View_11.png` | 展示“端口”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_12.png | `View/images/View_12.png` | 展示“剖面视角”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| View_13.png | `View/images/View_13.png` | 展示“设计列表”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

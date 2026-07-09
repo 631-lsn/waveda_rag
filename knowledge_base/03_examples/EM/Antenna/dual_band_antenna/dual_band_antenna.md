@@ -61,59 +61,43 @@ merged_at: "2026-07-07"
 
 整体模型尺寸为60x50x1.6 mm³，基底的材料为FR-4（介电常数为4.4，损耗角正切为0.02），微带线和金属地的材料都是PEC，边界条件为一阶吸收边界。
 
-> 图片: `./res/dual_band_antenna_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 1. 仿真频率和网格划分 该模型使用软件自适应网格进行剖分，使用集总面端口馈电，仿真范围在 2 - 6 GHz。 采用自适应网格进行剖分，自适应网格频率设置为6 GHz，具体设置如下图。
 
-> 图片: `./res/dual_band_antenna_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 创建端口 采用集总面端口，WavEDA支持自动创建积分线并识别端口面的方向。
 
-> 图片: `./res/dual_band_antenna_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_3.png`
 
 3. 计算区域设置 WaEDA可以根据用户给定的频率点设置对应的计算外边界大小，本案例以2.4 GHz为参考频点计算出对应的空气盒子大小为四分之一波长（30 mm），确保天线计算的准确性。
 
-> 图片: `./res/dual_band_antenna_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_4.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 4. 添加远场监测点 选择第一个谐振点（2.4 GHz）作为远场监测点。
 
-> 图片: `./res/dual_band_antenna_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_5.png`
 
 ### 后处理
 
 1. 网格查看 网格剖分完成后，选中目标体或面，进入View Mesh窗口网格剖分情况。
 
-> 图片: `./res/dual_band_antenna_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_6.png`
 
 2. S参数结果 仿真结束查看模型的S参数，通过添加标记点查看S参数的谐振点的信息，分别在2.4 GHz和5.3 GHz出现谐振点，达到双频带天线的设计目标。 如下图：
 
-> 图片: `./res/dual_band_antenna_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_7.png`
 
 3. 远场结果 查看添加的远场监测点的增益，可以查看三维结果、直角坐标系结果和极坐标结果。2.4 GHz下远场增益如图，远场相关信息在左下角显示。
 
-> 图片: `./res/dual_band_antenna_8.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_8.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/dual_band_antenna_9.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_9.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/dual_band_antenna_1.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_1.png`
-2. `./res/dual_band_antenna_2.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_2.png`
-3. `./res/dual_band_antenna_3.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_3.png`
-4. `./res/dual_band_antenna_4.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_4.png`
-5. `./res/dual_band_antenna_5.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_5.png`
-6. `./res/dual_band_antenna_6.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_6.png`
-7. `./res/dual_band_antenna_7.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_7.png`
-8. `./res/dual_band_antenna_8.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_8.png`
-9. `./res/dual_band_antenna_9.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\dual_band_antenna\res\dual_band_antenna_9.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| dual_band_antenna_1.png | `Example/EM/Antenna/dual_band_antenna/res/dual_band_antenna_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| dual_band_antenna_2.png | `Example/EM/Antenna/dual_band_antenna/res/dual_band_antenna_2.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| dual_band_antenna_8.png | `Example/EM/Antenna/dual_band_antenna/res/dual_band_antenna_8.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| dual_band_antenna_9.png | `Example/EM/Antenna/dual_band_antenna/res/dual_band_antenna_9.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

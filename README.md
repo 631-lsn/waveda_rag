@@ -92,6 +92,27 @@ knowledge_base/
 
 `setup_env.bat` 会把这些 Markdown 文档和 `wavEDA_docs/helpHtml/helpHtml` 中的官方 HTML 帮助一起构建成本地索引。
 
+## 回答中的图片
+
+桌面端回答会优先调用项目内已有图片，例如后续补充到 `knowledge_base/assets/images`、`assets/images` 或当前项目自带的 `wavEDA_docs/helpHtml/helpHtml` 图片。
+
+案例库中的图片先以 `待补图片清单` 形式保留候选项，路径写成 WavEDA 安装目录下的相对路径，例如 `Example/EM/Antenna/.../res/xxx.png`。运行时 agent 会根据用户在 `config/.env` 中填写的本机 WavEDA 路径去查找。
+
+如果新人电脑上安装了 WavEDA，可以在 `config/.env` 里设置自己的安装路径作为兜底图片来源：
+
+```env
+WAVEDA_ROOT=D:\Program Files\WavEDA
+```
+
+也可以只设置帮助文档目录或案例目录：
+
+```env
+WAVEDA_HELP_ROOT=D:\Program Files\WavEDA\documentation\helpHtml
+WAVEDA_EXAMPLE_ROOT=D:\Program Files\WavEDA\Example
+```
+
+不同电脑的安装路径可以不同，只需要改自己的 `config/.env`，不要提交这个文件。知识库里建议写相对路径，例如 `EM_Project/images/xxx.png`、`wavEDA_docs/helpHtml/helpHtml/EM_Project/images/xxx.png` 或 `Example/.../res/xxx.png`，程序会自动按“项目内图片优先，本机 WavEDA 图片兜底”的顺序查找。本机帮助文档路径通常只到一层 `helpHtml`，项目内的 `wavEDA_docs/helpHtml/helpHtml` 是仓库打包后的内部路径。
+
 ## 更新知识库后
 
 如果新增或修改了知识库文档，运行：

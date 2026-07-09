@@ -113,16 +113,16 @@ merged_at: "2026-07-07"
 
 
 ## 待补图片清单
-以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
-| 图片名称 | 当前资源路径 | 建议保留原因 |
+以下图片暂不插入正文，路径为 WavEDA 帮助文档内部相对路径；运行时 agent 会按项目内帮助图片和用户本机 WavEDA 帮助目录进行查找。
+| 图片名称 | WavEDA 帮助相对路径 | 建议保留原因 |
 | --- | --- | --- |
-| Snapshot1.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot1.png` | 展示“快照（Snapshot）”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Snapshot3.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot3.png` | 展示“快照设置”步骤的菜单或参数界面，便于新人按界面完成操作。 |
-| Snapshot5.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot5.png` | 展示“面快照”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Snapshot6.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot6.png` | 展示“面快照”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Snapshot7.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot7.png` | 展示“面快照”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Snapshot8.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot8.png` | 展示“体快照”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Snapshot9.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot9.png` | 展示“体快照”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Snapshot10.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot10.png` | 展示“体快照”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Snapshot11.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot11.png` | 展示“快照结果查看”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Snapshot12.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Snapshot12.png` | 展示“快照结果查看”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot1.png | `EM_Project/images/Snapshot1.png` | 展示“快照（Snapshot）”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot3.png | `EM_Project/images/Snapshot3.png` | 展示“快照设置”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Snapshot5.png | `EM_Project/images/Snapshot5.png` | 展示“面快照”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot6.png | `EM_Project/images/Snapshot6.png` | 展示“面快照”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot7.png | `EM_Project/images/Snapshot7.png` | 展示“面快照”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot8.png | `EM_Project/images/Snapshot8.png` | 展示“体快照”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot9.png | `EM_Project/images/Snapshot9.png` | 展示“体快照”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot10.png | `EM_Project/images/Snapshot10.png` | 展示“体快照”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot11.png | `EM_Project/images/Snapshot11.png` | 展示“快照结果查看”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Snapshot12.png | `EM_Project/images/Snapshot12.png` | 展示“快照结果查看”的结果入口或查看界面，便于新人确认后处理位置。 |

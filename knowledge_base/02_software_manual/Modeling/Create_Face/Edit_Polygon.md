@@ -26,8 +26,8 @@ merged_at: "2026-07-07"
 
 
 ## 待补图片清单
-以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
-| 图片名称 | 当前资源路径 | 建议保留原因 |
+以下图片暂不插入正文，路径为 WavEDA 帮助文档内部相对路径；运行时 agent 会按项目内帮助图片和用户本机 WavEDA 帮助目录进行查找。
+| 图片名称 | WavEDA 帮助相对路径 | 建议保留原因 |
 | --- | --- | --- |
-| Edit_Polygon_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_Face/images/Edit_Polygon_1.png` | 展示“编辑多边形面”步骤的菜单或参数界面，便于新人按界面完成操作。 |
-| Edit_Polygon_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_Face/images/Edit_Polygon_2.png` | 展示“编辑多边形面”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Edit_Polygon_1.png | `Modeling/Create_Face/images/Edit_Polygon_1.png` | 展示“编辑多边形面”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Edit_Polygon_2.png | `Modeling/Create_Face/images/Edit_Polygon_2.png` | 展示“编辑多边形面”步骤的菜单或参数界面，便于新人按界面完成操作。 |

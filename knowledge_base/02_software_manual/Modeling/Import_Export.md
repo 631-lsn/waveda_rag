@@ -30,9 +30,9 @@ WavEDA支持stp，step，igs，iges以及brep五种3D模型文件的导入导出
 
 
 ## 待补图片清单
-以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
-| 图片名称 | 当前资源路径 | 建议保留原因 |
+以下图片暂不插入正文，路径为 WavEDA 帮助文档内部相对路径；运行时 agent 会按项目内帮助图片和用户本机 WavEDA 帮助目录进行查找。
+| 图片名称 | WavEDA 帮助相对路径 | 建议保留原因 |
 | --- | --- | --- |
-| Import_Export_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/Import_Export_1.png` | 展示“导入/导出”步骤的菜单或参数界面，便于新人按界面完成操作。 |
-| Import_Export_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/Import_Export_2.png` | 展示“导入文件”步骤的菜单或参数界面，便于新人按界面完成操作。 |
-| Import_Export_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/Import_Export_3.png` | 展示“导入文件”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Import_Export_1.png | `Modeling/images/Import_Export_1.png` | 展示“导入/导出”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Import_Export_2.png | `Modeling/images/Import_Export_2.png` | 展示“导入文件”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Import_Export_3.png | `Modeling/images/Import_Export_3.png` | 展示“导入文件”步骤的菜单或参数界面，便于新人按界面完成操作。 |

@@ -59,61 +59,45 @@ merged_at: "2026-07-07"
 
 基片集成波导双频段滤波器，双频带分别为2.13 GHz ~ 2.56 GHz，5.42 GHz ~ 6.05 GHz。 滤波器整体尺寸为52.8*31.3*1.016 mm3，基底的介电常数为2.65，中间金属通孔为copper。
 
-> 图片: `./res/SIW_dual_band_filter_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 1. 仿真频率设置 该模型仿真频率为1~9 GHz，为观察SIW腔体内场分布，采用快速扫频方法进行仿真。
 
-> 图片: `./res/SIW_dual_band_filter_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_2.png`
 
 2. Domain及边界条件设置 为节省计算成本，滤波器的Domain尺寸设计为距离模型2 mm即可。 模型底部为金属面，因此模型底部方向的Domain可直接贴紧模型，且设置为PEC边界。
 
-> 图片: `./res/SIW_dual_band_filter_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 网格设置 自适应网格频率设置为5.67 GHz，残差设置为0.02，具体设置如下图：
 
-> 图片: `./res/SIW_dual_band_filter_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_4.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 3. 快照设置 在介质层上创建面Snaphot， 并选择Snapshot频点为第一通带和第二通带的中心频点2.3 GHz和5.7 GHz，并选择网格质量为30。
 
-> 图片: `./res/SIW_dual_band_filter_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_5.png`
 
 4. 创建端口 从微带线到地，画一个与微带线等宽的面，创建集总面端口，端口积分线均设置为金属面垂直到地。
 
-> 图片: `./res/SIW_dual_band_filter_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_6.png`
 
 ### 后处理
 
 1. 3D网格 仿真完成后，选中关键部分物体，进入查看网格窗口查看网格剖分情况。
 
-> 图片: `./res/SIW_dual_band_filter_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_7.png`
 
 2. Snapshot结果 直接点击对应Snapshot查看结果。
 
-> 图片: `./res/SIW_dual_band_filter_8.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_8.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 仿真结果 仿真后添加S参数曲线查看该滤波器性能。
 
-> 图片: `./res/SIW_dual_band_filter_9.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_9.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/SIW_dual_band_filter_1.png` -> `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_1.png`
-2. `./res/SIW_dual_band_filter_2.png` -> `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_2.png`
-3. `./res/SIW_dual_band_filter_3.png` -> `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_3.png`
-4. `./res/SIW_dual_band_filter_4.png` -> `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_4.png`
-5. `./res/SIW_dual_band_filter_5.png` -> `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_5.png`
-6. `./res/SIW_dual_band_filter_6.png` -> `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_6.png`
-7. `./res/SIW_dual_band_filter_7.png` -> `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_7.png`
-8. `./res/SIW_dual_band_filter_8.png` -> `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_8.png`
-9. `./res/SIW_dual_band_filter_9.png` -> `D:\Staid\app\waveda\Example\EM\Filter\SIW_dual_band_filter\res\SIW_dual_band_filter_9.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| SIW_dual_band_filter_1.png | `Example/EM/Filter/SIW_dual_band_filter/res/SIW_dual_band_filter_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| SIW_dual_band_filter_3.png | `Example/EM/Filter/SIW_dual_band_filter/res/SIW_dual_band_filter_3.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| SIW_dual_band_filter_8.png | `Example/EM/Filter/SIW_dual_band_filter/res/SIW_dual_band_filter_8.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| SIW_dual_band_filter_9.png | `Example/EM/Filter/SIW_dual_band_filter/res/SIW_dual_band_filter_9.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

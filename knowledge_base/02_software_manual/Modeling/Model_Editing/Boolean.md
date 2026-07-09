@@ -133,17 +133,17 @@ merged_at: "2026-07-07"
 
 
 ## 待补图片清单
-以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
-| 图片名称 | 当前资源路径 | 建议保留原因 |
+以下图片暂不插入正文，路径为 WavEDA 帮助文档内部相对路径；运行时 agent 会按项目内帮助图片和用户本机 WavEDA 帮助目录进行查找。
+| 图片名称 | WavEDA 帮助相对路径 | 建议保留原因 |
 | --- | --- | --- |
-| Boolean_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_1.png` | 展示“布尔操作”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Boolean_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_2.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Boolean_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_3.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Boolean_9.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_9.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Boolean_4.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_4.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Boolean_10.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_10.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Boolean_5.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_5.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Boolean_6.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_6.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Boolean_11.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_11.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Boolean_7.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_7.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Boolean_8.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Boolean_8.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_1.png | `Modeling/Model_Editing/images/Boolean_1.png` | 展示“布尔操作”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_2.png | `Modeling/Model_Editing/images/Boolean_2.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_3.png | `Modeling/Model_Editing/images/Boolean_3.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_9.png | `Modeling/Model_Editing/images/Boolean_9.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_4.png | `Modeling/Model_Editing/images/Boolean_4.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_10.png | `Modeling/Model_Editing/images/Boolean_10.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_5.png | `Modeling/Model_Editing/images/Boolean_5.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_6.png | `Modeling/Model_Editing/images/Boolean_6.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_11.png | `Modeling/Model_Editing/images/Boolean_11.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_7.png | `Modeling/Model_Editing/images/Boolean_7.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Boolean_8.png | `Modeling/Model_Editing/images/Boolean_8.png` | 展示“例子”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

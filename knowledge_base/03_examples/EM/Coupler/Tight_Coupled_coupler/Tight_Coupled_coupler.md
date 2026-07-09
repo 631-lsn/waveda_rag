@@ -45,40 +45,31 @@ merged_at: "2026-07-07"
 
 介质基板材料为FR4，介电常数为3.66，损耗角正切为0.0037。 耦合线与地等金属均采用PEC，如下图：
 
-> 图片: `res/Tight_Coupled_coupler1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 1. 仿真频率及网格设置 该模型仿真频率设置为1~ 3 GHz，扫频方式选插值(离散/快速也适用), 具体设置如下图：
 
-> 图片: `res/Tight_Coupled_coupler5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler5.png`
 
 2. 创建端口 采用集总面端口馈电，包括四个端口，如下图：
 
-> 图片: `res/Tight_Coupled_coupler2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 3.网格剖分 采用了自适应网格设置，频率选择了中心频率，最大迭代次数为20，残差为0.02，如下图：
 
-> 图片: `res/Tight_Coupled_coupler6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler6.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 后处理
 
 1. 模型网格 仿真完成后，在模型窗口右键，进入View Mesh窗口网格剖分情况。
 
-> 图片: `res/Tight_Coupled_coupler8.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler8.png`
 
-> 图片: `res/Tight_Coupled_coupler7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler7.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2.S参数结果 仿真后可以在电磁结果端口中通过获取S参数，以查看该耦合器性能。 如下图：
 
-> 图片: `res/Tight_Coupled_coupler4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler4.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 由以上S参数结果可见：回波损耗（|S11|）和隔离度（|S41|）均高于 20分贝，表明该耦合器具有较高的方向性与隔离度。
 
@@ -86,12 +77,11 @@ merged_at: "2026-07-07"
 
 [1] L. Pan, Y. Wu, W. Wang, Y. Zheng and Y. Liu, "A Symmetrical Broadband Tight-Coupled Directional Coupler With High Directivity Using Three-Folded-Coupled Lines," in IEEE Transactions on Circuits and Systems II: Express Briefs, vol. 69, no. 9, pp. 3744-3748, Sept. 2022, doi: 10.1109/TCSII.2022.3169160.
 
-## 图片资源
+## 待补图片清单
 
-1. `res/Tight_Coupled_coupler1.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler1.png`
-2. `res/Tight_Coupled_coupler5.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler5.png`
-3. `res/Tight_Coupled_coupler2.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler2.png`
-4. `res/Tight_Coupled_coupler6.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler6.png`
-5. `res/Tight_Coupled_coupler8.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler8.png`
-6. `res/Tight_Coupled_coupler7.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler7.png`
-7. `res/Tight_Coupled_coupler4.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\Tight_Coupled_coupler\res\Tight_Coupled_coupler4.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| Tight_Coupled_coupler1.png | `Example/EM/Coupler/Tight_Coupled_coupler/res/Tight_Coupled_coupler1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Tight_Coupled_coupler2.png | `Example/EM/Coupler/Tight_Coupled_coupler/res/Tight_Coupled_coupler2.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Tight_Coupled_coupler7.png | `Example/EM/Coupler/Tight_Coupled_coupler/res/Tight_Coupled_coupler7.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Tight_Coupled_coupler4.png | `Example/EM/Coupler/Tight_Coupled_coupler/res/Tight_Coupled_coupler4.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

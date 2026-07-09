@@ -43,41 +43,33 @@ merged_at: "2026-07-07"
 
 此模型为空孔隙介质模型，其中大小不一的球形孔隙被水和空气填充，其他介质为岩石。模型尺寸为800*800*400 mm³，仿真频点为10 MHz。
 
-> 图片: `./res/porous_medium_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\geological exploration\porous_medium\res\porous_medium_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 1. 创建点源 激励形式采用电偶极子源，如下图所示红色圆点为电偶极子源。
 
-> 图片: `./res/porous_medium_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\geological exploration\porous_medium\res\porous_medium_2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 创建接收器 如下图所示，红色直线为接收器。需要注意的是接收器不可放置在介质分层处、物体的边缘或过于靠近其他激励源，这些情况都会引起奇异值。
 
-> 图片: `./res/porous_medium_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\geological exploration\porous_medium\res\porous_medium_3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 后处理
 
 仿真结束后，可以在电磁结果-->接收器查看线接收器处的近场分布。在创建接收器结果界面需要选择激励模型、类型和频率点。
 
-> 图片: `./res/porous_medium_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\geological exploration\porous_medium\res\porous_medium_4.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 如下图所示，分别是线接收器在x、y、z三个方向上的电\磁场的实虚部分量。
 
-> 图片: `./res/porous_medium_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\geological exploration\porous_medium\res\porous_medium_5.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/porous_medium_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\geological exploration\porous_medium\res\porous_medium_6.png`
+## 待补图片清单
 
-## 图片资源
-
-1. `./res/porous_medium_1.png` -> `D:\Staid\app\waveda\Example\EM\geological exploration\porous_medium\res\porous_medium_1.png`
-2. `./res/porous_medium_2.png` -> `D:\Staid\app\waveda\Example\EM\geological exploration\porous_medium\res\porous_medium_2.png`
-3. `./res/porous_medium_3.png` -> `D:\Staid\app\waveda\Example\EM\geological exploration\porous_medium\res\porous_medium_3.png`
-4. `./res/porous_medium_4.png` -> `D:\Staid\app\waveda\Example\EM\geological exploration\porous_medium\res\porous_medium_4.png`
-5. `./res/porous_medium_5.png` -> `D:\Staid\app\waveda\Example\EM\geological exploration\porous_medium\res\porous_medium_5.png`
-6. `./res/porous_medium_6.png` -> `D:\Staid\app\waveda\Example\EM\geological exploration\porous_medium\res\porous_medium_6.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| porous_medium_1.png | `Example/EM/geological exploration/porous_medium/res/porous_medium_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| porous_medium_2.png | `Example/EM/geological exploration/porous_medium/res/porous_medium_2.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| porous_medium_4.png | `Example/EM/geological exploration/porous_medium/res/porous_medium_4.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| porous_medium_5.png | `Example/EM/geological exploration/porous_medium/res/porous_medium_5.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

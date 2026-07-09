@@ -46,8 +46,7 @@ merged_at: "2026-07-07"
 
 硅基板-铜柱阵列结构模型稳态温度场仿真，采用恒温边界、热通量边界进行仿真，模型示意图如下图所示：
 
-> 图片: `./res/Silicon_sub_copper_pillar_array_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 该模型尺寸为1000*1000*1010 (mm)，模型分为硅基板和上边铜柱阵列，边界条件为热通量边界，设置硅基板底部为温度边界。
 
@@ -55,46 +54,34 @@ merged_at: "2026-07-07"
 
 1. 仿真时间及网格设置 该模型仿真类型为稳态Steady类型。 初始网格设置每波长网格为1 EPW，基函数阶数为2阶，即网格采样率为2 PPW；采用自适应网格剖分，设置Longest Edge Bisection方法，残差为0.01；具体设置如下图：
 
-> 图片: `./res/Silicon_sub_copper_pillar_array_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/Silicon_sub_copper_pillar_array_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 边界条件设置 设置默认边界条件为热通量边界，温度为293.15 K，热传递系数为2000 W/m^2·K；设置硅基板底部为温度边界，温度为393.15 K。
 
-> 图片: `./res/Silicon_sub_copper_pillar_array_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_4.png`
 
 3. 线接收器设置 设置线接收器1起始点（1000 0 100）和终止点（0 1000 100）位置、线接收器2起始点（540 380 1010）和终止点（540 380 10）位置，坐标单位都为mm。
 
-> 图片: `./res/Silicon_sub_copper_pillar_array_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_5.png`
 
 ### 后处理
 
 1. 3D网格 仿真完成后，选中关键部分物体，进入显示网格窗口查看网格剖分情况。
 
-> 图片: `./res/Silicon_sub_copper_pillar_array_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_6.png`
 
 2. 查看线接收器结果 仿真完成后，鼠标右键点击工程树接收器处选择绘制线接收器随距离变化的温度结果。
 
-> 图片: `./res/Silicon_sub_copper_pillar_array_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_7.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 3. 查看快照结果 仿真完成后，鼠标右键点击工程树快照结果查看温度场3D结果。
 
-> 图片: `./res/Silicon_sub_copper_pillar_array_8.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_8.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/Silicon_sub_copper_pillar_array_1.png` -> `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_1.png`
-2. `./res/Silicon_sub_copper_pillar_array_2.png` -> `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_2.png`
-3. `./res/Silicon_sub_copper_pillar_array_3.png` -> `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_3.png`
-4. `./res/Silicon_sub_copper_pillar_array_4.png` -> `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_4.png`
-5. `./res/Silicon_sub_copper_pillar_array_5.png` -> `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_5.png`
-6. `./res/Silicon_sub_copper_pillar_array_6.png` -> `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_6.png`
-7. `./res/Silicon_sub_copper_pillar_array_7.png` -> `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_7.png`
-8. `./res/Silicon_sub_copper_pillar_array_8.png` -> `D:\Staid\app\waveda\Example\Thermal\Silicon_sub_copper_pillar_array\Silicon_sub_copper_pillar_array\res\Silicon_sub_copper_pillar_array_8.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| Silicon_sub_copper_pillar_array_1.png | `Example/Thermal/Silicon_sub_copper_pillar_array/Silicon_sub_copper_pillar_array/res/Silicon_sub_copper_pillar_array_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Silicon_sub_copper_pillar_array_2.png | `Example/Thermal/Silicon_sub_copper_pillar_array/Silicon_sub_copper_pillar_array/res/Silicon_sub_copper_pillar_array_2.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Silicon_sub_copper_pillar_array_7.png | `Example/Thermal/Silicon_sub_copper_pillar_array/Silicon_sub_copper_pillar_array/res/Silicon_sub_copper_pillar_array_7.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Silicon_sub_copper_pillar_array_8.png | `Example/Thermal/Silicon_sub_copper_pillar_array/Silicon_sub_copper_pillar_array/res/Silicon_sub_copper_pillar_array_8.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
