@@ -10,7 +10,7 @@ os.environ.setdefault("QTWEBENGINE_DISABLE_SANDBOX", "1")
 from PySide6.QtWidgets import QApplication
 
 from raggg.config import Settings
-from raggg.desktop.main_window import WorkbenchWindow
+from raggg.desktop.main_window import AILoaderOverlay, WorkbenchWindow
 
 
 def make_settings(root: Path) -> Settings:
@@ -88,6 +88,13 @@ class DesktopLayoutTests(unittest.TestCase):
 
             self.assertFalse(window.loader_overlay.isHidden())
             self.assertEqual(window.loader_overlay.text, "正在检索")
+
+    def test_loader_uses_orbital_glow_animation_contract(self) -> None:
+        overlay = AILoaderOverlay(text="生成中")
+
+        self.assertEqual(overlay.visual_mode, "orbital-glow")
+        self.assertGreater(overlay._letter_intensity(18), overlay._letter_intensity(60))
+        self.assertGreaterEqual(overlay._letter_lift(18), 2)
 
 
 if __name__ == "__main__":

@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Callable
 
 from PySide6.QtCore import QEvent, QObject, QRectF, QRunnable, Qt, QThreadPool, QTimer, QUrl, Signal, Slot
-from PySide6.QtGui import QColor, QFont, QIcon, QLinearGradient, QPainter, QPen, QPixmap
+from PySide6.QtGui import QColor, QBrush, QFont, QIcon, QLinearGradient, QPainter, QPen, QPixmap, QRadialGradient
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
 from PySide6.QtWidgets import (
@@ -565,6 +565,7 @@ class MetricCard(QFrame):
 class AILoaderOverlay(QWidget):
     def __init__(self, parent: QWidget | None = None, text: str = "正在载入") -> None:
         super().__init__(parent)
+        self.visual_mode = "orbital-glow"
         self.text = text
         self._angle = 90
         self._pulse = 0
@@ -580,39 +581,74 @@ class AILoaderOverlay(QWidget):
         self.update()
 
     def _advance(self) -> None:
-        self._angle = (self._angle + 3) % 360
+        self._angle = (self._angle + 2) % 360
         self._pulse = (self._pulse + 1) % 180
         self.update()
+
+    def _letter_intensity(self, phase: int) -> float:
+        return 0.38 + 0.62 * max(0.0, 1.0 - abs(phase - 18) / 18)
+
+    def _letter_lift(self, phase: int) -> int:
+        return 3 if 12 <= phase <= 24 else 0
 
     def paintEvent(self, event) -> None:
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing, True)
 
         gradient = QLinearGradient(0, 0, 0, self.height())
-        gradient.setColorAt(0.0, QColor(246, 225, 236, 224))
-        gradient.setColorAt(0.45, QColor(226, 242, 241, 218))
-        gradient.setColorAt(1.0, QColor(121, 194, 239, 230))
+        gradient.setColorAt(0.0, QColor(248, 228, 239))
+        gradient.setColorAt(0.42, QColor(231, 241, 240))
+        gradient.setColorAt(1.0, QColor(126, 199, 241))
         painter.fillRect(self.rect(), gradient)
 
-        size = min(180, max(118, min(self.width(), self.height()) // 4))
+        size = min(190, max(132, min(self.width(), self.height()) // 4))
         center_x = self.width() / 2
         center_y = self.height() / 2
         rect = QRectF(center_x - size / 2, center_y - size / 2, size, size)
 
-        glow_pen = QPen(QColor(116, 190, 231, 72), 18)
-        glow_pen.setCapStyle(Qt.RoundCap)
-        painter.setPen(glow_pen)
-        painter.drawArc(rect.adjusted(8, 8, -8, -8), -self._angle * 16, 225 * 16)
+        painter.setPen(Qt.NoPen)
+        for spread, alpha in ((34, 28), (22, 46), (12, 64)):
+            halo = QRadialGradient(rect.center(), size / 2 + spread)
+            halo.setColorAt(0.0, QColor(255, 255, 255, 0))
+            halo.setColorAt(0.55, QColor(101, 181, 228, alpha))
+            halo.setColorAt(1.0, QColor(101, 181, 228, 0))
+            painter.setBrush(QBrush(halo))
+            painter.drawEllipse(rect.adjusted(-spread, -spread, spread, spread))
 
-        ring_pen = QPen(QColor(87, 146, 215, 205), 5)
-        ring_pen.setCapStyle(Qt.RoundCap)
-        painter.setPen(ring_pen)
-        painter.drawArc(rect.adjusted(13, 13, -13, -13), -self._angle * 16, 118 * 16)
+        ring = QRadialGradient(rect.center(), size / 2)
+        ring.setColorAt(0.00, QColor(255, 255, 255, 70))
+        ring.setColorAt(0.54, QColor(210, 242, 252, 132))
+        ring.setColorAt(0.74, QColor(116, 195, 238, 230))
+        ring.setColorAt(0.89, QColor(68, 137, 218, 228))
+        ring.setColorAt(1.00, QColor(242, 252, 255, 206))
+        painter.setBrush(QBrush(ring))
+        painter.drawEllipse(rect)
 
-        inner_pen = QPen(QColor(255, 255, 255, 190), 2)
-        inner_pen.setCapStyle(Qt.RoundCap)
-        painter.setPen(inner_pen)
-        painter.drawArc(rect.adjusted(27, 27, -27, -27), -(self._angle + 170) * 16, 92 * 16)
+        core_rect = rect.adjusted(24, 24, -24, -24)
+        core = QRadialGradient(core_rect.center(), core_rect.width() / 2)
+        core.setColorAt(0.00, QColor(245, 253, 255, 226))
+        core.setColorAt(0.48, QColor(226, 246, 250, 196))
+        core.setColorAt(0.76, QColor(180, 225, 243, 142))
+        core.setColorAt(1.00, QColor(112, 184, 232, 92))
+        painter.setBrush(QBrush(core))
+        painter.drawEllipse(core_rect)
+
+        painter.setBrush(Qt.NoBrush)
+        for inset, color, width in (
+            (25, QColor(255, 255, 255, 178), 3),
+            (34, QColor(68, 133, 209, 92), 8),
+            (48, QColor(255, 255, 255, 82), 2),
+        ):
+            pen = QPen(color, width)
+            pen.setCapStyle(Qt.RoundCap)
+            painter.setPen(pen)
+            painter.drawArc(rect.adjusted(inset, inset, -inset, -inset), (self._angle + inset) * 16, 118 * 16)
+
+        sweep_rect = rect.adjusted(5, 5, -5, -5)
+        sweep_pen = QPen(QColor(78, 145, 221, 188), 6)
+        sweep_pen.setCapStyle(Qt.RoundCap)
+        painter.setPen(sweep_pen)
+        painter.drawArc(sweep_rect, -(self._angle + 18) * 16, 64 * 16)
 
         painter.setFont(QFont("Microsoft YaHei UI", 13, QFont.DemiBold))
         metrics = painter.fontMetrics()
@@ -623,8 +659,8 @@ class AILoaderOverlay(QWidget):
         base_y = center_y + metrics.ascent() / 2 - 2
         for index, letter in enumerate(letters):
             phase = (self._pulse + index * 9) % 90
-            brightness = 0.42 + 0.58 * max(0, 1 - abs(phase - 18) / 18)
-            lift = -3 if 12 <= phase <= 24 else 0
+            brightness = self._letter_intensity(phase)
+            lift = -self._letter_lift(phase)
             color = QColor(33, 55, 76)
             color.setAlpha(int(92 + 138 * brightness))
             painter.setPen(color)
