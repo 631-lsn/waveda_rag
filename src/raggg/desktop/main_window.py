@@ -881,7 +881,7 @@ class WorkbenchWindow(QMainWindow):
             self,
             "选择要入库的资料",
             str(self._project_root),
-            "Documents (*.md *.markdown *.html *.htm *.txt)",
+            "Documents (*.md *.markdown *.html *.htm *.txt *.pdf *.docx)",
         )
         if not path:
             return

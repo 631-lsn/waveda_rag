@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import shutil
+import zipfile
 from dataclasses import dataclass
 from pathlib import Path
+from xml.etree import ElementTree
 
 from raggg.config import Settings
 
@@ -10,7 +12,9 @@ from raggg.config import Settings
 MARKDOWN_EXTENSIONS = {".md", ".markdown"}
 HTML_EXTENSIONS = {".html", ".htm"}
 TEXT_EXTENSIONS = {".txt"}
-SUPPORTED_EXTENSIONS = MARKDOWN_EXTENSIONS | HTML_EXTENSIONS | TEXT_EXTENSIONS
+PDF_EXTENSIONS = {".pdf"}
+WORD_EXTENSIONS = {".docx"}
+SUPPORTED_EXTENSIONS = MARKDOWN_EXTENSIONS | HTML_EXTENSIONS | TEXT_EXTENSIONS | PDF_EXTENSIONS | WORD_EXTENSIONS
 
 
 @dataclass(frozen=True)
@@ -27,6 +31,10 @@ def _source_format(suffix: str) -> str:
         return "html"
     if suffix in TEXT_EXTENSIONS:
         return "text"
+    if suffix in PDF_EXTENSIONS:
+        return "pdf"
+    if suffix in WORD_EXTENSIONS:
+        return "word"
     raise ValueError(f"不支持的文件类型: {suffix or '(无扩展名)'}")
 
 
@@ -45,6 +53,45 @@ def _unique_destination(directory: Path, name: str) -> Path:
         counter += 1
 
 
+def _write_markdown_import(source: Path, destination: Path, text: str) -> None:
+    destination.write_text(f"# {source.stem}\n\n{text.strip()}\n", encoding="utf-8")
+
+
+def _extract_pdf_text(source: Path) -> str:
+    try:
+        from pypdf import PdfReader
+    except ImportError as exc:
+        raise RuntimeError("缺少 PDF 解析库 pypdf，请先安装依赖后再导入 PDF。") from exc
+
+    reader = PdfReader(str(source))
+    pages: list[str] = []
+    for page in reader.pages:
+        text = page.extract_text() or ""
+        if text.strip():
+            pages.append(text.strip())
+    return "\n\n".join(pages)
+
+
+def _extract_docx_text(source: Path) -> str:
+    try:
+        with zipfile.ZipFile(source) as archive:
+            xml_bytes = archive.read("word/document.xml")
+    except KeyError as exc:
+        raise ValueError(f"无法读取 Word 正文: {source}") from exc
+    except zipfile.BadZipFile as exc:
+        raise ValueError(f"不是有效的 docx 文件: {source}") from exc
+
+    root = ElementTree.fromstring(xml_bytes)
+    namespace = {"w": "http://schemas.openxmlformats.org/wordprocessingml/2006/main"}
+    paragraphs: list[str] = []
+    for paragraph in root.findall(".//w:p", namespace):
+        pieces = [node.text or "" for node in paragraph.findall(".//w:t", namespace)]
+        text = "".join(pieces).strip()
+        if text:
+            paragraphs.append(text)
+    return "\n\n".join(paragraphs)
+
+
 def ingest_document(settings: Settings, source_path: Path | str) -> IngestReport:
     source = Path(source_path)
     if not source.exists():
@@ -60,7 +107,13 @@ def ingest_document(settings: Settings, source_path: Path | str) -> IngestReport
     if source_format == "text":
         destination = _unique_destination(import_dir, f"{source.stem}.md")
         text = source.read_text(encoding="utf-8", errors="ignore")
-        destination.write_text(f"# {source.stem}\n\n{text}\n", encoding="utf-8")
+        _write_markdown_import(source, destination, text)
+    elif source_format == "pdf":
+        destination = _unique_destination(import_dir, f"{source.stem}.md")
+        _write_markdown_import(source, destination, _extract_pdf_text(source))
+    elif source_format == "word":
+        destination = _unique_destination(import_dir, f"{source.stem}.md")
+        _write_markdown_import(source, destination, _extract_docx_text(source))
     else:
         destination = _unique_destination(import_dir, source.name)
         shutil.copy2(source, destination)

@@ -1,6 +1,10 @@
 from pathlib import Path
 from tempfile import TemporaryDirectory
 import unittest
+from unittest.mock import Mock, patch
+import sys
+import types
+import zipfile
 
 from raggg.config import Settings
 from raggg.pipeline.ingestion import ingest_document
@@ -48,6 +52,61 @@ class IngestionTests(unittest.TestCase):
             self.assertEqual(report.imported_path.read_text(encoding="utf-8"), "# notes\n\nplain notes\n")
             self.assertEqual(report.source_format, "text")
 
+    def test_converts_docx_file_to_markdown(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            source = tmp_path / "guide.docx"
+            document_xml = """<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<w:document xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main">
+  <w:body>
+    <w:p><w:r><w:t>First paragraph</w:t></w:r></w:p>
+    <w:p><w:r><w:t>Second paragraph</w:t></w:r></w:p>
+  </w:body>
+</w:document>
+"""
+            with zipfile.ZipFile(source, "w") as archive:
+                archive.writestr("word/document.xml", document_xml)
+
+            report = ingest_document(make_settings(tmp_path), source)
+
+            self.assertEqual(report.imported_path.name, "guide.md")
+            self.assertEqual(
+                report.imported_path.read_text(encoding="utf-8"),
+                "# guide\n\nFirst paragraph\n\nSecond paragraph\n",
+            )
+            self.assertEqual(report.source_format, "word")
+
+    def test_converts_pdf_file_to_markdown(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            source = tmp_path / "paper.pdf"
+            source.write_bytes(b"%PDF-test")
+            fake_reader = Mock()
+            fake_reader.pages = [
+                Mock(extract_text=Mock(return_value="Page one")),
+                Mock(extract_text=Mock(return_value="Page two")),
+            ]
+            fake_pypdf = types.SimpleNamespace(PdfReader=Mock(return_value=fake_reader))
+
+            with patch.dict(sys.modules, {"pypdf": fake_pypdf}):
+                report = ingest_document(make_settings(tmp_path), source)
+
+            self.assertEqual(report.imported_path.name, "paper.md")
+            self.assertEqual(
+                report.imported_path.read_text(encoding="utf-8"),
+                "# paper\n\nPage one\n\nPage two\n",
+            )
+            self.assertEqual(report.source_format, "pdf")
+
+    def test_pdf_import_reports_missing_dependency(self) -> None:
+        with TemporaryDirectory() as tmp:
+            tmp_path = Path(tmp)
+            source = tmp_path / "paper.pdf"
+            source.write_bytes(b"%PDF-test")
+
+            with patch.dict(sys.modules, {"pypdf": None}):
+                with self.assertRaisesRegex(RuntimeError, "pypdf"):
+                    ingest_document(make_settings(tmp_path), source)
 
     def test_rejects_unsupported_extension(self) -> None:
         with TemporaryDirectory() as tmp:
