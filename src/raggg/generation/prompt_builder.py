@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import re
 
+from raggg.i18n import get_text
 from raggg.retrieval.retriever import SearchResult
 
 
@@ -15,28 +16,35 @@ def build_prompt(question: str, sources: list[SearchResult]) -> str:
         )
     joined = "\n\n".join(snippets)
     if joined.strip():
-        context = f"资料：\n{joined}\n\n请优先使用资料中的内容回答，资料不足时用自己的知识补充。"
+        context = (
+            f"{get_text('prompt_context_label')}：\n{joined}\n\n"
+            f"{get_text('prompt_context_instruction')}"
+        )
     else:
-        context = "（知识库中暂无相关文档）\n\n请用自己的知识回答这个问题，给出简洁、可操作的建议。"
+        context = get_text("prompt_no_context")
     return (
-        "你是一个中文 RAG 助手，帮助用户解决 WavEDA 仿真软件的使用问题。\n\n"
-        f"问题：{question}\n\n"
+        f"{get_text('prompt_role')}\n\n"
+        f"{get_text('prompt_question_prefix')}：{question}\n\n"
         f"{context}\n\n"
-        "请给出简洁、可操作的回答，如果引用了资料请标注来源。"
+        f"{get_text('prompt_final_instruction')}"
     )
 
 
 def build_local_answer(question: str, sources: list[SearchResult]) -> str:
     if not sources:
-        return "资料中没有足够依据回答这个问题。"
+        return get_text("local_answer_no_sources")
     top = sources[:3]
-    lines = ["根据当前知识库，先给出可确认的信息。", "", "要点："]
+    lines = [
+        get_text("local_answer_title"),
+        "",
+        f"{get_text('local_answer_points')}：",
+    ]
     for index, result in enumerate(top, start=1):
         chunk = result.chunk
         snippet = _source_snippet(chunk.title, chunk.content)
         lines.append(f"- [{index}] {chunk.title}：{snippet}")
     lines.append("")
-    lines.append("引用来源：")
+    lines.append(f"{get_text('local_answer_sources')}：")
     for index, result in enumerate(top, start=1):
         chunk = result.chunk
         lines.append(f"[{index}] {chunk.title} | {chunk.source_type} | {chunk.relative_path}")
