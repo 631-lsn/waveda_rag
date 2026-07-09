@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Callable
 
 from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QTimer, QUrl, Signal, Slot
-from PySide6.QtGui import QFont, QIcon, QPixmap
+from PySide6.QtGui import QColor, QFont, QIcon, QPixmap
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
 from PySide6.QtWidgets import (
@@ -43,41 +43,64 @@ from raggg.retrieval.retriever import SearchResult
 
 
 COLORS = {
-    "bg": "#07111f",
-    "surface": "#0d1726",
-    "surface2": "#1a2a43",
-    "surface3": "#2F4564",
-    "border": "#475a75",
-    "text": "#e6edf7",
-    "muted": "#92a2b8",
-    "subtle": "#607087",
-    "accent": "#31d0aa",
-    "accent2": "#7dd3fc",
-    "warning": "#f5c26b",
-    "danger": "#f87171",
-    "input": "#0a1322",
+    "bg": "#eef7fb",
+    "surface": "rgba(255, 255, 255, 0.48)",
+    "surface2": "rgba(255, 255, 255, 0.68)",
+    "surface3": "rgba(255, 255, 255, 0.78)",
+    "border": "rgba(255, 255, 255, 0.72)",
+    "text": "#10202d",
+    "muted": "#587082",
+    "subtle": "#7d93a1",
+    "accent": "#5f93d6",
+    "accent2": "#6eaec4",
+    "warning": "#c89032",
+    "danger": "#d75959",
+    "input": "rgba(255, 255, 255, 0.64)",
 }
 
 
 APP_STYLE = f"""
 QWidget {{
-    background: {COLORS["bg"]};
+    background: transparent;
     color: {COLORS["text"]};
     font-family: "Microsoft YaHei UI", "Segoe UI";
     font-size: 13px;
 }}
+QWidget#gradientRoot {{
+    background: qlineargradient(
+        x1:0, y1:0, x2:1, y2:1,
+        stop:0 #f3e1ea,
+        stop:0.34 #e9ecea,
+        stop:0.66 #c8ecf1,
+        stop:1 #78c2ef
+    );
+}}
 QFrame#panel {{
     background: {COLORS["surface"]};
     border: 1px solid {COLORS["border"]};
-    border-radius: 12px;
+    border-radius: 18px;
 }}
 QFrame#metricCard, QFrame#sourceCard {{
     background: {COLORS["surface2"]};
     border: 1px solid {COLORS["border"]};
-    border-radius: 10px;
+    border-radius: 12px;
+}}
+QFrame#sidebar {{
+    background: rgba(255, 255, 255, 0.58);
+    border: 1px solid rgba(255, 255, 255, 0.78);
+    border-radius: 22px;
+}}
+QFrame#composer {{
+    background: rgba(232, 248, 255, 0.64);
+    border: 1px solid rgba(255, 255, 255, 0.88);
+    border-radius: 20px;
+}}
+QWebEngineView#chatCanvas, QWebEngineView#sourcesCanvas {{
+    background: transparent;
+    border: 0;
 }}
 QLabel#title {{
-    color: #f8fbff;
+    color: {COLORS["text"]};
     font-size: 24px;
     font-weight: 700;
 }}
@@ -85,7 +108,7 @@ QLabel#subtitle, QLabel#muted {{
     color: {COLORS["muted"]};
 }}
 QLabel#section {{
-    color: #f8fbff;
+    color: {COLORS["text"]};
     font-size: 14px;
     font-weight: 700;
 }}
@@ -107,36 +130,72 @@ QLabel#badge {{
     font-weight: 700;
 }}
 QPushButton {{
-    background: {COLORS["surface3"]};
+    background: rgba(255, 255, 255, 0.56);
     color: {COLORS["text"]};
-    border: 1px solid {COLORS["border"]};
-    border-radius: 9px;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 12px;
     padding: 10px 12px;
 }}
 QPushButton:hover {{
-    background: #21324a;
-    border-color: #3a506d;
+    background: rgba(255, 255, 255, 0.78);
+    border-color: rgba(112, 168, 214, 0.55);
 }}
 QPushButton#primary {{
-    background: {COLORS["accent"]};
-    color: #041514;
+    background: rgba(154, 209, 247, 0.82);
+    color: #193047;
     border: 0;
     font-weight: 700;
 }}
 QPushButton#primary:hover {{
-    background: #5eead4;
+    background: rgba(176, 221, 251, 0.96);
+}}
+QPushButton#iconButton {{
+    min-width: 28px;
+    max-width: 28px;
+    min-height: 28px;
+    max-height: 28px;
+    border-radius: 14px;
+    padding: 0;
+    font-size: 15px;
+    font-weight: 700;
+}}
+QPushButton#sendButton {{
+    min-width: 32px;
+    max-width: 32px;
+    min-height: 32px;
+    max-height: 32px;
+    border-radius: 16px;
+    padding: 0;
+    font-size: 16px;
+    font-weight: 700;
+}}
+QPushButton#plusButton {{
+    min-width: 34px;
+    max-width: 34px;
+    min-height: 34px;
+    max-height: 34px;
+    border-radius: 17px;
+    padding: 0;
+    font-size: 16px;
 }}
 QPushButton:disabled {{
-    background: #1b2433;
+    background: rgba(255, 255, 255, 0.36);
     color: {COLORS["subtle"]};
 }}
 QLineEdit {{
-    background: {COLORS["input"]};
+    background: transparent;
     color: {COLORS["text"]};
-    border: 1px solid {COLORS["border"]};
-    border-radius: 12px;
-    padding: 13px 14px;
+    border: 0;
+    padding: 9px 8px;
     selection-background-color: {COLORS["accent"]};
+}}
+QLabel#miniPill {{
+    background: rgba(232, 248, 255, 0.52);
+    color: #5b86b5;
+    border: 1px solid rgba(255, 255, 255, 0.72);
+    border-radius: 11px;
+    padding: 3px 10px;
+    font-size: 11px;
 }}
 QScrollBar:vertical {{
     background: transparent;
@@ -450,7 +509,7 @@ def _convert_image_refs(html_text: str) -> str:
     return IMAGE_MD_RE.sub(_img_repl, html_text)
 
 
-WEBVIEW_BG = COLORS["input"]
+WEBVIEW_BG = "transparent"
 WEBVIEW_TEXT = COLORS["text"]
 
 
@@ -464,6 +523,7 @@ body {{
     color: {WEBVIEW_TEXT};
     margin: 0;
     padding: 0;
+    overflow-x: hidden;
 }}
 p {{ margin: 7px 0; line-height: 1.58; }}
 ol, ul {{ margin: 8px 0; padding-left: 24px; }}
@@ -768,23 +828,103 @@ class WorkbenchWindow(QMainWindow):
 
     def _build_ui(self) -> None:
         root = QWidget()
-        root.setObjectName("root")
+        root.setObjectName("gradientRoot")
         root.setStyleSheet(APP_STYLE)
         self.setCentralWidget(root)
 
         shell = QGridLayout(root)
-        shell.setContentsMargins(22, 20, 22, 20)
-        shell.setHorizontalSpacing(16)
-        shell.setVerticalSpacing(16)
-        shell.setColumnStretch(0, 0)
-        shell.setColumnStretch(1, 1)
-        shell.setColumnStretch(2, 0)
-        shell.setRowStretch(1, 1)
+        shell.setContentsMargins(14, 14, 14, 12)
+        shell.setHorizontalSpacing(12)
+        shell.setVerticalSpacing(0)
+        shell.setColumnStretch(0, 1)
+        shell.setColumnStretch(1, 0)
+        shell.setRowStretch(0, 1)
 
-        shell.addLayout(self._header(), 0, 0, 1, 3)
-        shell.addWidget(self._left_panel(), 1, 0)
-        shell.addWidget(self._chat_panel(), 1, 1)
-        shell.addWidget(self._source_panel(), 1, 2)
+        main = QVBoxLayout()
+        main.setContentsMargins(0, 0, 0, 0)
+        main.setSpacing(0)
+
+        top_bar = QHBoxLayout()
+        top_bar.setContentsMargins(0, 0, 0, 0)
+        top_bar.addStretch(1)
+        self.sidebar_toggle_button = QPushButton("◧")
+        self.sidebar_toggle_button.setObjectName("iconButton")
+        self.sidebar_toggle_button.setToolTip("显示/隐藏侧边栏")
+        self.sidebar_toggle_button.setCursor(Qt.PointingHandCursor)
+        self.sidebar_toggle_button.clicked.connect(self._toggle_sidebar)
+        top_bar.addWidget(self.sidebar_toggle_button)
+        main.addLayout(top_bar)
+
+        self.chat = QWebEngineView()
+        self.chat.setObjectName("chatCanvas")
+        self.chat.setStyleSheet("background: transparent; border: 0;")
+        self.chat.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
+        self.chat.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessRemoteUrls, False)
+
+        wb_ref = self
+
+        class _FavPage(QWebEnginePage):
+            def javaScriptConsoleMessage(self2, level, msg, line, source):
+                if msg == "RAGGG_FAV":
+                    wb_ref._do_fav()
+
+        self.chat.setPage(_FavPage(self.chat))
+        self.chat.page().setBackgroundColor(QColor(0, 0, 0, 0))
+        self.chat.setHtml(self._welcome_html())
+        main.addWidget(self.chat, stretch=1)
+
+        bottom = QVBoxLayout()
+        bottom.setContentsMargins(0, 0, 0, 0)
+        bottom.setSpacing(6)
+
+        pill_row = QHBoxLayout()
+        pill_row.addStretch(1)
+        self.activity_label = QLabel(get_text("status_ready"))
+        self.activity_label.setObjectName("miniPill")
+        self.activity_label.hide()
+        pill_row.addWidget(self.activity_label)
+        pill_row.addStretch(1)
+        bottom.addLayout(pill_row)
+
+        composer_frame = QFrame()
+        composer_frame.setObjectName("composer")
+        composer_frame.setMaximumWidth(520)
+        composer_layout = QHBoxLayout(composer_frame)
+        composer_layout.setContentsMargins(9, 5, 5, 5)
+        composer_layout.setSpacing(6)
+
+        self.import_button = QPushButton("+")
+        self.import_button.setObjectName("plusButton")
+        self.import_button.setToolTip("导入资料入库")
+        self.import_button.setCursor(Qt.PointingHandCursor)
+        self.import_button.clicked.connect(self._import_document)
+
+        self.question = QLineEdit()
+        self.question.setPlaceholderText("慢慢说，我听着")
+        self.question.returnPressed.connect(self._ask)
+
+        self.ask_button = QPushButton("↑")
+        self.ask_button.setObjectName("sendButton")
+        self.ask_button.setToolTip(get_text("btn_ask"))
+        self.ask_button.setCursor(Qt.PointingHandCursor)
+        self.ask_button.clicked.connect(self._ask)
+
+        composer_layout.addWidget(self.import_button)
+        composer_layout.addWidget(self.question, stretch=1)
+        composer_layout.addWidget(self.ask_button)
+
+        composer_row = QHBoxLayout()
+        composer_row.addStretch(1)
+        composer_row.addWidget(composer_frame)
+        composer_row.addStretch(1)
+        bottom.addLayout(composer_row)
+        main.addLayout(bottom)
+
+        self.sidebar_container = self._sidebar_panel()
+        self.sidebar_container.hide()
+
+        shell.addLayout(main, 0, 0)
+        shell.addWidget(self.sidebar_container, 0, 1)
 
     def _header(self) -> QHBoxLayout:
         header = QHBoxLayout()
@@ -940,6 +1080,89 @@ class WorkbenchWindow(QMainWindow):
         layout.addWidget(self.sources, stretch=1)
         return panel
 
+    def _sidebar_panel(self) -> QFrame:
+        panel = QFrame()
+        panel.setObjectName("sidebar")
+        panel.setFixedWidth(388)
+        layout = QVBoxLayout(panel)
+        layout.setContentsMargins(16, 16, 16, 16)
+        layout.setSpacing(12)
+
+        header = QHBoxLayout()
+        title = QLabel("资料与状态")
+        title.setObjectName("section")
+        close_button = QPushButton("◧")
+        close_button.setObjectName("iconButton")
+        close_button.setToolTip("隐藏侧边栏")
+        close_button.setCursor(Qt.PointingHandCursor)
+        close_button.clicked.connect(self._toggle_sidebar)
+        header.addWidget(title)
+        header.addStretch(1)
+        header.addWidget(close_button)
+        layout.addLayout(header)
+
+        status_grid = QGridLayout()
+        status_grid.setHorizontalSpacing(8)
+        status_grid.setVerticalSpacing(8)
+        self.status_card = MetricCard(get_text("card_knowledge_base"), get_text("status_loading_index"))
+        self.chunk_card = MetricCard(get_text("card_chunks"), "-", COLORS["warning"])
+        self.model_card = MetricCard(
+            get_text("card_model"),
+            self.settings.llm_model if self.settings.llm_api_key else get_text("model_local"),
+        )
+        self.watch_card = MetricCard("监听", "启动中", COLORS["accent2"])
+        status_grid.addWidget(self.status_card, 0, 0)
+        status_grid.addWidget(self.chunk_card, 0, 1)
+        status_grid.addWidget(self.model_card, 1, 0)
+        status_grid.addWidget(self.watch_card, 1, 1)
+        layout.addLayout(status_grid)
+
+        actions = QHBoxLayout()
+        actions.setSpacing(8)
+        self.api_button = self._button(get_text("btn_api_settings"))
+        self.api_button.clicked.connect(self._open_api_settings)
+        self.fav_button = self._button(get_text("btn_favorites"))
+        self.fav_button.clicked.connect(self._open_favorites)
+        actions.addWidget(self.api_button)
+        actions.addWidget(self.fav_button)
+        layout.addLayout(actions)
+
+        prompt_label = QLabel(get_text("quick_questions_label"))
+        prompt_label.setObjectName("section")
+        layout.addWidget(prompt_label)
+        for key in ("quick_q1", "quick_q2", "quick_q3"):
+            prompt = get_text(key)
+            button = self._button(prompt)
+            button.clicked.connect(lambda _checked=False, text=prompt: self._ask(text))
+            layout.addWidget(button)
+
+        source_title = QLabel(get_text("section_sources"))
+        source_title.setObjectName("section")
+        source_subtitle = QLabel(get_text("sources_subtitle"))
+        source_subtitle.setObjectName("muted")
+        source_subtitle.setWordWrap(True)
+        layout.addWidget(source_title)
+        layout.addWidget(source_subtitle)
+
+        self._source_list_html = self._empty_sources_html()
+        self.sources = QWebEngineView()
+        self.sources.setObjectName("sourcesCanvas")
+        self.sources.setStyleSheet("background: transparent; border: 0;")
+        self.sources.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
+        self.sources.page().urlChanged.connect(self._on_src_url)
+        self.sources.page().setBackgroundColor(QColor(0, 0, 0, 0))
+        self.sources.setHtml(self._source_list_html)
+
+        src_nav = QHBoxLayout()
+        back_btn = QPushButton(get_text("btn_back_to_sources"))
+        back_btn.setCursor(Qt.PointingHandCursor)
+        back_btn.clicked.connect(lambda: self.sources.setHtml(self._source_list_html))
+        src_nav.addWidget(back_btn)
+        src_nav.addStretch(1)
+        layout.addLayout(src_nav)
+        layout.addWidget(self.sources, stretch=1)
+        return panel
+
     def _panel(self, fixed_width: int | None = None) -> QFrame:
         panel = QFrame()
         panel.setObjectName("panel")
@@ -955,6 +1178,9 @@ class WorkbenchWindow(QMainWindow):
             button.setObjectName("primary")
         button.setCursor(Qt.PointingHandCursor)
         return button
+
+    def _toggle_sidebar(self) -> None:
+        self.sidebar_container.setHidden(not self.sidebar_container.isHidden())
 
     def _load_pipeline_if_ready(self) -> None:
         index_dir = self.settings.data_dir / "index"
@@ -1155,6 +1381,7 @@ class WorkbenchWindow(QMainWindow):
         self._watch_pending_snapshot = current
         self.watch_card.set_value("检测到变化", COLORS["warning"])
         if not self.is_busy:
+            self.activity_label.show()
             self.activity_label.setText("检测到知识库变化，等待文件稳定")
             self.activity_label.setStyleSheet(f"color: {COLORS['warning']};")
         self._watch_debounce_timer.start()
@@ -1233,6 +1460,7 @@ class WorkbenchWindow(QMainWindow):
     def _set_busy(self, busy: bool, text: str) -> None:
         self.is_busy = busy
         self.activity_label.setText(text)
+        self.activity_label.setVisible(busy)
         self.activity_label.setStyleSheet(f"color: {COLORS['warning' if busy else 'accent']};")
         for button in (self.ask_button, self.import_button):
             button.setDisabled(busy)
@@ -1248,9 +1476,8 @@ class WorkbenchWindow(QMainWindow):
     def _append_user(self, question: str) -> None:
         self._last_qa = (question, "")  # 记住问题，等回答来了配对
         msg_html = web_wrapper(
-            f"""<div style="margin:16px 0 8px 0;">
-              <div style="color:{COLORS['accent']};font-weight:700;font-size:13px;">{get_text("you_label")}</div>
-              <div style="margin-top:6px;padding:12px 14px;border-radius:12px;background:#102033;color:{COLORS['text']};">
+            f"""<div style="margin:16px 26px 8px 26px;display:flex;justify-content:flex-end;">
+              <div style="max-width:76%;padding:12px 15px;border-radius:18px 18px 4px 18px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.78);box-shadow:0 12px 36px rgba(74,141,180,.10);color:{COLORS['text']};line-height:1.58;">
                 {html.escape(question)}
               </div>
             </div>"""
@@ -1261,18 +1488,19 @@ class WorkbenchWindow(QMainWindow):
         self._last_qa = (self._last_qa[0], answer)  # 配对完成
         rendered = markdown_to_html(answer)
         msg_html = web_wrapper(
-            f"""<div style="margin:16px 0 18px 0;">
-              <div style="display:flex;align-items:center;gap:8px;">
-                <div style="color:{COLORS['warning']};font-weight:700;font-size:13px;">RAG</div>
+            f"""<div style="margin:16px 26px 18px 26px;display:flex;justify-content:flex-start;">
+              <div style="max-width:82%;">
+              <div style="display:flex;align-items:center;gap:8px;margin-left:2px;margin-bottom:6px;">
                 <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='{get_text("btn_copied")}';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
-                  style="background:{COLORS['surface3']};color:{COLORS['muted']};border:1px solid {COLORS['border']};border-radius:6px;padding:2px 10px;font-size:11px;cursor:pointer;"
+                  style="background:rgba(255,255,255,.54);color:{COLORS['muted']};border:1px solid rgba(255,255,255,.78);border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;"
                   onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">{get_text("btn_copy")}</button>
                 <button onclick="console.log('RAGGG_FAV');this.innerHTML='{get_text("btn_faved")}';this.style.color='{COLORS['accent']}';setTimeout(function(){{this.innerHTML='{get_text("btn_fav")}';this.style.color='{COLORS['muted']}'}}.bind(this),1500)"
-                  style="background:{COLORS['surface3']};color:{COLORS['muted']};border:1px solid {COLORS['border']};border-radius:6px;padding:2px 10px;font-size:11px;cursor:pointer;"
+                  style="background:rgba(255,255,255,.54);color:{COLORS['muted']};border:1px solid rgba(255,255,255,.78);border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;"
                   onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">{get_text("btn_fav")}</button>
               </div>
-              <div style="margin-top:6px;padding:14px 16px;border-radius:12px;background:#111c2f;color:{COLORS['text']};line-height:1.55;">
+              <div style="padding:15px 17px;border-radius:18px 18px 18px 4px;background:rgba(255,255,255,.58);border:1px solid rgba(255,255,255,.76);box-shadow:0 14px 42px rgba(80,150,185,.12);color:{COLORS['text']};line-height:1.6;">
                 {rendered}
+              </div>
               </div>
             </div>"""
         )
@@ -1322,27 +1550,7 @@ window.scrollTo(0, document.body.scrollHeight);
         return web_wrapper("\n".join(cards))
 
     def _welcome_html(self, chunk_count: str = "-", model_name: str = "DeepSeek") -> str:
-        return web_wrapper(
-            f"""<div style="text-align:center;padding:60px 20px;">
-            <div style="font-size:22px;font-weight:700;color:{COLORS['accent']};margin-bottom:12px;">WavEDA Knowledge Workbench</div>
-            <div style="color:{COLORS['muted']};margin-bottom:24px;">{get_text("startup_brand_subtitle")}</div>
-            <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
-              <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
-                <div style="font-size:20px;font-weight:700;color:{COLORS['accent']};">{chunk_count}</div>
-                <div style="color:{COLORS['muted']};font-size:12px;">{get_text("startup_chunks_label")}</div>
-              </div>
-              <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
-                <div style="font-size:20px;font-weight:700;color:{COLORS['accent2']};">{get_text("badge_waveda_first")}</div>
-                <div style="color:{COLORS['muted']};font-size:12px;">{get_text("startup_strategy_label")}</div>
-              </div>
-              <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
-                <div style="font-size:20px;font-weight:700;color:{COLORS['warning']};">{model_name}</div>
-                <div style="color:{COLORS['muted']};font-size:12px;">{get_text("startup_llm_label")}</div>
-              </div>
-            </div>
-            <div style="margin-top:28px;color:{COLORS['subtle']};font-size:13px;">{get_text("startup_hint")}</div>
-          </div>"""
-        )
+        return web_wrapper("""<div style="min-height:1px;"></div>""")
 
     def _empty_sources_html(self, message: str | None = None) -> str:
         if message is None:
