@@ -20,8 +20,16 @@ if exist "runtime\python\python.exe" (
 ) else (
     where py >nul 2>nul
     if errorlevel 1 (
-        echo [ERROR] Cannot find bundled Python runtime or Python launcher "py".
-        echo Please install Python 3.11 or newer, then run setup_env.bat again.
+        echo ============================================
+        echo   Python not found.
+        echo.
+        echo   Please install Python 3.11 or newer:
+        echo   https://www.python.org/downloads/
+        echo.
+        echo   IMPORTANT: Check "Add Python to PATH"
+        echo   during installation, then re-run setup_env.bat
+        echo ============================================
+        start https://www.python.org/downloads/
         pause
         exit /b 1
     )
