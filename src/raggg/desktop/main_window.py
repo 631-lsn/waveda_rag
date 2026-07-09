@@ -832,10 +832,6 @@ class WorkbenchWindow(QMainWindow):
         self.import_button.clicked.connect(self._import_document)
         layout.addWidget(self.import_button)
 
-        self.reload_button = self._button(get_text("btn_reload_index"))
-        self.reload_button.clicked.connect(self._load_pipeline_if_ready)
-        layout.addWidget(self.reload_button)
-
         self.api_button = self._button(get_text("btn_api_settings"))
         self.api_button.clicked.connect(self._open_api_settings)
         layout.addWidget(self.api_button)
@@ -1079,7 +1075,6 @@ class WorkbenchWindow(QMainWindow):
         """刷新所有 UI 文本以反映当前语言设置"""
         lang = get_language()
         # 侧边栏按钮
-        self.reload_button.setText(get_text("btn_reload_index"))
         self.api_button.setText(get_text("btn_api_settings"))
         self.fav_button.setText(get_text("btn_favorites"))
 
@@ -1236,7 +1231,7 @@ class WorkbenchWindow(QMainWindow):
         self.is_busy = busy
         self.activity_label.setText(text)
         self.activity_label.setStyleSheet(f"color: {COLORS['warning' if busy else 'accent']};")
-        for button in (self.ask_button, self.reload_button, self.import_button):
+        for button in (self.ask_button, self.import_button):
             button.setDisabled(busy)
         if not busy and self._watch_rebuild_requested and self._watch_pending_snapshot is not None:
             self._watch_rebuild_requested = False
