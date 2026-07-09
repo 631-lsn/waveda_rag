@@ -40,175 +40,11 @@ from raggg.pipeline.ingestion import IngestReport, ingest_document
 from raggg.pipeline.rag_pipeline import RAGAnswer, RAGPipeline
 from raggg.pipeline.source_watch import SourceSnapshot, scan_source_tree, snapshot_changed
 from raggg.retrieval.retriever import SearchResult
+from raggg.theme import get_theme, set_theme, get_colors, build_style, get_chat_bubble_colors, THEMES
 
-
-COLORS = {
-    "bg": "#eef7fb",
-    "surface": "rgba(255, 255, 255, 0.48)",
-    "surface2": "rgba(255, 255, 255, 0.68)",
-    "surface3": "rgba(255, 255, 255, 0.78)",
-    "border": "rgba(255, 255, 255, 0.72)",
-    "text": "#10202d",
-    "muted": "#587082",
-    "subtle": "#7d93a1",
-    "accent": "#5f93d6",
-    "accent2": "#6eaec4",
-    "warning": "#c89032",
-    "danger": "#d75959",
-    "input": "rgba(255, 255, 255, 0.64)",
-}
-
-
-APP_STYLE = f"""
-QWidget {{
-    background: transparent;
-    color: {COLORS["text"]};
-    font-family: "Microsoft YaHei UI", "Segoe UI";
-    font-size: 13px;
-}}
-QWidget#gradientRoot {{
-    background: qlineargradient(
-        x1:0, y1:0, x2:1, y2:1,
-        stop:0 #f3e1ea,
-        stop:0.34 #e9ecea,
-        stop:0.66 #c8ecf1,
-        stop:1 #78c2ef
-    );
-}}
-QFrame#panel {{
-    background: {COLORS["surface"]};
-    border: 1px solid {COLORS["border"]};
-    border-radius: 18px;
-}}
-QFrame#metricCard, QFrame#sourceCard {{
-    background: {COLORS["surface2"]};
-    border: 1px solid {COLORS["border"]};
-    border-radius: 12px;
-}}
-QFrame#sidebar {{
-    background: rgba(255, 255, 255, 0.58);
-    border: 1px solid rgba(255, 255, 255, 0.78);
-    border-radius: 22px;
-}}
-QFrame#composer {{
-    background: rgba(232, 248, 255, 0.64);
-    border: 1px solid rgba(255, 255, 255, 0.88);
-    border-radius: 20px;
-}}
-QWebEngineView#chatCanvas, QWebEngineView#sourcesCanvas {{
-    background: transparent;
-    border: 0;
-}}
-QLabel#title {{
-    color: {COLORS["text"]};
-    font-size: 24px;
-    font-weight: 700;
-}}
-QLabel#subtitle, QLabel#muted {{
-    color: {COLORS["muted"]};
-}}
-QLabel#section {{
-    color: {COLORS["text"]};
-    font-size: 14px;
-    font-weight: 700;
-}}
-QLabel#metricLabel {{
-    color: {COLORS["muted"]};
-    font-size: 12px;
-}}
-QLabel#metricValue {{
-    color: {COLORS["accent"]};
-    font-size: 18px;
-    font-weight: 700;
-}}
-QLabel#badge {{
-    background: #103430;
-    color: {COLORS["accent"]};
-    border: 1px solid #1f6b5e;
-    border-radius: 12px;
-    padding: 8px 14px;
-    font-weight: 700;
-}}
-QPushButton {{
-    background: rgba(255, 255, 255, 0.56);
-    color: {COLORS["text"]};
-    border: 1px solid rgba(255, 255, 255, 0.72);
-    border-radius: 12px;
-    padding: 10px 12px;
-}}
-QPushButton:hover {{
-    background: rgba(255, 255, 255, 0.78);
-    border-color: rgba(112, 168, 214, 0.55);
-}}
-QPushButton#primary {{
-    background: rgba(154, 209, 247, 0.82);
-    color: #193047;
-    border: 0;
-    font-weight: 700;
-}}
-QPushButton#primary:hover {{
-    background: rgba(176, 221, 251, 0.96);
-}}
-QPushButton#iconButton {{
-    min-width: 28px;
-    max-width: 28px;
-    min-height: 28px;
-    max-height: 28px;
-    border-radius: 14px;
-    padding: 0;
-    font-size: 15px;
-    font-weight: 700;
-}}
-QPushButton#sendButton {{
-    min-width: 32px;
-    max-width: 32px;
-    min-height: 32px;
-    max-height: 32px;
-    border-radius: 16px;
-    padding: 0;
-    font-size: 16px;
-    font-weight: 700;
-}}
-QPushButton#plusButton {{
-    min-width: 34px;
-    max-width: 34px;
-    min-height: 34px;
-    max-height: 34px;
-    border-radius: 17px;
-    padding: 0;
-    font-size: 16px;
-}}
-QPushButton:disabled {{
-    background: rgba(255, 255, 255, 0.36);
-    color: {COLORS["subtle"]};
-}}
-QLineEdit {{
-    background: transparent;
-    color: {COLORS["text"]};
-    border: 0;
-    padding: 9px 8px;
-    selection-background-color: {COLORS["accent"]};
-}}
-QLabel#miniPill {{
-    background: rgba(232, 248, 255, 0.52);
-    color: #5b86b5;
-    border: 1px solid rgba(255, 255, 255, 0.72);
-    border-radius: 11px;
-    padding: 3px 10px;
-    font-size: 11px;
-}}
-QScrollBar:vertical {{
-    background: transparent;
-    width: 10px;
-}}
-QScrollBar::handle:vertical {{
-    background: #26364c;
-    border-radius: 5px;
-}}
-QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
-    height: 0;
-}}
-"""
+# ── 动态主题 ──
+COLORS = get_colors()
+APP_STYLE = build_style()
 
 
 @dataclass(frozen=True)
@@ -694,11 +530,13 @@ class SettingsDialog(QDialog):
         self.tabs = QTabWidget()
         main_layout.addWidget(self.tabs)
 
-        # ── Tab 1: API 设置 ──
+        # ── Tab 1: 主题 ──
+        self._build_theme_tab()
+        # ── Tab 2: API 设置 ──
         self._build_api_tab()
-        # ── Tab 2: WavEDA 路径 ──
+        # ── Tab 3: WavEDA 路径 ──
         self._build_waveda_paths_tab()
-        # ── Tab 3: 语言 ──
+        # ── Tab 4: 语言 ──
         self._build_language_tab()
 
         buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
@@ -750,6 +588,31 @@ class SettingsDialog(QDialog):
     def _on_provider_changed(self, index: int) -> None:
         _, url, model = LLM_PROVIDERS[index]
         self.api_info_label.setText(f"URL: {url}   |   Model: {model}")
+
+    # ─── Theme Tab ────────────────────────────────
+    def _build_theme_tab(self) -> None:
+        tab = QWidget()
+        layout = QVBoxLayout(tab)
+        layout.setSpacing(14)
+
+        desc = QLabel(get_text("settings_theme_desc"))
+        desc.setStyleSheet(f"color:{COLORS['muted']};font-size:12px;")
+        desc.setWordWrap(True)
+        layout.addWidget(desc)
+
+        form = QFormLayout()
+        form.setSpacing(10)
+
+        self.theme_combo = QComboBox()
+        self.theme_combo.addItem(get_text("settings_theme_light"), "light")
+        self.theme_combo.addItem(get_text("settings_theme_dark"), "dark")
+        current = get_theme()
+        self.theme_combo.setCurrentIndex(0 if current == "light" else 1)
+        form.addRow(get_text("settings_theme_label") + ":", self.theme_combo)
+
+        layout.addLayout(form)
+        layout.addStretch()
+        self.tabs.addTab(tab, get_text("settings_theme_tab"))
 
     # ─── WavEDA Paths Tab ─────────────────────────
     def _build_waveda_paths_tab(self) -> None:
@@ -856,8 +719,20 @@ class SettingsDialog(QDialog):
         if not lang_found:
             new_lines.append(f"RAG_LANGUAGE={lang}")
 
+        # 保存主题
+        theme = self.theme_combo.currentData()
+        theme_found = False
+        for i, line in enumerate(new_lines):
+            if line.startswith("RAG_THEME="):
+                new_lines[i] = f"RAG_THEME={theme}"
+                theme_found = True
+                break
+        if not theme_found:
+            new_lines.append(f"RAG_THEME={theme}")
+
         env_path.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
         set_language(lang)
+        set_theme(theme)
         self.accept()
 
 
@@ -957,7 +832,7 @@ class WorkbenchWindow(QMainWindow):
         top_bar.addStretch(1)
         self.sidebar_toggle_button = QPushButton("◧")
         self.sidebar_toggle_button.setObjectName("iconButton")
-        self.sidebar_toggle_button.setToolTip("显示/隐藏侧边栏")
+        self.sidebar_toggle_button.setToolTip(get_text("sidebar_toggle_tooltip"))
         self.sidebar_toggle_button.setCursor(Qt.PointingHandCursor)
         self.sidebar_toggle_button.clicked.connect(self._toggle_sidebar)
         top_bar.addWidget(self.sidebar_toggle_button)
@@ -1003,12 +878,12 @@ class WorkbenchWindow(QMainWindow):
 
         self.import_button = QPushButton("+")
         self.import_button.setObjectName("plusButton")
-        self.import_button.setToolTip("导入资料入库")
+        self.import_button.setToolTip(get_text("import_tooltip"))
         self.import_button.setCursor(Qt.PointingHandCursor)
         self.import_button.clicked.connect(self._import_document)
 
         self.question = QLineEdit()
-        self.question.setPlaceholderText("慢慢说，我听着")
+        self.question.setPlaceholderText(get_text("placeholder_input"))
         self.question.returnPressed.connect(self._ask)
 
         self.ask_button = QPushButton("↑")
@@ -1078,10 +953,10 @@ class WorkbenchWindow(QMainWindow):
         layout.addWidget(self.status_card)
         layout.addWidget(self.chunk_card)
         layout.addWidget(self.model_card)
-        self.watch_card = MetricCard("监听", "启动中", COLORS["accent2"])
+        self.watch_card = MetricCard(get_text("watch_label"), get_text("watch_starting"), COLORS["accent2"])
         layout.addWidget(self.watch_card)
 
-        self.import_button = self._button("导入资料入库", primary=True)
+        self.import_button = self._button(get_text("import_button"), primary=True)
         self.import_button.clicked.connect(self._import_document)
         layout.addWidget(self.import_button)
 
@@ -1201,11 +1076,11 @@ class WorkbenchWindow(QMainWindow):
         layout.setSpacing(12)
 
         header = QHBoxLayout()
-        title = QLabel("资料与状态")
+        title = QLabel(get_text("section_data_status"))
         title.setObjectName("section")
         close_button = QPushButton("◧")
         close_button.setObjectName("iconButton")
-        close_button.setToolTip("隐藏侧边栏")
+        close_button.setToolTip(get_text("sidebar_hide_tooltip"))
         close_button.setCursor(Qt.PointingHandCursor)
         close_button.clicked.connect(self._toggle_sidebar)
         header.addWidget(title)
@@ -1222,7 +1097,7 @@ class WorkbenchWindow(QMainWindow):
             get_text("card_model"),
             self.settings.llm_model if self.settings.llm_api_key else get_text("model_local"),
         )
-        self.watch_card = MetricCard("监听", "启动中", COLORS["accent2"])
+        self.watch_card = MetricCard(get_text("watch_label"), get_text("watch_starting"), COLORS["accent2"])
         status_grid.addWidget(self.status_card, 0, 0)
         status_grid.addWidget(self.chunk_card, 0, 1)
         status_grid.addWidget(self.model_card, 1, 0)
@@ -1438,18 +1313,18 @@ class WorkbenchWindow(QMainWindow):
             return
         path, _ = QFileDialog.getOpenFileName(
             self,
-            "选择要入库的资料",
+            get_text("import_dialog_title"),
             str(self._project_root),
             "Documents (*.md *.markdown *.html *.htm *.txt *.pdf *.docx)",
         )
         if not path:
             return
 
-        self._set_busy(True, "正在导入资料并重建知识库")
+        self._set_busy(True, get_text("import_busy_msg"))
         worker = Worker(lambda: self._import_and_rebuild(path))
         worker.signals.result.connect(self._on_import_done)
-        worker.signals.error.connect(lambda message: self._show_error("导入失败", message))
-        worker.signals.finished.connect(lambda: self._set_busy(False, "就绪"))
+        worker.signals.error.connect(lambda message: self._show_error(get_text("import_failed"), message))
+        worker.signals.finished.connect(lambda: self._set_busy(False, get_text("status_ready")))
         self._start_worker(worker)
 
     def _import_and_rebuild(self, path: str) -> tuple[IngestReport, BuildReport]:
@@ -1462,11 +1337,8 @@ class WorkbenchWindow(QMainWindow):
         self.chunk_card.set_value(str(build_report.chunk_count), COLORS["warning"])
         self._load_pipeline_if_ready()
         self._sync_watch_snapshot()
-        QMessageBox.information(
-            self,
-            "导入完成",
-            f"已导入: {ingest_report.imported_path.name}\n知识块: {build_report.chunk_count}",
-        )
+        result_text = get_text("import_result").replace("{name}", ingest_report.imported_path.name).replace("{count}", str(build_report.chunk_count))
+        QMessageBox.information(self, get_text("import_done"), result_text)
 
     def _rebuild_async(self) -> None:
         if self.is_busy:
@@ -1500,17 +1372,17 @@ class WorkbenchWindow(QMainWindow):
         self._watch_pending_snapshot = None
         self._watch_rebuild_requested = False
         if hasattr(self, "watch_card"):
-            self.watch_card.set_value("监听中", COLORS["accent2"])
+            self.watch_card.set_value(get_text("watch_active"), COLORS["accent2"])
 
     def _check_source_changes(self) -> None:
         current = scan_source_tree(self.settings.obsidian_vault_root)
         if not snapshot_changed(self._source_snapshot, current):
             return
         self._watch_pending_snapshot = current
-        self.watch_card.set_value("检测到变化", COLORS["warning"])
+        self.watch_card.set_value(get_text("watch_changed"), COLORS["warning"])
         if not self.is_busy:
             self.activity_label.show()
-            self.activity_label.setText("检测到知识库变化，等待文件稳定")
+            self.activity_label.setText(get_text("watch_waiting_stable"))
             self.activity_label.setStyleSheet(f"color: {COLORS['warning']};")
         self._watch_debounce_timer.start()
 
@@ -1519,16 +1391,16 @@ class WorkbenchWindow(QMainWindow):
             return
         if self.is_busy:
             self._watch_rebuild_requested = True
-            self.watch_card.set_value("等待空闲", COLORS["warning"])
+            self.watch_card.set_value(get_text("watch_idle"), COLORS["warning"])
             return
 
         snapshot_after_change = self._watch_pending_snapshot
-        self._set_busy(True, "知识库变化，正在自动重建")
-        self.watch_card.set_value("自动重建", COLORS["warning"])
+        self._set_busy(True, get_text("watch_busy_msg"))
+        self.watch_card.set_value(get_text("watch_rebuilding"), COLORS["warning"])
         worker = Worker(lambda: build_knowledge_base(self.settings))
         worker.signals.result.connect(lambda report: self._on_watch_rebuild_done(report, snapshot_after_change))
-        worker.signals.error.connect(lambda message: self._show_error("自动重建失败", message))
-        worker.signals.finished.connect(lambda: self._set_busy(False, "就绪"))
+        worker.signals.error.connect(lambda message: self._show_error(get_text("watch_rebuild_error"), message))
+        worker.signals.finished.connect(lambda: self._set_busy(False, get_text("status_ready")))
         self._start_worker(worker)
 
     def _on_watch_rebuild_done(self, report: BuildReport, snapshot_after_change: SourceSnapshot) -> None:
@@ -1537,7 +1409,7 @@ class WorkbenchWindow(QMainWindow):
         self._source_snapshot = snapshot_after_change
         self._watch_pending_snapshot = None
         self._watch_rebuild_requested = False
-        self.watch_card.set_value("监听中", COLORS["accent2"])
+        self.watch_card.set_value(get_text("watch_active"), COLORS["accent2"])
 
     def _ask(self, question: str | None = None) -> None:
         if self.is_busy:
@@ -1607,9 +1479,10 @@ class WorkbenchWindow(QMainWindow):
 
     def _append_user(self, question: str) -> None:
         self._last_qa = (question, "")  # 记住问题，等回答来了配对
+        bubbles = get_chat_bubble_colors()
         msg_html = web_wrapper(
             f"""<div style="margin:16px 26px 8px 26px;display:flex;justify-content:flex-end;">
-              <div style="max-width:76%;padding:12px 15px;border-radius:18px 18px 4px 18px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.78);box-shadow:0 12px 36px rgba(74,141,180,.10);color:{COLORS['text']};line-height:1.58;">
+              <div style="max-width:76%;padding:12px 15px;border-radius:18px 18px 4px 18px;background:{bubbles['user_bg']};border:1px solid {bubbles['user_border']};box-shadow:0 12px 36px rgba(74,141,180,.10);color:{bubbles['text']};line-height:1.58;">
                 {html.escape(question)}
               </div>
             </div>"""
@@ -1617,20 +1490,21 @@ class WorkbenchWindow(QMainWindow):
         self._append_html(msg_html)
 
     def _append_assistant(self, answer: str) -> None:
-        self._last_qa = (self._last_qa[0], answer)  # 配对完成
+        self._last_qa = (self._last_qa[0], answer)
         rendered = markdown_to_html(answer)
+        bubbles = get_chat_bubble_colors()
         msg_html = web_wrapper(
             f"""<div style="margin:16px 26px 18px 26px;display:flex;justify-content:flex-start;">
               <div style="max-width:82%;">
               <div style="display:flex;align-items:center;gap:8px;margin-left:2px;margin-bottom:6px;">
                 <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='{get_text("btn_copied")}';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
-                  style="background:rgba(255,255,255,.54);color:{COLORS['muted']};border:1px solid rgba(255,255,255,.78);border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;"
-                  onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">{get_text("btn_copy")}</button>
-                <button onclick="console.log('RAGGG_FAV');this.innerHTML='{get_text("btn_faved")}';this.style.color='{COLORS['accent']}';setTimeout(function(){{this.innerHTML='{get_text("btn_fav")}';this.style.color='{COLORS['muted']}'}}.bind(this),1500)"
-                  style="background:rgba(255,255,255,.54);color:{COLORS['muted']};border:1px solid rgba(255,255,255,.78);border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;"
-                  onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">{get_text("btn_fav")}</button>
+                  style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;"
+                  onmouseover="this.style.color='{bubbles['accent']}'" onmouseout="this.style.color='{bubbles['muted']}'">{get_text("btn_copy")}</button>
+                <button onclick="console.log('RAGGG_FAV');this.innerHTML='{get_text("btn_faved")}';this.style.color='{bubbles['accent']}';setTimeout(function(){{this.innerHTML='{get_text("btn_fav")}';this.style.color='{bubbles['muted']}'}}.bind(this),1500)"
+                  style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;"
+                  onmouseover="this.style.color='{bubbles['accent']}'" onmouseout="this.style.color='{bubbles['muted']}'">{get_text("btn_fav")}</button>
               </div>
-              <div style="padding:15px 17px;border-radius:18px 18px 18px 4px;background:rgba(255,255,255,.58);border:1px solid rgba(255,255,255,.76);box-shadow:0 14px 42px rgba(80,150,185,.12);color:{COLORS['text']};line-height:1.6;">
+              <div style="padding:15px 17px;border-radius:18px 18px 18px 4px;background:{bubbles['assistant_bg']};border:1px solid {bubbles['assistant_border']};box-shadow:0 14px 42px rgba(80,150,185,.12);color:{bubbles['text']};line-height:1.6;">
                 {rendered}
               </div>
               </div>

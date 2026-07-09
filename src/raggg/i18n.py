@@ -145,8 +145,90 @@ TEXTS: dict[str, dict[str, str]] = {
         "en": "Local snippets",
     },
     "placeholder_input": {
-        "zh": "输入WavEDA问题，如：波端口怎么设置？| PML和吸收边界的关系？",
-        "en": "Ask about WavEDA, e.g. How to set up a wave port? | What is PML?",
+        "zh": "慢慢说，我听着",
+        "en": "Take your time, I am listening",
+    },
+
+    # ── 监听模块 ──────────────────────────────────
+    "watch_label": {
+        "zh": "监听",
+        "en": "Watch",
+    },
+    "watch_starting": {
+        "zh": "启动中",
+        "en": "Starting",
+    },
+    "watch_active": {
+        "zh": "监听中",
+        "en": "Watching",
+    },
+    "watch_changed": {
+        "zh": "检测到变化",
+        "en": "Changes detected",
+    },
+    "watch_idle": {
+        "zh": "等待空闲",
+        "en": "Waiting idle",
+    },
+    "watch_rebuilding": {
+        "zh": "自动重建",
+        "en": "Rebuilding",
+    },
+    "watch_busy_msg": {
+        "zh": "知识库变化，正在自动重建",
+        "en": "Knowledge base changed, auto-rebuilding",
+    },
+    "watch_rebuild_error": {
+        "zh": "自动重建失败",
+        "en": "Auto-rebuild failed",
+    },
+    "watch_waiting_stable": {
+        "zh": "检测到知识库变化，等待文件稳定",
+        "en": "Knowledge base changes detected, waiting for files to stabilize",
+    },
+
+    # ── 导入模块 ──────────────────────────────────
+    "import_button": {
+        "zh": "导入资料入库",
+        "en": "Import Documents",
+    },
+    "import_tooltip": {
+        "zh": "导入资料入库",
+        "en": "Import documents to knowledge base",
+    },
+    "import_dialog_title": {
+        "zh": "选择要导入的资料",
+        "en": "Select documents to import",
+    },
+    "import_busy_msg": {
+        "zh": "正在导入资料并重建知识库",
+        "en": "Importing documents and rebuilding knowledge base",
+    },
+    "import_failed": {
+        "zh": "导入失败",
+        "en": "Import failed",
+    },
+    "import_done": {
+        "zh": "导入完成",
+        "en": "Import complete",
+    },
+    "import_result": {
+        "zh": "已导入: {name}\n知识块: {count}",
+        "en": "Imported: {name}\nChunks: {count}",
+    },
+
+    # ── 侧边栏 ──────────────────────────────────
+    "sidebar_toggle_tooltip": {
+        "zh": "显示/隐藏侧边栏",
+        "en": "Show/Hide Sidebar",
+    },
+    "sidebar_hide_tooltip": {
+        "zh": "隐藏侧边栏",
+        "en": "Hide Sidebar",
+    },
+    "section_data_status": {
+        "zh": "资料与状态",
+        "en": "Data &amp; Status",
     },
 
     # ── 来源面板 ──────────────────────────────────
@@ -243,6 +325,28 @@ TEXTS: dict[str, dict[str, str]] = {
     "msg_api_saved": {
         "zh": "设置已更新，重启应用后生效。",
         "en": "Settings updated. Restart the app for changes to take effect.",
+    },
+
+    # ── 设置：主题 Tab ──────────────────────────────────
+    "settings_theme_tab": {
+        "zh": "主题",
+        "en": "Theme",
+    },
+    "settings_theme_label": {
+        "zh": "界面主题",
+        "en": "Interface Theme",
+    },
+    "settings_theme_desc": {
+        "zh": "切换主题后需要重启应用生效。",
+        "en": "Restart the app after changing theme for it to take effect.",
+    },
+    "settings_theme_light": {
+        "zh": "浅色",
+        "en": "Light",
+    },
+    "settings_theme_dark": {
+        "zh": "深色",
+        "en": "Dark",
     },
 
     # ── 设置：API Tab ──────────────────────────────────
