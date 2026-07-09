@@ -698,6 +698,7 @@ class WorkbenchWindow(QMainWindow):
         self._active_workers: list[Worker] = []
         self.is_busy = False
         self._last_qa: tuple[str, str] = ("", "")  # (question, answer)
+        self._conversation_history: list[tuple[str, str]] = []
         self._fav_file = settings.data_dir / "favorites.json"
         self._project_root = Path(__file__).resolve().parents[3]
         self._source_snapshot: SourceSnapshot = {}
@@ -1194,7 +1195,8 @@ class WorkbenchWindow(QMainWindow):
         self.question.clear()
         self._append_user(text)
         self._set_busy(True, get_text("status_searching"))
-        worker = Worker(lambda: AskResult(text, self.pipeline.ask(text)))
+        conversation_history = list(self._conversation_history)
+        worker = Worker(lambda: AskResult(text, self.pipeline.ask(text, conversation_history=conversation_history)))
         worker.signals.result.connect(self._on_answer_done)
         worker.signals.error.connect(lambda message: self._append_assistant(get_text("msg_generation_failed") + message))
         worker.signals.finished.connect(lambda: self._set_busy(False, get_text("status_ready")))
@@ -1211,6 +1213,7 @@ class WorkbenchWindow(QMainWindow):
 
     def _on_answer_done(self, result: AskResult) -> None:
         self._append_assistant(result.answer.answer)
+        self._remember_turn(result.question, result.answer.answer)
         all_images = _extract_images_from_sources(result.answer.sources, self._image_index)
         if all_images:
             img_html = '<div style="margin:12px 0 8px 0;"><div style="color:' + COLORS["accent2"] + ';font-weight:700;margin-bottom:8px;">' + get_text("screenshot_label") + '</div>'
@@ -1235,6 +1238,11 @@ class WorkbenchWindow(QMainWindow):
         if not busy and self._watch_rebuild_requested and self._watch_pending_snapshot is not None:
             self._watch_rebuild_requested = False
             QTimer.singleShot(0, self._trigger_watch_rebuild)
+
+    def _remember_turn(self, question: str, answer: str, max_turns: int = 5) -> None:
+        self._conversation_history.append((question, answer))
+        if len(self._conversation_history) > max_turns:
+            self._conversation_history = self._conversation_history[-max_turns:]
 
     def _append_user(self, question: str) -> None:
         self._last_qa = (question, "")  # 记住问题，等回答来了配对

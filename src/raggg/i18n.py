@@ -324,6 +324,22 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "请优先使用资料中的内容回答，资料不足时用自己的知识补充。",
         "en": "Prioritize content from the references. Supplement with your own knowledge when references are insufficient.",
     },
+    "prompt_history_label": {
+        "zh": "最近对话",
+        "en": "Recent conversation",
+    },
+    "prompt_history_instruction": {
+        "zh": "如果当前问题使用了“这个、它、上一步、下一步、刚才”等指代，请结合最近对话理解用户真实意图；但事实依据仍以资料为准。",
+        "en": "If the current question uses references such as this, it, previous step, next step, or just now, use the recent conversation to understand the intent; factual grounding should still come from the references.",
+    },
+    "prompt_history_user": {
+        "zh": "用户",
+        "en": "User",
+    },
+    "prompt_history_assistant": {
+        "zh": "助手",
+        "en": "Assistant",
+    },
     "prompt_no_context": {
         "zh": "（知识库中暂无相关文档）\n\n请用自己的知识回答这个问题，给出简洁、可操作的建议。",
         "en": "(No relevant documents found in the knowledge base)\n\nPlease answer this question using your own knowledge. Give concise, actionable advice.",
