@@ -6,7 +6,14 @@ from raggg.i18n import get_text
 from raggg.retrieval.retriever import SearchResult
 
 
-def build_prompt(question: str, sources: list[SearchResult]) -> str:
+ConversationHistory = list[tuple[str, str]]
+
+
+def build_prompt(
+    question: str,
+    sources: list[SearchResult],
+    conversation_history: ConversationHistory | None = None,
+) -> str:
     snippets = []
     for index, result in enumerate(sources, start=1):
         chunk = result.chunk
@@ -22,8 +29,16 @@ def build_prompt(question: str, sources: list[SearchResult]) -> str:
         )
     else:
         context = get_text("prompt_no_context")
+    history = _format_conversation_history(conversation_history or [])
+    history_section = ""
+    if history:
+        history_section = (
+            f"{get_text('prompt_history_label')}：\n{history}\n\n"
+            f"{get_text('prompt_history_instruction')}\n\n"
+        )
     return (
         f"{get_text('prompt_role')}\n\n"
+        f"{history_section}"
         f"{get_text('prompt_question_prefix')}：{question}\n\n"
         f"{context}\n\n"
         f"{get_text('prompt_final_instruction')}"
@@ -49,6 +64,25 @@ def build_local_answer(question: str, sources: list[SearchResult]) -> str:
         chunk = result.chunk
         lines.append(f"[{index}] {chunk.title} | {chunk.source_type} | {chunk.relative_path}")
     return "\n".join(lines)
+
+
+def _format_conversation_history(history: ConversationHistory, max_turns: int = 5) -> str:
+    lines = []
+    for index, (question, answer) in enumerate(history[-max_turns:], start=1):
+        safe_question = _compact_text(question, 300)
+        safe_answer = _compact_text(answer, 700)
+        if safe_question:
+            lines.append(f"[{index}] {get_text('prompt_history_user')}：{safe_question}")
+        if safe_answer:
+            lines.append(f"[{index}] {get_text('prompt_history_assistant')}：{safe_answer}")
+    return "\n".join(lines)
+
+
+def _compact_text(text: str, limit: int) -> str:
+    compact = re.sub(r"\s+", " ", text).strip()
+    if len(compact) <= limit:
+        return compact
+    return compact[:limit].rstrip(" ，。；、,.") + "..."
 
 
 def _source_snippet(title: str, content: str, limit: int = 180) -> str:
