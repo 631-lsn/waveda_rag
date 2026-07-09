@@ -150,22 +150,22 @@ k矢量在平面波设置页面由用户填写，a矢量为参考轴数值，默
 
 
 ## 待补图片清单
-以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
-| 图片名称 | 当前资源路径 | 建议保留原因 |
+以下图片暂不插入正文，路径为 WavEDA 帮助文档内部相对路径；运行时 agent 会按项目内帮助图片和用户本机 WavEDA 帮助目录进行查找。
+| 图片名称 | WavEDA 帮助相对路径 | 建议保留原因 |
 | --- | --- | --- |
-| Plane_Wave_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_1.png` | 展示“平面波”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_2.png` | 展示“平面波激励源的主要应用场景包括：”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_17.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_17.png` | 展示“参考坐标系”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_18.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_18.png` | 展示“线极化：”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_3.png` | 展示“线极化：”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_7.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_7.png` | 展示“线极化：”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_8.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_8.png` | 展示“圆极化:”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_4.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_4.png` | 展示“圆极化:”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_5.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_5.png` | 展示“圆极化:”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_19.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_19.png` | 展示“椭圆极化:”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_6.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_6.png` | 展示“椭圆极化:”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_9.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_9.png` | 展示“椭圆极化:”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_11.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_11.png` | 展示“平面波实例”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_12.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_12.png` | 展示“平面波实例”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_13.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_13.png` | 展示“平面波实例”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Plane_Wave_14.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Stimulate/images/Plane_Wave_14.png` | 展示“平面波实例”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_1.png | `Modeling/Stimulate/images/Plane_Wave_1.png` | 展示“平面波”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_2.png | `Modeling/Stimulate/images/Plane_Wave_2.png` | 展示“平面波激励源的主要应用场景包括：”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_17.png | `Modeling/Stimulate/images/Plane_Wave_17.png` | 展示“参考坐标系”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_18.png | `Modeling/Stimulate/images/Plane_Wave_18.png` | 展示“线极化：”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_3.png | `Modeling/Stimulate/images/Plane_Wave_3.png` | 展示“线极化：”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_7.png | `Modeling/Stimulate/images/Plane_Wave_7.png` | 展示“线极化：”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_8.png | `Modeling/Stimulate/images/Plane_Wave_8.png` | 展示“圆极化:”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_4.png | `Modeling/Stimulate/images/Plane_Wave_4.png` | 展示“圆极化:”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_5.png | `Modeling/Stimulate/images/Plane_Wave_5.png` | 展示“圆极化:”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_19.png | `Modeling/Stimulate/images/Plane_Wave_19.png` | 展示“椭圆极化:”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_6.png | `Modeling/Stimulate/images/Plane_Wave_6.png` | 展示“椭圆极化:”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_9.png | `Modeling/Stimulate/images/Plane_Wave_9.png` | 展示“椭圆极化:”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_11.png | `Modeling/Stimulate/images/Plane_Wave_11.png` | 展示“平面波实例”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_12.png | `Modeling/Stimulate/images/Plane_Wave_12.png` | 展示“平面波实例”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_13.png | `Modeling/Stimulate/images/Plane_Wave_13.png` | 展示“平面波实例”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Plane_Wave_14.png | `Modeling/Stimulate/images/Plane_Wave_14.png` | 展示“平面波实例”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

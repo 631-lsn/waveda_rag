@@ -46,8 +46,7 @@ merged_at: "2026-07-07"
 
 此案例是一个频率选择表面模型，可以实现线极化到圆极化的转化。Zmin和 Zmax方向上是波端口馈电，四周为周期边界，扫频范围为0.01-25 GHz。
 
-> 图片: `./res/FSS_unit_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 利用参考文献[1]中的几何参数，本案例在WavEDA中对FSS的几何进行建模。在本例中，首先建立结构是由一块零厚度的完美电导体薄片，后对这个薄片进行挖空处理得到一对自互补超表面,下图为本案例的几何。
 
@@ -61,25 +60,19 @@ merged_at: "2026-07-07"
 
 在X和Y方向上均设置了周期边界，该设置使得晶胞和激励在X和Y方向上周期性重复。关于周期边界的正确定义的详细说明可以在WavEDA帮助文档中找到。
 
-> 图片: `./res/FSS_unit_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_2.png`
 
-> 图片: `./res/FSS_unit_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_3.png`
 
 2.端口设置
 
 然后在模型域的Zmin和Zmax面添加波端口作为激励，在本例中，波端口的模式数为10。
 
-> 图片: `./res/FSS_unit_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_4.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 3.网格设置
 
 该模型利用自适应网格进行剖分，考虑几何尺寸大于半波长，为了保证仿真结果的准确性，在网格剖分时，设置采样率为18。
 
-> 图片: `./res/FSS_unit_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_5.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 后处理
 
@@ -87,38 +80,29 @@ merged_at: "2026-07-07"
 
 通过模式特性调整端口尺寸或匹配结构，减少反射。以下是该模型的两个波端口模式。
 
-> 图片: `./res/FSS_unit_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_6.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/FSS_unit_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_7.png`
 
 2.S参数幅值
 
 可以看出在6.33 GHz和7.97 GHz处线极化到圆极化的转换。
 
-> 图片: `./res/FSS_unit_8.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_8.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 3.相位差
 
 在几个频率处，正交极化的透射和反射系数的幅度在-3 dB的水平上交叉。在这些特定频率下，入射功率的一半被透射，而另一半被反射。相位图可以清楚地看出相位差是 90°。
 
-> 图片: `./res/FSS_unit_9.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_9.png`
 
 ### 参考文献
 
 [1] J. D. Baena, A. P. Slobozhanyuk, J. D. Ortiz and P. A. Belov, "Linear to circular polarization converters based on self-complementary metasurfaces," 2014 8th International Congress on Advanced Electromagnetic Materials in Microwaves and Optics, Copenhagen, Denmark, 2014, pp. 43-45, doi: 10.1109/MetaMaterials.2014.6948588.
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/FSS_unit_1.png` -> `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_1.png`
-2. `./res/FSS_unit_2.png` -> `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_2.png`
-3. `./res/FSS_unit_3.png` -> `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_3.png`
-4. `./res/FSS_unit_4.png` -> `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_4.png`
-5. `./res/FSS_unit_5.png` -> `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_5.png`
-6. `./res/FSS_unit_6.png` -> `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_6.png`
-7. `./res/FSS_unit_7.png` -> `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_7.png`
-8. `./res/FSS_unit_8.png` -> `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_8.png`
-9. `./res/FSS_unit_9.png` -> `D:\Staid\app\waveda\Example\EM\PBC\FSS\res\FSS_unit_9.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| FSS_unit_1.png | `Example/EM/PBC/FSS/res/FSS_unit_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| FSS_unit_4.png | `Example/EM/PBC/FSS/res/FSS_unit_4.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| FSS_unit_6.png | `Example/EM/PBC/FSS/res/FSS_unit_6.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| FSS_unit_8.png | `Example/EM/PBC/FSS/res/FSS_unit_8.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

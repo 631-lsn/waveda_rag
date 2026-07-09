@@ -85,16 +85,16 @@ source_relative_path: "EM_Project/Far_field.html"
 
 ## 待补图片清单
 
-以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
+以下图片暂不插入正文，路径为 WavEDA 帮助文档内部相对路径；运行时 agent 会按项目内帮助图片和用户本机 WavEDA 帮助目录进行查找。
 
-| 图片名称 | 当前资源路径 | 建议保留原因 |
+| 图片名称 | WavEDA 帮助相对路径 | 建议保留原因 |
 | --- | --- | --- |
-| far_field1.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field1.png` | 展示工程树中的远场节点入口。 |
-| far_field2.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field2.png` | 展示右键远场节点后的菜单，适合说明“添加远场频点”的入口。 |
-| far_field3.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field3.png` | 展示添加远场监视频点对话框，包含单频点、步长和点数设置。 |
-| far_field4.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field4.png` | 展示“编辑端口激励”的菜单入口。 |
-| far_field5.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field5.png` | 展示端口激励组合设置窗口，适合说明幅度、相位和端口组合。 |
-| far_field7.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field7.png` | 展示禁用远场仿真的菜单入口。 |
-| far_field17.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field17.png` | 展示轴比/增益频率曲线的频点和角度设置窗口。 |
-| far_field9.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field9.png` | 展示仿真后在电磁结果中查看远场结果的入口。 |
-| far_field10.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/far_field10.png` | 展示远场 3D 方向图结果，可作为最终效果示例。 |
+| far_field1.png | `EM_Project/images/far_field1.png` | 展示工程树中的远场节点入口。 |
+| far_field2.png | `EM_Project/images/far_field2.png` | 展示右键远场节点后的菜单，适合说明“添加远场频点”的入口。 |
+| far_field3.png | `EM_Project/images/far_field3.png` | 展示添加远场监视频点对话框，包含单频点、步长和点数设置。 |
+| far_field4.png | `EM_Project/images/far_field4.png` | 展示“编辑端口激励”的菜单入口。 |
+| far_field5.png | `EM_Project/images/far_field5.png` | 展示端口激励组合设置窗口，适合说明幅度、相位和端口组合。 |
+| far_field7.png | `EM_Project/images/far_field7.png` | 展示禁用远场仿真的菜单入口。 |
+| far_field17.png | `EM_Project/images/far_field17.png` | 展示轴比/增益频率曲线的频点和角度设置窗口。 |
+| far_field9.png | `EM_Project/images/far_field9.png` | 展示仿真后在电磁结果中查看远场结果的入口。 |
+| far_field10.png | `EM_Project/images/far_field10.png` | 展示远场 3D 方向图结果，可作为最终效果示例。 |

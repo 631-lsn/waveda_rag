@@ -68,15 +68,15 @@ merged_at: "2026-07-07"
 
 
 ## 待补图片清单
-以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
-| 图片名称 | 当前资源路径 | 建议保留原因 |
+以下图片暂不插入正文，路径为 WavEDA 帮助文档内部相对路径；运行时 agent 会按项目内帮助图片和用户本机 WavEDA 帮助目录进行查找。
+| 图片名称 | WavEDA 帮助相对路径 | 建议保留原因 |
 | --- | --- | --- |
-| LCS1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/LCS1.png` | 展示“局部坐标系”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| LCS2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/LCS2.png` | 展示“在所选择物体上放置LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| LCS3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/LCS3.png` | 展示“在所选择物体上放置LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| LCS4.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/LCS4.png` | 展示“在所选择物体上放置LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| LCS5.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/LCS5.png` | 展示“移动LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| LCS6.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/LCS6.png` | 展示“移动LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| LCS7.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/LCS7.png` | 展示“移动LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| LCS8.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/LCS8.png` | 展示“移动LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| LCS9.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/images/LCS9.png` | 展示“局部坐标系属性”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| LCS1.png | `Modeling/images/LCS1.png` | 展示“局部坐标系”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| LCS2.png | `Modeling/images/LCS2.png` | 展示“在所选择物体上放置LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| LCS3.png | `Modeling/images/LCS3.png` | 展示“在所选择物体上放置LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| LCS4.png | `Modeling/images/LCS4.png` | 展示“在所选择物体上放置LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| LCS5.png | `Modeling/images/LCS5.png` | 展示“移动LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| LCS6.png | `Modeling/images/LCS6.png` | 展示“移动LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| LCS7.png | `Modeling/images/LCS7.png` | 展示“移动LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| LCS8.png | `Modeling/images/LCS8.png` | 展示“移动LCS”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| LCS9.png | `Modeling/images/LCS9.png` | 展示“局部坐标系属性”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

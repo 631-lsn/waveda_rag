@@ -48,53 +48,43 @@ merged_at: "2026-07-07"
 
 采用基底为75um-GaAs的IPD工艺制造，GSG端口馈电，金属层用PEC面代替仿真，整体尺寸为1.265*2.468*0.075 mm3。
 
-> 图片: `./res/mmwave_bpf_IPD_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 1. 仿真频率设置 该模型仿真频率为1 ~56 GHz。最大尺寸大概为0.23 λg@28 GHz ， 结构中存在薄层结构，网格会较多，可采用快速扫频方法计算。
 
-> 图片: `./res/mmwave_bpf_IPD_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. Domain及边界条件设置 为节省计算成本，滤波器的Domain尺寸设计为距离模型250 um即可。 模型底部为金属面，因此模型底部方向的Domain可直接贴紧模型，且设置为PEC边界。
 
-> 图片: `./res/mmwave_bpf_IPD_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 网格设置 自适应网格频率设置为28 GHz，残差设置为0.02，具体设置如下图：
 
-> 图片: `./res/mmwave_bpf_IPD_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_4.png`
 
 3. 创建端口 为方便测试，原模型为GSG端口，但仿真中只需从GSG端口的信号线馈电。 从微带线到地，画一个与微带线等宽的面，创建集总面端口，端口积分线均设置为金属面垂直到地。
 
-> 图片: `./res/mmwave_bpf_IPD_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_5.png`
 
 ### 后处理
 
 1. 3D网格 仿真完成后，选中关键部分物体，进入查看网格窗口查看网格剖分情况。
 
-> 图片: `./res/mmwave_bpf_IPD_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_6.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 仿真结果 仿真后添加S参数曲线查看该滤波器性能。
 
-> 图片: `./res/mmwave_bpf_IPD_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_7.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 参考文献
 
 [1] X. Zhang, Y. Wu, Y. Yang, H. Yu, W. Wang and W. Wang, "A Compact mm-Wave Bandpass Filter Based on Transversal Signal Interference Concept in IPD Technology," 2022 International Applied Computational Electromagnetics Society Symposium (ACES-China), Xuzhou, China, 2022, pp. 1-3, doi: 10.1109/ACES-China56081.2022.10064779.
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/mmwave_bpf_IPD_1.png` -> `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_1.png`
-2. `./res/mmwave_bpf_IPD_2.png` -> `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_2.png`
-3. `./res/mmwave_bpf_IPD_3.png` -> `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_3.png`
-4. `./res/mmwave_bpf_IPD_4.png` -> `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_4.png`
-5. `./res/mmwave_bpf_IPD_5.png` -> `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_5.png`
-6. `./res/mmwave_bpf_IPD_6.png` -> `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_6.png`
-7. `./res/mmwave_bpf_IPD_7.png` -> `D:\Staid\app\waveda\Example\EM\Filter\mmwave_bpf_IPD\res\mmwave_bpf_IPD_7.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| mmwave_bpf_IPD_1.png | `Example/EM/Filter/mmwave_bpf_IPD/res/mmwave_bpf_IPD_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| mmwave_bpf_IPD_2.png | `Example/EM/Filter/mmwave_bpf_IPD/res/mmwave_bpf_IPD_2.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| mmwave_bpf_IPD_6.png | `Example/EM/Filter/mmwave_bpf_IPD/res/mmwave_bpf_IPD_6.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| mmwave_bpf_IPD_7.png | `Example/EM/Filter/mmwave_bpf_IPD/res/mmwave_bpf_IPD_7.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

@@ -73,8 +73,7 @@ merged_at: "2026-07-07"
 
 本案例在WavEDA中对天线的几何形状进行了建模。 首先建立结构是由一块尺寸为38.5*38.5*1.6 mm³的介质基板，并设置材料为FR-4，相对介电常数约为4.4，损耗角正切为0.02。结构采用微带线馈电，在微带线开口处采用阶梯阻抗变换作为阻抗匹配结构。背面设计蝶形缝隙，结合渐变微带馈线仿真。下图为模型几何。
 
-> 图片: `./res/Wideband_slot_antenna_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
@@ -86,18 +85,14 @@ merged_at: "2026-07-07"
 
 然后在模型域的 X,Y 面添加波端口作为激励，积分线的关键设置，如下图所示。
 
-> 图片: `./res/Wideband_slot_antenna_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_3.png`
 
 3.网格设置
 
 该模型利用自适应网格进行剖分，考虑几何尺寸大于半波长，为了保证仿真结果的准确性，在网格剖分时，自适应网格频率设置为8 GHz，设置采样率为10。
 
-> 图片: `./res/Wideband_slot_antenna_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_4.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/Wideband_slot_antenna_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 后处理
 
@@ -105,41 +100,27 @@ merged_at: "2026-07-07"
 
 通过模式特性调整端口尺寸或匹配结构，减少反射。以下是该模型的两个波端口模式。
 
-> 图片: `./res/Wideband_slot_antenna_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_5.png`
 
-> 图片: `./res/Wideband_slot_antenna_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_6.png`
 
 2.S参数
 
 从S参数图可以本案例的天线性能，包括回波损耗和入射损耗。 S(1,1) 表示端口1的反射系数本案例S(1,1)在大部分频段（如3.0–10.0 GHz）低于-10 dB，表明该天线在超宽带范围内（UWB，通常3.1–10.6 GHz）具备良好的阻抗匹配特性。S(2,1)在超宽带范围内呈现显著波动，部分频段传输损耗较高。
 
-> 图片: `./res/Wideband_slot_antenna_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_7.png`
 
-> 图片: `./res/Wideband_slot_antenna_8.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_8.png`
 
 3.远场结果
 
 在WavEDA的结果后处理内可以选则查看3D远场结果图，或者特殊角度下的平面远场结果。 辐射方向图半功率波瓣宽度（HPBW）>103°。
 
-> 图片: `./res/Wideband_slot_antenna_9.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_9.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/Wideband_slot_antenna_10.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_10.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/Wideband_slot_antenna_1.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_1.png`
-2. `./res/Wideband_slot_antenna_3.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_3.png`
-3. `./res/Wideband_slot_antenna_4.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_4.png`
-4. `./res/Wideband_slot_antenna_2.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_2.png`
-5. `./res/Wideband_slot_antenna_5.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_5.png`
-6. `./res/Wideband_slot_antenna_6.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_6.png`
-7. `./res/Wideband_slot_antenna_7.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_7.png`
-8. `./res/Wideband_slot_antenna_8.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_8.png`
-9. `./res/Wideband_slot_antenna_9.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_9.png`
-10. `./res/Wideband_slot_antenna_10.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\Wideband_slot_antenna\res\Wideband_slot_antenna_10.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| Wideband_slot_antenna_1.png | `Example/EM/Antenna/Wideband_slot_antenna/res/Wideband_slot_antenna_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Wideband_slot_antenna_4.png | `Example/EM/Antenna/Wideband_slot_antenna/res/Wideband_slot_antenna_4.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Wideband_slot_antenna_9.png | `Example/EM/Antenna/Wideband_slot_antenna/res/Wideband_slot_antenna_9.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Wideband_slot_antenna_10.png | `Example/EM/Antenna/Wideband_slot_antenna/res/Wideband_slot_antenna_10.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

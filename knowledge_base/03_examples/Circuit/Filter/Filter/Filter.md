@@ -38,39 +38,34 @@ merged_at: "2026-07-07"
 
 本模型为基于肖特基二极管的射频检波电路，工作频率为1 GHz。电路由正弦电压源（V1）、50 Ω限流/匹配电阻（R1）、二极管检波器（D1）和电压探针（Vprobe1）组成，构成典型的半波整流结构。
 
-> 图片: `./res/filter1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Circuit\Filter\Filter\res\filter1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 采用瞬态分析（Tran1），仿真时间窗口为0-10 ns，覆盖10个完整信号周期。设置参数如下:
 
-> 图片: `./res/filter5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Circuit\Filter\Filter\res\filter5.png`
 
 正弦源幅度设为1 V，频率1 GHz。二极管使用实际器件模型（DiodeModel1），包含非线性结电容和串联电阻效应，模拟高频下的真实检波行为。点击仿真按键，软件将自动计算。
 
-> 图片: `./res/filter2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Circuit\Filter\Filter\res\filter2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 仿真结束后，在页面内选中对应的结果参数，点击绘制。
 
-> 图片: `./res/filter3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Circuit\Filter\Filter\res\filter3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 后处理
 
 通过监测电压探针Vprobe1获得整流后的时域波形。仿真结果显示：输出为震荡波形，初始峰值1 V，反映电路的瞬态建立过程。该特性适用于射频场和脉冲信号测量等应用场景。
 
-> 图片: `./res/filter4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Circuit\Filter\Filter\res\filter4.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 >
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/filter1.png` -> `D:\Staid\app\waveda\Example\Circuit\Filter\Filter\res\filter1.png`
-2. `./res/filter5.png` -> `D:\Staid\app\waveda\Example\Circuit\Filter\Filter\res\filter5.png`
-3. `./res/filter2.png` -> `D:\Staid\app\waveda\Example\Circuit\Filter\Filter\res\filter2.png`
-4. `./res/filter3.png` -> `D:\Staid\app\waveda\Example\Circuit\Filter\Filter\res\filter3.png`
-5. `./res/filter4.png` -> `D:\Staid\app\waveda\Example\Circuit\Filter\Filter\res\filter4.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| filter1.png | `Example/Circuit/Filter/Filter/res/filter1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| filter2.png | `Example/Circuit/Filter/Filter/res/filter2.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| filter3.png | `Example/Circuit/Filter/Filter/res/filter3.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| filter4.png | `Example/Circuit/Filter/Filter/res/filter4.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

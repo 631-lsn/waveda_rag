@@ -59,12 +59,12 @@ merged_at: "2026-07-07"
 
 
 ## 待补图片清单
-以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
-| 图片名称 | 当前资源路径 | 建议保留原因 |
+以下图片暂不插入正文，路径为 WavEDA 帮助文档内部相对路径；运行时 agent 会按项目内帮助图片和用户本机 WavEDA 帮助目录进行查找。
+| 图片名称 | WavEDA 帮助相对路径 | 建议保留原因 |
 | --- | --- | --- |
-| Solid_Intersection_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/Solid_Intersection_1.png` | 展示“新物体”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Solid_Intersection_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/Solid_Intersection_2.png` | 展示“已经存在的物体”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Solid_Intersection_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/Solid_Intersection_3.png` | 展示“空”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Solid_Intersection_4.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/Solid_Intersection_4.png` | 展示“将新物体用于之后的冲突情况”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Solid_Intersection_5.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/Solid_Intersection_5.png` | 展示“将现有物体用于之后的冲突情况”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Solid_Intersection_6.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Create_3D_Geometry/images/Solid_Intersection_6.png` | 展示“不选择任何物体用于之后的冲突情况”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Solid_Intersection_1.png | `Modeling/Create_3D_Geometry/images/Solid_Intersection_1.png` | 展示“新物体”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Solid_Intersection_2.png | `Modeling/Create_3D_Geometry/images/Solid_Intersection_2.png` | 展示“已经存在的物体”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Solid_Intersection_3.png | `Modeling/Create_3D_Geometry/images/Solid_Intersection_3.png` | 展示“空”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Solid_Intersection_4.png | `Modeling/Create_3D_Geometry/images/Solid_Intersection_4.png` | 展示“将新物体用于之后的冲突情况”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Solid_Intersection_5.png | `Modeling/Create_3D_Geometry/images/Solid_Intersection_5.png` | 展示“将现有物体用于之后的冲突情况”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Solid_Intersection_6.png | `Modeling/Create_3D_Geometry/images/Solid_Intersection_6.png` | 展示“不选择任何物体用于之后的冲突情况”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

@@ -48,37 +48,33 @@ merged_at: "2026-07-07"
 
 本案例采用馈线和辐射元件位于接地板的两侧，接地板上开有缝隙，微带馈线穿过缝隙并延伸形成匹配枝节。 通过调整缝隙尺寸和匹配枝节的长度，优化输入阻抗以最小化S11。 接地板上方为薄导体贴片，作为辐射元件，与馈线通过缝隙耦合实现能量传输。下面显示了所得几何图形的图片。
 
-> 图片: `./res/microstrip_patch_antenna_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\Antenna\res\microstrip_patch_antenna_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 1. 计算域设置 本案例在Zmax方向上根据中心频率处波长求得计算区域离模型78 mm。建模空气盒子大小为91.3x91.3x78.4 mm³。
 
-> 图片: `./res/microstrip_patch_antenna_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\Antenna\res\microstrip_patch_antenna_3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 周期边界设置 在Zmax和Zmin方向上为一阶吸收边界，在Xmin、Xmax和Ymin、Ymanx方向都添加了周期边界。设置如图所示，本案例通过周期边界法通过简化无限周期结构的场分布条件，高效实现阵列天线的初步仿真。
 
-> 图片: `./res/microstrip_patch_antenna_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\Antenna\res\microstrip_patch_antenna_6.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 后处理
 
 1. 3D网格 仿真完成后，选中关键部分物体，进入显示网格窗口查看网格剖分情况。
 
-> 图片: `./res/microstrip_patch_antenna_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\Antenna\res\microstrip_patch_antenna_7.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2.S参数从S参数图可以看出本案例的天线性能，在1.5 GHz附近表现出优异的辐射特性（S11=−30 dB），-10 dB带宽覆盖16%，满足多数阵列单元天线设计指标。
 
-> 图片: `./res/microstrip_patch_antenna_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\PBC\Antenna\res\microstrip_patch_antenna_5.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/microstrip_patch_antenna_1.png` -> `D:\Staid\app\waveda\Example\EM\PBC\Antenna\res\microstrip_patch_antenna_1.png`
-2. `./res/microstrip_patch_antenna_3.png` -> `D:\Staid\app\waveda\Example\EM\PBC\Antenna\res\microstrip_patch_antenna_3.png`
-3. `./res/microstrip_patch_antenna_6.png` -> `D:\Staid\app\waveda\Example\EM\PBC\Antenna\res\microstrip_patch_antenna_6.png`
-4. `./res/microstrip_patch_antenna_7.png` -> `D:\Staid\app\waveda\Example\EM\PBC\Antenna\res\microstrip_patch_antenna_7.png`
-5. `./res/microstrip_patch_antenna_5.png` -> `D:\Staid\app\waveda\Example\EM\PBC\Antenna\res\microstrip_patch_antenna_5.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| microstrip_patch_antenna_1.png | `Example/EM/PBC/Antenna/res/microstrip_patch_antenna_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| microstrip_patch_antenna_3.png | `Example/EM/PBC/Antenna/res/microstrip_patch_antenna_3.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| microstrip_patch_antenna_7.png | `Example/EM/PBC/Antenna/res/microstrip_patch_antenna_7.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| microstrip_patch_antenna_5.png | `Example/EM/PBC/Antenna/res/microstrip_patch_antenna_5.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

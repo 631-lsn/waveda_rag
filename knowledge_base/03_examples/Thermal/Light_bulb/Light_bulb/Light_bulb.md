@@ -45,8 +45,7 @@ merged_at: "2026-07-07"
 
 灯泡模型瞬态温度场仿真，采用热通量边界进行仿真，模型示意图如下图所示：
 
-> 图片: `./res/Light_bulb_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 该模型尺寸为40*40*47 (mm)，模型分为灯泡和钨丝，边界条件为热通量边界。
 
@@ -54,48 +53,36 @@ merged_at: "2026-07-07"
 
 1. 仿真时间及网格设置 该模型仿真类型为Time window类型，仿真时间窗Time windows设置为20 s，即进行0-20 s瞬态应力仿真；设置时步为0.05 s。 初始网格设置每波长网格为1 EPW，基函数阶数为2阶，即网格采样率为2 PPW；采用自适应网格剖分，设置Rebuild Mesh with Size Field方法，残差为0.001；具体设置如下图：
 
-> 图片: `./res/Light_bulb_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 体激励源 选中钨丝设置体激励，设置激励大小为10 W进行激励
 
-> 图片: `./res/Light_bulb_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_3.png`
 
 3. 边界条件设置 设置热通量边界，温度为20 ℃，热传递系数为10 W/m^2·K。
 
-> 图片: `./res/Light_bulb_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_4.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 4. 点接收器设置 设置点接收器1（0 0 0）位置和点接收器2（0 0 -15）位置，坐标单位都为mm。
 
-> 图片: `./res/Light_bulb_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_5.png`
 
 ### 后处理
 
 1. 3D网格 仿真完成后，选中关键部分物体，进入显示网格窗口查看网格剖分情况。
 
-> 图片: `./res/Light_bulb_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_6.png`
 
 2. 查看点接收器结果 仿真完成后，鼠标右键点击工程树接收器处选择绘制点接收器随时间变化的温度结果。
 
-> 图片: `./res/Light_bulb_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_7.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 3. 查看快照结果 仿真完成后，鼠标右键点击工程树快照结果查看温度场3D结果
 
-> 图片: `./res/Light_bulb_8.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_8.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/Light_bulb_1.png` -> `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_1.png`
-2. `./res/Light_bulb_2.png` -> `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_2.png`
-3. `./res/Light_bulb_3.png` -> `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_3.png`
-4. `./res/Light_bulb_4.png` -> `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_4.png`
-5. `./res/Light_bulb_5.png` -> `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_5.png`
-6. `./res/Light_bulb_6.png` -> `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_6.png`
-7. `./res/Light_bulb_7.png` -> `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_7.png`
-8. `./res/Light_bulb_8.png` -> `D:\Staid\app\waveda\Example\Thermal\Light_bulb\Light_bulb\res\Light_bulb_8.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| Light_bulb_1.png | `Example/Thermal/Light_bulb/Light_bulb/res/Light_bulb_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Light_bulb_2.png | `Example/Thermal/Light_bulb/Light_bulb/res/Light_bulb_2.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Light_bulb_7.png | `Example/Thermal/Light_bulb/Light_bulb/res/Light_bulb_7.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Light_bulb_8.png | `Example/Thermal/Light_bulb/Light_bulb/res/Light_bulb_8.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

@@ -65,52 +65,39 @@ merged_at: "2026-07-07"
 
 介质基板材料为FR4，介电常数为2.2，损耗角正切为0.009， 金属采用PEC，如下图：
 
-> 图片: `res/HMSIW_Coupler_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 1. 仿真频率及网格设置 该模型仿真频率设置为14 ~ 24GHz，扫频方式选快速（离散/插值也适用）。 具体设置如下图：
 
-> 图片: `res/HMSIW_Coupler_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_7.png`
 
 2. 创建端口 采用集总面端口馈电，包括四个端口，如下图：
 
-> 图片: `res/HMSIW_Coupler_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 3.网格剖分 未采用自适应网格，没有对局部物体进行单独加密，采用了默认网格进行剖分,如下图(局部网格尺寸默认为-1)，如下图：
 
-> 图片: `res/HMSIW_Coupler_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 后处理
 
 1. 模型网格 仿真完成后，在模型窗口右键，进入View Mesh窗口网格剖分情况。
 
-> 图片: `res/HMSIW_Coupler_9.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_9.png`
 
-> 图片: `res/HMSIW_Coupler_10.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_10.png`
 
 2.S参数结果 仿真后可以在电磁结果端口中通过获取S参数，以查看该耦合器性能。 如下图：
 
-> 图片: `res/HMSIW_Coupler_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_4.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 3. Snapshot结果仿真后可以在电磁结果快照中查看Snapshot，本模型分为上层SIW，下层SIW,如下图：
 
 Snapshot结果(上层SIW)：
 
-> 图片: `res/HMSIW_Coupler_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_5.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 Snapshot结果(下层SIW)：
 
-> 图片: `res/HMSIW_Coupler_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_6.png`
 
 由以上S参数以及Snapshot结果来看，该耦合器具有较高的方向性与隔离度。
 
@@ -118,14 +105,11 @@ Snapshot结果(下层SIW)：
 
 [1] Wu K. Integration and interconnect techniques of planar and nonplanar structures for microwave and millimeter-wave cir-Cuits-current status and future trend. 2001 Asia-Pacific Microwave Conf Proc, Taiwan , 2001.
 
-## 图片资源
+## 待补图片清单
 
-1. `res/HMSIW_Coupler_1.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_1.png`
-2. `res/HMSIW_Coupler_7.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_7.png`
-3. `res/HMSIW_Coupler_2.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_2.png`
-4. `res/HMSIW_Coupler_3.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_3.png`
-5. `res/HMSIW_Coupler_9.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_9.png`
-6. `res/HMSIW_Coupler_10.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_10.png`
-7. `res/HMSIW_Coupler_4.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_4.png`
-8. `res/HMSIW_Coupler_5.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_5.png`
-9. `res/HMSIW_Coupler_6.png` -> `D:\Staid\app\waveda\Example\EM\Coupler\HMSIW_Coupler\res\HMSIW_Coupler_6.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| HMSIW_Coupler_1.png | `Example/EM/Coupler/HMSIW_Coupler/res/HMSIW_Coupler_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| HMSIW_Coupler_2.png | `Example/EM/Coupler/HMSIW_Coupler/res/HMSIW_Coupler_2.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| HMSIW_Coupler_4.png | `Example/EM/Coupler/HMSIW_Coupler/res/HMSIW_Coupler_4.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| HMSIW_Coupler_5.png | `Example/EM/Coupler/HMSIW_Coupler/res/HMSIW_Coupler_5.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

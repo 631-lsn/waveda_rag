@@ -46,65 +46,45 @@ merged_at: "2026-07-07"
 
 散热板硅芯片模型仿真瞬态，采用恒温边界、热通量边界仿真。 模型尺寸为100*50*46 (mm)，散热片为铝，底下为硅芯片，默认边界条件为恒温边界。
 
-> 图片: `./res/Radiator_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 1. 仿真时间及网格设置 该模型仿真类型为瞬态仿真。 仿真时间窗Time windows设置为75 s，进行0-75 s瞬态热仿真，设置时步为0.01 s，时间步为7500步。
 
-> 图片: `./res/Radiator_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 边界设置 设置默认边界条件为恒温边界，温度为293.15 K； 其余面的边界条件为热通量边界，温度为293.15 K，热传递系数为100 W/m^2·K。
 
-> 图片: `./res/Radiator_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 设置硅基板底部为热率边界，功耗值为50 W。
 
-> 图片: `./res/Radiator_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_4.png`
 
 3. 自适应网格设置 使用Rebuild Mesh with Size Field方法，Theta设置为0.4，Residual Tolerance设置为0.01。
 
-> 图片: `./res/Radiator_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_5.png`
 
 4. 点接收器设置 设置点接收器坐标为(13.4167,20,23),单位为 mm，该接收器点位于散热片的中央。
 
-> 图片: `./res/Radiator_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_6.png`
 
 ### 后处理
 
 1. 网格查看 仿真完成后，打开网格显示开关并选择体网格显示按键，查看散热器模型的网格分布。
 
-> 图片: `./res/Radiator_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_7.png`
 
 2.查看点接收器结果 在左侧树选择结果接收器右击绘制点接收器的结果。可以看到在该点上温度随时间变化的结果。
 
-> 图片: `./res/Radiator_8.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_8.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 3.查看快照结果 在左侧树选择结果快照右击绘制温度场结果。 可以看到整体散热器模型随着时间的变化，温度分布的变化。下图分别是时间在10 s和75 s的温度场结果。
 
-> 图片: `./res/Radiator_9.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_9.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/Radiator_10.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_10.png`
+## 待补图片清单
 
-## 图片资源
-
-1. `./res/Radiator_1.png` -> `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_1.png`
-2. `./res/Radiator_2.png` -> `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_2.png`
-3. `./res/Radiator_3.png` -> `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_3.png`
-4. `./res/Radiator_4.png` -> `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_4.png`
-5. `./res/Radiator_5.png` -> `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_5.png`
-6. `./res/Radiator_6.png` -> `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_6.png`
-7. `./res/Radiator_7.png` -> `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_7.png`
-8. `./res/Radiator_8.png` -> `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_8.png`
-9. `./res/Radiator_9.png` -> `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_9.png`
-10. `./res/Radiator_10.png` -> `D:\Staid\app\waveda\Example\Thermal\Radiator\Radiator\res\Radiator_10.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| Radiator_1.png | `Example/Thermal/Radiator/Radiator/res/Radiator_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Radiator_2.png | `Example/Thermal/Radiator/Radiator/res/Radiator_2.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Radiator_8.png | `Example/Thermal/Radiator/Radiator/res/Radiator_8.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Radiator_9.png | `Example/Thermal/Radiator/Radiator/res/Radiator_9.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

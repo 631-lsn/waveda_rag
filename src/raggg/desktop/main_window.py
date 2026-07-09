@@ -176,7 +176,7 @@ class Worker(QRunnable):
             self.signals.finished.emit()
 
 
-IMAGE_MD_RE = re.compile(r">?\s*图片:\s*`\.?/(images/[^`)]+\.(?:png|jpg|jpeg|gif|svg))`")
+IMAGE_MD_RE = re.compile(r">?\s*[^:\n]{0,16}:\s*`?\.?/([^`)]+\.(?:png|jpg|jpeg|gif|svg))`?", re.IGNORECASE)
 INLINE_BOLD_RE = re.compile(r"\*\*(.+?)\*\*")
 ORDERED_RE = re.compile(r"^\s*(\d+)\.\s+(.+)$")
 UNORDERED_RE = re.compile(r"^\s*[-*]\s+(.+)$")
@@ -339,7 +339,17 @@ def markdown_to_html(text: str) -> str:
     return result
 
 
-IMAGE_PATH_RE = re.compile(r"[`\"]?(\.?/?images/[^`\"\s)]+\.(?:png|jpg|jpeg|gif|svg))[`\"]?", re.IGNORECASE)
+IMAGE_PATH_RE = re.compile(
+    r"[`\"]?((?:[A-Za-z0-9_. -]+[\\/])*(?:(?:images|res)[\\/])?[A-Za-z0-9_. -]+\.(?:png|jpg|jpeg|gif|svg))[`\"]?",
+    re.IGNORECASE,
+)
+IMAGE_PATH_PREFIXES = (
+    "waveda_docs/helphtml/helphtml/",
+    "waveda_docs/helphtml/",
+    "knowledge_base/assets/images/",
+    "assets/images/",
+)
+IMAGE_EXTENSIONS = (".png", ".jpg", ".jpeg", ".gif", ".svg")
 
 MIME_MAP = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
             ".gif": "image/gif", ".svg": "image/svg+xml"}
@@ -367,12 +377,30 @@ def _path_to_data_uri(filepath: str) -> str:
 
 def _preload_all_images(image_index: dict[str, str]) -> None:
     """后台线程：预编码所有图片为data URI"""
-    for path in image_index.values():
+    for path in set(image_index.values()):
         _path_to_data_uri(path)
 
 
+
+def _normalize_image_key(value: str) -> str:
+    key = value.strip().strip("`\"'<>|,;").replace("\\", "/")
+    key = re.sub(r"^\./+", "", key)
+    key = key.lstrip("/")
+    lower = key.lower()
+    for prefix in IMAGE_PATH_PREFIXES:
+        if lower.startswith(prefix):
+            key = key[len(prefix):]
+            lower = key.lower()
+            break
+    marker = "helphtml/helphtml/"
+    marker_index = lower.find(marker)
+    if marker_index >= 0:
+        key = key[marker_index + len(marker):]
+    return key.lower()
+
+
 def _extract_images_from_sources(sources: list, image_index: dict[str, str],
-                                  min_score: float = 0.75) -> list[tuple[str, str]]:
+                                  min_score: float = 0.45) -> list[tuple[str, str]]:
     """从检索到的来源chunk中提取图片路径, 过滤低分来源, 返回 [(绝对路径, 标题), ...]"""
     seen = set()
     results = []
@@ -382,11 +410,19 @@ def _extract_images_from_sources(sources: list, image_index: dict[str, str],
         content = src.chunk.content
         title = src.chunk.title
         for match in IMAGE_PATH_RE.finditer(content):
-            img_name = os.path.basename(match.group(1))
-            if img_name in seen or img_name not in image_index:
+            raw_ref = match.group(1)
+            candidates = [
+                _normalize_image_key(raw_ref),
+                os.path.basename(raw_ref).lower(),
+            ]
+            normalized = candidates[0]
+            if normalized.startswith("example/"):
+                candidates.append(normalized[len("example/"):])
+            img_path = next((image_index[key] for key in candidates if key in image_index), "")
+            if not img_path or img_path in seen:
                 continue
-            seen.add(img_name)
-            results.append((image_index[img_name], title))
+            seen.add(img_path)
+            results.append((img_path, title))
     return results
 
 
@@ -564,16 +600,39 @@ class WorkbenchWindow(QMainWindow):
         self.thread_pool.start(worker)
 
     def _build_image_index(self) -> None:
-        """预建图片索引: 文件名 -> 绝对路径"""
-        help_base = self._project_root / "wavEDA_docs" / "helpHtml" / "helpHtml"
-        if not help_base.exists():
-            return
-        for root, dirs, files in os.walk(str(help_base)):
-            if os.path.basename(root) == "images":
-                for fname in files:
-                    if fname.lower().endswith(('.png', '.jpg', '.jpeg', '.gif', '.svg')):
-                        self._image_index[fname] = os.path.join(root, fname).replace(os.sep, "/")
-        print(f"Image index: {len(self._image_index)} images loaded")
+        """Build image index with project assets first, then user WavEDA paths."""
+        image_roots = [
+            (self._project_root / "knowledge_base" / "assets" / "images", ""),
+            (self._project_root / "assets" / "images", ""),
+            (self._project_root / "wavEDA_docs" / "helpHtml" / "helpHtml", ""),
+        ]
+        if self.settings.waveda_help_root:
+            image_roots.append((self.settings.waveda_help_root, ""))
+        if self.settings.waveda_root:
+            image_roots.append((self.settings.waveda_root / "Example", "Example"))
+            image_roots.append((self.settings.waveda_root / "documentation" / "helpHtml", ""))
+            image_roots.append((self.settings.waveda_root / "helpHtml", ""))
+            image_roots.append((self.settings.waveda_root / "helpHtml" / "helpHtml", ""))
+        if self.settings.waveda_example_root:
+            image_roots.append((self.settings.waveda_example_root, "Example"))
+
+        for root, key_prefix in image_roots:
+            if root.exists():
+                self._add_images_from_root(root, key_prefix=key_prefix)
+        print(f"Image index: {len(set(self._image_index.values()))} files, {len(self._image_index)} keys loaded")
+
+    def _add_images_from_root(self, root: Path, key_prefix: str = "") -> None:
+        root = root.resolve()
+        for image_path in root.rglob("*"):
+            if not image_path.is_file() or image_path.suffix.lower() not in IMAGE_EXTENSIONS:
+                continue
+            abs_path = str(image_path).replace(os.sep, "/")
+            rel_key = _normalize_image_key(image_path.relative_to(root).as_posix())
+            name_key = image_path.name.lower()
+            self._image_index.setdefault(rel_key, abs_path)
+            if key_prefix:
+                self._image_index.setdefault(_normalize_image_key(f"{key_prefix}/{rel_key}"), abs_path)
+            self._image_index.setdefault(name_key, abs_path)
 
     def _build_ui(self) -> None:
         root = QWidget()
@@ -911,15 +970,16 @@ class WorkbenchWindow(QMainWindow):
 
     def _on_answer_done(self, result: AskResult) -> None:
         self._append_assistant(result.answer.answer)
-        # ---- 追加来源中的图片 ----
         all_images = _extract_images_from_sources(result.answer.sources, self._image_index)
         if all_images:
-            img_html = '<div style="margin:12px 0 8px 0;"><div style="color:' + COLORS["accent2"] + ';font-weight:700;margin-bottom:8px;">操作截图</div>'
+            img_html = '<div style="margin:12px 0 8px 0;"><div style="color:' + COLORS["accent2"] + ';font-weight:700;margin-bottom:8px;">\u64cd\u4f5c\u622a\u56fe</div>'
             for img_path, title in all_images[:6]:
                 abs_path = img_path.replace(os.sep, "/")
                 data_uri = _path_to_data_uri(abs_path)
-            if data_uri:
-                img_html += f'<p style="margin:6px 0;"><span style="color:{COLORS["muted"]};font-size:12px;">{html.escape(title)}</span><br><img src="{data_uri}" style="max-width:100%;max-height:400px;border-radius:8px;border:1px solid {COLORS["border"]};margin-top:4px;"></p>'
+                if not data_uri:
+                    continue
+                safe_title = html.escape(title)
+                img_html += f'<p style="margin:6px 0;"><span style="color:{COLORS["muted"]};font-size:12px;">{safe_title}</span><br><img src="{data_uri}" style="max-width:100%;max-height:400px;border-radius:8px;border:1px solid {COLORS["border"]};margin-top:4px;"></p>'
             img_html += '</div>'
             self._append_html(web_wrapper(img_html))
         self._source_list_html = self._sources_html(result.answer.sources)

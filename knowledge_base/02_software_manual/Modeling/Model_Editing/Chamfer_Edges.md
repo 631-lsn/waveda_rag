@@ -68,14 +68,14 @@ merged_at: "2026-07-07"
 
 
 ## 待补图片清单
-以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
-| 图片名称 | 当前资源路径 | 建议保留原因 |
+以下图片暂不插入正文，路径为 WavEDA 帮助文档内部相对路径；运行时 agent 会按项目内帮助图片和用户本机 WavEDA 帮助目录进行查找。
+| 图片名称 | WavEDA 帮助相对路径 | 建议保留原因 |
 | --- | --- | --- |
-| Chamfer_Edges_1.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Chamfer_Edges_1.png` | 展示“激活倒斜角功能”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Chamfer_Edges_5.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Chamfer_Edges_5.png` | 展示“激活倒斜角功能”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Chamfer_Edges_3.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Chamfer_Edges_3.png` | 展示“激活倒斜角功能”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Chamfer_Edges_2.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Chamfer_Edges_2.png` | 展示“设置参数”步骤的菜单或参数界面，便于新人按界面完成操作。 |
-| Chamfer_Edges_6.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Chamfer_Edges_6.png` | 展示“角度”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Chamfer_Edges_4.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Chamfer_Edges_4.png` | 展示“角度”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Chamfer_Edges_7.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Chamfer_Edges_7.png` | 展示“反转”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
-| Chamfer_Edges_8.png | `wavEDA_docs/helpHtml/helpHtml/Modeling/Model_Editing/images/Chamfer_Edges_8.png` | 展示“反转”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Chamfer_Edges_1.png | `Modeling/Model_Editing/images/Chamfer_Edges_1.png` | 展示“激活倒斜角功能”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Chamfer_Edges_5.png | `Modeling/Model_Editing/images/Chamfer_Edges_5.png` | 展示“激活倒斜角功能”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Chamfer_Edges_3.png | `Modeling/Model_Editing/images/Chamfer_Edges_3.png` | 展示“激活倒斜角功能”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Chamfer_Edges_2.png | `Modeling/Model_Editing/images/Chamfer_Edges_2.png` | 展示“设置参数”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Chamfer_Edges_6.png | `Modeling/Model_Editing/images/Chamfer_Edges_6.png` | 展示“角度”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Chamfer_Edges_4.png | `Modeling/Model_Editing/images/Chamfer_Edges_4.png` | 展示“角度”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Chamfer_Edges_7.png | `Modeling/Model_Editing/images/Chamfer_Edges_7.png` | 展示“反转”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |
+| Chamfer_Edges_8.png | `Modeling/Model_Editing/images/Chamfer_Edges_8.png` | 展示“反转”相关界面或示例，后续审查时判断是否需要作为辅助配图。 |

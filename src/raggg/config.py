@@ -16,6 +16,12 @@ def _resolve_path(value: str, root: Path) -> Path:
     return root / path
 
 
+def _resolve_optional_path(value: str | None, root: Path) -> Path | None:
+    if not value or not value.strip():
+        return None
+    return _resolve_path(value.strip(), root)
+
+
 def load_dotenv_file(path: Path) -> dict[str, str]:
     """Load simple KEY=VALUE lines without requiring python-dotenv."""
     if not path.exists():
@@ -33,7 +39,9 @@ def load_dotenv_file(path: Path) -> dict[str, str]:
 @dataclass(frozen=True)
 class Settings:
     project_root: Path
+    waveda_root: Path | None
     waveda_help_root: Path
+    waveda_example_root: Path | None
     obsidian_vault_root: Path
     data_dir: Path
     embedding_model: str
@@ -49,10 +57,12 @@ class Settings:
         values.setdefault("OBSIDIAN_VAULT_ROOT", "knowledge_base")
         return cls(
             project_root=project_root,
+            waveda_root=_resolve_optional_path(values.get("WAVEDA_ROOT", ""), project_root),
             waveda_help_root=_resolve_path(
                 values.get("WAVEDA_HELP_ROOT", "wavEDA_docs/helpHtml/helpHtml"),
                 project_root,
             ),
+            waveda_example_root=_resolve_optional_path(values.get("WAVEDA_EXAMPLE_ROOT", ""), project_root),
             obsidian_vault_root=_resolve_path(
                 values.get("OBSIDIAN_VAULT_ROOT", "knowledge_base"),
                 project_root,

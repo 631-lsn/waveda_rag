@@ -46,35 +46,22 @@ merged_at: "2026-07-07"
 
 本模型为Wirebonds封装模型，芯片Die的材料为Silicon，通过键合线与下层走线连接，键合线材料为Gold，走线材料为Copper，填充材料分别为PP和FR4。
 
-> 图片: `./res/Wirebonds_model_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 仿真设置
 
 1. 多物理场设置 多物理场条件设置如下：在键合线顶端设置为0.05 V电压源，并加载分段脉冲函数，底端电压设置为0 V；封装结构的PCB外表面设置对流热通量边界条件，温度为293.15 K，对流热通量为10 W/m^2*K；结构底层基板设置固定约束。在0-10 s进行瞬态电热力仿真。
 
-> 图片: `./res/Wirebonds_model_8.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_8.png`
 
-> 图片: `./res/Wirebonds_model_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_2.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/Wirebonds_model_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/Wirebonds_model_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_4.png`
 
-> 图片: `./res/Wirebonds_model_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_5.png`
 
 2. 仿真配置 选择电磁、热学、力学，并同时勾选电热耦合和热膨胀选项，仿真类型全部选择 Time Domain，进入设置界面后进行瞬态参数配置。具体设置如下图：
 
-> 图片: `./res/Wirebonds_model_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_6.png`
 
-> 图片: `./res/Wirebonds_model_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_7.png`
 
 ### 后处理
 
@@ -82,49 +69,21 @@ merged_at: "2026-07-07"
 
 电场结果
 
-> 图片: `./res/Wirebonds_model_13.gif`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_13.gif`
 
-> 图片: `./res/Wirebonds_model_9.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_9.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 温度结果
 
-> 图片: `./res/Wirebonds_model_14.gif`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_14.gif`
 
-> 图片: `./res/Wirebonds_model_10.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_10.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 力学结果
 
-> 图片: `./res/Wirebonds_model_15.gif`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_15.gif`
+## 待补图片清单
 
-> 图片: `./res/Wirebonds_model_11.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_11.png`
-
-> 图片: `./res/Wirebonds_model_16.gif`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_16.gif`
-
-> 图片: `./res/Wirebonds_model_12.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_12.png`
-
-## 图片资源
-
-1. `./res/Wirebonds_model_1.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_1.png`
-2. `./res/Wirebonds_model_8.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_8.png`
-3. `./res/Wirebonds_model_2.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_2.png`
-4. `./res/Wirebonds_model_3.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_3.png`
-5. `./res/Wirebonds_model_4.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_4.png`
-6. `./res/Wirebonds_model_5.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_5.png`
-7. `./res/Wirebonds_model_6.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_6.png`
-8. `./res/Wirebonds_model_7.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_7.png`
-9. `./res/Wirebonds_model_13.gif` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_13.gif`
-10. `./res/Wirebonds_model_9.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_9.png`
-11. `./res/Wirebonds_model_14.gif` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_14.gif`
-12. `./res/Wirebonds_model_10.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_10.png`
-13. `./res/Wirebonds_model_15.gif` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_15.gif`
-14. `./res/Wirebonds_model_11.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_11.png`
-15. `./res/Wirebonds_model_16.gif` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_16.gif`
-16. `./res/Wirebonds_model_12.png` -> `D:\Staid\app\waveda\Example\Multi-Physics\Wirebonds_model\Wirebonds_model\res\Wirebonds_model_12.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| Wirebonds_model_1.png | `Example/Multi-Physics/Wirebonds_model/Wirebonds_model/res/Wirebonds_model_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Wirebonds_model_2.png | `Example/Multi-Physics/Wirebonds_model/Wirebonds_model/res/Wirebonds_model_2.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Wirebonds_model_9.png | `Example/Multi-Physics/Wirebonds_model/Wirebonds_model/res/Wirebonds_model_9.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| Wirebonds_model_10.png | `Example/Multi-Physics/Wirebonds_model/Wirebonds_model/res/Wirebonds_model_10.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |

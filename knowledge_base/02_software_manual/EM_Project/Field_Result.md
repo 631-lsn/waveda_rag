@@ -113,27 +113,27 @@ merged_at: "2026-07-07"
 
 
 ## 待补图片清单
-以下图片暂不插入正文，后续等人工审查后再从本机或官方帮助目录复制到知识库图片资源目录。
-| 图片名称 | 当前资源路径 | 建议保留原因 |
+以下图片暂不插入正文，路径为 WavEDA 帮助文档内部相对路径；运行时 agent 会按项目内帮助图片和用户本机 WavEDA 帮助目录进行查找。
+| 图片名称 | WavEDA 帮助相对路径 | 建议保留原因 |
 | --- | --- | --- |
-| Field_Result_1.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_1.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_2.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_2.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_3.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_3.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_4.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_4.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_5.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_5.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_6.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_6.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_7.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_7.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_8.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_8.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_9.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_9.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_10.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_10.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_11.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_11.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_12.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_12.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_13.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_13.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_14.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_14.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_15.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_15.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
-| Field_Result_16.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_16.png` | 展示与“场选择”相关的关键界面，适合作为后续图文教程配图。 |
-| Field_Result_17.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_17.png` | 展示与“时谐场”相关的关键界面，适合作为后续图文教程配图。 |
-| Field_Result_1.gif | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_1.gif` | 展示与“时谐场”相关的关键界面，适合作为后续图文教程配图。 |
-| Field_Result_18.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_18.png` | 展示与“分量场”相关的关键界面，适合作为后续图文教程配图。 |
-| Field_Result_19.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_19.png` | 展示与“场数据格式”相关的关键界面，适合作为后续图文教程配图。 |
-| Field_Result_20.png | `wavEDA_docs/helpHtml/helpHtml/EM_Project/images/Field_Result_20.png` | 展示“最大值设置”步骤的菜单或参数界面，便于新人按界面完成操作。 |
+| Field_Result_1.png | `EM_Project/images/Field_Result_1.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_2.png | `EM_Project/images/Field_Result_2.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_3.png | `EM_Project/images/Field_Result_3.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_4.png | `EM_Project/images/Field_Result_4.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_5.png | `EM_Project/images/Field_Result_5.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_6.png | `EM_Project/images/Field_Result_6.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_7.png | `EM_Project/images/Field_Result_7.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_8.png | `EM_Project/images/Field_Result_8.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_9.png | `EM_Project/images/Field_Result_9.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_10.png | `EM_Project/images/Field_Result_10.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_11.png | `EM_Project/images/Field_Result_11.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_12.png | `EM_Project/images/Field_Result_12.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_13.png | `EM_Project/images/Field_Result_13.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_14.png | `EM_Project/images/Field_Result_14.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_15.png | `EM_Project/images/Field_Result_15.png` | 展示“视图与显示格式”的结果入口或查看界面，便于新人确认后处理位置。 |
+| Field_Result_16.png | `EM_Project/images/Field_Result_16.png` | 展示与“场选择”相关的关键界面，适合作为后续图文教程配图。 |
+| Field_Result_17.png | `EM_Project/images/Field_Result_17.png` | 展示与“时谐场”相关的关键界面，适合作为后续图文教程配图。 |
+| Field_Result_1.gif | `EM_Project/images/Field_Result_1.gif` | 展示与“时谐场”相关的关键界面，适合作为后续图文教程配图。 |
+| Field_Result_18.png | `EM_Project/images/Field_Result_18.png` | 展示与“分量场”相关的关键界面，适合作为后续图文教程配图。 |
+| Field_Result_19.png | `EM_Project/images/Field_Result_19.png` | 展示与“场数据格式”相关的关键界面，适合作为后续图文教程配图。 |
+| Field_Result_20.png | `EM_Project/images/Field_Result_20.png` | 展示“最大值设置”步骤的菜单或参数界面，便于新人按界面完成操作。 |

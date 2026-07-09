@@ -46,63 +46,44 @@ merged_at: "2026-07-07"
 
 此模型为阵列贴片天线，馈电方式为集总面端口，与过孔和地平面相连接。仿真范围为4-6 GHz。对于天线模型，空气盒子至少偏离模型四分之一波长，若对仿真结果精度要求更高，可以适当增大空气盒子尺寸。
 
-> 图片: `./res/patch_array_ant_1.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_1.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/patch_array_ant_2.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_2.png`
 
 ### 仿真设置
 
 1. 网格划分 此模型采用自适应网格剖分，为了提高仿真精确度，对金属过孔和贴片进行局部加密。
 
-> 图片: `./res/patch_array_ant_3.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_3.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 2. 扫频设置 此模型结构相对简单，最高频率为6 GHz，快速算法迭代200次即可获得收敛结果。已知此阵列贴片天线模型的工作谐振点较少，结果曲线相对光滑，扫频点数设置为101。若模型复杂、仿真频率较高、结果曲线较为曲折需要增加迭代次数和扫频点数。
 
-> 图片: `./res/patch_array_ant_4.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_4.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
 ### 后处理
 
 1. 网格剖分情况分析 查看网格时WavEDA支持以纵横比显示，如下图所示，大部分网格纵横比集中在2左右，纵横比越小网格剖分质量越好。
 
-> 图片: `./res/patch_array_ant_5.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_5.png`
 
-> 图片: `./res/patch_array_ant_6.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_6.png`
 
 2. S参数 下图为4个端口的S参数结果，可以看出其工作谐振点在5 GHz左右。
 
-> 图片: `./res/patch_array_ant_7.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_7.png`
 
 3. 远场辐射 首先在远场-->编辑端口激励界面设置四个端口同时激励，下图展示了4个端口同时激励得到的三维远场辐射结果。
 
-> 图片: `./res/patch_array_ant_8.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_8.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/patch_array_ant_9.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_9.png`
+> 图示要点：此处原图对应当前段落的关键步骤或结果，后续审查通过后再补图。
 
-> 图片: `./res/patch_array_ant_10.png`  
-> 原始路径: `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_10.png`
 
 ### 参考文献
 
 [1] Liu Y, Wang H, Li K, et al. RCS reduction of a patch array antenna based on microstrip resonators[J]. IEEE Antennas and Wireless Propagation Letters, 2014, 14: 4-7.
 
-## 图片资源
+## 待补图片清单
 
-1. `./res/patch_array_ant_1.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_1.png`
-2. `./res/patch_array_ant_2.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_2.png`
-3. `./res/patch_array_ant_3.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_3.png`
-4. `./res/patch_array_ant_4.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_4.png`
-5. `./res/patch_array_ant_5.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_5.png`
-6. `./res/patch_array_ant_6.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_6.png`
-7. `./res/patch_array_ant_7.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_7.png`
-8. `./res/patch_array_ant_8.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_8.png`
-9. `./res/patch_array_ant_9.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_9.png`
-10. `./res/patch_array_ant_10.png` -> `D:\Staid\app\waveda\Example\EM\Antenna\patch_array_ant\res\patch_array_ant_10.png`
+| 文件名 | WavEDA 相对路径 | 用途 |
+| --- | --- | --- |
+| patch_array_ant_1.png | `Example/EM/Antenna/patch_array_ant/res/patch_array_ant_1.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| patch_array_ant_3.png | `Example/EM/Antenna/patch_array_ant/res/patch_array_ant_3.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| patch_array_ant_8.png | `Example/EM/Antenna/patch_array_ant/res/patch_array_ant_8.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
+| patch_array_ant_9.png | `Example/EM/Antenna/patch_array_ant/res/patch_array_ant_9.png` | 展示该案例中的关键模型、设置或结果，后续审查后决定是否补图。 |
