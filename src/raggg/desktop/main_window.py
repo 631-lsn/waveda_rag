@@ -696,7 +696,7 @@ class WorkbenchWindow(QMainWindow):
 
         self.status_card = MetricCard(get_text("card_knowledge_base"), get_text("status_loading_index"))
         self.chunk_card = MetricCard(get_text("card_chunks"), "-", COLORS["warning"])
-        self.model_card = MetricCard(get_text("card_model"), "DeepSeek")
+        self.model_card = MetricCard(get_text("card_model"), self.settings.llm_model if self.settings.llm_api_key else get_text("model_local"))
         layout.addWidget(self.status_card)
         layout.addWidget(self.chunk_card)
         layout.addWidget(self.model_card)
@@ -758,7 +758,18 @@ class WorkbenchWindow(QMainWindow):
                     wb_ref._do_fav()
         self.chat.setPage(_FavPage(self.chat))
 
-        self.chat.setHtml(self._welcome_html())
+        # 读取实际的 chunk 数量和模型名
+        chunks_path = self.settings.data_dir / "index" / "chunks.json"
+        chunk_count_str = "-"
+        if chunks_path.exists():
+            try:
+                import json
+                data = json.loads(chunks_path.read_text(encoding="utf-8"))
+                chunk_count_str = str(len(data))
+            except Exception:
+                pass
+        model_name_str = self.settings.llm_model if self.settings.llm_api_key else get_text("model_local")
+        self.chat.setHtml(self._welcome_html(chunk_count=chunk_count_str, model_name=model_name_str))
         self.chat.setMinimumHeight(300)
         layout.addWidget(self.chat, stretch=1)
 
@@ -1081,14 +1092,14 @@ window.scrollTo(0, document.body.scrollHeight);
             )
         return web_wrapper("\n".join(cards))
 
-    def _welcome_html(self) -> str:
+    def _welcome_html(self, chunk_count: str = "-", model_name: str = "DeepSeek") -> str:
         return web_wrapper(
             f"""<div style="text-align:center;padding:60px 20px;">
             <div style="font-size:22px;font-weight:700;color:{COLORS['accent']};margin-bottom:12px;">WavEDA Knowledge Workbench</div>
             <div style="color:{COLORS['muted']};margin-bottom:24px;">{get_text("startup_brand_subtitle")}</div>
             <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
               <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
-                <div style="font-size:20px;font-weight:700;color:{COLORS['accent']};">1,908</div>
+                <div style="font-size:20px;font-weight:700;color:{COLORS['accent']};">{chunk_count}</div>
                 <div style="color:{COLORS['muted']};font-size:12px;">{get_text("startup_chunks_label")}</div>
               </div>
               <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
@@ -1096,7 +1107,7 @@ window.scrollTo(0, document.body.scrollHeight);
                 <div style="color:{COLORS['muted']};font-size:12px;">{get_text("startup_strategy_label")}</div>
               </div>
               <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
-                <div style="font-size:20px;font-weight:700;color:{COLORS['warning']};">DeepSeek</div>
+                <div style="font-size:20px;font-weight:700;color:{COLORS['warning']};">{model_name}</div>
                 <div style="color:{COLORS['muted']};font-size:12px;">{get_text("startup_llm_label")}</div>
               </div>
             </div>
