@@ -10,7 +10,7 @@ os.environ.setdefault("QTWEBENGINE_DISABLE_SANDBOX", "1")
 from PySide6.QtWidgets import QApplication
 
 from raggg.config import Settings
-from raggg.desktop.main_window import WorkbenchWindow
+from raggg.desktop.main_window import AILoaderOverlay, WorkbenchWindow
 
 
 def make_settings(root: Path) -> Settings:
@@ -61,6 +61,40 @@ class DesktopLayoutTests(unittest.TestCase):
 
             window.sidebar_toggle_button.click()
             self.assertTrue(window.sidebar_container.isHidden())
+
+    def test_startup_loader_is_visible_with_initial_message(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+
+            self.assertFalse(window.loader_overlay.isHidden())
+            self.assertEqual(window.loader_overlay.text, "正在载入")
+
+    def test_busy_state_reuses_loader_overlay(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+
+            window.loader_overlay.hide()
+            window._set_busy(True, "正在检索")
+
+            self.assertFalse(window.loader_overlay.isHidden())
+            self.assertEqual(window.loader_overlay.text, "正在检索")
+
+    def test_loader_uses_orbital_glow_animation_contract(self) -> None:
+        overlay = AILoaderOverlay(text="生成中")
+
+        self.assertEqual(overlay.visual_mode, "orbital-glow")
+        self.assertGreater(overlay._letter_intensity(18), overlay._letter_intensity(60))
+        self.assertGreaterEqual(overlay._letter_lift(18), 2)
 
 
 if __name__ == "__main__":

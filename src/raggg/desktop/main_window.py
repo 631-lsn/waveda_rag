@@ -9,8 +9,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QTimer, QUrl, Signal, Slot
-from PySide6.QtGui import QColor, QFont, QIcon, QPixmap
+from PySide6.QtCore import QEvent, QObject, QRectF, QRunnable, Qt, QThreadPool, QTimer, QUrl, Signal, Slot
+from PySide6.QtGui import QColor, QBrush, QFont, QIcon, QLinearGradient, QPainter, QPen, QPixmap, QRadialGradient
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
 from PySide6.QtWidgets import (
@@ -562,6 +562,112 @@ class MetricCard(QFrame):
             self.value_label.setStyleSheet(f"color: {color};")
 
 
+class AILoaderOverlay(QWidget):
+    def __init__(self, parent: QWidget | None = None, text: str = "正在载入") -> None:
+        super().__init__(parent)
+        self.visual_mode = "orbital-glow"
+        self.text = text
+        self._angle = 90
+        self._pulse = 0
+        self.setAttribute(Qt.WA_StyledBackground, False)
+        self.setAttribute(Qt.WA_OpaquePaintEvent, False)
+        self._timer = QTimer(self)
+        self._timer.setInterval(32)
+        self._timer.timeout.connect(self._advance)
+        self._timer.start()
+
+    def set_text(self, text: str) -> None:
+        self.text = text or "请稍候"
+        self.update()
+
+    def _advance(self) -> None:
+        self._angle = (self._angle + 2) % 360
+        self._pulse = (self._pulse + 1) % 180
+        self.update()
+
+    def _letter_intensity(self, phase: int) -> float:
+        return 0.38 + 0.62 * max(0.0, 1.0 - abs(phase - 18) / 18)
+
+    def _letter_lift(self, phase: int) -> int:
+        return 3 if 12 <= phase <= 24 else 0
+
+    def paintEvent(self, event) -> None:
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing, True)
+
+        gradient = QLinearGradient(0, 0, 0, self.height())
+        gradient.setColorAt(0.0, QColor(248, 228, 239))
+        gradient.setColorAt(0.42, QColor(231, 241, 240))
+        gradient.setColorAt(1.0, QColor(126, 199, 241))
+        painter.fillRect(self.rect(), gradient)
+
+        size = min(190, max(132, min(self.width(), self.height()) // 4))
+        center_x = self.width() / 2
+        center_y = self.height() / 2
+        rect = QRectF(center_x - size / 2, center_y - size / 2, size, size)
+
+        painter.setPen(Qt.NoPen)
+        for spread, alpha in ((34, 28), (22, 46), (12, 64)):
+            halo = QRadialGradient(rect.center(), size / 2 + spread)
+            halo.setColorAt(0.0, QColor(255, 255, 255, 0))
+            halo.setColorAt(0.55, QColor(101, 181, 228, alpha))
+            halo.setColorAt(1.0, QColor(101, 181, 228, 0))
+            painter.setBrush(QBrush(halo))
+            painter.drawEllipse(rect.adjusted(-spread, -spread, spread, spread))
+
+        ring = QRadialGradient(rect.center(), size / 2)
+        ring.setColorAt(0.00, QColor(255, 255, 255, 70))
+        ring.setColorAt(0.54, QColor(210, 242, 252, 132))
+        ring.setColorAt(0.74, QColor(116, 195, 238, 230))
+        ring.setColorAt(0.89, QColor(68, 137, 218, 228))
+        ring.setColorAt(1.00, QColor(242, 252, 255, 206))
+        painter.setBrush(QBrush(ring))
+        painter.drawEllipse(rect)
+
+        core_rect = rect.adjusted(24, 24, -24, -24)
+        core = QRadialGradient(core_rect.center(), core_rect.width() / 2)
+        core.setColorAt(0.00, QColor(245, 253, 255, 226))
+        core.setColorAt(0.48, QColor(226, 246, 250, 196))
+        core.setColorAt(0.76, QColor(180, 225, 243, 142))
+        core.setColorAt(1.00, QColor(112, 184, 232, 92))
+        painter.setBrush(QBrush(core))
+        painter.drawEllipse(core_rect)
+
+        painter.setBrush(Qt.NoBrush)
+        for inset, color, width in (
+            (25, QColor(255, 255, 255, 178), 3),
+            (34, QColor(68, 133, 209, 92), 8),
+            (48, QColor(255, 255, 255, 82), 2),
+        ):
+            pen = QPen(color, width)
+            pen.setCapStyle(Qt.RoundCap)
+            painter.setPen(pen)
+            painter.drawArc(rect.adjusted(inset, inset, -inset, -inset), (self._angle + inset) * 16, 118 * 16)
+
+        sweep_rect = rect.adjusted(5, 5, -5, -5)
+        sweep_pen = QPen(QColor(78, 145, 221, 188), 6)
+        sweep_pen.setCapStyle(Qt.RoundCap)
+        painter.setPen(sweep_pen)
+        painter.drawArc(sweep_rect, -(self._angle + 18) * 16, 64 * 16)
+
+        painter.setFont(QFont("Microsoft YaHei UI", 13, QFont.DemiBold))
+        metrics = painter.fontMetrics()
+        letters = list(self.text)
+        spacing = 2
+        total_width = sum(metrics.horizontalAdvance(letter) for letter in letters) + spacing * max(0, len(letters) - 1)
+        x = center_x - total_width / 2
+        base_y = center_y + metrics.ascent() / 2 - 2
+        for index, letter in enumerate(letters):
+            phase = (self._pulse + index * 9) % 90
+            brightness = self._letter_intensity(phase)
+            lift = -self._letter_lift(phase)
+            color = QColor(33, 55, 76)
+            color.setAlpha(int(92 + 138 * brightness))
+            painter.setPen(color)
+            painter.drawText(QRectF(x, base_y - metrics.ascent() + lift, metrics.horizontalAdvance(letter) + 3, metrics.height()), Qt.AlignLeft, letter)
+            x += metrics.horizontalAdvance(letter) + spacing
+
+
 LLM_PROVIDERS = [
     ("DeepSeek",      "https://api.deepseek.com",                       "deepseek-chat"),
     ("Kimi (Moonshot)", "https://api.moonshot.cn/v1",                    "moonshot-v1-8k"),
@@ -779,7 +885,9 @@ class WorkbenchWindow(QMainWindow):
         self._image_index: dict[str, str] = {}  # filename -> absolute_path
         self._build_image_index()
         self._build_ui()
+        self._show_loader("正在载入")
         self._load_pipeline_if_ready()
+        QTimer.singleShot(700, self._hide_loader)
         self._start_source_watcher()
         # 后台预编码所有图片，用户第一次问就不慢了
         self._preload_images()
@@ -925,6 +1033,10 @@ class WorkbenchWindow(QMainWindow):
 
         shell.addLayout(main, 0, 0)
         shell.addWidget(self.sidebar_container, 0, 1)
+        self.loader_overlay = AILoaderOverlay(root, text="正在载入")
+        self.loader_overlay.setGeometry(root.rect())
+        self.loader_overlay.raise_()
+        root.installEventFilter(self)
 
     def _header(self) -> QHBoxLayout:
         header = QHBoxLayout()
@@ -1181,6 +1293,22 @@ class WorkbenchWindow(QMainWindow):
 
     def _toggle_sidebar(self) -> None:
         self.sidebar_container.setHidden(not self.sidebar_container.isHidden())
+
+    def eventFilter(self, watched: QObject, event: QEvent) -> bool:
+        if event.type() == QEvent.Resize and hasattr(self, "loader_overlay"):
+            self.loader_overlay.setGeometry(self.centralWidget().rect())
+            self.loader_overlay.raise_()
+        return super().eventFilter(watched, event)
+
+    def _show_loader(self, text: str) -> None:
+        self.loader_overlay.set_text(text)
+        self.loader_overlay.setGeometry(self.centralWidget().rect())
+        self.loader_overlay.raise_()
+        self.loader_overlay.show()
+
+    def _hide_loader(self) -> None:
+        if not self.is_busy:
+            self.loader_overlay.hide()
 
     def _load_pipeline_if_ready(self) -> None:
         index_dir = self.settings.data_dir / "index"
@@ -1459,6 +1587,10 @@ class WorkbenchWindow(QMainWindow):
 
     def _set_busy(self, busy: bool, text: str) -> None:
         self.is_busy = busy
+        if busy:
+            self._show_loader(text)
+        else:
+            self._hide_loader()
         self.activity_label.setText(text)
         self.activity_label.setVisible(busy)
         self.activity_label.setStyleSheet(f"color: {COLORS['warning' if busy else 'accent']};")
