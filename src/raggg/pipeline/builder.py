@@ -10,6 +10,7 @@ from raggg.indexing.vector_store import VectorStore
 from raggg.loaders.html_loader import iter_html_documents
 from raggg.loaders.markdown_loader import iter_markdown_documents
 from raggg.models import Chunk, Document
+from raggg.pipeline.ingestion import _extract_docx_text, _extract_pdf_text
 from raggg.preprocessing.chunker import chunk_documents
 
 
@@ -41,11 +42,47 @@ def _write_chunks(path: Path, chunks: list[Chunk]) -> None:
     )
 
 
+def _iter_knowledge_base_documents(root: Path) -> list[Document]:
+    documents = list(iter_markdown_documents(root))
+    if not root.exists():
+        return documents
+
+    for path in sorted(root.rglob("*")):
+        if not path.is_file():
+            continue
+        relative_parts = path.relative_to(root).parts
+        if any(part.startswith(".") for part in relative_parts):
+            continue
+        suffix = path.suffix.lower()
+        if suffix == ".pdf":
+            text = _extract_pdf_text(path)
+        elif suffix == ".docx":
+            text = _extract_docx_text(path)
+        else:
+            continue
+        documents.append(
+            Document(
+                source_type="obsidian_note",
+                source_path=path,
+                relative_path=path.relative_to(root).as_posix(),
+                title=path.stem,
+                text=text,
+                metadata={
+                    "domain": "multiphysics",
+                    "content_type": "document",
+                    "has_formula": any(token in text for token in ("$$", "\\nabla", "\\partial")),
+                    "has_wikilink": False,
+                },
+            )
+        )
+    return documents
+
+
 def build_knowledge_base(settings: Settings) -> BuildReport:
     settings.data_dir.mkdir(parents=True, exist_ok=True)
     documents = []
     waveda_docs = iter_html_documents(settings.waveda_help_root)
-    obsidian_docs = iter_markdown_documents(settings.obsidian_vault_root)
+    obsidian_docs = _iter_knowledge_base_documents(settings.obsidian_vault_root)
     documents.extend(waveda_docs)
     documents.extend(obsidian_docs)
 
