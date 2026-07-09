@@ -40,175 +40,11 @@ from raggg.pipeline.ingestion import IngestReport, ingest_document
 from raggg.pipeline.rag_pipeline import RAGAnswer, RAGPipeline
 from raggg.pipeline.source_watch import SourceSnapshot, scan_source_tree, snapshot_changed
 from raggg.retrieval.retriever import SearchResult
+from raggg.theme import get_theme, set_theme, get_colors, build_style, get_chat_bubble_colors, THEMES
 
-
-COLORS = {
-    "bg": "#eef7fb",
-    "surface": "rgba(255, 255, 255, 0.48)",
-    "surface2": "rgba(255, 255, 255, 0.68)",
-    "surface3": "rgba(255, 255, 255, 0.78)",
-    "border": "rgba(255, 255, 255, 0.72)",
-    "text": "#10202d",
-    "muted": "#587082",
-    "subtle": "#7d93a1",
-    "accent": "#5f93d6",
-    "accent2": "#6eaec4",
-    "warning": "#c89032",
-    "danger": "#d75959",
-    "input": "rgba(255, 255, 255, 0.64)",
-}
-
-
-APP_STYLE = f"""
-QWidget {{
-    background: transparent;
-    color: {COLORS["text"]};
-    font-family: "Microsoft YaHei UI", "Segoe UI";
-    font-size: 13px;
-}}
-QWidget#gradientRoot {{
-    background: qlineargradient(
-        x1:0, y1:0, x2:1, y2:1,
-        stop:0 #f3e1ea,
-        stop:0.34 #e9ecea,
-        stop:0.66 #c8ecf1,
-        stop:1 #78c2ef
-    );
-}}
-QFrame#panel {{
-    background: {COLORS["surface"]};
-    border: 1px solid {COLORS["border"]};
-    border-radius: 18px;
-}}
-QFrame#metricCard, QFrame#sourceCard {{
-    background: {COLORS["surface2"]};
-    border: 1px solid {COLORS["border"]};
-    border-radius: 12px;
-}}
-QFrame#sidebar {{
-    background: rgba(255, 255, 255, 0.58);
-    border: 1px solid rgba(255, 255, 255, 0.78);
-    border-radius: 22px;
-}}
-QFrame#composer {{
-    background: rgba(232, 248, 255, 0.64);
-    border: 1px solid rgba(255, 255, 255, 0.88);
-    border-radius: 20px;
-}}
-QWebEngineView#chatCanvas, QWebEngineView#sourcesCanvas {{
-    background: transparent;
-    border: 0;
-}}
-QLabel#title {{
-    color: {COLORS["text"]};
-    font-size: 24px;
-    font-weight: 700;
-}}
-QLabel#subtitle, QLabel#muted {{
-    color: {COLORS["muted"]};
-}}
-QLabel#section {{
-    color: {COLORS["text"]};
-    font-size: 14px;
-    font-weight: 700;
-}}
-QLabel#metricLabel {{
-    color: {COLORS["muted"]};
-    font-size: 12px;
-}}
-QLabel#metricValue {{
-    color: {COLORS["accent"]};
-    font-size: 18px;
-    font-weight: 700;
-}}
-QLabel#badge {{
-    background: #103430;
-    color: {COLORS["accent"]};
-    border: 1px solid #1f6b5e;
-    border-radius: 12px;
-    padding: 8px 14px;
-    font-weight: 700;
-}}
-QPushButton {{
-    background: rgba(255, 255, 255, 0.56);
-    color: {COLORS["text"]};
-    border: 1px solid rgba(255, 255, 255, 0.72);
-    border-radius: 12px;
-    padding: 10px 12px;
-}}
-QPushButton:hover {{
-    background: rgba(255, 255, 255, 0.78);
-    border-color: rgba(112, 168, 214, 0.55);
-}}
-QPushButton#primary {{
-    background: rgba(154, 209, 247, 0.82);
-    color: #193047;
-    border: 0;
-    font-weight: 700;
-}}
-QPushButton#primary:hover {{
-    background: rgba(176, 221, 251, 0.96);
-}}
-QPushButton#iconButton {{
-    min-width: 28px;
-    max-width: 28px;
-    min-height: 28px;
-    max-height: 28px;
-    border-radius: 14px;
-    padding: 0;
-    font-size: 15px;
-    font-weight: 700;
-}}
-QPushButton#sendButton {{
-    min-width: 32px;
-    max-width: 32px;
-    min-height: 32px;
-    max-height: 32px;
-    border-radius: 16px;
-    padding: 0;
-    font-size: 16px;
-    font-weight: 700;
-}}
-QPushButton#plusButton {{
-    min-width: 34px;
-    max-width: 34px;
-    min-height: 34px;
-    max-height: 34px;
-    border-radius: 17px;
-    padding: 0;
-    font-size: 16px;
-}}
-QPushButton:disabled {{
-    background: rgba(255, 255, 255, 0.36);
-    color: {COLORS["subtle"]};
-}}
-QLineEdit {{
-    background: transparent;
-    color: {COLORS["text"]};
-    border: 0;
-    padding: 9px 8px;
-    selection-background-color: {COLORS["accent"]};
-}}
-QLabel#miniPill {{
-    background: rgba(232, 248, 255, 0.52);
-    color: #5b86b5;
-    border: 1px solid rgba(255, 255, 255, 0.72);
-    border-radius: 11px;
-    padding: 3px 10px;
-    font-size: 11px;
-}}
-QScrollBar:vertical {{
-    background: transparent;
-    width: 10px;
-}}
-QScrollBar::handle:vertical {{
-    background: #26364c;
-    border-radius: 5px;
-}}
-QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {{
-    height: 0;
-}}
-"""
+# ── 动态主题 ──
+COLORS = get_colors()
+APP_STYLE = build_style()
 
 
 @dataclass(frozen=True)
@@ -588,11 +424,13 @@ class SettingsDialog(QDialog):
         self.tabs = QTabWidget()
         main_layout.addWidget(self.tabs)
 
-        # ── Tab 1: API 设置 ──
+        # ── Tab 1: 主题 ──
+        self._build_theme_tab()
+        # ── Tab 2: API 设置 ──
         self._build_api_tab()
-        # ── Tab 2: WavEDA 路径 ──
+        # ── Tab 3: WavEDA 路径 ──
         self._build_waveda_paths_tab()
-        # ── Tab 3: 语言 ──
+        # ── Tab 4: 语言 ──
         self._build_language_tab()
 
         buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
@@ -644,6 +482,31 @@ class SettingsDialog(QDialog):
     def _on_provider_changed(self, index: int) -> None:
         _, url, model = LLM_PROVIDERS[index]
         self.api_info_label.setText(f"URL: {url}   |   Model: {model}")
+
+    # ─── Theme Tab ────────────────────────────────
+    def _build_theme_tab(self) -> None:
+        tab = QWidget()
+        layout = QVBoxLayout(tab)
+        layout.setSpacing(14)
+
+        desc = QLabel(get_text("settings_theme_desc"))
+        desc.setStyleSheet(f"color:{COLORS['muted']};font-size:12px;")
+        desc.setWordWrap(True)
+        layout.addWidget(desc)
+
+        form = QFormLayout()
+        form.setSpacing(10)
+
+        self.theme_combo = QComboBox()
+        self.theme_combo.addItem(get_text("settings_theme_light"), "light")
+        self.theme_combo.addItem(get_text("settings_theme_dark"), "dark")
+        current = get_theme()
+        self.theme_combo.setCurrentIndex(0 if current == "light" else 1)
+        form.addRow(get_text("settings_theme_label") + ":", self.theme_combo)
+
+        layout.addLayout(form)
+        layout.addStretch()
+        self.tabs.addTab(tab, get_text("settings_theme_tab"))
 
     # ─── WavEDA Paths Tab ─────────────────────────
     def _build_waveda_paths_tab(self) -> None:
@@ -750,8 +613,20 @@ class SettingsDialog(QDialog):
         if not lang_found:
             new_lines.append(f"RAG_LANGUAGE={lang}")
 
+        # 保存主题
+        theme = self.theme_combo.currentData()
+        theme_found = False
+        for i, line in enumerate(new_lines):
+            if line.startswith("RAG_THEME="):
+                new_lines[i] = f"RAG_THEME={theme}"
+                theme_found = True
+                break
+        if not theme_found:
+            new_lines.append(f"RAG_THEME={theme}")
+
         env_path.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
         set_language(lang)
+        set_theme(theme)
         self.accept()
 
 
@@ -1475,9 +1350,10 @@ class WorkbenchWindow(QMainWindow):
 
     def _append_user(self, question: str) -> None:
         self._last_qa = (question, "")  # 记住问题，等回答来了配对
+        bubbles = get_chat_bubble_colors()
         msg_html = web_wrapper(
             f"""<div style="margin:16px 26px 8px 26px;display:flex;justify-content:flex-end;">
-              <div style="max-width:76%;padding:12px 15px;border-radius:18px 18px 4px 18px;background:rgba(255,255,255,.66);border:1px solid rgba(255,255,255,.78);box-shadow:0 12px 36px rgba(74,141,180,.10);color:{COLORS['text']};line-height:1.58;">
+              <div style="max-width:76%;padding:12px 15px;border-radius:18px 18px 4px 18px;background:{bubbles['user_bg']};border:1px solid {bubbles['user_border']};box-shadow:0 12px 36px rgba(74,141,180,.10);color:{bubbles['text']};line-height:1.58;">
                 {html.escape(question)}
               </div>
             </div>"""
@@ -1485,20 +1361,21 @@ class WorkbenchWindow(QMainWindow):
         self._append_html(msg_html)
 
     def _append_assistant(self, answer: str) -> None:
-        self._last_qa = (self._last_qa[0], answer)  # 配对完成
+        self._last_qa = (self._last_qa[0], answer)
         rendered = markdown_to_html(answer)
+        bubbles = get_chat_bubble_colors()
         msg_html = web_wrapper(
             f"""<div style="margin:16px 26px 18px 26px;display:flex;justify-content:flex-start;">
               <div style="max-width:82%;">
               <div style="display:flex;align-items:center;gap:8px;margin-left:2px;margin-bottom:6px;">
                 <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='{get_text("btn_copied")}';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
-                  style="background:rgba(255,255,255,.54);color:{COLORS['muted']};border:1px solid rgba(255,255,255,.78);border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;"
-                  onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">{get_text("btn_copy")}</button>
-                <button onclick="console.log('RAGGG_FAV');this.innerHTML='{get_text("btn_faved")}';this.style.color='{COLORS['accent']}';setTimeout(function(){{this.innerHTML='{get_text("btn_fav")}';this.style.color='{COLORS['muted']}'}}.bind(this),1500)"
-                  style="background:rgba(255,255,255,.54);color:{COLORS['muted']};border:1px solid rgba(255,255,255,.78);border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;"
-                  onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">{get_text("btn_fav")}</button>
+                  style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;"
+                  onmouseover="this.style.color='{bubbles['accent']}'" onmouseout="this.style.color='{bubbles['muted']}'">{get_text("btn_copy")}</button>
+                <button onclick="console.log('RAGGG_FAV');this.innerHTML='{get_text("btn_faved")}';this.style.color='{bubbles['accent']}';setTimeout(function(){{this.innerHTML='{get_text("btn_fav")}';this.style.color='{bubbles['muted']}'}}.bind(this),1500)"
+                  style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;"
+                  onmouseover="this.style.color='{bubbles['accent']}'" onmouseout="this.style.color='{bubbles['muted']}'">{get_text("btn_fav")}</button>
               </div>
-              <div style="padding:15px 17px;border-radius:18px 18px 18px 4px;background:rgba(255,255,255,.58);border:1px solid rgba(255,255,255,.76);box-shadow:0 14px 42px rgba(80,150,185,.12);color:{COLORS['text']};line-height:1.6;">
+              <div style="padding:15px 17px;border-radius:18px 18px 18px 4px;background:{bubbles['assistant_bg']};border:1px solid {bubbles['assistant_border']};box-shadow:0 14px 42px rgba(80,150,185,.12);color:{bubbles['text']};line-height:1.6;">
                 {rendered}
               </div>
               </div>

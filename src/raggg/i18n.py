@@ -245,6 +245,28 @@ TEXTS: dict[str, dict[str, str]] = {
         "en": "Settings updated. Restart the app for changes to take effect.",
     },
 
+    # ── 设置：主题 Tab ──────────────────────────────────
+    "settings_theme_tab": {
+        "zh": "主题",
+        "en": "Theme",
+    },
+    "settings_theme_label": {
+        "zh": "界面主题",
+        "en": "Interface Theme",
+    },
+    "settings_theme_desc": {
+        "zh": "切换主题后需要重启应用生效。",
+        "en": "Restart the app after changing theme for it to take effect.",
+    },
+    "settings_theme_light": {
+        "zh": "浅色",
+        "en": "Light",
+    },
+    "settings_theme_dark": {
+        "zh": "深色",
+        "en": "Dark",
+    },
+
     # ── 设置：API Tab ──────────────────────────────────
     "settings_api_tab": {
         "zh": "API 设置",
