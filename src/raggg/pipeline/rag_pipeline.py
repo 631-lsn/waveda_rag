@@ -5,6 +5,7 @@ from dataclasses import dataclass
 from raggg.config import Settings
 from raggg.generation.llm_client import OpenAICompatibleClient
 from raggg.generation.prompt_builder import build_local_answer, build_prompt
+from raggg.i18n import get_text
 from raggg.indexing.vector_store import VectorStore
 from raggg.retrieval.retriever import Retriever, SearchResult
 
@@ -45,5 +46,5 @@ class RAGPipeline:
     @staticmethod
     def _friendly_llm_warning(error_message: str) -> str:
         if "401" in error_message or "Authorization" in error_message:
-            return "模型暂不可用：API 认证失败，已使用本地知识库回答。请检查 DeepSeek API key。"
-        return "模型暂不可用，已使用本地知识库回答。"
+            return get_text("error_llm_auth")
+        return get_text("error_llm_unavailable")

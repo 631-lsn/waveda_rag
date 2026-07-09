@@ -46,7 +46,12 @@ if defined USING_BUNDLED_PYTHON (
     echo.
     echo [2/5] Skipping virtual environment creation.
     echo.
-    echo [3/5] Using bundled Python dependencies.
+    echo [3/5] Checking bundled Python dependencies...
+    "%PYTHON%" -B scripts\install_pdf_dependency.py
+    if errorlevel 1 (
+        echo [WARN] Failed to install optional PDF dependency pypdf.
+        echo        PDF import will show a clear error until this dependency is installed.
+    )
 ) else (
     echo.
     echo [3/5] Installing Python dependencies...

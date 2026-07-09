@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QUrl, Signal, Slot
+from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QTimer, QUrl, Signal, Slot
 from PySide6.QtGui import QFont, QIcon, QPixmap
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
@@ -18,6 +18,7 @@ from PySide6.QtWidgets import (
     QComboBox,
     QDialog,
     QDialogButtonBox,
+    QFileDialog,
     QFormLayout,
     QFrame,
     QGridLayout,
@@ -33,8 +34,11 @@ from PySide6.QtWidgets import (
 )
 
 from raggg.config import Settings, load_settings
+from raggg.i18n import get_text, get_language, set_language
 from raggg.pipeline.builder import BuildReport, build_knowledge_base
+from raggg.pipeline.ingestion import IngestReport, ingest_document
 from raggg.pipeline.rag_pipeline import RAGAnswer, RAGPipeline
+from raggg.pipeline.source_watch import SourceSnapshot, scan_source_tree, snapshot_changed
 from raggg.retrieval.retriever import SearchResult
 
 
@@ -501,16 +505,40 @@ LLM_PROVIDERS = [
 ]
 
 
-class ApiSettingsDialog(QDialog):
+class SettingsDialog(QDialog):
+    """统一设置窗口，使用标签页组织：API + 语言（可扩展）"""
+
     def __init__(self, settings: Settings, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.settings = settings
-        self.setWindowTitle("API 设置 — 选择大模型")
-        self.setMinimumWidth(400)
-        layout = QVBoxLayout(self)
+        self.setWindowTitle(get_text("settings_title"))
+        self.setMinimumWidth(480)
+        self.setMinimumHeight(360)
+
+        main_layout = QVBoxLayout(self)
+
+        # ── 标签栏 ──
+        from PySide6.QtWidgets import QTabWidget
+        self.tabs = QTabWidget()
+        main_layout.addWidget(self.tabs)
+
+        # ── Tab 1: API 设置 ──
+        self._build_api_tab()
+        # ── Tab 2: 语言 ──
+        self._build_language_tab()
+
+        buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        buttons.accepted.connect(self._save_all_and_accept)
+        buttons.rejected.connect(self.reject)
+        main_layout.addWidget(buttons)
+
+    # ─── API Tab ─────────────────────────────────
+    def _build_api_tab(self) -> None:
+        tab = QWidget()
+        layout = QVBoxLayout(tab)
         layout.setSpacing(14)
 
-        desc = QLabel("选择大模型提供商，输入你的 API Key 即可。\nBase URL 和模型名称会自动填写。")
+        desc = QLabel(get_text("settings_api_desc"))
         desc.setStyleSheet(f"color:{COLORS['muted']};font-size:12px;")
         desc.setWordWrap(True)
         layout.addWidget(desc)
@@ -521,50 +549,90 @@ class ApiSettingsDialog(QDialog):
         self.provider_combo = QComboBox()
         for name, _, _ in LLM_PROVIDERS:
             self.provider_combo.addItem(name)
-        current_url = settings.llm_base_url.rstrip("/")
+        current_url = self.settings.llm_base_url.rstrip("/")
         current_idx = 0
         for i, (_, url, _) in enumerate(LLM_PROVIDERS):
             if url == current_url:
-                current_idx = i; break
+                current_idx = i
+                break
         self.provider_combo.setCurrentIndex(current_idx)
         self.provider_combo.currentIndexChanged.connect(self._on_provider_changed)
-        form.addRow("大模型:", self.provider_combo)
+        form.addRow(get_text("settings_api_provider") + ":", self.provider_combo)
 
-        self.key_edit = QLineEdit(settings.llm_api_key)
+        self.key_edit = QLineEdit(self.settings.llm_api_key)
         self.key_edit.setPlaceholderText("sk-...")
         self.key_edit.setEchoMode(QLineEdit.Password)
-        form.addRow("API Key:", self.key_edit)
+        form.addRow(get_text("settings_api_key") + ":", self.key_edit)
 
-        self.info_label = QLabel()
-        self.info_label.setStyleSheet(f"color:{COLORS['subtle']};font-size:11px;")
+        self.api_info_label = QLabel()
+        self.api_info_label.setStyleSheet(f"color:{COLORS['subtle']};font-size:11px;")
         self._on_provider_changed(current_idx)
-        form.addRow(self.info_label)
+        form.addRow(self.api_info_label)
 
         layout.addLayout(form)
-
-        buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
-        buttons.accepted.connect(self._save_and_accept)
-        buttons.rejected.connect(self.reject)
-        layout.addWidget(buttons)
+        layout.addStretch()
+        self.tabs.addTab(tab, get_text("settings_api_tab"))
 
     def _on_provider_changed(self, index: int) -> None:
         _, url, model = LLM_PROVIDERS[index]
-        self.info_label.setText(f"URL: {url}   |   Model: {model}")
+        self.api_info_label.setText(f"URL: {url}   |   Model: {model}")
 
-    def _save_and_accept(self) -> None:
+    # ─── Language Tab ────────────────────────────
+    def _build_language_tab(self) -> None:
+        tab = QWidget()
+        layout = QVBoxLayout(tab)
+        layout.setSpacing(14)
+
+        desc = QLabel(get_text("settings_lang_desc"))
+        desc.setStyleSheet(f"color:{COLORS['muted']};font-size:12px;")
+        desc.setWordWrap(True)
+        layout.addWidget(desc)
+
+        form = QFormLayout()
+        form.setSpacing(10)
+
+        self.lang_combo = QComboBox()
+        self.lang_combo.addItem(get_text("settings_lang_zh"), "zh")
+        self.lang_combo.addItem(get_text("settings_lang_en"), "en")
+        current_lang = get_language()
+        self.lang_combo.setCurrentIndex(0 if current_lang == "zh" else 1)
+        form.addRow(get_text("settings_lang_label") + ":", self.lang_combo)
+
+        layout.addLayout(form)
+        layout.addStretch()
+        self.tabs.addTab(tab, get_text("settings_lang_tab"))
+
+    # ─── Save ────────────────────────────────────
+    def _save_all_and_accept(self) -> None:
+        # 保存 API
         _, url, model = LLM_PROVIDERS[self.provider_combo.currentIndex()]
         env_path = Path(__file__).resolve().parents[3] / "config" / ".env"
-        lines = []
+        lines: list[str] = []
         if env_path.exists():
             lines = env_path.read_text(encoding="utf-8").splitlines()
-        new_lines = []
+        new_lines: list[str] = []
         for line in lines:
-            if not any(line.startswith(k + "=") for k in ("RAG_LLM_BASE_URL", "RAG_LLM_API_KEY", "RAG_LLM_MODEL")):
+            if not any(line.startswith(k + "=") for k in (
+                "RAG_LLM_BASE_URL", "RAG_LLM_API_KEY", "RAG_LLM_MODEL",
+            )):
                 new_lines.append(line)
         new_lines.append(f"RAG_LLM_BASE_URL={url}")
         new_lines.append(f"RAG_LLM_API_KEY={self.key_edit.text().strip()}")
         new_lines.append(f"RAG_LLM_MODEL={model}")
+
+        # 保存语言
+        lang = self.lang_combo.currentData()
+        lang_found = False
+        for i, line in enumerate(new_lines):
+            if line.startswith("RAG_LANGUAGE="):
+                new_lines[i] = f"RAG_LANGUAGE={lang}"
+                lang_found = True
+                break
+        if not lang_found:
+            new_lines.append(f"RAG_LANGUAGE={lang}")
+
         env_path.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
+        set_language(lang)
         self.accept()
 
 
@@ -579,6 +647,9 @@ class WorkbenchWindow(QMainWindow):
         self._last_qa: tuple[str, str] = ("", "")  # (question, answer)
         self._fav_file = settings.data_dir / "favorites.json"
         self._project_root = Path(__file__).resolve().parents[3]
+        self._source_snapshot: SourceSnapshot = {}
+        self._watch_pending_snapshot: SourceSnapshot | None = None
+        self._watch_rebuild_requested = False
         self.setWindowTitle("WavEDA Knowledge Workbench")
         icon_path = self._project_root / "wavEDA_docs" / "helpHtml" / "image" / "waveda.png"
         if icon_path.exists():
@@ -589,6 +660,7 @@ class WorkbenchWindow(QMainWindow):
         self._build_image_index()
         self._build_ui()
         self._load_pipeline_if_ready()
+        self._start_source_watcher()
         # 后台预编码所有图片，用户第一次问就不慢了
         self._preload_images()
 
@@ -597,7 +669,7 @@ class WorkbenchWindow(QMainWindow):
         from functools import partial
         worker = Worker(partial(_preload_all_images, self._image_index))
         worker.signals.finished.connect(lambda: print("Image preload complete"))
-        self.thread_pool.start(worker)
+        self._start_worker(worker)
 
     def _build_image_index(self) -> None:
         """Build image index with project assets first, then user WavEDA paths."""
@@ -668,13 +740,12 @@ class WorkbenchWindow(QMainWindow):
         title.setObjectName("title")
         title_row.addWidget(title, stretch=1)
         titles.addLayout(title_row)
-        subtitle = QLabel("WavEDA 仿真软件知识问答助手")
+        subtitle = QLabel(get_text("app_subtitle"))
         subtitle.setObjectName("subtitle")
-        titles.addWidget(subtitle)
         titles.addWidget(subtitle)
         header.addLayout(titles)
         header.addStretch(1)
-        badge = QLabel("WavEDA 优先")
+        badge = QLabel(get_text("badge_waveda_first"))
         badge.setObjectName("badge")
         header.addWidget(badge, alignment=Qt.AlignRight | Qt.AlignVCenter)
         return header
@@ -685,40 +756,46 @@ class WorkbenchWindow(QMainWindow):
         layout.setContentsMargins(16, 16, 16, 16)
         layout.setSpacing(12)
 
-        section = QLabel("工作台状态")
+        section = QLabel(get_text("sidebar_status"))
         section.setObjectName("section")
         layout.addWidget(section)
 
-        self.status_card = MetricCard("知识库", "正在载入")
-        self.chunk_card = MetricCard("知识块", "-", COLORS["warning"])
-        self.model_card = MetricCard("模型", "DeepSeek")
+        self.status_card = MetricCard(get_text("card_knowledge_base"), get_text("status_loading_index"))
+        self.chunk_card = MetricCard(get_text("card_chunks"), "-", COLORS["warning"])
+        self.model_card = MetricCard(get_text("card_model"), self.settings.llm_model if self.settings.llm_api_key else get_text("model_local"))
         layout.addWidget(self.status_card)
         layout.addWidget(self.chunk_card)
         layout.addWidget(self.model_card)
+        self.watch_card = MetricCard("监听", "启动中", COLORS["accent2"])
+        layout.addWidget(self.watch_card)
 
-        # 重建知识库按钮已移除 — 改用 scripts/add_document.py 追加文档
-        self.reload_button = self._button("重新载入索引")
+        self.import_button = self._button("导入资料入库", primary=True)
+        self.import_button.clicked.connect(self._import_document)
+        layout.addWidget(self.import_button)
+
+        self.reload_button = self._button(get_text("btn_reload_index"))
         self.reload_button.clicked.connect(self._load_pipeline_if_ready)
         layout.addWidget(self.reload_button)
 
-        self.api_button = self._button("API 设置")
+        self.api_button = self._button(get_text("btn_api_settings"))
         self.api_button.clicked.connect(self._open_api_settings)
         layout.addWidget(self.api_button)
 
-        self.fav_button = self._button("收藏夹")
+        self.fav_button = self._button(get_text("btn_favorites"))
         self.fav_button.clicked.connect(self._open_favorites)
         layout.addWidget(self.fav_button)
 
-        prompt_label = QLabel("快捷问题")
+        prompt_label = QLabel(get_text("quick_questions_label"))
         prompt_label.setObjectName("section")
         layout.addSpacing(10)
         layout.addWidget(prompt_label)
-        for prompt in ("波端口怎么设置？", "PML 和吸收边界有什么关系？", "如何设置平面波激励？"):
+        for key in ("quick_q1", "quick_q2", "quick_q3"):
+            prompt = get_text(key)
             button = self._button(prompt)
             button.clicked.connect(lambda _checked=False, text=prompt: self._ask(text))
             layout.addWidget(button)
 
-        note = QLabel("优先检索 WavEDA 帮助文档和团队教程，理论笔记作为补充。")
+        note = QLabel(get_text("search_note"))
         note.setObjectName("muted")
         note.setWordWrap(True)
         layout.addStretch(1)
@@ -732,9 +809,9 @@ class WorkbenchWindow(QMainWindow):
         layout.setSpacing(12)
 
         top = QHBoxLayout()
-        section = QLabel("问答")
+        section = QLabel(get_text("section_qa"))
         section.setObjectName("section")
-        self.activity_label = QLabel("就绪")
+        self.activity_label = QLabel(get_text("status_ready"))
         self.activity_label.setStyleSheet(f"color: {COLORS['accent']};")
         top.addWidget(section)
         top.addStretch(1)
@@ -753,16 +830,27 @@ class WorkbenchWindow(QMainWindow):
                     wb_ref._do_fav()
         self.chat.setPage(_FavPage(self.chat))
 
-        self.chat.setHtml(self._welcome_html())
+        # 读取实际的 chunk 数量和模型名
+        chunks_path = self.settings.data_dir / "index" / "chunks.json"
+        chunk_count_str = "-"
+        if chunks_path.exists():
+            try:
+                import json
+                data = json.loads(chunks_path.read_text(encoding="utf-8"))
+                chunk_count_str = str(len(data))
+            except Exception:
+                pass
+        model_name_str = self.settings.llm_model if self.settings.llm_api_key else get_text("model_local")
+        self.chat.setHtml(self._welcome_html(chunk_count=chunk_count_str, model_name=model_name_str))
         self.chat.setMinimumHeight(300)
         layout.addWidget(self.chat, stretch=1)
 
         composer = QHBoxLayout()
         composer.setSpacing(10)
         self.question = QLineEdit()
-        self.question.setPlaceholderText("输入WavEDA问题，如：波端口怎么设置？| PML和吸收边界的关系？")
+        self.question.setPlaceholderText(get_text("placeholder_input"))
         self.question.returnPressed.connect(self._ask)
-        self.ask_button = self._button("提问", primary=True)
+        self.ask_button = self._button(get_text("btn_ask"), primary=True)
         self.ask_button.clicked.connect(self._ask)
         composer.addWidget(self.question, stretch=1)
         composer.addWidget(self.ask_button)
@@ -774,9 +862,9 @@ class WorkbenchWindow(QMainWindow):
         layout = QVBoxLayout(panel)
         layout.setContentsMargins(16, 16, 16, 16)
         layout.setSpacing(10)
-        title = QLabel("来源证据")
+        title = QLabel(get_text("section_sources"))
         title.setObjectName("section")
-        subtitle = QLabel("按相关性排序，帮助文档和团队教程优先")
+        subtitle = QLabel(get_text("sources_subtitle"))
         subtitle.setObjectName("muted")
         self._source_list_html = self._empty_sources_html()
         self.sources = QWebEngineView()
@@ -785,7 +873,7 @@ class WorkbenchWindow(QMainWindow):
         self.sources.setHtml(self._source_list_html)
         src_nav = QHBoxLayout()
         src_nav.setSpacing(6)
-        back_btn = QPushButton("← 返回来源列表")
+        back_btn = QPushButton(get_text("btn_back_to_sources"))
         back_btn.setCursor(Qt.PointingHandCursor)
         back_btn.clicked.connect(lambda: self.sources.setHtml(self._source_list_html))
         src_nav.addWidget(back_btn)
@@ -816,14 +904,14 @@ class WorkbenchWindow(QMainWindow):
         index_dir = self.settings.data_dir / "index"
         if not (index_dir / "chunks.json").exists() or not (index_dir / "vectors.npy").exists():
             self.pipeline = None
-            self.status_card.set_value("未构建", COLORS["danger"])
+            self.status_card.set_value(get_text("kb_not_built"), COLORS["danger"])
             self.chunk_card.set_value("-", COLORS["warning"])
-            self.sources.setHtml(self._empty_sources_html("知识库尚未构建。"))
+            self.sources.setHtml(self._empty_sources_html(get_text("sources_not_built")))
             return
         self.pipeline = RAGPipeline(self.settings)
-        self.status_card.set_value("已载入", COLORS["accent"])
+        self.status_card.set_value(get_text("kb_loaded"), COLORS["accent"])
         self.chunk_card.set_value(str(len(self.pipeline.store.chunks)), COLORS["warning"])
-        model_name = self.settings.llm_model if self.settings.llm_api_key else "本地片段"
+        model_name = self.settings.llm_model if self.settings.llm_api_key else get_text("model_local")
         model_color = COLORS["accent"] if self.settings.llm_api_key else COLORS["warning"]
         self.model_card.set_value(model_name, model_color)
         self.sources.setHtml(self._empty_sources_html())
@@ -857,7 +945,7 @@ class WorkbenchWindow(QMainWindow):
             favs.append({"question": q, "answer": a, "time": __import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M")})
             with open(self._fav_file, "w", encoding="utf-8") as f:
                 import json as _json; _json.dump(favs, f, ensure_ascii=False, indent=2)
-            self.status_card.set_value("已收藏", COLORS["accent"])
+            self.status_card.set_value(get_text("favorites_saved"), COLORS["accent"])
 
     def _load_favs(self) -> list:
         import json as _json
@@ -870,10 +958,10 @@ class WorkbenchWindow(QMainWindow):
     def _open_favorites(self) -> None:
         favs = self._load_favs()
         if not favs:
-            QMessageBox.information(self, "收藏夹", "还没有收藏任何问答。")
+            QMessageBox.information(self, get_text("favorites_title"), get_text("msg_favorites_empty"))
             return
         dialog = QDialog(self)
-        dialog.setWindowTitle("收藏夹")
+        dialog.setWindowTitle(get_text("favorites_title"))
         dialog.resize(750, 550)
         layout = QVBoxLayout(dialog)
         from PySide6.QtWidgets import QScrollArea
@@ -897,7 +985,7 @@ class WorkbenchWindow(QMainWindow):
             qa_text.setMaximumHeight(250)
             qa_text.setStyleSheet(f"background:{COLORS['surface2']};border:0;")
             card_layout.addWidget(qa_text)
-            del_btn = QPushButton("删除")
+            del_btn = QPushButton(get_text("btn_delete"))
             del_btn.setStyleSheet(f"background:{COLORS['danger']};color:#fff;border:0;padding:2px 8px;font-size:11px;")
             real_idx = len(favs) - 1 - i
             del_btn.clicked.connect(lambda ch=False, idx=real_idx: self._do_fav_del(idx, dialog))
@@ -921,25 +1009,125 @@ class WorkbenchWindow(QMainWindow):
         self._open_favorites()
 
     def _open_api_settings(self) -> None:
-        dialog = ApiSettingsDialog(self.settings, self)
+        dialog = SettingsDialog(self.settings, self)
         if dialog.exec() == QDialog.Accepted:
             self.settings = load_settings()
             self._load_pipeline_if_ready()
-            QMessageBox.information(self, "已保存", "API 设置已更新，重启应用后生效。")
+            self._refresh_ui_language()
+            QMessageBox.information(self, get_text("settings_title"), get_text("msg_api_saved"))
+
+    def _refresh_ui_language(self) -> None:
+        """刷新所有 UI 文本以反映当前语言设置"""
+        lang = get_language()
+        # 侧边栏按钮
+        self.reload_button.setText(get_text("btn_reload_index"))
+        self.api_button.setText(get_text("btn_api_settings"))
+        self.fav_button.setText(get_text("btn_favorites"))
+
+    def _import_document(self) -> None:
+        if self.is_busy:
+            return
+        path, _ = QFileDialog.getOpenFileName(
+            self,
+            "选择要入库的资料",
+            str(self._project_root),
+            "Documents (*.md *.markdown *.html *.htm *.txt *.pdf *.docx)",
+        )
+        if not path:
+            return
+
+        self._set_busy(True, "正在导入资料并重建知识库")
+        worker = Worker(lambda: self._import_and_rebuild(path))
+        worker.signals.result.connect(self._on_import_done)
+        worker.signals.error.connect(lambda message: self._show_error("导入失败", message))
+        worker.signals.finished.connect(lambda: self._set_busy(False, "就绪"))
+        self._start_worker(worker)
+
+    def _import_and_rebuild(self, path: str) -> tuple[IngestReport, BuildReport]:
+        ingest_report = ingest_document(self.settings, path)
+        build_report = build_knowledge_base(self.settings)
+        return ingest_report, build_report
+
+    def _on_import_done(self, result: tuple[IngestReport, BuildReport]) -> None:
+        ingest_report, build_report = result
+        self.chunk_card.set_value(str(build_report.chunk_count), COLORS["warning"])
+        self._load_pipeline_if_ready()
+        self._sync_watch_snapshot()
+        QMessageBox.information(
+            self,
+            "导入完成",
+            f"已导入: {ingest_report.imported_path.name}\n知识块: {build_report.chunk_count}",
+        )
 
     def _rebuild_async(self) -> None:
         if self.is_busy:
             return
-        self._set_busy(True, "正在重建知识库")
+        self._set_busy(True, get_text("status_building"))
         worker = Worker(lambda: build_knowledge_base(self.settings))
         worker.signals.result.connect(self._on_rebuild_done)
-        worker.signals.error.connect(lambda message: self._show_error("重建失败", message))
-        worker.signals.finished.connect(lambda: self._set_busy(False, "就绪"))
+        worker.signals.error.connect(lambda message: self._show_error(get_text("error_rebuild_title"), message))
+        worker.signals.finished.connect(lambda: self._set_busy(False, get_text("status_ready")))
         self._start_worker(worker)
 
     def _on_rebuild_done(self, report: BuildReport) -> None:
         self.chunk_card.set_value(str(report.chunk_count), COLORS["warning"])
         self._load_pipeline_if_ready()
+        self._sync_watch_snapshot()
+
+    def _start_source_watcher(self) -> None:
+        self._sync_watch_snapshot()
+        self._watch_timer = QTimer(self)
+        self._watch_timer.setInterval(5000)
+        self._watch_timer.timeout.connect(self._check_source_changes)
+        self._watch_timer.start()
+
+        self._watch_debounce_timer = QTimer(self)
+        self._watch_debounce_timer.setSingleShot(True)
+        self._watch_debounce_timer.setInterval(2000)
+        self._watch_debounce_timer.timeout.connect(self._trigger_watch_rebuild)
+
+    def _sync_watch_snapshot(self) -> None:
+        self._source_snapshot = scan_source_tree(self.settings.obsidian_vault_root)
+        self._watch_pending_snapshot = None
+        self._watch_rebuild_requested = False
+        if hasattr(self, "watch_card"):
+            self.watch_card.set_value("监听中", COLORS["accent2"])
+
+    def _check_source_changes(self) -> None:
+        current = scan_source_tree(self.settings.obsidian_vault_root)
+        if not snapshot_changed(self._source_snapshot, current):
+            return
+        self._watch_pending_snapshot = current
+        self.watch_card.set_value("检测到变化", COLORS["warning"])
+        if not self.is_busy:
+            self.activity_label.setText("检测到知识库变化，等待文件稳定")
+            self.activity_label.setStyleSheet(f"color: {COLORS['warning']};")
+        self._watch_debounce_timer.start()
+
+    def _trigger_watch_rebuild(self) -> None:
+        if self._watch_pending_snapshot is None:
+            return
+        if self.is_busy:
+            self._watch_rebuild_requested = True
+            self.watch_card.set_value("等待空闲", COLORS["warning"])
+            return
+
+        snapshot_after_change = self._watch_pending_snapshot
+        self._set_busy(True, "知识库变化，正在自动重建")
+        self.watch_card.set_value("自动重建", COLORS["warning"])
+        worker = Worker(lambda: build_knowledge_base(self.settings))
+        worker.signals.result.connect(lambda report: self._on_watch_rebuild_done(report, snapshot_after_change))
+        worker.signals.error.connect(lambda message: self._show_error("自动重建失败", message))
+        worker.signals.finished.connect(lambda: self._set_busy(False, "就绪"))
+        self._start_worker(worker)
+
+    def _on_watch_rebuild_done(self, report: BuildReport, snapshot_after_change: SourceSnapshot) -> None:
+        self.chunk_card.set_value(str(report.chunk_count), COLORS["warning"])
+        self._load_pipeline_if_ready()
+        self._source_snapshot = snapshot_after_change
+        self._watch_pending_snapshot = None
+        self._watch_rebuild_requested = False
+        self.watch_card.set_value("监听中", COLORS["accent2"])
 
     def _ask(self, question: str | None = None) -> None:
         if self.is_busy:
@@ -948,15 +1136,15 @@ class WorkbenchWindow(QMainWindow):
         if not text:
             return
         if self.pipeline is None:
-            QMessageBox.information(self, "未载入知识库", "请先重建或载入知识库。")
+            QMessageBox.information(self, get_text("error_no_kb_title"), get_text("error_no_kb_msg"))
             return
         self.question.clear()
         self._append_user(text)
-        self._set_busy(True, "正在检索与生成")
+        self._set_busy(True, get_text("status_searching"))
         worker = Worker(lambda: AskResult(text, self.pipeline.ask(text)))
         worker.signals.result.connect(self._on_answer_done)
-        worker.signals.error.connect(lambda message: self._append_assistant(f"生成失败：{message}"))
-        worker.signals.finished.connect(lambda: self._set_busy(False, "就绪"))
+        worker.signals.error.connect(lambda message: self._append_assistant(get_text("msg_generation_failed") + message))
+        worker.signals.finished.connect(lambda: self._set_busy(False, get_text("status_ready")))
         self._start_worker(worker)
 
     def _start_worker(self, worker: Worker) -> None:
@@ -972,7 +1160,7 @@ class WorkbenchWindow(QMainWindow):
         self._append_assistant(result.answer.answer)
         all_images = _extract_images_from_sources(result.answer.sources, self._image_index)
         if all_images:
-            img_html = '<div style="margin:12px 0 8px 0;"><div style="color:' + COLORS["accent2"] + ';font-weight:700;margin-bottom:8px;">\u64cd\u4f5c\u622a\u56fe</div>'
+            img_html = '<div style="margin:12px 0 8px 0;"><div style="color:' + COLORS["accent2"] + ';font-weight:700;margin-bottom:8px;">' + get_text("screenshot_label") + '</div>'
             for img_path, title in all_images[:6]:
                 abs_path = img_path.replace(os.sep, "/")
                 data_uri = _path_to_data_uri(abs_path)
@@ -989,14 +1177,17 @@ class WorkbenchWindow(QMainWindow):
         self.is_busy = busy
         self.activity_label.setText(text)
         self.activity_label.setStyleSheet(f"color: {COLORS['warning' if busy else 'accent']};")
-        for button in (self.ask_button, self.reload_button):
+        for button in (self.ask_button, self.reload_button, self.import_button):
             button.setDisabled(busy)
+        if not busy and self._watch_rebuild_requested and self._watch_pending_snapshot is not None:
+            self._watch_rebuild_requested = False
+            QTimer.singleShot(0, self._trigger_watch_rebuild)
 
     def _append_user(self, question: str) -> None:
         self._last_qa = (question, "")  # 记住问题，等回答来了配对
         msg_html = web_wrapper(
             f"""<div style="margin:16px 0 8px 0;">
-              <div style="color:{COLORS['accent']};font-weight:700;font-size:13px;">你</div>
+              <div style="color:{COLORS['accent']};font-weight:700;font-size:13px;">{get_text("you_label")}</div>
               <div style="margin-top:6px;padding:12px 14px;border-radius:12px;background:#102033;color:{COLORS['text']};">
                 {html.escape(question)}
               </div>
@@ -1011,12 +1202,12 @@ class WorkbenchWindow(QMainWindow):
             f"""<div style="margin:16px 0 18px 0;">
               <div style="display:flex;align-items:center;gap:8px;">
                 <div style="color:{COLORS['warning']};font-weight:700;font-size:13px;">RAG</div>
-                <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='已复制!';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
+                <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='{get_text("btn_copied")}';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
                   style="background:{COLORS['surface3']};color:{COLORS['muted']};border:1px solid {COLORS['border']};border-radius:6px;padding:2px 10px;font-size:11px;cursor:pointer;"
-                  onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">复制</button>
-                <button onclick="console.log('RAGGG_FAV');this.innerHTML='已收藏';this.style.color='{COLORS['accent']}';setTimeout(function(){{this.innerHTML='收藏';this.style.color='{COLORS['muted']}'}}.bind(this),1500)"
+                  onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">{get_text("btn_copy")}</button>
+                <button onclick="console.log('RAGGG_FAV');this.innerHTML='{get_text("btn_faved")}';this.style.color='{COLORS['accent']}';setTimeout(function(){{this.innerHTML='{get_text("btn_fav")}';this.style.color='{COLORS['muted']}'}}.bind(this),1500)"
                   style="background:{COLORS['surface3']};color:{COLORS['muted']};border:1px solid {COLORS['border']};border-radius:6px;padding:2px 10px;font-size:11px;cursor:pointer;"
-                  onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">收藏</button>
+                  onmouseover="this.style.color='{COLORS['accent']}'" onmouseout="this.style.color='{COLORS['muted']}'">{get_text("btn_fav")}</button>
               </div>
               <div style="margin-top:6px;padding:14px 16px;border-radius:12px;background:#111c2f;color:{COLORS['text']};line-height:1.55;">
                 {rendered}
@@ -1042,11 +1233,11 @@ window.scrollTo(0, document.body.scrollHeight);
             score_pct = min(1.0, result.score)
             color = COLORS["accent"] if score_pct > 0.8 else (COLORS["warning"] if score_pct > 0.5 else COLORS["muted"])
             if chunk.source_type == "waveda_help":
-                badge_label, badge_color = "WavEDA 帮助", "#103430"
+                badge_label, badge_color = get_text("badge_waveda_help"), "#103430"
             elif chunk.source_type == "user_tutorial":
-                badge_label, badge_color = "团队教程", "#1f472b"
+                badge_label, badge_color = get_text("badge_team_tutorial"), "#1f472b"
             else:
-                badge_label, badge_color = "理论笔记", "#1f2937"
+                badge_label, badge_color = get_text("badge_theory_notes"), "#1f2937"
             source_link = chunk.relative_path
 
             # Link to the original HTML help file (with images + CSS)
@@ -1063,35 +1254,37 @@ window.scrollTo(0, document.body.scrollHeight);
                     <span style="background:{badge_color};color:{color};border-radius:8px;padding:2px 10px;font-size:11px;font-weight:600;">{badge_label}</span>
                   </div>
                   <div style="color:{COLORS['muted']};font-size:11px;margin-bottom:4px;">{source_link}</div>
-                  <div style="color:{color};font-size:11px;">匹配度 {score_pct:.1%}</div>
+                  <div style="color:{color};font-size:11px;">{get_text("match_score")} {score_pct:.1%}</div>
                 </div>"""
             )
         return web_wrapper("\n".join(cards))
 
-    def _welcome_html(self) -> str:
+    def _welcome_html(self, chunk_count: str = "-", model_name: str = "DeepSeek") -> str:
         return web_wrapper(
             f"""<div style="text-align:center;padding:60px 20px;">
             <div style="font-size:22px;font-weight:700;color:{COLORS['accent']};margin-bottom:12px;">WavEDA Knowledge Workbench</div>
-            <div style="color:{COLORS['muted']};margin-bottom:24px;">WavEDA 仿真软件知识问答助手</div>
+            <div style="color:{COLORS['muted']};margin-bottom:24px;">{get_text("startup_brand_subtitle")}</div>
             <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
               <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
-                <div style="font-size:20px;font-weight:700;color:{COLORS['accent']};">1,908</div>
-                <div style="color:{COLORS['muted']};font-size:12px;">知识块</div>
+                <div style="font-size:20px;font-weight:700;color:{COLORS['accent']};">{chunk_count}</div>
+                <div style="color:{COLORS['muted']};font-size:12px;">{get_text("startup_chunks_label")}</div>
               </div>
               <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
-                <div style="font-size:20px;font-weight:700;color:{COLORS['accent2']};">WavEDA优先</div>
-                <div style="color:{COLORS['muted']};font-size:12px;">检索策略</div>
+                <div style="font-size:20px;font-weight:700;color:{COLORS['accent2']};">{get_text("badge_waveda_first")}</div>
+                <div style="color:{COLORS['muted']};font-size:12px;">{get_text("startup_strategy_label")}</div>
               </div>
               <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
-                <div style="font-size:20px;font-weight:700;color:{COLORS['warning']};">DeepSeek</div>
-                <div style="color:{COLORS['muted']};font-size:12px;">大模型</div>
+                <div style="font-size:20px;font-weight:700;color:{COLORS['warning']};">{model_name}</div>
+                <div style="color:{COLORS['muted']};font-size:12px;">{get_text("startup_llm_label")}</div>
               </div>
             </div>
-            <div style="margin-top:28px;color:{COLORS['subtle']};font-size:13px;">在下方输入 WavEDA 相关问题开始</div>
+            <div style="margin-top:28px;color:{COLORS['subtle']};font-size:13px;">{get_text("startup_hint")}</div>
           </div>"""
         )
 
-    def _empty_sources_html(self, message: str = "提出问题后，这里会显示可追溯的来源证据。") -> str:
+    def _empty_sources_html(self, message: str | None = None) -> str:
+        if message is None:
+            message = get_text("sources_empty")
         return web_wrapper(
             f"""<div style="text-align:center;padding:40px 16px;">
             <div style="color:{COLORS['subtle']};font-size:13px;">{html.escape(message)}</div>
