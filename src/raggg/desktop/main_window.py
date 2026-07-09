@@ -9,7 +9,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QUrl, Signal, Slot
+from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QTimer, QUrl, Signal, Slot
 from PySide6.QtGui import QFont, QIcon, QPixmap
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
@@ -37,6 +37,7 @@ from raggg.config import Settings, load_settings
 from raggg.pipeline.builder import BuildReport, build_knowledge_base
 from raggg.pipeline.ingestion import IngestReport, ingest_document
 from raggg.pipeline.rag_pipeline import RAGAnswer, RAGPipeline
+from raggg.pipeline.source_watch import SourceSnapshot, scan_source_tree, snapshot_changed
 from raggg.retrieval.retriever import SearchResult
 
 
@@ -545,6 +546,9 @@ class WorkbenchWindow(QMainWindow):
         self._last_qa: tuple[str, str] = ("", "")  # (question, answer)
         self._fav_file = settings.data_dir / "favorites.json"
         self._project_root = Path(__file__).resolve().parents[3]
+        self._source_snapshot: SourceSnapshot = {}
+        self._watch_pending_snapshot: SourceSnapshot | None = None
+        self._watch_rebuild_requested = False
         self.setWindowTitle("WavEDA Knowledge Workbench")
         icon_path = self._project_root / "wavEDA_docs" / "helpHtml" / "image" / "waveda.png"
         if icon_path.exists():
@@ -555,6 +559,7 @@ class WorkbenchWindow(QMainWindow):
         self._build_image_index()
         self._build_ui()
         self._load_pipeline_if_ready()
+        self._start_source_watcher()
         # 后台预编码所有图片，用户第一次问就不慢了
         self._preload_images()
 
@@ -563,7 +568,7 @@ class WorkbenchWindow(QMainWindow):
         from functools import partial
         worker = Worker(partial(_preload_all_images, self._image_index))
         worker.signals.finished.connect(lambda: print("Image preload complete"))
-        self.thread_pool.start(worker)
+        self._start_worker(worker)
 
     def _build_image_index(self) -> None:
         """预建图片索引: 文件名 -> 绝对路径"""
@@ -638,6 +643,8 @@ class WorkbenchWindow(QMainWindow):
         layout.addWidget(self.status_card)
         layout.addWidget(self.chunk_card)
         layout.addWidget(self.model_card)
+        self.watch_card = MetricCard("监听", "启动中", COLORS["accent2"])
+        layout.addWidget(self.watch_card)
 
         self.import_button = self._button("导入资料入库", primary=True)
         self.import_button.clicked.connect(self._import_document)
@@ -902,6 +909,7 @@ class WorkbenchWindow(QMainWindow):
         ingest_report, build_report = result
         self.chunk_card.set_value(str(build_report.chunk_count), COLORS["warning"])
         self._load_pipeline_if_ready()
+        self._sync_watch_snapshot()
         QMessageBox.information(
             self,
             "导入完成",
@@ -921,6 +929,62 @@ class WorkbenchWindow(QMainWindow):
     def _on_rebuild_done(self, report: BuildReport) -> None:
         self.chunk_card.set_value(str(report.chunk_count), COLORS["warning"])
         self._load_pipeline_if_ready()
+        self._sync_watch_snapshot()
+
+    def _start_source_watcher(self) -> None:
+        self._sync_watch_snapshot()
+        self._watch_timer = QTimer(self)
+        self._watch_timer.setInterval(5000)
+        self._watch_timer.timeout.connect(self._check_source_changes)
+        self._watch_timer.start()
+
+        self._watch_debounce_timer = QTimer(self)
+        self._watch_debounce_timer.setSingleShot(True)
+        self._watch_debounce_timer.setInterval(2000)
+        self._watch_debounce_timer.timeout.connect(self._trigger_watch_rebuild)
+
+    def _sync_watch_snapshot(self) -> None:
+        self._source_snapshot = scan_source_tree(self.settings.obsidian_vault_root)
+        self._watch_pending_snapshot = None
+        self._watch_rebuild_requested = False
+        if hasattr(self, "watch_card"):
+            self.watch_card.set_value("监听中", COLORS["accent2"])
+
+    def _check_source_changes(self) -> None:
+        current = scan_source_tree(self.settings.obsidian_vault_root)
+        if not snapshot_changed(self._source_snapshot, current):
+            return
+        self._watch_pending_snapshot = current
+        self.watch_card.set_value("检测到变化", COLORS["warning"])
+        if not self.is_busy:
+            self.activity_label.setText("检测到知识库变化，等待文件稳定")
+            self.activity_label.setStyleSheet(f"color: {COLORS['warning']};")
+        self._watch_debounce_timer.start()
+
+    def _trigger_watch_rebuild(self) -> None:
+        if self._watch_pending_snapshot is None:
+            return
+        if self.is_busy:
+            self._watch_rebuild_requested = True
+            self.watch_card.set_value("等待空闲", COLORS["warning"])
+            return
+
+        snapshot_after_change = self._watch_pending_snapshot
+        self._set_busy(True, "知识库变化，正在自动重建")
+        self.watch_card.set_value("自动重建", COLORS["warning"])
+        worker = Worker(lambda: build_knowledge_base(self.settings))
+        worker.signals.result.connect(lambda report: self._on_watch_rebuild_done(report, snapshot_after_change))
+        worker.signals.error.connect(lambda message: self._show_error("自动重建失败", message))
+        worker.signals.finished.connect(lambda: self._set_busy(False, "就绪"))
+        self._start_worker(worker)
+
+    def _on_watch_rebuild_done(self, report: BuildReport, snapshot_after_change: SourceSnapshot) -> None:
+        self.chunk_card.set_value(str(report.chunk_count), COLORS["warning"])
+        self._load_pipeline_if_ready()
+        self._source_snapshot = snapshot_after_change
+        self._watch_pending_snapshot = None
+        self._watch_rebuild_requested = False
+        self.watch_card.set_value("监听中", COLORS["accent2"])
 
     def _ask(self, question: str | None = None) -> None:
         if self.is_busy:
@@ -971,6 +1035,9 @@ class WorkbenchWindow(QMainWindow):
         self.activity_label.setStyleSheet(f"color: {COLORS['warning' if busy else 'accent']};")
         for button in (self.ask_button, self.reload_button, self.import_button):
             button.setDisabled(busy)
+        if not busy and self._watch_rebuild_requested and self._watch_pending_snapshot is not None:
+            self._watch_rebuild_requested = False
+            QTimer.singleShot(0, self._trigger_watch_rebuild)
 
     def _append_user(self, question: str) -> None:
         self._last_qa = (question, "")  # 记住问题，等回答来了配对

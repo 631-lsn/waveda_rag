@@ -110,6 +110,8 @@ knowledge_base/
 
 桌面界面左侧也提供 `导入资料入库` 按钮，可选择单个 `.md`、`.markdown`、`.html`、`.htm`、`.txt`、`.pdf` 或 `.docx` 文件。导入文件会保存到 `knowledge_base/05_reference/imported/`，随后自动重建索引并重新载入。
 
+软件运行时会自动监听 `knowledge_base/` 下的支持格式文件。手动修改、增加或删除这些文件后，界面会在文件稳定后自动后台重建索引并重新载入；重建期间提问和导入按钮会暂时禁用。
+
 ## 常见问题
 
 ### 双击 start.bat 没反应
