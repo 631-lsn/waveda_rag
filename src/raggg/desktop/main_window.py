@@ -724,7 +724,7 @@ class WorkbenchWindow(QMainWindow):
         top_bar.addStretch(1)
         self.sidebar_toggle_button = QPushButton("◧")
         self.sidebar_toggle_button.setObjectName("iconButton")
-        self.sidebar_toggle_button.setToolTip("显示/隐藏侧边栏")
+        self.sidebar_toggle_button.setToolTip(get_text("sidebar_toggle_tooltip"))
         self.sidebar_toggle_button.setCursor(Qt.PointingHandCursor)
         self.sidebar_toggle_button.clicked.connect(self._toggle_sidebar)
         top_bar.addWidget(self.sidebar_toggle_button)
@@ -770,12 +770,12 @@ class WorkbenchWindow(QMainWindow):
 
         self.import_button = QPushButton("+")
         self.import_button.setObjectName("plusButton")
-        self.import_button.setToolTip("导入资料入库")
+        self.import_button.setToolTip(get_text("import_tooltip"))
         self.import_button.setCursor(Qt.PointingHandCursor)
         self.import_button.clicked.connect(self._import_document)
 
         self.question = QLineEdit()
-        self.question.setPlaceholderText("慢慢说，我听着")
+        self.question.setPlaceholderText(get_text("placeholder_input"))
         self.question.returnPressed.connect(self._ask)
 
         self.ask_button = QPushButton("↑")
@@ -841,10 +841,10 @@ class WorkbenchWindow(QMainWindow):
         layout.addWidget(self.status_card)
         layout.addWidget(self.chunk_card)
         layout.addWidget(self.model_card)
-        self.watch_card = MetricCard("监听", "启动中", COLORS["accent2"])
+        self.watch_card = MetricCard(get_text("watch_label"), get_text("watch_starting"), COLORS["accent2"])
         layout.addWidget(self.watch_card)
 
-        self.import_button = self._button("导入资料入库", primary=True)
+        self.import_button = self._button(get_text("import_button"), primary=True)
         self.import_button.clicked.connect(self._import_document)
         layout.addWidget(self.import_button)
 
@@ -964,11 +964,11 @@ class WorkbenchWindow(QMainWindow):
         layout.setSpacing(12)
 
         header = QHBoxLayout()
-        title = QLabel("资料与状态")
+        title = QLabel(get_text("section_data_status"))
         title.setObjectName("section")
         close_button = QPushButton("◧")
         close_button.setObjectName("iconButton")
-        close_button.setToolTip("隐藏侧边栏")
+        close_button.setToolTip(get_text("sidebar_hide_tooltip"))
         close_button.setCursor(Qt.PointingHandCursor)
         close_button.clicked.connect(self._toggle_sidebar)
         header.addWidget(title)
@@ -985,7 +985,7 @@ class WorkbenchWindow(QMainWindow):
             get_text("card_model"),
             self.settings.llm_model if self.settings.llm_api_key else get_text("model_local"),
         )
-        self.watch_card = MetricCard("监听", "启动中", COLORS["accent2"])
+        self.watch_card = MetricCard(get_text("watch_label"), get_text("watch_starting"), COLORS["accent2"])
         status_grid.addWidget(self.status_card, 0, 0)
         status_grid.addWidget(self.chunk_card, 0, 1)
         status_grid.addWidget(self.model_card, 1, 0)
@@ -1185,18 +1185,18 @@ class WorkbenchWindow(QMainWindow):
             return
         path, _ = QFileDialog.getOpenFileName(
             self,
-            "选择要入库的资料",
+            get_text("import_dialog_title"),
             str(self._project_root),
             "Documents (*.md *.markdown *.html *.htm *.txt *.pdf *.docx)",
         )
         if not path:
             return
 
-        self._set_busy(True, "正在导入资料并重建知识库")
+        self._set_busy(True, get_text("import_busy_msg"))
         worker = Worker(lambda: self._import_and_rebuild(path))
         worker.signals.result.connect(self._on_import_done)
-        worker.signals.error.connect(lambda message: self._show_error("导入失败", message))
-        worker.signals.finished.connect(lambda: self._set_busy(False, "就绪"))
+        worker.signals.error.connect(lambda message: self._show_error(get_text("import_failed"), message))
+        worker.signals.finished.connect(lambda: self._set_busy(False, get_text("status_ready")))
         self._start_worker(worker)
 
     def _import_and_rebuild(self, path: str) -> tuple[IngestReport, BuildReport]:
@@ -1209,11 +1209,8 @@ class WorkbenchWindow(QMainWindow):
         self.chunk_card.set_value(str(build_report.chunk_count), COLORS["warning"])
         self._load_pipeline_if_ready()
         self._sync_watch_snapshot()
-        QMessageBox.information(
-            self,
-            "导入完成",
-            f"已导入: {ingest_report.imported_path.name}\n知识块: {build_report.chunk_count}",
-        )
+        result_text = get_text("import_result").replace("{name}", ingest_report.imported_path.name).replace("{count}", str(build_report.chunk_count))
+        QMessageBox.information(self, get_text("import_done"), result_text)
 
     def _rebuild_async(self) -> None:
         if self.is_busy:
@@ -1247,17 +1244,17 @@ class WorkbenchWindow(QMainWindow):
         self._watch_pending_snapshot = None
         self._watch_rebuild_requested = False
         if hasattr(self, "watch_card"):
-            self.watch_card.set_value("监听中", COLORS["accent2"])
+            self.watch_card.set_value(get_text("watch_active"), COLORS["accent2"])
 
     def _check_source_changes(self) -> None:
         current = scan_source_tree(self.settings.obsidian_vault_root)
         if not snapshot_changed(self._source_snapshot, current):
             return
         self._watch_pending_snapshot = current
-        self.watch_card.set_value("检测到变化", COLORS["warning"])
+        self.watch_card.set_value(get_text("watch_changed"), COLORS["warning"])
         if not self.is_busy:
             self.activity_label.show()
-            self.activity_label.setText("检测到知识库变化，等待文件稳定")
+            self.activity_label.setText(get_text("watch_waiting_stable"))
             self.activity_label.setStyleSheet(f"color: {COLORS['warning']};")
         self._watch_debounce_timer.start()
 
@@ -1266,16 +1263,16 @@ class WorkbenchWindow(QMainWindow):
             return
         if self.is_busy:
             self._watch_rebuild_requested = True
-            self.watch_card.set_value("等待空闲", COLORS["warning"])
+            self.watch_card.set_value(get_text("watch_idle"), COLORS["warning"])
             return
 
         snapshot_after_change = self._watch_pending_snapshot
-        self._set_busy(True, "知识库变化，正在自动重建")
-        self.watch_card.set_value("自动重建", COLORS["warning"])
+        self._set_busy(True, get_text("watch_busy_msg"))
+        self.watch_card.set_value(get_text("watch_rebuilding"), COLORS["warning"])
         worker = Worker(lambda: build_knowledge_base(self.settings))
         worker.signals.result.connect(lambda report: self._on_watch_rebuild_done(report, snapshot_after_change))
-        worker.signals.error.connect(lambda message: self._show_error("自动重建失败", message))
-        worker.signals.finished.connect(lambda: self._set_busy(False, "就绪"))
+        worker.signals.error.connect(lambda message: self._show_error(get_text("watch_rebuild_error"), message))
+        worker.signals.finished.connect(lambda: self._set_busy(False, get_text("status_ready")))
         self._start_worker(worker)
 
     def _on_watch_rebuild_done(self, report: BuildReport, snapshot_after_change: SourceSnapshot) -> None:
@@ -1284,7 +1281,7 @@ class WorkbenchWindow(QMainWindow):
         self._source_snapshot = snapshot_after_change
         self._watch_pending_snapshot = None
         self._watch_rebuild_requested = False
-        self.watch_card.set_value("监听中", COLORS["accent2"])
+        self.watch_card.set_value(get_text("watch_active"), COLORS["accent2"])
 
     def _ask(self, question: str | None = None) -> None:
         if self.is_busy:
