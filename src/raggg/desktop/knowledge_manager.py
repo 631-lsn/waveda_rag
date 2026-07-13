@@ -125,13 +125,19 @@ class KnowledgeManager(QWidget):
         import_controls.addWidget(QLabel(get_text("kbm_import_target") + ":"))
         self.category_combo = QComboBox()
         self._populate_categories()
+        self.category_combo.currentIndexChanged.connect(self._on_category_changed)
         import_controls.addWidget(self.category_combo)
+
+        import_controls.addWidget(QLabel(get_text("kbm_import_subdir") + ":"))
+        self.subdir_combo = QComboBox()
+        self._populate_subdirs()
+        import_controls.addWidget(self.subdir_combo)
 
         import_controls.addWidget(QLabel(get_text("kbm_priority_label") + ":"))
         self.priority_combo = QComboBox()
         for i in range(1, 6):
             self.priority_combo.addItem(get_text(f"kbm_priority_{i}"), i)
-        self.priority_combo.setCurrentIndex(2)  # 默认中等(3)
+        self.priority_combo.setCurrentIndex(2)
         import_controls.addWidget(self.priority_combo)
 
         import_controls.addWidget(QLabel(get_text("kbm_import_desc_label") + ":"))
@@ -224,6 +230,25 @@ class KnowledgeManager(QWidget):
         for cat_id, cat_label in cats:
             self.category_combo.addItem(cat_label, cat_id)
 
+    def _on_category_changed(self, _index: int) -> None:
+        self._populate_subdirs()
+
+    def _populate_subdirs(self) -> None:
+        """根据选中的大分类，列出所有子目录，外加 AI 自动推荐选项"""
+        cat_id = self.category_combo.currentData()
+        cat_path = self._kb_root / cat_id
+        self.subdir_combo.clear()
+        # 首选项：AI 自动推荐
+        self.subdir_combo.addItem(get_text("kbm_subdir_auto"), "__AUTO__")
+        # 根目录
+        self.subdir_combo.addItem(get_text("kbm_subdir_root"), "")
+        if cat_path.exists():
+            for entry in sorted(cat_path.iterdir()):
+                if entry.is_dir() and not entry.name.startswith("."):
+                    display = self._CAT_I18N.get(entry.name, entry.name)
+                    self.subdir_combo.addItem(f"  {display}", entry.name)
+        self.subdir_combo.setCurrentIndex(0)
+
     def _import_pdf(self) -> None:
         path, _ = QFileDialog.getOpenFileName(
             self, get_text("kbm_import_pdf_title"), "", "PDF (*.pdf)"
@@ -261,18 +286,30 @@ class KnowledgeManager(QWidget):
         # 2. 生成 Markdown
         markdown = self._build_markdown(filepath, text)
 
-        # 3. 获取用户指定的分类和目标文件夹
+        # 3. 获取目标路径（大分类 + 子目录）
         cat_id = self.category_combo.currentData()
-        target_dir = self._kb_root / cat_id
+        base_dir = self._kb_root / cat_id
         user_desc = self.desc_edit.text().strip()
 
-        # 4. 调用 LLM 辅助分析（异步和简化处理）
+        # 确定子目录（手动选择 或 AI 自动推荐）
+        subdir_choice = self.subdir_combo.currentData()
+        if subdir_choice == "__AUTO__":
+            # 列出可选子目录让 AI 从中选择
+            avaialble_subdirs = self._list_subdirs(base_dir)
+            chosen_subdir = self._ai_suggest_subdir(text, filepath.stem, user_desc, avaialble_subdirs)
+            target_dir = base_dir / chosen_subdir if chosen_subdir else base_dir
+        elif subdir_choice:
+            target_dir = base_dir / subdir_choice
+        else:
+            target_dir = base_dir
+
+        # 4. 调用 LLM 辅助分析
         suggestion = self._ai_analyze(text, filepath.stem, user_desc)
 
         # 5. 预览并确认
         preview = (
             f"{get_text('kbm_preview_file')}: {filepath.name}\n"
-            f"{get_text('kbm_preview_target')}: {target_dir}\n"
+            f"{get_text('kbm_preview_target')}: {target_dir.relative_to(self._kb_root.parent)}\n"
             f"{get_text('kbm_preview_suggestion')}:\n{suggestion}\n\n"
             f"---\n{markdown[:500]}...\n"
         )
@@ -286,6 +323,7 @@ class KnowledgeManager(QWidget):
             return
 
         # 6. 写入文件
+        target_dir.mkdir(parents=True, exist_ok=True)
         safe_name = re.sub(r"[^\w\-.]", "_", filepath.stem)
         out_path = target_dir / f"{safe_name}.md"
         out_path.write_text(markdown, encoding="utf-8")
@@ -316,6 +354,67 @@ class KnowledgeManager(QWidget):
             f"# {filepath.stem}\n\n"
             f"{text}\n"
         )
+
+    @staticmethod
+    def _list_subdirs(base_dir: Path) -> list[str]:
+        """列出某大分类下的所有子目录名"""
+        subdirs = []
+        if base_dir.exists():
+            for entry in sorted(base_dir.iterdir()):
+                if entry.is_dir() and not entry.name.startswith("."):
+                    subdirs.append(entry.name)
+        return subdirs
+
+    def _ai_suggest_subdir(
+        self, text: str, filename: str, user_desc: str, subdirs: list[str]
+    ) -> str:
+        """让 AI 从可用子目录中推荐最匹配的一个"""
+        if not subdirs:
+            return ""
+        prompt = (
+            f"分析以下文档内容，从候选子目录中选择最合适的一个。\n"
+            f"文档名：{filename}\n"
+            f"候选子目录：{', '.join(subdirs)}\n"
+            f"内容片段：{text[:1200]}\n"
+        )
+        if user_desc:
+            prompt += f"管理员备注：{user_desc}\n"
+        prompt += "只回答子目录名，不要解释。如果不确定，回答 ROOT。"
+
+        if self.settings.llm_api_key:
+            try:
+                from raggg.generation.llm_client import OpenAICompatibleClient
+                client = OpenAICompatibleClient(
+                    self.settings.llm_base_url,
+                    self.settings.llm_api_key,
+                    self.settings.llm_model,
+                )
+                response = client.complete(prompt).strip()
+                if response in subdirs:
+                    return response
+            except Exception:
+                pass
+
+        # 本地匹配回退
+        keyword_map = {}
+        for sub in subdirs:
+            lower = sub.lower()
+            if "em" in lower or "project" in lower:
+                keyword_map.update({"端口": sub, "激励": sub, "边界": sub, "远场": sub, "pml": sub})
+            if "modeling" in lower:
+                keyword_map.update({"建模": sub, "几何": sub, "面": sub, "曲线": sub, "拉伸": sub})
+            if "mesh" in lower:
+                keyword_map.update({"网格": sub, "mesh": sub})
+            if "antenna" in lower:
+                keyword_map.update({"天线": sub})
+            if "filter" in lower:
+                keyword_map.update({"滤波器": sub})
+            if "circuit" in lower:
+                keyword_map.update({"电路": sub})
+        for kw, sub in keyword_map.items():
+            if kw in text.lower() or kw in filename.lower():
+                return sub
+        return ""
 
     def _ai_analyze(self, text: str, filename: str, user_desc: str) -> str:
         """调用 LLM 分析内容，给出分类建议"""

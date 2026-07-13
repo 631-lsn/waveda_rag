@@ -584,6 +584,18 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "5 - 最高",
         "en": "5 - Highest",
     },
+    "kbm_import_subdir": {
+        "zh": "子目录",
+        "en": "Sub-directory",
+    },
+    "kbm_subdir_auto": {
+        "zh": "🤖 AI 自动推荐",
+        "en": "AI Auto-Suggest",
+    },
+    "kbm_subdir_root": {
+        "zh": "(根目录)",
+        "en": "(Root)",
+    },
     "kbm_import_target": {
         "zh": "目标节点",
         "en": "Target Node",
