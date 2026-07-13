@@ -526,6 +526,170 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "已收藏",
         "en": "Saved",
     },
+
+    # ── 知识库管理 ──────────────────────────────────
+    "kbm_desc": {
+        "zh": "浏览、编辑知识库文件，导入 PDF/PPT 并自动转换。LLM 会辅助分析内容建议分类。",
+        "en": "Browse and edit knowledge base files. Import PDF/PPT with auto-conversion. LLM assists with content classification.",
+    },
+    "kbm_tree_title": {
+        "zh": "知识结构",
+        "en": "Knowledge Tree",
+    },
+    "kbm_select_hint": {
+        "zh": "点击左侧文件进行编辑",
+        "en": "Click a file on the left to edit",
+    },
+    "kbm_save": {
+        "zh": "保存",
+        "en": "Save",
+    },
+    "kbm_editor_placeholder": {
+        "zh": "选择文件后在此编辑 Markdown...",
+        "en": "Select a file to edit Markdown here...",
+    },
+    "kbm_import_title": {
+        "zh": "导入文档（PDF / PPT → MD）",
+        "en": "Import Documents (PDF / PPT to MD)",
+    },
+    "kbm_import_pdf": {
+        "zh": "导入 PDF",
+        "en": "Import PDF",
+    },
+    "kbm_import_ppt": {
+        "zh": "导入 PPT",
+        "en": "Import PPT",
+    },
+    "kbm_priority_label": {
+        "zh": "重要度",
+        "en": "Priority",
+    },
+    "kbm_priority_1": {
+        "zh": "1 - 最低",
+        "en": "1 - Lowest",
+    },
+    "kbm_priority_2": {
+        "zh": "2 - 较低",
+        "en": "2 - Low",
+    },
+    "kbm_priority_3": {
+        "zh": "3 - 普通",
+        "en": "3 - Normal",
+    },
+    "kbm_priority_4": {
+        "zh": "4 - 较高",
+        "en": "4 - High",
+    },
+    "kbm_priority_5": {
+        "zh": "5 - 最高",
+        "en": "5 - Highest",
+    },
+    "kbm_import_target": {
+        "zh": "目标节点",
+        "en": "Target Node",
+    },
+    "kbm_import_desc_label": {
+        "zh": "备注",
+        "en": "Notes",
+    },
+    "kbm_import_desc_placeholder": {
+        "zh": "简要描述文档内容，帮助AI分类...",
+        "en": "Briefly describe the document to help AI classification...",
+    },
+    "kbm_import_pdf_title": {
+        "zh": "选择 PDF 文件",
+        "en": "Select PDF File",
+    },
+    "kbm_import_ppt_title": {
+        "zh": "选择 PPT 文件",
+        "en": "Select PPT File",
+    },
+    "kbm_import_failed": {
+        "zh": "导入失败",
+        "en": "Import Failed",
+    },
+    "kbm_import_empty": {
+        "zh": "无法从文件中提取文本内容。",
+        "en": "Could not extract text content from the file.",
+    },
+    "kbm_preview_file": {
+        "zh": "文件",
+        "en": "File",
+    },
+    "kbm_preview_target": {
+        "zh": "目标位置",
+        "en": "Target",
+    },
+    "kbm_preview_suggestion": {
+        "zh": "AI 分析建议",
+        "en": "AI Analysis",
+    },
+    "kbm_confirm_import": {
+        "zh": "确认导入",
+        "en": "Confirm Import",
+    },
+    "kbm_import_done": {
+        "zh": "导入完成",
+        "en": "Import Complete",
+    },
+    "kbm_import_ok_msg": {
+        "zh": "文件已导入",
+        "en": "File imported",
+    },
+    "kbm_no_file_selected": {
+        "zh": "请先选择要编辑的文件。",
+        "en": "Please select a file to edit first.",
+    },
+    "kbm_save_ok": {
+        "zh": "文件已保存。",
+        "en": "File saved.",
+    },
+    "kbm_cat_01": {
+        "zh": "01 团队教程",
+        "en": "01 Team Tutorials",
+    },
+    "kbm_cat_02": {
+        "zh": "02 软件手册",
+        "en": "02 Software Manual",
+    },
+    "kbm_cat_03": {
+        "zh": "03 仿真案例",
+        "en": "03 Examples",
+    },
+    "kbm_cat_04": {
+        "zh": "04 错误排查",
+        "en": "04 Error Cases",
+    },
+    "kbm_cat_05": {
+        "zh": "05 参考资料",
+        "en": "05 Reference",
+    },
+    "kbm_cat_06": {
+        "zh": "06 理论笔记",
+        "en": "06 Theory Notes",
+    },
+    "kbm_tab": {
+        "zh": "知识库",
+        "en": "Knowledge Base",
+    },
+
+    # ── 临时文件上传 ──────────────────────────────────
+    "upload_tooltip": {
+        "zh": "上传文件提问（PDF/PPT/DOCX）",
+        "en": "Upload file to ask (PDF/PPT/DOCX)",
+    },
+    "upload_dialog_title": {
+        "zh": "选择要提问的文件",
+        "en": "Select file to ask about",
+    },
+    "upload_attached": {
+        "zh": "已附加: {name}",
+        "en": "Attached: {name}",
+    },
+    "upload_clear": {
+        "zh": "移除附件",
+        "en": "Remove attachment",
+    },
 }
 
 

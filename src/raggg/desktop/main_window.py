@@ -540,6 +540,8 @@ class SettingsDialog(QDialog):
         self._build_waveda_paths_tab()
         # ── Tab 4: 语言 ──
         self._build_language_tab()
+        # ── Tab 5: 知识库管理 ──
+        self._build_knowledge_base_tab()
 
         buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
         buttons.accepted.connect(self._save_all_and_accept)
@@ -684,6 +686,12 @@ class SettingsDialog(QDialog):
         layout.addStretch()
         self.tabs.addTab(tab, get_text("settings_lang_tab"))
 
+    # ─── Knowledge Base Manager Tab ───────────────
+    def _build_knowledge_base_tab(self) -> None:
+        from raggg.desktop.knowledge_manager import KnowledgeManager
+        tab = KnowledgeManager(self.settings)
+        self.tabs.addTab(tab, get_text("kbm_tab"))
+
     # ─── Save ────────────────────────────────────
     def _save_all_and_accept(self) -> None:
         # 保存 API
@@ -748,6 +756,8 @@ class WorkbenchWindow(QMainWindow):
         self.is_busy = False
         self._last_qa: tuple[str, str] = ("", "")  # (question, answer)
         self._conversation_history: list[tuple[str, str]] = []
+        self._temp_attached_text: str = ""
+        self._temp_attached_name: str = ""
         self._stream_message_counter = 0
         self._fav_file = settings.data_dir / "favorites.json"
         self._project_root = Path(__file__).resolve().parents[3]
@@ -879,6 +889,24 @@ class WorkbenchWindow(QMainWindow):
         pill_row.addStretch(1)
         bottom.addLayout(pill_row)
 
+        # ── 附件标签（临时上传文件的提示） ──
+        self.attach_label = QLabel("")
+        self.attach_label.setObjectName("miniPill")
+        self.attach_label.hide()
+        self.attach_remove_btn = QPushButton("×")
+        self.attach_remove_btn.setObjectName("iconButton")
+        self.attach_remove_btn.setToolTip(get_text("upload_clear"))
+        self.attach_remove_btn.setCursor(Qt.PointingHandCursor)
+        self.attach_remove_btn.clicked.connect(self._clear_attachment)
+        self.attach_remove_btn.hide()
+
+        attach_row = QHBoxLayout()
+        attach_row.setContentsMargins(0, 0, 0, 0)
+        attach_row.addSpacing(12)
+        attach_row.addWidget(self.attach_label)
+        attach_row.addWidget(self.attach_remove_btn)
+        attach_row.addStretch(1)
+
         composer_frame = QFrame()
         composer_frame.setObjectName("composer")
         composer_frame.setMaximumWidth(520)
@@ -888,7 +916,7 @@ class WorkbenchWindow(QMainWindow):
 
         self.import_button = QPushButton("+")
         self.import_button.setObjectName("plusButton")
-        self.import_button.setToolTip(get_text("import_tooltip"))
+        self.import_button.setToolTip(get_text("upload_tooltip"))
         self.import_button.setCursor(Qt.PointingHandCursor)
         self.import_button.clicked.connect(self._import_document)
 
@@ -910,6 +938,7 @@ class WorkbenchWindow(QMainWindow):
         composer_row.addStretch(1)
         composer_row.addWidget(composer_frame)
         composer_row.addStretch(1)
+        bottom.addLayout(attach_row)
         bottom.addLayout(composer_row)
         main.addLayout(bottom)
 
@@ -1322,36 +1351,56 @@ class WorkbenchWindow(QMainWindow):
         self.fav_button.setText(get_text("btn_favorites"))
 
     def _import_document(self) -> None:
+        """临时上传文件用于当前提问，不写入知识库"""
         if self.is_busy:
             return
         path, _ = QFileDialog.getOpenFileName(
             self,
-            get_text("import_dialog_title"),
+            get_text("upload_dialog_title"),
             str(self._project_root),
-            "Documents (*.md *.markdown *.html *.htm *.txt *.pdf *.docx)",
+            "Documents (*.pdf *.pptx *.docx *.md *.txt *.html)",
         )
         if not path:
             return
+        # 提取文本
+        filepath = Path(path)
+        text = ""
+        suffix = filepath.suffix.lower()
+        if suffix == ".pdf":
+            try:
+                from raggg.pipeline.ingestion import _extract_pdf_text
+                text = _extract_pdf_text(filepath)
+            except Exception:
+                text = f"[PDF: {filepath.name}]"
+        elif suffix == ".pptx":
+            from raggg.desktop.knowledge_manager import KnowledgeManager
+            text = KnowledgeManager._extract_pptx_text(filepath)
+        elif suffix == ".docx":
+            try:
+                from raggg.pipeline.ingestion import _extract_docx_text
+                text = _extract_docx_text(filepath)
+            except Exception:
+                text = f"[DOCX: {filepath.name}]"
+        elif suffix in (".md", ".txt", ".html", ".htm"):
+            text = filepath.read_text(encoding="utf-8", errors="ignore")
+        if not text.strip():
+            QMessageBox.warning(self, get_text("import_failed"), get_text("kbm_import_empty"))
+            return
 
-        self._set_busy(True, get_text("import_busy_msg"))
-        worker = Worker(lambda: self._import_and_rebuild(path))
-        worker.signals.result.connect(self._on_import_done)
-        worker.signals.error.connect(lambda message: self._show_error(get_text("import_failed"), message))
-        worker.signals.finished.connect(lambda: self._set_busy(False, get_text("status_ready")))
-        self._start_worker(worker)
+        self._temp_attached_text = text
+        self._temp_attached_name = filepath.name
+        self.attach_label.setText(get_text("upload_attached").replace("{name}", filepath.name))
+        self.attach_label.show()
+        self.attach_remove_btn.show()
+        self.question.setPlaceholderText(get_text("placeholder_input"))
 
-    def _import_and_rebuild(self, path: str) -> tuple[IngestReport, BuildReport]:
-        ingest_report = ingest_document(self.settings, path)
-        build_report = build_knowledge_base(self.settings)
-        return ingest_report, build_report
-
-    def _on_import_done(self, result: tuple[IngestReport, BuildReport]) -> None:
-        ingest_report, build_report = result
-        self.chunk_card.set_value(str(build_report.chunk_count), COLORS["warning"])
-        self._load_pipeline_if_ready()
-        self._sync_watch_snapshot()
-        result_text = get_text("import_result").replace("{name}", ingest_report.imported_path.name).replace("{count}", str(build_report.chunk_count))
-        QMessageBox.information(self, get_text("import_done"), result_text)
+    def _clear_attachment(self) -> None:
+        """清除临时附着的文件"""
+        self._temp_attached_text = ""
+        self._temp_attached_name = ""
+        self.attach_label.hide()
+        self.attach_remove_btn.hide()
+        self.question.setPlaceholderText(get_text("placeholder_input"))
 
     def _rebuild_async(self) -> None:
         if self.is_busy:
@@ -1430,11 +1479,25 @@ class WorkbenchWindow(QMainWindow):
         text = (question or self.question.text()).strip()
         if not text:
             return
+        # 如果有临时附着的文件内容，拼接到问题里
+        if self._temp_attached_text:
+            text = (
+                f"{get_text('upload_attached').replace('{name}', self._temp_attached_name)}\n\n"
+                f"=== {get_text('kbm_preview_file')}: {self._temp_attached_name} ===\n"
+                f"{self._temp_attached_text[:3000]}\n"
+                f"===\n\n"
+                f"{get_text('prompt_question_prefix')}: {text}"
+            )
+            self._temp_attached_text = ""
+            self._temp_attached_name = ""
+            self.attach_label.hide()
+            self.attach_remove_btn.hide()
+            self.question.setPlaceholderText(get_text("placeholder_input"))
         if self.pipeline is None:
             QMessageBox.information(self, get_text("error_no_kb_title"), get_text("error_no_kb_msg"))
             return
         self.question.clear()
-        self._append_user(text)
+        self._append_user(text[:500] + ("..." if len(text) > 500 else ""))  # 展示截断版本
         self._set_busy(True, get_text("status_searching"))
         conversation_history = list(self._conversation_history)
         stream_id = self._begin_streaming_assistant()

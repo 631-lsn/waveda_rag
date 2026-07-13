@@ -60,6 +60,10 @@ class Retriever:
             lexical_score = _lexical_overlap(query_tokens, f"{chunk.title} {chunk.section} {chunk.content}")
             score = 0.65 * vector_score + 0.35 * lexical_score
 
+            # 优先级加权 (1-5, 默认3) — 高优先级文档获得额外得分
+            priority = int(chunk.metadata.get("priority", 3))
+            score *= 0.9 + 0.07 * priority  # priority=3 → 1.11x, priority=5 → 1.25x
+
             chunk_text_lower = f"{chunk.title} {chunk.section} {chunk.content}".lower()
             is_helpful = chunk.source_type in ("waveda_help", "user_tutorial")
             if is_helpful and any(term in query_lower for term in WAVEDA_TERMS):
