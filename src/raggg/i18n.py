@@ -300,6 +300,38 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "在下方输入 WavEDA 相关问题开始",
         "en": "Enter a WavEDA question below to get started",
     },
+    "welcome_title": {
+        "zh": "您好！我是 WavEDA 仿真软件助手",
+        "en": "Hello! I am your WavEDA simulation assistant",
+    },
+    "welcome_intro": {
+        "zh": "我可以根据官方帮助、团队教程和错误案例，为您解答建模操作、仿真设置、错误排查和结果后处理等问题。",
+        "en": "I can use the official help, team tutorials, and error cases to answer questions about modeling, simulation settings, troubleshooting, and result post-processing.",
+    },
+    "welcome_detail": {
+        "zh": "请直接描述您正在做什么、卡在哪一步，或贴出具体报错。我会尽量给出简洁、可操作的步骤，并附上相关资料来源。",
+        "en": "Describe what you are doing, where you are stuck, or provide the exact error. I will give concise, actionable steps with relevant sources.",
+    },
+    "welcome_examples_title": {
+        "zh": "例如，您可以这样问：",
+        "en": "For example, you can ask:",
+    },
+    "welcome_example_1": {
+        "zh": "波端口怎么设置，为什么预览方向要朝外？",
+        "en": "How do I configure a wave port, and why should its preview direction point outward?",
+    },
+    "welcome_example_2": {
+        "zh": "仿真提示材料未设置，应该怎么排查？",
+        "en": "How should I troubleshoot a missing-material simulation error?",
+    },
+    "welcome_example_3": {
+        "zh": "如何导出 S 参数，或者找到工程生成的 snp 文件？",
+        "en": "How do I export S-parameters or find the generated SNP file?",
+    },
+    "welcome_click_hint": {
+        "zh": "点击示例即可开始提问",
+        "en": "Click an example to start",
+    },
 
     # ── 错误/提示消息 ──────────────────────────────────
     "error_rebuild_title": {
