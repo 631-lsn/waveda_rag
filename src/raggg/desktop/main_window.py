@@ -514,6 +514,15 @@ LLM_PROVIDERS = [
     ("OpenAI",        "https://api.openai.com/v1",                      "gpt-4o-mini"),
 ]
 
+# 支持图片的多模态模型列表（后续出了新的加一行即可）
+VISION_MODELS = {
+    "gpt-4o", "gpt-4o-mini", "gpt-4-turbo", "gpt-4-vision-preview",
+    "claude-3-opus", "claude-3-sonnet", "claude-3-haiku",
+    "claude-3.5-sonnet", "claude-opus-4", "claude-sonnet-5",
+    "qwen-vl-plus", "qwen-vl-max", "qwen2.5-vl-7b", "qwen2.5-vl-72b",
+    "gemini-2.0-flash", "gemini-1.5-flash", "gemini-1.5-pro",
+}
+
 
 class SettingsDialog(QDialog):
     """统一设置窗口，使用标签页组织：API + 语言（可扩展）"""
@@ -1351,22 +1360,53 @@ class WorkbenchWindow(QMainWindow):
         self.fav_button.setText(get_text("btn_favorites"))
 
     def _import_document(self) -> None:
-        """临时上传文件用于当前提问，不写入知识库"""
+        """临时上传文件/图片用于当前提问，不写入知识库"""
         if self.is_busy:
             return
+        current_model = self.settings.llm_model
+        is_vision = current_model in VISION_MODELS
+
+        filters = "Documents (*.pdf *.pptx *.docx *.md *.txt *.html)"
+        if is_vision:
+            filters += ";;Images (*.png *.jpg *.jpeg *.gif *.bmp)"
+
         path, _ = QFileDialog.getOpenFileName(
             self,
             get_text("upload_dialog_title"),
             str(self._project_root),
-            "Documents (*.pdf *.pptx *.docx *.md *.txt *.html)",
+            filters,
         )
         if not path:
             return
-        # 提取文本
+
         filepath = Path(path)
-        text = ""
         suffix = filepath.suffix.lower()
-        if suffix == ".pdf":
+        text = ""
+
+        # 图片：转 base64
+        if suffix in (".png", ".jpg", ".jpeg", ".gif", ".bmp"):
+            if not is_vision:
+                QMessageBox.information(
+                    self,
+                    get_text("upload_image_title"),
+                    get_text("upload_image_no_vision"),
+                )
+                return
+            import base64 as _b64
+            data = filepath.read_bytes()
+            b64 = _b64.b64encode(data).decode()
+            mime_map = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
+                       ".gif": "image/gif", ".bmp": "image/bmp"}
+            mime = mime_map.get(suffix, "image/png")
+            text = f"[IMAGE: {filepath.name}]\ndata:{mime};base64,{b64}"
+            QMessageBox.information(
+                self,
+                get_text("upload_image_title"),
+                get_text("upload_image_hint"),
+            )
+
+        # 文档：提取文本
+        elif suffix == ".pdf":
             try:
                 from raggg.pipeline.ingestion import _extract_pdf_text
                 text = _extract_pdf_text(filepath)
@@ -1383,6 +1423,7 @@ class WorkbenchWindow(QMainWindow):
                 text = f"[DOCX: {filepath.name}]"
         elif suffix in (".md", ".txt", ".html", ".htm"):
             text = filepath.read_text(encoding="utf-8", errors="ignore")
+
         if not text.strip():
             QMessageBox.warning(self, get_text("import_failed"), get_text("kbm_import_empty"))
             return
