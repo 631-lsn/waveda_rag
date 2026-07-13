@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import html
+import json
 import os
 import re
 import sys
@@ -9,8 +10,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import QObject, QRunnable, Qt, QThreadPool, QTimer, QUrl, Signal, Slot
-from PySide6.QtGui import QColor, QFont, QIcon, QPixmap
+from PySide6.QtCore import QEvent, QObject, QRectF, QRunnable, Qt, QThreadPool, QTimer, QUrl, Signal, Slot
+from PySide6.QtGui import QColor, QBrush, QFont, QIcon, QLinearGradient, QPainter, QPen, QPixmap, QRadialGradient
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
 from PySide6.QtWidgets import (
@@ -55,6 +56,7 @@ class AskResult:
 
 class WorkerSignals(QObject):
     result = Signal(object)
+    progress = Signal(object)
     error = Signal(str)
     finished = Signal()
 
@@ -398,6 +400,112 @@ class MetricCard(QFrame):
             self.value_label.setStyleSheet(f"color: {color};")
 
 
+class AILoaderOverlay(QWidget):
+    def __init__(self, parent: QWidget | None = None, text: str = "正在载入") -> None:
+        super().__init__(parent)
+        self.visual_mode = "orbital-glow"
+        self.text = text
+        self._angle = 90
+        self._pulse = 0
+        self.setAttribute(Qt.WA_StyledBackground, False)
+        self.setAttribute(Qt.WA_OpaquePaintEvent, False)
+        self._timer = QTimer(self)
+        self._timer.setInterval(32)
+        self._timer.timeout.connect(self._advance)
+        self._timer.start()
+
+    def set_text(self, text: str) -> None:
+        self.text = text or "请稍候"
+        self.update()
+
+    def _advance(self) -> None:
+        self._angle = (self._angle + 2) % 360
+        self._pulse = (self._pulse + 1) % 180
+        self.update()
+
+    def _letter_intensity(self, phase: int) -> float:
+        return 0.38 + 0.62 * max(0.0, 1.0 - abs(phase - 18) / 18)
+
+    def _letter_lift(self, phase: int) -> int:
+        return 3 if 12 <= phase <= 24 else 0
+
+    def paintEvent(self, event) -> None:
+        painter = QPainter(self)
+        painter.setRenderHint(QPainter.Antialiasing, True)
+
+        gradient = QLinearGradient(0, 0, 0, self.height())
+        gradient.setColorAt(0.0, QColor(248, 228, 239))
+        gradient.setColorAt(0.42, QColor(231, 241, 240))
+        gradient.setColorAt(1.0, QColor(126, 199, 241))
+        painter.fillRect(self.rect(), gradient)
+
+        size = min(190, max(132, min(self.width(), self.height()) // 4))
+        center_x = self.width() / 2
+        center_y = self.height() / 2
+        rect = QRectF(center_x - size / 2, center_y - size / 2, size, size)
+
+        painter.setPen(Qt.NoPen)
+        for spread, alpha in ((34, 28), (22, 46), (12, 64)):
+            halo = QRadialGradient(rect.center(), size / 2 + spread)
+            halo.setColorAt(0.0, QColor(255, 255, 255, 0))
+            halo.setColorAt(0.55, QColor(101, 181, 228, alpha))
+            halo.setColorAt(1.0, QColor(101, 181, 228, 0))
+            painter.setBrush(QBrush(halo))
+            painter.drawEllipse(rect.adjusted(-spread, -spread, spread, spread))
+
+        ring = QRadialGradient(rect.center(), size / 2)
+        ring.setColorAt(0.00, QColor(255, 255, 255, 70))
+        ring.setColorAt(0.54, QColor(210, 242, 252, 132))
+        ring.setColorAt(0.74, QColor(116, 195, 238, 230))
+        ring.setColorAt(0.89, QColor(68, 137, 218, 228))
+        ring.setColorAt(1.00, QColor(242, 252, 255, 206))
+        painter.setBrush(QBrush(ring))
+        painter.drawEllipse(rect)
+
+        core_rect = rect.adjusted(24, 24, -24, -24)
+        core = QRadialGradient(core_rect.center(), core_rect.width() / 2)
+        core.setColorAt(0.00, QColor(245, 253, 255, 226))
+        core.setColorAt(0.48, QColor(226, 246, 250, 196))
+        core.setColorAt(0.76, QColor(180, 225, 243, 142))
+        core.setColorAt(1.00, QColor(112, 184, 232, 92))
+        painter.setBrush(QBrush(core))
+        painter.drawEllipse(core_rect)
+
+        painter.setBrush(Qt.NoBrush)
+        for inset, color, width in (
+            (25, QColor(255, 255, 255, 178), 3),
+            (34, QColor(68, 133, 209, 92), 8),
+            (48, QColor(255, 255, 255, 82), 2),
+        ):
+            pen = QPen(color, width)
+            pen.setCapStyle(Qt.RoundCap)
+            painter.setPen(pen)
+            painter.drawArc(rect.adjusted(inset, inset, -inset, -inset), (self._angle + inset) * 16, 118 * 16)
+
+        sweep_rect = rect.adjusted(5, 5, -5, -5)
+        sweep_pen = QPen(QColor(78, 145, 221, 188), 6)
+        sweep_pen.setCapStyle(Qt.RoundCap)
+        painter.setPen(sweep_pen)
+        painter.drawArc(sweep_rect, -(self._angle + 18) * 16, 64 * 16)
+
+        painter.setFont(QFont("Microsoft YaHei UI", 13, QFont.DemiBold))
+        metrics = painter.fontMetrics()
+        letters = list(self.text)
+        spacing = 2
+        total_width = sum(metrics.horizontalAdvance(letter) for letter in letters) + spacing * max(0, len(letters) - 1)
+        x = center_x - total_width / 2
+        base_y = center_y + metrics.ascent() / 2 - 2
+        for index, letter in enumerate(letters):
+            phase = (self._pulse + index * 9) % 90
+            brightness = self._letter_intensity(phase)
+            lift = -self._letter_lift(phase)
+            color = QColor(33, 55, 76)
+            color.setAlpha(int(92 + 138 * brightness))
+            painter.setPen(color)
+            painter.drawText(QRectF(x, base_y - metrics.ascent() + lift, metrics.horizontalAdvance(letter) + 3, metrics.height()), Qt.AlignLeft, letter)
+            x += metrics.horizontalAdvance(letter) + spacing
+
+
 LLM_PROVIDERS = [
     ("DeepSeek",      "https://api.deepseek.com",                       "deepseek-chat"),
     ("Kimi (Moonshot)", "https://api.moonshot.cn/v1",                    "moonshot-v1-8k"),
@@ -650,6 +758,7 @@ class WorkbenchWindow(QMainWindow):
         self._conversation_history: list[tuple[str, str]] = []
         self._temp_attached_text: str = ""
         self._temp_attached_name: str = ""
+        self._stream_message_counter = 0
         self._fav_file = settings.data_dir / "favorites.json"
         self._project_root = Path(__file__).resolve().parents[3]
         self._source_snapshot: SourceSnapshot = {}
@@ -664,7 +773,9 @@ class WorkbenchWindow(QMainWindow):
         self._image_index: dict[str, str] = {}  # filename -> absolute_path
         self._build_image_index()
         self._build_ui()
+        self._show_loader("正在载入")
         self._load_pipeline_if_ready()
+        QTimer.singleShot(700, self._hide_loader)
         self._start_source_watcher()
         # 后台预编码所有图片，用户第一次问就不慢了
         self._preload_images()
@@ -750,12 +861,19 @@ class WorkbenchWindow(QMainWindow):
 
         class _FavPage(QWebEnginePage):
             def javaScriptConsoleMessage(self2, level, msg, line, source):
-                if msg == "RAGGG_FAV":
-                    wb_ref._do_fav()
+                wb_ref._on_console_msg(level, msg, line, source)
 
         self.chat.setPage(_FavPage(self.chat))
         self.chat.page().setBackgroundColor(QColor(0, 0, 0, 0))
-        self.chat.setHtml(self._welcome_html())
+        chunks_path = self.settings.data_dir / "index" / "chunks.json"
+        chunk_count = "-"
+        if chunks_path.exists():
+            try:
+                chunk_count = str(len(json.loads(chunks_path.read_text(encoding="utf-8"))))
+            except (OSError, json.JSONDecodeError):
+                pass
+        model_name = self.settings.llm_model if self.settings.llm_api_key else get_text("model_local")
+        self.chat.setHtml(self._welcome_html(chunk_count=chunk_count, model_name=model_name))
         main.addWidget(self.chat, stretch=1)
 
         bottom = QVBoxLayout()
@@ -829,6 +947,10 @@ class WorkbenchWindow(QMainWindow):
 
         shell.addLayout(main, 0, 0)
         shell.addWidget(self.sidebar_container, 0, 1)
+        self.loader_overlay = AILoaderOverlay(root, text="正在载入")
+        self.loader_overlay.setGeometry(root.rect())
+        self.loader_overlay.raise_()
+        root.installEventFilter(self)
 
     def _header(self) -> QHBoxLayout:
         header = QHBoxLayout()
@@ -926,8 +1048,7 @@ class WorkbenchWindow(QMainWindow):
         wb_ref = self
         class _FavPage(QWebEnginePage):
             def javaScriptConsoleMessage(self2, level, msg, line, source):
-                if msg == "RAGGG_FAV":
-                    wb_ref._do_fav()
+                wb_ref._on_console_msg(level, msg, line, source)
         self.chat.setPage(_FavPage(self.chat))
 
         # 读取实际的 chunk 数量和模型名
@@ -1086,6 +1207,22 @@ class WorkbenchWindow(QMainWindow):
     def _toggle_sidebar(self) -> None:
         self.sidebar_container.setHidden(not self.sidebar_container.isHidden())
 
+    def eventFilter(self, watched: QObject, event: QEvent) -> bool:
+        if event.type() == QEvent.Resize and hasattr(self, "loader_overlay"):
+            self.loader_overlay.setGeometry(self.centralWidget().rect())
+            self.loader_overlay.raise_()
+        return super().eventFilter(watched, event)
+
+    def _show_loader(self, text: str) -> None:
+        self.loader_overlay.set_text(text)
+        self.loader_overlay.setGeometry(self.centralWidget().rect())
+        self.loader_overlay.raise_()
+        self.loader_overlay.show()
+
+    def _hide_loader(self) -> None:
+        if not self.is_busy:
+            self.loader_overlay.hide()
+
     def _load_pipeline_if_ready(self) -> None:
         index_dir = self.settings.data_dir / "index"
         if not (index_dir / "chunks.json").exists() or not (index_dir / "vectors.npy").exists():
@@ -1120,6 +1257,10 @@ class WorkbenchWindow(QMainWindow):
     def _on_console_msg(self, level, msg: str, line: int, source: str) -> None:
         if msg == "RAGGG_FAV":
             self._do_fav()
+        elif msg.startswith("RAGGG_QUICK:"):
+            question = msg.partition(":")[2].strip()
+            if question:
+                QTimer.singleShot(0, lambda current=question: self._ask(current))
         elif msg.startswith("RAGGG_FAVDEL:"):
             # Not used here; favorites dialog uses Qt buttons now
             pass
@@ -1359,9 +1500,27 @@ class WorkbenchWindow(QMainWindow):
         self._append_user(text[:500] + ("..." if len(text) > 500 else ""))  # 展示截断版本
         self._set_busy(True, get_text("status_searching"))
         conversation_history = list(self._conversation_history)
-        worker = Worker(lambda: AskResult(text, self.pipeline.ask(text, conversation_history=conversation_history)))
-        worker.signals.result.connect(self._on_answer_done)
-        worker.signals.error.connect(lambda message: self._append_assistant(get_text("msg_generation_failed") + message))
+        stream_id = self._begin_streaming_assistant()
+
+        def ask_with_streaming() -> AskResult:
+            assert self.pipeline is not None
+            answer = self.pipeline.ask(
+                text,
+                conversation_history=conversation_history,
+                on_chunk=lambda chunk: worker.signals.progress.emit(chunk),
+            )
+            return AskResult(text, answer)
+
+        worker = Worker(ask_with_streaming)
+        worker.signals.progress.connect(
+            lambda chunk, current_id=stream_id: self._append_stream_chunk(current_id, str(chunk))
+        )
+        worker.signals.result.connect(
+            lambda result, current_id=stream_id: self._on_answer_done(result, current_id)
+        )
+        worker.signals.error.connect(
+            lambda message, current_id=stream_id: self._on_stream_error(current_id, message)
+        )
         worker.signals.finished.connect(lambda: self._set_busy(False, get_text("status_ready")))
         self._start_worker(worker)
 
@@ -1374,8 +1533,11 @@ class WorkbenchWindow(QMainWindow):
         if worker in self._active_workers:
             self._active_workers.remove(worker)
 
-    def _on_answer_done(self, result: AskResult) -> None:
-        self._append_assistant(result.answer.answer)
+    def _on_answer_done(self, result: AskResult, stream_id: str | None = None) -> None:
+        if stream_id is None:
+            self._append_assistant(result.answer.answer)
+        else:
+            self._finish_streaming_assistant(stream_id, result.answer.answer)
         self._remember_turn(result.question, result.answer.answer)
         all_images = _extract_images_from_sources(result.answer.sources, self._image_index)
         if all_images:
@@ -1394,6 +1556,10 @@ class WorkbenchWindow(QMainWindow):
 
     def _set_busy(self, busy: bool, text: str) -> None:
         self.is_busy = busy
+        if busy:
+            self._show_loader(text)
+        else:
+            self._hide_loader()
         self.activity_label.setText(text)
         self.activity_label.setVisible(busy)
         self.activity_label.setStyleSheet(f"color: {COLORS['warning' if busy else 'accent']};")
@@ -1443,6 +1609,59 @@ class WorkbenchWindow(QMainWindow):
         )
         self._append_html(msg_html)
 
+    def _begin_streaming_assistant(self) -> str:
+        self._stream_message_counter += 1
+        stream_id = f"rag-stream-{self._stream_message_counter}"
+        actions_id = f"{stream_id}-actions"
+        content_id = f"{stream_id}-content"
+        bubbles = get_chat_bubble_colors()
+        msg_html = web_wrapper(
+            f"""<div id="{stream_id}" style="margin:16px 26px 18px 26px;display:flex;justify-content:flex-start;">
+              <div style="max-width:82%;">
+              <div id="{actions_id}" style="display:none;align-items:center;gap:8px;margin-left:2px;margin-bottom:6px;">
+                <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='{get_text("btn_copied")}';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
+                  style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;">{get_text("btn_copy")}</button>
+                <button onclick="console.log('RAGGG_FAV');this.innerHTML='{get_text("btn_faved")}';this.style.color='{bubbles['accent']}';setTimeout(function(){{this.innerHTML='{get_text("btn_fav")}';this.style.color='{bubbles['muted']}'}}.bind(this),1500)"
+                  style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;">{get_text("btn_fav")}</button>
+              </div>
+              <div id="{content_id}" style="padding:15px 17px;border-radius:18px 18px 18px 4px;background:{bubbles['assistant_bg']};border:1px solid {bubbles['assistant_border']};box-shadow:0 14px 42px rgba(80,150,185,.12);color:{bubbles['text']};line-height:1.6;white-space:pre-wrap;"><span data-stream-cursor style="color:{bubbles['accent']};">▌</span></div>
+              </div>
+            </div>"""
+        )
+        self._append_html(msg_html)
+        return stream_id
+
+    def _append_stream_chunk(self, stream_id: str, chunk: str) -> None:
+        # Once text starts arriving, reveal the chat instead of covering it
+        # with the loading overlay. Busy state still disables user actions.
+        self.loader_overlay.hide()
+        content_id = json.dumps(f"{stream_id}-content")
+        chunk_json = json.dumps(chunk, ensure_ascii=False)
+        self.chat.page().runJavaScript(
+            f"""var content=document.getElementById({content_id});
+if(content){{
+  var cursor=content.querySelector('[data-stream-cursor]');
+  if(cursor){{cursor.insertAdjacentText('beforebegin', {chunk_json});}}
+  window.scrollTo(0, document.body.scrollHeight);
+}}"""
+        )
+
+    def _finish_streaming_assistant(self, stream_id: str, answer: str) -> None:
+        self._last_qa = (self._last_qa[0], answer)
+        content_id = json.dumps(f"{stream_id}-content")
+        actions_id = json.dumps(f"{stream_id}-actions")
+        rendered_json = json.dumps(markdown_to_html(answer), ensure_ascii=False)
+        self.chat.page().runJavaScript(
+            f"""var content=document.getElementById({content_id});
+if(content){{content.innerHTML={rendered_json};content.style.whiteSpace='normal';}}
+var actions=document.getElementById({actions_id});
+if(actions){{actions.style.display='flex';}}
+window.scrollTo(0, document.body.scrollHeight);"""
+        )
+
+    def _on_stream_error(self, stream_id: str, message: str) -> None:
+        self._finish_streaming_assistant(stream_id, get_text("msg_generation_failed") + message)
+
     def _append_html(self, html_content: str) -> None:
         """Append HTML content to the chat WebView, preserving existing content."""
         self.chat.page().runJavaScript(
@@ -1487,7 +1706,51 @@ window.scrollTo(0, document.body.scrollHeight);
         return web_wrapper("\n".join(cards))
 
     def _welcome_html(self, chunk_count: str = "-", model_name: str = "DeepSeek") -> str:
-        return web_wrapper("""<div style="min-height:1px;"></div>""")
+        bubbles = get_chat_bubble_colors()
+        examples = [get_text(f"welcome_example_{index}") for index in range(1, 4)]
+        example_buttons = []
+        for example in examples:
+            question_json = json.dumps(example, ensure_ascii=False)
+            example_buttons.append(
+                f"""<button onclick='console.log("RAGGG_QUICK:" + {question_json})'
+                  style="display:block;width:100%;text-align:left;margin:8px 0;padding:11px 14px;
+                         border:1px solid {bubbles['border']};border-radius:12px;
+                         background:{bubbles['surface2']};color:{bubbles['text']};
+                         font-family:inherit;font-size:13px;line-height:1.5;cursor:pointer;"
+                  onmouseover="this.style.borderColor='{bubbles['accent']}';this.style.color='{bubbles['accent']}'"
+                  onmouseout="this.style.borderColor='{bubbles['border']}';this.style.color='{bubbles['text']}'">{html.escape(example)}</button>"""
+            )
+
+        status_parts = []
+        if chunk_count != "-":
+            status_parts.append(f"{get_text('startup_chunks_label')} {html.escape(chunk_count)}")
+        if model_name:
+            status_parts.append(f"{get_text('startup_llm_label')} {html.escape(model_name)}")
+        status_html = " · ".join(status_parts)
+
+        return web_wrapper(
+            f"""<div style="max-width:760px;margin:52px auto 36px auto;padding:0 24px;">
+              <div style="padding:22px 24px;border-radius:18px 18px 18px 4px;
+                          background:{bubbles['assistant_bg']};border:1px solid {bubbles['assistant_border']};
+                          box-shadow:0 14px 42px rgba(80,150,185,.12);color:{bubbles['text']};">
+                <div style="font-size:21px;font-weight:700;color:{bubbles['accent']};margin-bottom:12px;">
+                  {html.escape(get_text('welcome_title'))}
+                </div>
+                <p style="margin:0 0 9px 0;line-height:1.7;">{html.escape(get_text('welcome_intro'))}</p>
+                <p style="margin:0;line-height:1.7;color:{bubbles['muted']};">{html.escape(get_text('welcome_detail'))}</p>
+              </div>
+              <div style="margin-top:22px;">
+                <div style="font-size:14px;font-weight:700;color:{bubbles['text']};margin-bottom:8px;">
+                  {html.escape(get_text('welcome_examples_title'))}
+                </div>
+                {''.join(example_buttons)}
+                <div style="margin-top:10px;text-align:center;color:{bubbles['muted']};font-size:11px;">
+                  {html.escape(get_text('welcome_click_hint'))}
+                  {(' · ' + status_html) if status_html else ''}
+                </div>
+              </div>
+            </div>"""
+        )
 
     def _empty_sources_html(self, message: str | None = None) -> str:
         if message is None:
