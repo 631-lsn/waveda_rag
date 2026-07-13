@@ -3,41 +3,59 @@ import * as React from "react";
 interface LoaderProps {
   size?: number;
   text?: string;
+  variant?: "overlay" | "inline";
 }
 
-export const Component: React.FC<LoaderProps> = ({ size = 180, text = "Generating" }) => {
+export const Component: React.FC<LoaderProps> = ({ size, text = "Generating", variant = "overlay" }) => {
   const letters = text.split("");
+  const orbitSize = size ?? (variant === "inline" ? 46 : 180);
 
   return (
     <div
-      data-testid="ai-loader-overlay"
-      className="fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-[var(--bg)] text-[var(--text)] transition-colors duration-300"
+      data-testid={variant === "inline" ? "ai-loader-inline" : "ai-loader-overlay"}
+      role={variant === "inline" ? "status" : undefined}
+      aria-live={variant === "inline" ? "polite" : undefined}
+      className={
+        variant === "inline"
+          ? "flex w-full items-center gap-3 rounded-2xl border border-[var(--line)] bg-[var(--surface-2)] px-4 py-2.5 text-[var(--text)] shadow-sm"
+          : "fixed inset-0 z-50 flex items-center justify-center overflow-hidden bg-[var(--bg)] text-[var(--text)] transition-colors duration-300"
+      }
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0"
-        style={{
-          background:
-            "radial-gradient(circle at 50% 42%, rgba(34, 211, 238, 0.08), transparent 31%), radial-gradient(circle at 50% 100%, rgba(14, 165, 233, 0.05), transparent 43%)",
-        }}
-      />
+      {variant === "overlay" && (
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute inset-0"
+          style={{
+            background:
+              "radial-gradient(circle at 50% 42%, rgba(34, 211, 238, 0.08), transparent 31%), radial-gradient(circle at 50% 100%, rgba(14, 165, 233, 0.05), transparent 43%)",
+          }}
+        />
+      )}
       <div
         data-testid="ai-loader-orbit"
-        className="relative z-10 flex items-center justify-center font-inter select-none"
-        style={{ width: size, height: size }}
+        aria-hidden={variant === "inline" ? "true" : undefined}
+        className="relative z-10 flex shrink-0 items-center justify-center font-inter select-none"
+        style={{ width: orbitSize, height: orbitSize }}
       >
-        {letters.map((letter, index) => (
-          <span
-            key={index}
-            className="inline-block text-[var(--muted)] opacity-55 animate-loaderLetter"
-            style={{ animationDelay: `${index * 0.1}s` }}
-          >
-            {letter}
-          </span>
-        ))}
+        {variant === "overlay" &&
+          letters.map((letter, index) => (
+            <span
+              key={index}
+              className="inline-block text-[var(--muted)] opacity-55 animate-loaderLetter"
+              style={{ animationDelay: `${index * 0.1}s` }}
+            >
+              {letter}
+            </span>
+          ))}
 
         <div className="absolute inset-0 rounded-full animate-loaderCircle"></div>
       </div>
+      {variant === "inline" && (
+        <div className="min-w-0">
+          <p className="text-sm font-medium text-[var(--text)]">{text}</p>
+          <p className="mt-0.5 text-xs text-[var(--muted)]">WavEDA Research Copilot</p>
+        </div>
+      )}
 
       <style jsx>{`
         @keyframes loaderCircle {

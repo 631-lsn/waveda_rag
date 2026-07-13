@@ -4,6 +4,17 @@ import { describe, expect, it } from "vitest";
 import { Component } from "./ai-loader";
 
 describe("AI loader", () => {
+  it("renders an inline status without covering the application", () => {
+    render(<Component variant="inline" text="正在生成" />);
+
+    const status = screen.getByTestId("ai-loader-inline");
+    expect(status).toHaveAttribute("role", "status");
+    expect(status).toHaveAttribute("aria-live", "polite");
+    expect(status).toHaveTextContent("正在生成");
+    expect(status.className).not.toContain("fixed");
+    expect(status.className).not.toContain("inset-0");
+  });
+
   it("uses the application theme instead of an inverted hard-coded gradient", () => {
     render(<Component />);
 

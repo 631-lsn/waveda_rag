@@ -6,6 +6,7 @@ import remarkMath from "remark-math";
 
 import { Button } from "@/components/ui/button";
 import { PromptInput } from "@/components/ui/ai-chat-input";
+import { Component as AiLoader } from "@/components/ui/ai-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import type { ConversationMessage, Locale, ModelProvider } from "@/lib/contracts";
 import { t } from "@/lib/i18n";
@@ -16,6 +17,7 @@ interface ChatPageProps {
   messages: ConversationMessage[];
   question: string;
   busy: boolean;
+  busyText: string;
   providers: ModelProvider[];
   providerId: string;
   modelSwitching: boolean;
@@ -77,8 +79,13 @@ export function ChatPage(props: ChatPageProps) {
       </ScrollArea>
 
       <div className="composer-wrap">
+        {props.busyText && (
+          <div className="mx-auto max-w-[760px]">
+            <AiLoader variant="inline" size={48} text={props.busyText} />
+          </div>
+        )}
         <PromptInput
-          className="mx-auto max-w-[760px]"
+          className={cn("mx-auto max-w-[760px]", props.busyText && "mt-3")}
           value={props.question}
           onChange={props.onQuestionChange}
           onSubmit={props.onAsk}

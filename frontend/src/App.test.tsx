@@ -107,7 +107,9 @@ describe("WavEDA React workbench", () => {
 
     const requestId = setup.askMock.mock.calls[0][0];
     setup.emit({ type: "answer_progress", requestId, phase: "retrieving" });
-    expect(screen.getByTestId("ai-loader-orbit")).toBeInTheDocument();
+    expect(screen.getByTestId("ai-loader-inline")).toBeInTheDocument();
+    expect(screen.queryByTestId("ai-loader-overlay")).not.toBeInTheDocument();
+    expect(screen.getByRole("main")).toBeInTheDocument();
     setup.emit({ type: "answer_progress", requestId, phase: "generating" });
     setup.emit({
       type: "answer_completed",
@@ -137,7 +139,7 @@ describe("WavEDA React workbench", () => {
       },
     });
 
-    await waitFor(() => expect(screen.queryByTestId("ai-loader-orbit")).not.toBeInTheDocument());
+    await waitFor(() => expect(screen.queryByTestId("ai-loader-inline")).not.toBeInTheDocument());
     expect(screen.getByText("请先选择 Domain 上的非金属面。")).toBeInTheDocument();
   });
 

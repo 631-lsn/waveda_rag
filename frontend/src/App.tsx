@@ -272,6 +272,7 @@ export default function App({ bridge }: AppProps) {
           messages={messages}
           question={question}
           busy={Boolean(busyText)}
+          busyText={busyText}
           providers={bootstrap.providers}
           providerId={bootstrap.providerId}
           modelSwitching={modelSwitching}
@@ -323,7 +324,6 @@ export default function App({ bridge }: AppProps) {
       >
         {content}
       </AppShell>
-      {busyText && <AiLoader size={180} text={busyText} />}
       {notice && (
         <div className="notice-toast" role="status">
           <span>{notice}</span>
