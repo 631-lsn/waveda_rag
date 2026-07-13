@@ -38,9 +38,14 @@ class RAGPipeline:
         top_k: int = 6,
         conversation_history: ConversationHistory | None = None,
         on_chunk: Callable[[str], None] | None = None,
+        progress: Callable[[str], None] | None = None,
     ) -> RAGAnswer:
         history = conversation_history or []
+        if progress:
+            progress("retrieving")
         sources = self.retriever.search(self._build_retrieval_query(question, history), top_k=top_k)
+        if progress:
+            progress("generating")
         prompt = build_prompt(question, sources, conversation_history=history)
         warning = None
         if self.client.is_configured:

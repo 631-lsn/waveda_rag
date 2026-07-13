@@ -3,7 +3,7 @@ from __future__ import annotations
 import re
 
 from raggg.generation.personality import get_personality_prompt
-from raggg.i18n import get_text, get_language
+from raggg.i18n import get_language, get_text
 from raggg.retrieval.retriever import SearchResult
 
 

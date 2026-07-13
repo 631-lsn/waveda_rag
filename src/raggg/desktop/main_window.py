@@ -35,7 +35,8 @@ from PySide6.QtWidgets import (
 )
 
 from raggg.config import Settings, load_settings
-from raggg.i18n import get_text, get_language, set_language, get_welcome_text
+from raggg.desktop.providers import LLM_PROVIDERS
+from raggg.i18n import get_language, get_text, get_welcome_text, set_language
 from raggg.pipeline.builder import BuildReport, build_knowledge_base
 from raggg.pipeline.ingestion import IngestReport, ingest_document
 from raggg.pipeline.rag_pipeline import RAGAnswer, RAGPipeline
@@ -552,14 +553,6 @@ class AILoaderOverlay(QWidget):
             x += metrics.horizontalAdvance(letter) + spacing
 
 
-LLM_PROVIDERS = [
-    ("DeepSeek",      "https://api.deepseek.com",                       "deepseek-chat"),
-    ("Kimi (Moonshot)", "https://api.moonshot.cn/v1",                    "moonshot-v1-8k"),
-    ("千问 (通义)",     "https://dashscope.aliyuncs.com/compatible-mode/v1", "qwen-plus"),
-    ("百炼 (阿里云)",   "https://dashscope.aliyuncs.com/compatible-mode/v1", "qwen-plus"),
-    ("OpenAI",        "https://api.openai.com/v1",                      "gpt-4o-mini"),
-]
-
 # 支持图片的多模态模型列表（后续出了新的加一行即可）
 VISION_MODELS = {
     "gpt-4o", "gpt-4o-mini", "gpt-4-turbo", "gpt-4-vision-preview",
@@ -657,12 +650,12 @@ class SettingsDialog(QDialog):
         form.setSpacing(10)
 
         self.provider_combo = QComboBox()
-        for name, _, _ in LLM_PROVIDERS:
-            self.provider_combo.addItem(name)
+        for provider in LLM_PROVIDERS:
+            self.provider_combo.addItem(provider.label)
         current_url = self.settings.llm_base_url.rstrip("/")
         current_idx = 0
-        for i, (_, url, _) in enumerate(LLM_PROVIDERS):
-            if url == current_url:
+        for i, provider in enumerate(LLM_PROVIDERS):
+            if provider.base_url == current_url:
                 current_idx = i
                 break
         self.provider_combo.setCurrentIndex(current_idx)
@@ -684,8 +677,8 @@ class SettingsDialog(QDialog):
         self.tabs.addTab(tab, get_text("settings_api_tab"))
 
     def _on_provider_changed(self, index: int) -> None:
-        _, url, model = LLM_PROVIDERS[index]
-        self.api_info_label.setText(f"URL: {url}   |   Model: {model}")
+        provider = LLM_PROVIDERS[index]
+        self.api_info_label.setText(f"URL: {provider.base_url}   |   Model: {provider.model}")
 
     # ─── Theme Tab ────────────────────────────────
     def _build_theme_tab(self) -> None:
@@ -789,7 +782,7 @@ class SettingsDialog(QDialog):
     # ─── Save ────────────────────────────────────
     def _save_all_and_accept(self) -> None:
         # 保存 API
-        _, url, model = LLM_PROVIDERS[self.provider_combo.currentIndex()]
+        provider = LLM_PROVIDERS[self.provider_combo.currentIndex()]
         env_path = Path(__file__).resolve().parents[3] / "config" / ".env"
         lines: list[str] = []
         if env_path.exists():
@@ -797,13 +790,14 @@ class SettingsDialog(QDialog):
         new_lines: list[str] = []
         for line in lines:
             if not any(line.startswith(k + "=") for k in (
-                "RAG_LLM_BASE_URL", "RAG_LLM_API_KEY", "RAG_LLM_MODEL",
+                "RAG_LLM_PROVIDER", "RAG_LLM_BASE_URL", "RAG_LLM_API_KEY", "RAG_LLM_MODEL",
                 "WAVEDA_ROOT", "WAVEDA_HELP_ROOT", "WAVEDA_EXAMPLE_ROOT",
             )):
                 new_lines.append(line)
-        new_lines.append(f"RAG_LLM_BASE_URL={url}")
+        new_lines.append(f"RAG_LLM_PROVIDER={provider.id}")
+        new_lines.append(f"RAG_LLM_BASE_URL={provider.base_url}")
         new_lines.append(f"RAG_LLM_API_KEY={self.key_edit.text().strip()}")
-        new_lines.append(f"RAG_LLM_MODEL={model}")
+        new_lines.append(f"RAG_LLM_MODEL={provider.model}")
 
         waveda_root = self.waveda_root_edit.text().strip()
         waveda_help_root = self.waveda_help_root_edit.text().strip() or "wavEDA_docs/helpHtml/helpHtml"
