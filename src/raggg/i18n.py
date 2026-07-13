@@ -726,6 +726,18 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "移除附件",
         "en": "Remove attachment",
     },
+    "upload_image_title": {
+        "zh": "上传图片",
+        "en": "Upload Image",
+    },
+    "upload_image_no_vision": {
+        "zh": "当前模型不支持图片识别。请切换到 GPT-4o、Claude 或千问 VL 等多模态模型后再上传图片。",
+        "en": "Current model does not support image recognition. Please switch to GPT-4o, Claude, or Qwen VL to upload images.",
+    },
+    "upload_image_hint": {
+        "zh": "图片已附加。请在输入框中描述你想了解的问题，AI 将根据图片内容回答。",
+        "en": "Image attached. Describe what you want to know and AI will answer based on the image.",
+    },
 }
 
 
