@@ -11,6 +11,8 @@ data/raw_manifest.json
 runtime/
 .venv/
 .tmp/
+frontend/node_modules/
+frontend/coverage/
 __pycache__/
 *.pyc
 *.pyo

@@ -1,0 +1,21 @@
+@import "tailwindcss";
+
+@config "../tailwind.config.ts";
+
+:root {
+  font-family: Inter, "Microsoft YaHei UI", "Segoe UI", sans-serif;
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  min-width: 0;
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  overflow: hidden;
+}
