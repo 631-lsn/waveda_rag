@@ -43,8 +43,28 @@ class DesktopStoreTests(unittest.TestCase):
 
         self.assertTrue(payload["apiConfigured"])
         self.assertEqual(payload["theme"], "dark")
+        self.assertEqual(payload["personality"], "normal")
         self.assertNotIn("apiKey", payload)
         self.assertNotIn("secret-value", json.dumps(payload))
+
+    def test_saving_personality_survives_reload(self) -> None:
+        store = DesktopStore(self.settings)
+
+        payload = store.save_settings({"personality": "cat"})
+        reloaded = store.bootstrap_payload()
+
+        self.assertEqual(payload["personality"], "cat")
+        self.assertEqual(reloaded["personality"], "cat")
+        self.assertIn("RAG_PERSONALITY=cat", self.env_path.read_text(encoding="utf-8"))
+
+    def test_invalid_personality_does_not_change_env(self) -> None:
+        original = "RAG_LLM_API_KEY=secret-value\n"
+        self.env_path.write_text(original, encoding="utf-8")
+
+        with self.assertRaisesRegex(ValueError, "Unsupported personality"):
+            DesktopStore(self.settings).save_settings({"personality": "robot"})
+
+        self.assertEqual(self.env_path.read_text(encoding="utf-8"), original)
 
     def test_conversation_lifecycle_changes_only_selected_record(self) -> None:
         store = DesktopStore(self.settings)

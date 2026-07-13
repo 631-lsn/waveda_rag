@@ -14,6 +14,7 @@ from raggg.pipeline.ingestion import ingest_document
 from raggg.pipeline.rag_pipeline import RAGPipeline
 from raggg.retrieval.retriever import SearchResult
 from raggg.desktop.store import DesktopStore
+from raggg.generation.personality import set_personality
 
 
 TaskRunner = Callable[
@@ -375,6 +376,7 @@ class DesktopBridge(QObject):
     def _refresh_runtime_settings(self, update: dict[str, Any]) -> None:
         env = load_dotenv_file(self.store.env_path)
         root = self.settings.project_root
+        set_personality(env.get("RAG_PERSONALITY", "normal"), persist=False)
 
         def optional_path(name: str, current: Path | None) -> Path | None:
             raw = env.get(name)

@@ -12,6 +12,7 @@ from raggg.desktop.providers import (
     infer_provider_id,
     provider_payloads,
 )
+from raggg.generation.personality import PERSONALITIES
 
 
 def _now() -> str:
@@ -33,8 +34,10 @@ class DesktopStore:
         env = load_dotenv_file(self.env_path)
         theme = env.get("RAG_THEME", "dark")
         locale = env.get("RAG_LANGUAGE", "zh")
+        personality = env.get("RAG_PERSONALITY", "normal")
         theme = theme if theme in {"dark", "light"} else "dark"
         locale = locale if locale in {"zh", "en"} else "zh"
+        personality = personality if personality in PERSONALITIES else "normal"
         api_key = env.get("RAG_LLM_API_KEY", self.settings.llm_api_key)
         model = env.get("RAG_LLM_MODEL", self.settings.llm_model)
         base_url = env.get("RAG_LLM_BASE_URL", self.settings.llm_base_url)
@@ -47,6 +50,7 @@ class DesktopStore:
         return {
             "locale": locale,
             "theme": theme,
+            "personality": personality,
             "apiConfigured": bool(api_key.strip()),
             "model": model,
             "baseUrl": base_url,
@@ -189,6 +193,7 @@ class DesktopStore:
             "apiKey": "RAG_LLM_API_KEY",
             "theme": "RAG_THEME",
             "locale": "RAG_LANGUAGE",
+            "personality": "RAG_PERSONALITY",
             "wavedaRoot": "WAVEDA_ROOT",
             "wavedaHelpRoot": "WAVEDA_HELP_ROOT",
             "wavedaExampleRoot": "WAVEDA_EXAMPLE_ROOT",
@@ -200,6 +205,8 @@ class DesktopStore:
             raise ValueError("Unsupported theme.")
         if env.get("RAG_LANGUAGE", "zh") not in {"zh", "en"}:
             raise ValueError("Unsupported locale.")
+        if env.get("RAG_PERSONALITY", "normal") not in PERSONALITIES:
+            raise ValueError("Unsupported personality.")
         self.env_path.parent.mkdir(parents=True, exist_ok=True)
         lines = [f"{key}={value}" for key, value in env.items()]
         self.env_path.write_text("\n".join(lines) + "\n", encoding="utf-8")

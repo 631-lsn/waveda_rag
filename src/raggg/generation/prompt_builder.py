@@ -2,7 +2,8 @@ from __future__ import annotations
 
 import re
 
-from raggg.i18n import get_text
+from raggg.i18n import get_language, get_text
+from raggg.generation.personality import get_personality_prompt
 from raggg.retrieval.retriever import SearchResult
 
 
@@ -37,6 +38,7 @@ def build_prompt(
             f"{get_text('prompt_history_instruction')}\n\n"
         )
     return (
+        f"{get_personality_prompt(get_language())}\n\n"
         f"{get_text('prompt_role')}\n\n"
         f"{history_section}"
         f"{get_text('prompt_question_prefix')}：{question}\n\n"

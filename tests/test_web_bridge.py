@@ -8,6 +8,7 @@ import unittest
 from raggg.config import Settings
 from raggg.desktop.store import DesktopStore
 from raggg.desktop.web_bridge import DesktopBridge
+from raggg.generation.personality import get_personality, set_personality
 from raggg.pipeline.rag_pipeline import RAGAnswer, RAGPipeline
 
 
@@ -59,6 +60,7 @@ class WebBridgeTests(unittest.TestCase):
         self.settings = make_settings(self.root)
 
     def tearDown(self) -> None:
+        set_personality("normal", persist=False)
         self.tmp.cleanup()
 
     def test_rag_pipeline_reports_retrieval_then_generation(self) -> None:
@@ -150,6 +152,19 @@ class WebBridgeTests(unittest.TestCase):
 
         self.assertIn("Unknown provider", payload["error"])
         self.assertIs(bridge.pipeline, current_pipeline)
+
+    def test_saving_personality_refreshes_runtime_without_restart(self) -> None:
+        bridge = DesktopBridge(
+            self.settings,
+            pipeline=FakePipeline(),
+            store=DesktopStore(self.settings),
+            task_runner=run_immediately,
+        )
+
+        payload = json.loads(bridge.save_settings('{"personality":"dog"}'))
+
+        self.assertEqual(payload["personality"], "dog")
+        self.assertEqual(get_personality(), "dog")
 
 
 if __name__ == "__main__":
