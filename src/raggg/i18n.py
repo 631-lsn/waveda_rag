@@ -584,6 +584,18 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "5 - 最高",
         "en": "5 - Highest",
     },
+    "kbm_import_subdir": {
+        "zh": "子目录",
+        "en": "Sub-directory",
+    },
+    "kbm_subdir_auto": {
+        "zh": "🤖 AI 自动推荐",
+        "en": "AI Auto-Suggest",
+    },
+    "kbm_subdir_root": {
+        "zh": "(根目录)",
+        "en": "(Root)",
+    },
     "kbm_import_target": {
         "zh": "目标节点",
         "en": "Target Node",
@@ -667,6 +679,30 @@ TEXTS: dict[str, dict[str, str]] = {
     "kbm_cat_06": {
         "zh": "06 理论笔记",
         "en": "06 Theory Notes",
+    },
+    "kbm_sub_tutorials": {
+        "zh": "tutorials",
+        "en": "Tutorials",
+    },
+    "kbm_example_circuit": {
+        "zh": "Circuit",
+        "en": "Circuit",
+    },
+    "kbm_example_em": {
+        "zh": "EM",
+        "en": "EM",
+    },
+    "kbm_example_mech": {
+        "zh": "Mech",
+        "en": "Mech",
+    },
+    "kbm_example_multi": {
+        "zh": "Multi-Physics",
+        "en": "Multi-Physics",
+    },
+    "kbm_example_thermal": {
+        "zh": "Thermal",
+        "en": "Thermal",
     },
     "kbm_tab": {
         "zh": "知识库",
