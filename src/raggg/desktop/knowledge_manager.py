@@ -267,11 +267,15 @@ class KnowledgeManager(QWidget):
         out_path = target_dir / f"{safe_name}.md"
         out_path.write_text(markdown, encoding="utf-8")
         self._load_tree()
-        QMessageBox.information(
-            self,
-            get_text("kbm_import_done"),
-            f"{get_text('kbm_import_ok_msg')}: {out_path.relative_to(self._kb_root.parent)}",
-        )
+
+        # 7. 重建索引使新内容可检索
+        from raggg.pipeline.builder import build_knowledge_base
+        try:
+            report = build_knowledge_base(self.settings)
+            msg = f"{get_text('kbm_import_ok_msg')}: {out_path.relative_to(self._kb_root.parent)}\nChunks: {report.chunk_count}"
+        except Exception:
+            msg = f"{get_text('kbm_import_ok_msg')}: {out_path.relative_to(self._kb_root.parent)}\n(索引重建失败，请手动重建)"
+        QMessageBox.information(self, get_text("kbm_import_done"), msg)
 
     def _build_markdown(self, filepath: Path, text: str) -> str:
         """构建带 YAML 头部的 md 文件"""
