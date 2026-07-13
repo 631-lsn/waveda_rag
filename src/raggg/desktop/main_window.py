@@ -35,7 +35,7 @@ from PySide6.QtWidgets import (
 )
 
 from raggg.config import Settings, load_settings
-from raggg.i18n import get_text, get_language, set_language
+from raggg.i18n import get_text, get_language, set_language, get_welcome_text
 from raggg.pipeline.builder import BuildReport, build_knowledge_base
 from raggg.pipeline.ingestion import IngestReport, ingest_document
 from raggg.pipeline.rag_pipeline import RAGAnswer, RAGPipeline
@@ -1827,10 +1827,10 @@ window.scrollTo(0, document.body.scrollHeight);
                           background:{bubbles['assistant_bg']};border:1px solid {bubbles['assistant_border']};
                           box-shadow:0 14px 42px rgba(80,150,185,.12);color:{bubbles['text']};">
                 <div style="font-size:21px;font-weight:700;color:{bubbles['accent']};margin-bottom:12px;">
-                  {html.escape(get_text('welcome_title'))}
+                  {html.escape(get_welcome_text('welcome_title'))}
                 </div>
-                <p style="margin:0 0 9px 0;line-height:1.7;">{html.escape(get_text('welcome_intro'))}</p>
-                <p style="margin:0;line-height:1.7;color:{bubbles['muted']};">{html.escape(get_text('welcome_detail'))}</p>
+                <p style="margin:0 0 9px 0;line-height:1.7;">{html.escape(get_welcome_text('welcome_intro'))}</p>
+                <p style="margin:0;line-height:1.7;color:{bubbles['muted']};">{html.escape(get_welcome_text('welcome_detail'))}</p>
               </div>
               <div style="margin-top:22px;">
                 <div style="font-size:14px;font-weight:700;color:{bubbles['text']};margin-bottom:8px;">
