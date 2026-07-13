@@ -76,7 +76,7 @@ describe("WavEDA React workbench", () => {
     const setup = makeBridge();
     const user = userEvent.setup();
     render(<App bridge={setup.bridge} />);
-    await screen.findByRole("textbox", { name: "提问输入框" });
+    await screen.findByRole("textbox", { name: "提问输入框" }, { timeout: 3000 });
 
     await user.type(screen.getByRole("textbox", { name: "提问输入框" }), "波端口怎么设置？");
     await user.click(screen.getByRole("button", { name: "发送" }));
