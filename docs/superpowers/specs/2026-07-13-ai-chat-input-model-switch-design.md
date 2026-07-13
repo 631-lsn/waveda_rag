@@ -107,7 +107,7 @@ The flow is:
 1. The user selects a provider from `PromptInput`.
 2. React disables repeated selection and calls the desktop bridge.
 3. Python validates the provider ID against the fixed catalog.
-4. Python updates only `RAG_LLM_BASE_URL` and `RAG_LLM_MODEL` in `config/.env`.
+4. Python updates `RAG_LLM_PROVIDER`, `RAG_LLM_BASE_URL`, and `RAG_LLM_MODEL` in `config/.env`. The non-secret provider ID is required because the 通义千问 and 阿里云百炼 presets share the same URL and model.
 5. Python preserves the current `RAG_LLM_API_KEY` exactly as stored.
 6. The web bridge reloads runtime settings and rebuilds the RAG pipeline so the next question uses the selected provider.
 7. The bridge returns a sanitized bootstrap payload, and React updates the selected provider and displayed model.

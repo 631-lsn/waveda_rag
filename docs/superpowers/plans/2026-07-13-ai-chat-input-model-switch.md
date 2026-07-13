@@ -11,6 +11,7 @@
 ## Global Constraints
 
 - Keep exactly one current API key; provider switching must not alter `RAG_LLM_API_KEY`.
+- Persist `RAG_LLM_PROVIDER` because the `qwen` and `bailian` presets share the same Base URL and model.
 - Remove voice input, effort selection, image attachments, and external logo assets.
 - Use the provider presets from the original desktop GUI.
 - Use `lucide-react` for component icons.
@@ -34,7 +35,7 @@
 
 - [ ] **Step 1: Write failing provider-store tests**
 
-Add tests asserting the five provider IDs and models, sanitized bootstrap metadata, preservation of `RAG_LLM_API_KEY`, persistence of the selected Base URL/model, and byte-for-byte unchanged `.env` content after an invalid ID.
+Add tests asserting the five provider IDs and models, sanitized bootstrap metadata, preservation of `RAG_LLM_API_KEY`, persistence of provider ID/Base URL/model, and byte-for-byte unchanged `.env` content after an invalid ID.
 
 ```python
 def test_select_provider_preserves_api_key_and_updates_model(self) -> None:
@@ -45,6 +46,7 @@ def test_select_provider_preserves_api_key_and_updates_model(self) -> None:
     payload = DesktopStore(self.settings).select_provider("openai")
     saved = self.env_path.read_text(encoding="utf-8")
     self.assertIn("RAG_LLM_API_KEY=secret-value", saved)
+    self.assertIn("RAG_LLM_PROVIDER=openai", saved)
     self.assertIn("RAG_LLM_BASE_URL=https://api.openai.com/v1", saved)
     self.assertIn("RAG_LLM_MODEL=gpt-4o-mini", saved)
     self.assertEqual(payload["providerId"], "openai")
@@ -65,7 +67,7 @@ Expected: failures because the provider catalog, bootstrap fields, and `select_p
 
 - [ ] **Step 3: Implement the provider catalog and store operation**
 
-Define immutable records with IDs `deepseek`, `kimi`, `qwen`, `bailian`, and `openai`. `provider_payloads()` returns only `id`, `label`, `baseUrl`, and `model`. `select_provider` validates before reading/writing, then delegates to the existing settings writer with only `baseUrl` and `model`.
+Define immutable records with IDs `deepseek`, `kimi`, `qwen`, `bailian`, and `openai`. `provider_payloads()` returns only `id`, `label`, `baseUrl`, and `model`. `select_provider` validates before reading/writing, then delegates to the existing settings writer with `providerId`, `baseUrl`, and `model`; it never supplies `apiKey`.
 
 Update the legacy `SettingsDialog` to import the canonical catalog instead of maintaining its own tuple list.
 
