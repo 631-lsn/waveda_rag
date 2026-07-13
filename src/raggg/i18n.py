@@ -359,6 +359,44 @@ TEXTS: dict[str, dict[str, str]] = {
         "en": "Settings updated. Restart the app for changes to take effect.",
     },
 
+    # ── 设置：人格 Tab ──────────────────────────────────
+    "settings_personality_tab": {
+        "zh": "人格",
+        "en": "Personality",
+    },
+    "settings_personality_label": {
+        "zh": "助手风格",
+        "en": "Assistant Style",
+    },
+    "settings_personality_desc": {
+        "zh": "选择 AI 助手的语气风格，重启应用后生效。",
+        "en": "Choose your AI assistant's tone. Restart the app to take effect.",
+    },
+    "personality_normal": {
+        "zh": "默认 — 专业简洁",
+        "en": "Default — Professional & Concise",
+    },
+    "personality_mature": {
+        "zh": "御姐风 — 成熟稳重",
+        "en": "Mature — Elegant & Experienced",
+    },
+    "personality_sweet": {
+        "zh": "甜妹风 — 活泼可爱",
+        "en": "Sweet — Cheerful & Cute",
+    },
+    "personality_dog": {
+        "zh": "小狗风 — 忠诚热情",
+        "en": "Puppy — Loyal & Enthusiastic",
+    },
+    "personality_cat": {
+        "zh": "小猫风 — 高冷傲娇",
+        "en": "Kitty — Aloof & Tsundere",
+    },
+    "personality_workhorse": {
+        "zh": "牛马风 — 任劳任怨",
+        "en": "Workhorse — Humble & Hardworking",
+    },
+
     # ── 设置：主题 Tab ──────────────────────────────────
     "settings_theme_tab": {
         "zh": "主题",

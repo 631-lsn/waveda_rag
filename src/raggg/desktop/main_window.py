@@ -543,7 +543,9 @@ class SettingsDialog(QDialog):
 
         # ── Tab 1: 主题 ──
         self._build_theme_tab()
-        # ── Tab 2: API 设置 ──
+        # ── Tab 2: 人格 ──
+        self._build_personality_tab()
+        # ── Tab 3: API 设置 ──
         self._build_api_tab()
         # ── Tab 3: WavEDA 路径 ──
         self._build_waveda_paths_tab()
@@ -558,6 +560,43 @@ class SettingsDialog(QDialog):
         main_layout.addWidget(buttons)
 
     # ─── API Tab ─────────────────────────────────
+    # ─── Personality Tab ──────────────────────────
+    def _build_personality_tab(self) -> None:
+        from raggg.generation.personality import PERSONALITIES, get_personality
+        tab = QWidget()
+        layout = QVBoxLayout(tab)
+        layout.setSpacing(14)
+
+        desc = QLabel(get_text("settings_personality_desc"))
+        desc.setStyleSheet(f"color:{COLORS['muted']};font-size:12px;")
+        desc.setWordWrap(True)
+        layout.addWidget(desc)
+
+        form = QFormLayout()
+        form.setSpacing(10)
+
+        self.personality_combo = QComboBox()
+        personality_labels = {
+            "normal": get_text("personality_normal"),
+            "mature": get_text("personality_mature"),
+            "sweet": get_text("personality_sweet"),
+            "dog": get_text("personality_dog"),
+            "cat": get_text("personality_cat"),
+            "workhorse": get_text("personality_workhorse"),
+        }
+        for key, label in personality_labels.items():
+            self.personality_combo.addItem(label, key)
+        current = get_personality()
+        for i, (key, _) in enumerate(personality_labels.items()):
+            if key == current:
+                self.personality_combo.setCurrentIndex(i)
+                break
+        form.addRow(get_text("settings_personality_label") + ":", self.personality_combo)
+
+        layout.addLayout(form)
+        layout.addStretch()
+        self.tabs.addTab(tab, get_text("settings_personality_tab"))
+
     def _build_api_tab(self) -> None:
         tab = QWidget()
         layout = QVBoxLayout(tab)
@@ -749,9 +788,22 @@ class SettingsDialog(QDialog):
         if not theme_found:
             new_lines.append(f"RAG_THEME={theme}")
 
+        # 保存人格
+        personality = self.personality_combo.currentData()
+        pers_found = False
+        for i, line in enumerate(new_lines):
+            if line.startswith("RAG_PERSONALITY="):
+                new_lines[i] = f"RAG_PERSONALITY={personality}"
+                pers_found = True
+                break
+        if not pers_found:
+            new_lines.append(f"RAG_PERSONALITY={personality}")
+
         env_path.write_text("\n".join(new_lines) + "\n", encoding="utf-8")
         set_language(lang)
         set_theme(theme)
+        from raggg.generation.personality import set_personality
+        set_personality(personality)
         self.accept()
 
 
