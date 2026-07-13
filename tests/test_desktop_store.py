@@ -61,19 +61,18 @@ class DesktopStoreTests(unittest.TestCase):
 
     def test_migrates_legacy_favorites_and_deletes_one(self) -> None:
         favorites_path = self.root / "data" / "favorites.json"
-        favorites_path.write_text(
-            json.dumps(
-                [
-                    {"question": "Q1", "answer": "A1", "time": "2026-07-01 09:00"},
-                    {"question": "Q2", "answer": "A2", "time": "2026-07-02 09:00"},
-                ],
-                ensure_ascii=False,
-            ),
-            encoding="utf-8",
+        original = json.dumps(
+            [
+                {"question": "Q1", "answer": "A1", "time": "2026-07-01 09:00"},
+                {"question": "Q2", "answer": "A2", "time": "2026-07-02 09:00"},
+            ],
+            ensure_ascii=False,
         )
+        favorites_path.write_text(original, encoding="utf-8")
         store = DesktopStore(self.settings)
 
         favorites = store.list_favorites()
+        self.assertEqual(favorites_path.read_text(encoding="utf-8"), original)
         deleted = store.delete_favorite(favorites[0]["id"])
 
         self.assertTrue(deleted)

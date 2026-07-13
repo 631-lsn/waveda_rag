@@ -4,7 +4,7 @@ from datetime import datetime, timezone
 import json
 from pathlib import Path
 from typing import Any
-from uuid import uuid4
+from uuid import NAMESPACE_URL, uuid4, uuid5
 
 from raggg.config import Settings, load_dotenv_file
 
@@ -124,21 +124,24 @@ class DesktopStore:
 
     def list_favorites(self) -> list[dict[str, Any]]:
         records = self._read_list(self.favorites_path)
-        changed = False
         normalized: list[dict[str, Any]] = []
-        for item in records:
+        for index, item in enumerate(records):
             favorite = dict(item)
             if not favorite.get("id"):
-                favorite["id"] = str(uuid4())
-                changed = True
+                legacy_key = "|".join(
+                    [
+                        str(index),
+                        str(favorite.get("question", "")),
+                        str(favorite.get("answer", "")),
+                        str(favorite.get("time", "")),
+                    ]
+                )
+                favorite["id"] = str(uuid5(NAMESPACE_URL, f"raggg-favorite:{legacy_key}"))
             if not favorite.get("createdAt"):
                 favorite["createdAt"] = favorite.pop("time", "") or _now()
-                changed = True
             else:
                 favorite.pop("time", None)
             normalized.append(favorite)
-        if changed:
-            self._write_list(self.favorites_path, normalized)
         return normalized
 
     def save_favorite(self, question: str, answer: str) -> dict[str, Any]:
