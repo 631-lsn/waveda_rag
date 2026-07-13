@@ -127,6 +127,13 @@ class KnowledgeManager(QWidget):
         self._populate_categories()
         import_controls.addWidget(self.category_combo)
 
+        import_controls.addWidget(QLabel(get_text("kbm_priority_label") + ":"))
+        self.priority_combo = QComboBox()
+        for i in range(1, 6):
+            self.priority_combo.addItem(get_text(f"kbm_priority_{i}"), i)
+        self.priority_combo.setCurrentIndex(2)  # 默认中等(3)
+        import_controls.addWidget(self.priority_combo)
+
         import_controls.addWidget(QLabel(get_text("kbm_import_desc_label") + ":"))
         self.desc_edit = QLineEdit()
         self.desc_edit.setPlaceholderText(get_text("kbm_import_desc_placeholder"))
@@ -280,6 +287,7 @@ class KnowledgeManager(QWidget):
     def _build_markdown(self, filepath: Path, text: str) -> str:
         """构建带 YAML 头部的 md 文件"""
         cat_id = self.category_combo.currentData()
+        priority = self.priority_combo.currentData()
         return (
             "---\n"
             f"title: \"{filepath.stem}\"\n"
@@ -287,6 +295,7 @@ class KnowledgeManager(QWidget):
             f"source_file: \"{filepath.name}\"\n"
             f"imported_at: \"2026-07-09\"\n"
             f"category: \"{cat_id}\"\n"
+            f"priority: {priority}\n"
             "---\n\n"
             f"# {filepath.stem}\n\n"
             f"{text}\n"

@@ -771,6 +771,24 @@ class WorkbenchWindow(QMainWindow):
         pill_row.addStretch(1)
         bottom.addLayout(pill_row)
 
+        # ── 附件标签（临时上传文件的提示） ──
+        self.attach_label = QLabel("")
+        self.attach_label.setObjectName("miniPill")
+        self.attach_label.hide()
+        self.attach_remove_btn = QPushButton("×")
+        self.attach_remove_btn.setObjectName("iconButton")
+        self.attach_remove_btn.setToolTip(get_text("upload_clear"))
+        self.attach_remove_btn.setCursor(Qt.PointingHandCursor)
+        self.attach_remove_btn.clicked.connect(self._clear_attachment)
+        self.attach_remove_btn.hide()
+
+        attach_row = QHBoxLayout()
+        attach_row.setContentsMargins(0, 0, 0, 0)
+        attach_row.addSpacing(12)
+        attach_row.addWidget(self.attach_label)
+        attach_row.addWidget(self.attach_remove_btn)
+        attach_row.addStretch(1)
+
         composer_frame = QFrame()
         composer_frame.setObjectName("composer")
         composer_frame.setMaximumWidth(520)
@@ -780,7 +798,7 @@ class WorkbenchWindow(QMainWindow):
 
         self.import_button = QPushButton("+")
         self.import_button.setObjectName("plusButton")
-        self.import_button.setToolTip(get_text("import_tooltip"))
+        self.import_button.setToolTip(get_text("upload_tooltip"))
         self.import_button.setCursor(Qt.PointingHandCursor)
         self.import_button.clicked.connect(self._import_document)
 
@@ -802,6 +820,7 @@ class WorkbenchWindow(QMainWindow):
         composer_row.addStretch(1)
         composer_row.addWidget(composer_frame)
         composer_row.addStretch(1)
+        bottom.addLayout(attach_row)
         bottom.addLayout(composer_row)
         main.addLayout(bottom)
 
@@ -1229,8 +1248,18 @@ class WorkbenchWindow(QMainWindow):
 
         self._temp_attached_text = text
         self._temp_attached_name = filepath.name
-        hint = get_text("upload_attached").replace("{name}", filepath.name)
-        self.question.setPlaceholderText(f"[{hint}] {get_text('placeholder_input')}")
+        self.attach_label.setText(get_text("upload_attached").replace("{name}", filepath.name))
+        self.attach_label.show()
+        self.attach_remove_btn.show()
+        self.question.setPlaceholderText(get_text("placeholder_input"))
+
+    def _clear_attachment(self) -> None:
+        """清除临时附着的文件"""
+        self._temp_attached_text = ""
+        self._temp_attached_name = ""
+        self.attach_label.hide()
+        self.attach_remove_btn.hide()
+        self.question.setPlaceholderText(get_text("placeholder_input"))
 
     def _rebuild_async(self) -> None:
         if self.is_busy:
@@ -1320,6 +1349,8 @@ class WorkbenchWindow(QMainWindow):
             )
             self._temp_attached_text = ""
             self._temp_attached_name = ""
+            self.attach_label.hide()
+            self.attach_remove_btn.hide()
             self.question.setPlaceholderText(get_text("placeholder_input"))
         if self.pipeline is None:
             QMessageBox.information(self, get_text("error_no_kb_title"), get_text("error_no_kb_msg"))

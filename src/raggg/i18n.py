@@ -528,6 +528,30 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "导入 PPT",
         "en": "Import PPT",
     },
+    "kbm_priority_label": {
+        "zh": "重要度",
+        "en": "Priority",
+    },
+    "kbm_priority_1": {
+        "zh": "1 - 最低",
+        "en": "1 - Lowest",
+    },
+    "kbm_priority_2": {
+        "zh": "2 - 较低",
+        "en": "2 - Low",
+    },
+    "kbm_priority_3": {
+        "zh": "3 - 普通",
+        "en": "3 - Normal",
+    },
+    "kbm_priority_4": {
+        "zh": "4 - 较高",
+        "en": "4 - High",
+    },
+    "kbm_priority_5": {
+        "zh": "5 - 最高",
+        "en": "5 - Highest",
+    },
     "kbm_import_target": {
         "zh": "目标节点",
         "en": "Target Node",
@@ -627,8 +651,12 @@ TEXTS: dict[str, dict[str, str]] = {
         "en": "Select file to ask about",
     },
     "upload_attached": {
-        "zh": "已附加文件: {name}",
+        "zh": "已附加: {name}",
         "en": "Attached: {name}",
+    },
+    "upload_clear": {
+        "zh": "移除附件",
+        "en": "Remove attachment",
     },
 }
 
