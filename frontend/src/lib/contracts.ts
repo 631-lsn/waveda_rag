@@ -1,5 +1,6 @@
 export type Locale = "zh" | "en";
 export type Theme = "dark" | "light";
+export type Personality = "normal" | "mature" | "sweet" | "dog" | "cat" | "workhorse";
 export type AnswerPhase = "retrieving" | "generating";
 
 export interface SourceItem {
@@ -48,6 +49,7 @@ export interface ModelProvider {
 export interface BootstrapPayload {
   locale: Locale;
   theme: Theme;
+  personality: Personality;
   apiConfigured: boolean;
   model: string;
   baseUrl: string;
@@ -67,6 +69,7 @@ export interface SettingsUpdate {
   apiKey?: string;
   theme?: Theme;
   locale?: Locale;
+  personality?: Personality;
   wavedaRoot?: string;
   wavedaHelpRoot?: string;
   wavedaExampleRoot?: string;
