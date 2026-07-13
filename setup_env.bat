@@ -12,7 +12,7 @@ cd /d "%RAGGG_PORTABLE_ROOT%"
 if not exist ".tmp" mkdir ".tmp"
 
 echo.
-echo [1/6] Checking Python runtime...
+echo [1/5] Checking Python runtime...
 if exist "runtime\python\python.exe" (
     echo Using bundled portable Python runtime.
     set "PYTHON=%RAGGG_PORTABLE_ROOT%runtime\python\python.exe"
@@ -35,7 +35,7 @@ if exist "runtime\python\python.exe" (
     )
 
     echo.
-    echo [2/6] Creating local virtual environment...
+    echo [2/5] Creating local virtual environment...
     if not exist ".venv\Scripts\python.exe" (
         py -m venv .venv
         if errorlevel 1 (
@@ -52,9 +52,9 @@ if exist "runtime\python\python.exe" (
 
 if defined USING_BUNDLED_PYTHON (
     echo.
-    echo [2/6] Skipping virtual environment creation.
+    echo [2/5] Skipping virtual environment creation.
     echo.
-    echo [3/6] Checking bundled Python dependencies...
+    echo [3/5] Checking bundled Python dependencies...
     "%PYTHON%" -B scripts\install_pdf_dependency.py
     if errorlevel 1 (
         echo [WARN] Failed to install optional PDF dependency pypdf.
@@ -62,7 +62,7 @@ if defined USING_BUNDLED_PYTHON (
     )
 ) else (
     echo.
-    echo [3/6] Installing Python dependencies...
+    echo [3/5] Installing Python dependencies...
     "%PYTHON%" -m ensurepip --upgrade --default-pip
     if errorlevel 1 (
         echo [ERROR] Failed to initialize pip.
@@ -83,17 +83,7 @@ if defined USING_BUNDLED_PYTHON (
 )
 
 echo.
-echo [4/6] Building React desktop frontend...
-powershell -NoProfile -ExecutionPolicy Bypass -File scripts\build_frontend.ps1
-if errorlevel 1 (
-    echo [ERROR] Failed to build the React frontend.
-    echo Please check the message above, then run setup_env.bat again.
-    pause
-    exit /b 1
-)
-
-echo.
-echo [5/6] Building local knowledge index...
+echo [4/5] Building local knowledge index...
 "%PYTHON%" -B scripts\build_knowledge_base.py
 if errorlevel 1 (
     echo [ERROR] Failed to build knowledge index.
@@ -103,7 +93,7 @@ if errorlevel 1 (
 )
 
 echo.
-echo [6/6] Running smoke test...
+echo [5/5] Running smoke test...
 "%PYTHON%" -B scripts\smoke_test.py
 if errorlevel 1 (
     echo [ERROR] Smoke test failed. Please check the message above.

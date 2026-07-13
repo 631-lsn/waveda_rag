@@ -15,7 +15,7 @@ if importlib.util.find_spec("PySide6") is None and VENV_PYTHON.exists():
     if current != target:
         os.execv(str(target), [str(target), *sys.argv])
 
-from raggg.desktop.web_window import run_desktop_app
+from raggg.desktop.main_window import run_desktop_app
 
 
 if __name__ == "__main__":
