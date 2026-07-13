@@ -433,10 +433,65 @@ class AILoaderOverlay(QWidget):
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing, True)
 
+        dark_mode = get_theme() == "dark"
+        if dark_mode:
+            background_stops = (
+                (0.0, QColor(26, 20, 40)),
+                (0.42, QColor(15, 36, 51)),
+                (1.0, QColor(10, 48, 72)),
+            )
+            halo_rgb = (82, 172, 226)
+            ring_colors = (
+                QColor(108, 190, 226, 72),
+                QColor(48, 112, 150, 164),
+                QColor(70, 165, 220, 228),
+                QColor(38, 109, 179, 230),
+                QColor(16, 42, 64, 222),
+            )
+            core_colors = (
+                QColor(54, 104, 132, 220),
+                QColor(31, 79, 104, 202),
+                QColor(20, 58, 82, 176),
+                QColor(12, 37, 58, 142),
+            )
+            arc_colors = (
+                QColor(194, 231, 250, 178),
+                QColor(74, 151, 219, 136),
+                QColor(143, 207, 240, 100),
+            )
+            sweep_color = QColor(100, 181, 236, 210)
+            text_rgb = (220, 229, 240)
+        else:
+            background_stops = (
+                (0.0, QColor(248, 228, 239)),
+                (0.42, QColor(231, 241, 240)),
+                (1.0, QColor(126, 199, 241)),
+            )
+            halo_rgb = (101, 181, 228)
+            ring_colors = (
+                QColor(255, 255, 255, 70),
+                QColor(210, 242, 252, 132),
+                QColor(116, 195, 238, 230),
+                QColor(68, 137, 218, 228),
+                QColor(242, 252, 255, 206),
+            )
+            core_colors = (
+                QColor(245, 253, 255, 226),
+                QColor(226, 246, 250, 196),
+                QColor(180, 225, 243, 142),
+                QColor(112, 184, 232, 92),
+            )
+            arc_colors = (
+                QColor(255, 255, 255, 178),
+                QColor(68, 133, 209, 92),
+                QColor(255, 255, 255, 82),
+            )
+            sweep_color = QColor(78, 145, 221, 188)
+            text_rgb = (33, 55, 76)
+
         gradient = QLinearGradient(0, 0, 0, self.height())
-        gradient.setColorAt(0.0, QColor(248, 228, 239))
-        gradient.setColorAt(0.42, QColor(231, 241, 240))
-        gradient.setColorAt(1.0, QColor(126, 199, 241))
+        for position, color in background_stops:
+            gradient.setColorAt(position, color)
         painter.fillRect(self.rect(), gradient)
 
         size = min(190, max(132, min(self.width(), self.height()) // 4))
@@ -448,42 +503,33 @@ class AILoaderOverlay(QWidget):
         for spread, alpha in ((34, 28), (22, 46), (12, 64)):
             halo = QRadialGradient(rect.center(), size / 2 + spread)
             halo.setColorAt(0.0, QColor(255, 255, 255, 0))
-            halo.setColorAt(0.55, QColor(101, 181, 228, alpha))
-            halo.setColorAt(1.0, QColor(101, 181, 228, 0))
+            halo.setColorAt(0.55, QColor(*halo_rgb, alpha))
+            halo.setColorAt(1.0, QColor(*halo_rgb, 0))
             painter.setBrush(QBrush(halo))
             painter.drawEllipse(rect.adjusted(-spread, -spread, spread, spread))
 
         ring = QRadialGradient(rect.center(), size / 2)
-        ring.setColorAt(0.00, QColor(255, 255, 255, 70))
-        ring.setColorAt(0.54, QColor(210, 242, 252, 132))
-        ring.setColorAt(0.74, QColor(116, 195, 238, 230))
-        ring.setColorAt(0.89, QColor(68, 137, 218, 228))
-        ring.setColorAt(1.00, QColor(242, 252, 255, 206))
+        for position, color in zip((0.00, 0.54, 0.74, 0.89, 1.00), ring_colors):
+            ring.setColorAt(position, color)
         painter.setBrush(QBrush(ring))
         painter.drawEllipse(rect)
 
         core_rect = rect.adjusted(24, 24, -24, -24)
         core = QRadialGradient(core_rect.center(), core_rect.width() / 2)
-        core.setColorAt(0.00, QColor(245, 253, 255, 226))
-        core.setColorAt(0.48, QColor(226, 246, 250, 196))
-        core.setColorAt(0.76, QColor(180, 225, 243, 142))
-        core.setColorAt(1.00, QColor(112, 184, 232, 92))
+        for position, color in zip((0.00, 0.48, 0.76, 1.00), core_colors):
+            core.setColorAt(position, color)
         painter.setBrush(QBrush(core))
         painter.drawEllipse(core_rect)
 
         painter.setBrush(Qt.NoBrush)
-        for inset, color, width in (
-            (25, QColor(255, 255, 255, 178), 3),
-            (34, QColor(68, 133, 209, 92), 8),
-            (48, QColor(255, 255, 255, 82), 2),
-        ):
+        for inset, color, width in zip((25, 34, 48), arc_colors, (3, 8, 2)):
             pen = QPen(color, width)
             pen.setCapStyle(Qt.RoundCap)
             painter.setPen(pen)
             painter.drawArc(rect.adjusted(inset, inset, -inset, -inset), (self._angle + inset) * 16, 118 * 16)
 
         sweep_rect = rect.adjusted(5, 5, -5, -5)
-        sweep_pen = QPen(QColor(78, 145, 221, 188), 6)
+        sweep_pen = QPen(sweep_color, 6)
         sweep_pen.setCapStyle(Qt.RoundCap)
         painter.setPen(sweep_pen)
         painter.drawArc(sweep_rect, -(self._angle + 18) * 16, 64 * 16)
@@ -499,7 +545,7 @@ class AILoaderOverlay(QWidget):
             phase = (self._pulse + index * 9) % 90
             brightness = self._letter_intensity(phase)
             lift = -self._letter_lift(phase)
-            color = QColor(33, 55, 76)
+            color = QColor(*text_rgb)
             color.setAlpha(int(92 + 138 * brightness))
             painter.setPen(color)
             painter.drawText(QRectF(x, base_y - metrics.ascent() + lift, metrics.horizontalAdvance(letter) + 3, metrics.height()), Qt.AlignLeft, letter)
