@@ -22,6 +22,8 @@ Windows 用户按下面三步来：
    - 打开 WavEDA Knowledge Workbench 桌面界面
    - 第一次提问前，可以在左侧点击 `API 设置`，填入自己的 API Key
 
+界面采用 React + TypeScript + Tailwind CSS，并按 shadcn 约定组织组件。`setup_env.bat` 会自动构建静态前端；日常运行不需要单独启动 Node.js 或 Web 服务。
+
 如果你不确定有没有安装好，双击 `run_smoke_test.bat`。它会跑三条基础问题，能看到来源说明就表示核心检索链路正常。
 
 ## 需要提前准备什么
@@ -61,8 +63,12 @@ waveda_rag/
 ├─ start.bat                      # 日常启动桌面应用
 ├─ run_smoke_test.bat             # 验证检索和问答链路
 ├─ app/desktop_app.py             # 桌面应用入口
+├─ frontend/                      # React + TypeScript 前端
+│  ├─ src/components/ui/          # shadcn 共享组件默认目录
+│  ├─ src/index.css               # Tailwind 与全局主题样式
+│  └─ dist/                       # PySide6 加载的生产构建
 ├─ src/raggg/                     # RAG 核心代码
-│  ├─ desktop/                    # PySide6 桌面界面
+│  ├─ desktop/                    # PySide6 桌面壳与 QWebChannel 桥接
 │  ├─ generation/                 # 提示词和大模型调用
 │  ├─ indexing/                   # 本地向量索引
 │  ├─ loaders/                    # Markdown / HTML 文档读取
@@ -74,6 +80,16 @@ waveda_rag/
 ├─ config/.env                    # 本地 API 配置，不提交 Git
 └─ requirements.txt               # Python 依赖
 ```
+
+## 前端开发与重新构建
+
+项目没有依赖系统全局 Node.js。运行以下命令会优先使用已有 Node.js，否则把官方 Windows x64 LTS 运行时下载到 Git 已忽略的 `.tmp/`：
+
+```powershell
+powershell -NoProfile -ExecutionPolicy Bypass -File scripts\build_frontend.ps1
+```
+
+前端默认组件路径是 `frontend/src/components/ui/`，并通过 `@/components/ui` 导入。保留这个目录对 shadcn CLI 很重要，因为 `frontend/components.json` 的组件生成、别名解析和后续升级都依赖该约定。全局样式默认位于 `frontend/src/index.css`。
 
 ## 知识库说明
 
