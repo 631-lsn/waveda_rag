@@ -587,17 +587,13 @@ class SettingsDialog(QDialog):
         self.tabs = QTabWidget()
         main_layout.addWidget(self.tabs)
 
-        # ── Tab 1: 主题 ──
-        self._build_theme_tab()
-        # ── Tab 2: 人格 ──
-        self._build_personality_tab()
-        # ── Tab 3: API 设置 ──
+        # ── Tab 1: 个性化（主题+人格+语言） ──
+        self._build_personalization_tab()
+        # ── Tab 2: API 设置 ──
         self._build_api_tab()
         # ── Tab 3: WavEDA 路径 ──
         self._build_waveda_paths_tab()
-        # ── Tab 4: 语言 ──
-        self._build_language_tab()
-        # ── Tab 5: 知识库管理 ──
+        # ── Tab 4: 知识库管理 ──
         self._build_knowledge_base_tab()
 
         buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
@@ -607,19 +603,33 @@ class SettingsDialog(QDialog):
 
     # ─── API Tab ─────────────────────────────────
     # ─── Personality Tab ──────────────────────────
-    def _build_personality_tab(self) -> None:
-        from raggg.generation.personality import PERSONALITIES, get_personality
+    # ─── 个性化（主题 + 人格 + 语言合并） ──────────
+    def _build_personalization_tab(self) -> None:
+        from raggg.generation.personality import get_personality
         tab = QWidget()
         layout = QVBoxLayout(tab)
-        layout.setSpacing(14)
+        layout.setSpacing(18)
 
-        desc = QLabel(get_text("settings_personality_desc"))
-        desc.setStyleSheet(f"color:{COLORS['muted']};font-size:12px;")
-        desc.setWordWrap(True)
-        layout.addWidget(desc)
+        # ── 主题 ──
+        theme_label = QLabel(get_text("settings_theme_label"))
+        theme_label.setStyleSheet(f"color:{COLORS['text']};font-weight:700;font-size:13px;")
+        layout.addWidget(theme_label)
 
-        form = QFormLayout()
-        form.setSpacing(10)
+        self.theme_combo = QComboBox()
+        self.theme_combo.addItem(get_text("settings_theme_light"), "light")
+        self.theme_combo.addItem(get_text("settings_theme_dark"), "dark")
+        self.theme_combo.setCurrentIndex(0 if get_theme() == "light" else 1)
+        layout.addWidget(self.theme_combo)
+
+        # ── 分隔 ──
+        sep1 = QLabel("")
+        sep1.setStyleSheet(f"border-top:1px solid {COLORS['border']};margin:4px 0;")
+        layout.addWidget(sep1)
+
+        # ── 人格 ──
+        pers_label = QLabel(get_text("settings_personality_label"))
+        pers_label.setStyleSheet(f"color:{COLORS['text']};font-weight:700;font-size:13px;")
+        layout.addWidget(pers_label)
 
         self.personality_combo = QComboBox()
         personality_labels = {
@@ -637,11 +647,31 @@ class SettingsDialog(QDialog):
             if key == current:
                 self.personality_combo.setCurrentIndex(i)
                 break
-        form.addRow(get_text("settings_personality_label") + ":", self.personality_combo)
+        layout.addWidget(self.personality_combo)
 
-        layout.addLayout(form)
+        # ── 分隔 ──
+        sep2 = QLabel("")
+        sep2.setStyleSheet(f"border-top:1px solid {COLORS['border']};margin:4px 0;")
+        layout.addWidget(sep2)
+
+        # ── 语言 ──
+        lang_label = QLabel(get_text("settings_lang_label"))
+        lang_label.setStyleSheet(f"color:{COLORS['text']};font-weight:700;font-size:13px;")
+        layout.addWidget(lang_label)
+
+        self.lang_combo = QComboBox()
+        self.lang_combo.addItem(get_text("settings_lang_zh"), "zh")
+        self.lang_combo.addItem(get_text("settings_lang_en"), "en")
+        self.lang_combo.setCurrentIndex(0 if get_language() == "zh" else 1)
+        layout.addWidget(self.lang_combo)
+
+        desc = QLabel(get_text("settings_lang_desc"))
+        desc.setStyleSheet(f"color:{COLORS['muted']};font-size:11px;")
+        desc.setWordWrap(True)
+        layout.addWidget(desc)
+
         layout.addStretch()
-        self.tabs.addTab(tab, get_text("settings_personality_tab"))
+        self.tabs.addTab(tab, get_text("settings_personalization_tab"))
 
     def _build_api_tab(self) -> None:
         tab = QWidget()

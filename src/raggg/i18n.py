@@ -459,6 +459,12 @@ TEXTS: dict[str, dict[str, str]] = {
         "en": "Workhorse — Humble & Hardworking",
     },
 
+    # ── 设置：个性化 Tab ──────────────────────────────────
+    "settings_personalization_tab": {
+        "zh": "个性化",
+        "en": "Personalization",
+    },
+
     # ── 设置：主题 Tab ──────────────────────────────────
     "settings_theme_tab": {
         "zh": "主题",
