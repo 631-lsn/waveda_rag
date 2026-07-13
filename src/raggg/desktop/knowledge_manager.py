@@ -150,14 +150,30 @@ class KnowledgeManager(QWidget):
             return
         self._add_tree_items(self.tree.invisibleRootItem(), self._kb_root)
 
+    # 目录名 → i18n key 映射
+    _CAT_I18N = {
+        "01_team_tutorials": "kbm_cat_01",
+        "02_software_manual": "kbm_cat_02",
+        "03_examples": "kbm_cat_03",
+        "04_error_cases": "kbm_cat_04",
+        "05_reference": "kbm_cat_05",
+        "06_theory_notes": "kbm_cat_06",
+        "tutorials": "kbm_sub_tutorials",
+        "Circuit": "kbm_example_circuit",
+        "EM": "kbm_example_em",
+        "Mech": "kbm_example_mech",
+        "Multi-Physics": "kbm_example_multi",
+        "Thermal": "kbm_example_thermal",
+    }
+
     def _add_tree_items(self, parent: QTreeWidgetItem, path: Path) -> None:
         for entry in sorted(path.iterdir()):
             if entry.name.startswith("."):
                 continue
             if entry.is_dir():
-                item = QTreeWidgetItem(parent, [entry.name])
+                display_name = get_text(self._CAT_I18N.get(entry.name, "")) or entry.name
+                item = QTreeWidgetItem(parent, [display_name])
                 item.setData(0, Qt.UserRole, str(entry))
-                # Count md files inside
                 md_count = sum(1 for _ in entry.rglob("*.md"))
                 item.setToolTip(0, f"{md_count} documents")
                 self._add_tree_items(item, entry)
