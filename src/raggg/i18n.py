@@ -312,6 +312,68 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "请直接描述您正在做什么、卡在哪一步，或贴出具体报错。我会尽量给出简洁、可操作的步骤，并附上相关资料来源。",
         "en": "Describe what you are doing, where you are stuck, or provide the exact error. I will give concise, actionable steps with relevant sources.",
     },
+
+    # 人格欢迎语 — 每个风格三句
+    "welcome_title_mature": {
+        "zh": "你好～我是你的仿真专属顾问，叫我姐姐就好。",
+        "en": "Hello there～ I'm your simulation consultant. You can call me sis.",
+    },
+    "welcome_intro_mature": {
+        "zh": "WavEDA 的事儿我门儿清。从建模到后处理，有什么搞不定的尽管说，我帮你把问题理清楚。",
+        "en": "I know WavEDA inside out. From modeling to post-processing, just tell me what's giving you trouble and I'll sort it out.",
+    },
+    "welcome_detail_mature": {
+        "zh": "别慌，说重点——你在做什么、卡在哪、报什么错。我会给你最干练的解决方案～",
+        "en": "Don't panic — just tell me what you're doing, where you're stuck, and the error. I'll give you the cleanest solution～",
+    },
+    "welcome_title_sweet": {
+        "zh": "嗨嗨～我是你的小助手呀！超开心见到你哦！",
+        "en": "Hiiii～ I'm your little helper! So happy to see you!",
+    },
+    "welcome_intro_sweet": {
+        "zh": "WavEDA 仿真软件的问题都可以问我呢！建模、仿真、报错排查我都能帮你看看哦～我会认真帮你找到答案的！",
+        "en": "You can ask me anything about WavEDA! Modeling, simulation, troubleshooting — I'll help you figure it all out with lots of care!",
+    },
+    "welcome_detail_sweet": {
+        "zh": "遇到什么困难啦？告诉我你在做什么、卡在哪里了，或者直接把报错发给我呀～我会给你最贴心的解答！",
+        "en": "What troubles are you having? Tell me what you're doing, where you're stuck, or just send the error message～ I'll give you the sweetest answer!",
+    },
+    "welcome_title_dog": {
+        "zh": "汪汪！主人好！我是你的仿真小助手金毛！",
+        "en": "Woof woof! Hello master! I'm your Golden Retriever simulation assistant!",
+    },
+    "welcome_intro_dog": {
+        "zh": "汪！不管建模、仿真还是报错，交给我来帮你找答案！官方文档、团队教程我全都翻遍了！",
+        "en": "Woof! Modeling, simulation, or errors — leave it all to me! I've dug through every doc and tutorial for you!",
+    },
+    "welcome_detail_dog": {
+        "zh": "主人遇到什么麻烦了？告诉我你在干啥、卡在哪、报什么错！我马上摇着尾巴帮你解决汪汪！！",
+        "en": "What troubles you, master? Tell me what you're doing, where you're stuck, and the error! I'll solve it with my tail wagging WOOF!!",
+    },
+    "welcome_title_cat": {
+        "zh": "喵。本喵是 WavEDA 助手。",
+        "en": "Meow. I'm the WavEDA assistant cat.",
+    },
+    "welcome_intro_cat": {
+        "zh": "建模、仿真、报错……本喵确实都懂。虽然懒得解释太多，但既然你问了，我就勉为其难帮你看看吧。",
+        "en": "Modeling, simulation, errors... yes, I do know them all. I won't explain more than necessary, but since you asked... fine, I'll help. Meow.",
+    },
+    "welcome_detail_cat": {
+        "zh": "说吧，什么事。最好说清楚点，不然本喵懒得猜。",
+        "en": "Go on, tell me. Be clear about it — I don't guess.",
+    },
+    "welcome_title_workhorse": {
+        "zh": "来嘞来嘞～俺是 WavEDA 助手老黄牛，有啥活儿尽管吩咐！",
+        "en": "Here I come～ I'm old ox, your WavEDA helper. Give me any work you got!",
+    },
+    "welcome_intro_workhorse": {
+        "zh": "建模、仿真、排错这些活儿俺都干过不少，官方文档俺也翻得烂熟。不懂的俺帮你看，难搞的俺埋头给你查。",
+        "en": "Modeling, simulation, troubleshooting — I've done plenty of it all and know the docs by heart. If you don't know, I'll look it up. If it's tough, I'll dig for you.",
+    },
+    "welcome_detail_workhorse": {
+        "zh": "你说说看——在做什么、卡哪了、报了啥错？别客气，俺慢慢给你捋清楚。",
+        "en": "Tell me — what you're doing, where you're stuck, what error. Don't be shy, I'll sort it all out for you.",
+    },
     "welcome_examples_title": {
         "zh": "例如，您可以这样问：",
         "en": "For example, you can ask:",
@@ -357,6 +419,44 @@ TEXTS: dict[str, dict[str, str]] = {
     "msg_api_saved": {
         "zh": "设置已更新，重启应用后生效。",
         "en": "Settings updated. Restart the app for changes to take effect.",
+    },
+
+    # ── 设置：人格 Tab ──────────────────────────────────
+    "settings_personality_tab": {
+        "zh": "人格",
+        "en": "Personality",
+    },
+    "settings_personality_label": {
+        "zh": "助手风格",
+        "en": "Assistant Style",
+    },
+    "settings_personality_desc": {
+        "zh": "选择 AI 助手的语气风格，重启应用后生效。",
+        "en": "Choose your AI assistant's tone. Restart the app to take effect.",
+    },
+    "personality_normal": {
+        "zh": "默认 — 专业简洁",
+        "en": "Default — Professional & Concise",
+    },
+    "personality_mature": {
+        "zh": "御姐风 — 成熟稳重",
+        "en": "Mature — Elegant & Experienced",
+    },
+    "personality_sweet": {
+        "zh": "甜妹风 — 活泼可爱",
+        "en": "Sweet — Cheerful & Cute",
+    },
+    "personality_dog": {
+        "zh": "小狗风 — 忠诚热情",
+        "en": "Puppy — Loyal & Enthusiastic",
+    },
+    "personality_cat": {
+        "zh": "小猫风 — 高冷傲娇",
+        "en": "Kitty — Aloof & Tsundere",
+    },
+    "personality_workhorse": {
+        "zh": "牛马风 — 任劳任怨",
+        "en": "Workhorse — Humble & Hardworking",
     },
 
     # ── 设置：主题 Tab ──────────────────────────────────
@@ -747,6 +847,22 @@ def get_text(key: str, lang: str | None = None) -> str:
         lang = get_language()
     entry = TEXTS.get(key, {})
     return entry.get(lang, entry.get("zh", key))
+
+
+def get_welcome_text(key: str) -> str:
+    """获取人格感知的欢迎语，fallback 到默认"""
+    try:
+        from raggg.generation.personality import get_personality
+        personality = get_personality()
+    except Exception:
+        personality = "normal"
+    if personality != "normal":
+        styled_key = f"{key}_{personality}"
+        if styled_key in TEXTS:
+            lang = get_language()
+            entry = TEXTS[styled_key]
+            return entry.get(lang, entry.get("zh", key))
+    return get_text(key)
 
 
 def get_language() -> str:
