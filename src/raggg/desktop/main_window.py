@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import base64
 import html
+import json
 import os
 import re
 import sys
@@ -55,6 +56,7 @@ class AskResult:
 
 class WorkerSignals(QObject):
     result = Signal(object)
+    progress = Signal(object)
     error = Signal(str)
     finished = Signal()
 
@@ -746,6 +748,7 @@ class WorkbenchWindow(QMainWindow):
         self.is_busy = False
         self._last_qa: tuple[str, str] = ("", "")  # (question, answer)
         self._conversation_history: list[tuple[str, str]] = []
+        self._stream_message_counter = 0
         self._fav_file = settings.data_dir / "favorites.json"
         self._project_root = Path(__file__).resolve().parents[3]
         self._source_snapshot: SourceSnapshot = {}
@@ -848,12 +851,19 @@ class WorkbenchWindow(QMainWindow):
 
         class _FavPage(QWebEnginePage):
             def javaScriptConsoleMessage(self2, level, msg, line, source):
-                if msg == "RAGGG_FAV":
-                    wb_ref._do_fav()
+                wb_ref._on_console_msg(level, msg, line, source)
 
         self.chat.setPage(_FavPage(self.chat))
         self.chat.page().setBackgroundColor(QColor(0, 0, 0, 0))
-        self.chat.setHtml(self._welcome_html())
+        chunks_path = self.settings.data_dir / "index" / "chunks.json"
+        chunk_count = "-"
+        if chunks_path.exists():
+            try:
+                chunk_count = str(len(json.loads(chunks_path.read_text(encoding="utf-8"))))
+            except (OSError, json.JSONDecodeError):
+                pass
+        model_name = self.settings.llm_model if self.settings.llm_api_key else get_text("model_local")
+        self.chat.setHtml(self._welcome_html(chunk_count=chunk_count, model_name=model_name))
         main.addWidget(self.chat, stretch=1)
 
         bottom = QVBoxLayout()
@@ -1009,8 +1019,7 @@ class WorkbenchWindow(QMainWindow):
         wb_ref = self
         class _FavPage(QWebEnginePage):
             def javaScriptConsoleMessage(self2, level, msg, line, source):
-                if msg == "RAGGG_FAV":
-                    wb_ref._do_fav()
+                wb_ref._on_console_msg(level, msg, line, source)
         self.chat.setPage(_FavPage(self.chat))
 
         # 读取实际的 chunk 数量和模型名
@@ -1219,6 +1228,10 @@ class WorkbenchWindow(QMainWindow):
     def _on_console_msg(self, level, msg: str, line: int, source: str) -> None:
         if msg == "RAGGG_FAV":
             self._do_fav()
+        elif msg.startswith("RAGGG_QUICK:"):
+            question = msg.partition(":")[2].strip()
+            if question:
+                QTimer.singleShot(0, lambda current=question: self._ask(current))
         elif msg.startswith("RAGGG_FAVDEL:"):
             # Not used here; favorites dialog uses Qt buttons now
             pass
@@ -1424,9 +1437,27 @@ class WorkbenchWindow(QMainWindow):
         self._append_user(text)
         self._set_busy(True, get_text("status_searching"))
         conversation_history = list(self._conversation_history)
-        worker = Worker(lambda: AskResult(text, self.pipeline.ask(text, conversation_history=conversation_history)))
-        worker.signals.result.connect(self._on_answer_done)
-        worker.signals.error.connect(lambda message: self._append_assistant(get_text("msg_generation_failed") + message))
+        stream_id = self._begin_streaming_assistant()
+
+        def ask_with_streaming() -> AskResult:
+            assert self.pipeline is not None
+            answer = self.pipeline.ask(
+                text,
+                conversation_history=conversation_history,
+                on_chunk=lambda chunk: worker.signals.progress.emit(chunk),
+            )
+            return AskResult(text, answer)
+
+        worker = Worker(ask_with_streaming)
+        worker.signals.progress.connect(
+            lambda chunk, current_id=stream_id: self._append_stream_chunk(current_id, str(chunk))
+        )
+        worker.signals.result.connect(
+            lambda result, current_id=stream_id: self._on_answer_done(result, current_id)
+        )
+        worker.signals.error.connect(
+            lambda message, current_id=stream_id: self._on_stream_error(current_id, message)
+        )
         worker.signals.finished.connect(lambda: self._set_busy(False, get_text("status_ready")))
         self._start_worker(worker)
 
@@ -1439,8 +1470,11 @@ class WorkbenchWindow(QMainWindow):
         if worker in self._active_workers:
             self._active_workers.remove(worker)
 
-    def _on_answer_done(self, result: AskResult) -> None:
-        self._append_assistant(result.answer.answer)
+    def _on_answer_done(self, result: AskResult, stream_id: str | None = None) -> None:
+        if stream_id is None:
+            self._append_assistant(result.answer.answer)
+        else:
+            self._finish_streaming_assistant(stream_id, result.answer.answer)
         self._remember_turn(result.question, result.answer.answer)
         all_images = _extract_images_from_sources(result.answer.sources, self._image_index)
         if all_images:
@@ -1512,6 +1546,59 @@ class WorkbenchWindow(QMainWindow):
         )
         self._append_html(msg_html)
 
+    def _begin_streaming_assistant(self) -> str:
+        self._stream_message_counter += 1
+        stream_id = f"rag-stream-{self._stream_message_counter}"
+        actions_id = f"{stream_id}-actions"
+        content_id = f"{stream_id}-content"
+        bubbles = get_chat_bubble_colors()
+        msg_html = web_wrapper(
+            f"""<div id="{stream_id}" style="margin:16px 26px 18px 26px;display:flex;justify-content:flex-start;">
+              <div style="max-width:82%;">
+              <div id="{actions_id}" style="display:none;align-items:center;gap:8px;margin-left:2px;margin-bottom:6px;">
+                <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='{get_text("btn_copied")}';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
+                  style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;">{get_text("btn_copy")}</button>
+                <button onclick="console.log('RAGGG_FAV');this.innerHTML='{get_text("btn_faved")}';this.style.color='{bubbles['accent']}';setTimeout(function(){{this.innerHTML='{get_text("btn_fav")}';this.style.color='{bubbles['muted']}'}}.bind(this),1500)"
+                  style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;">{get_text("btn_fav")}</button>
+              </div>
+              <div id="{content_id}" style="padding:15px 17px;border-radius:18px 18px 18px 4px;background:{bubbles['assistant_bg']};border:1px solid {bubbles['assistant_border']};box-shadow:0 14px 42px rgba(80,150,185,.12);color:{bubbles['text']};line-height:1.6;white-space:pre-wrap;"><span data-stream-cursor style="color:{bubbles['accent']};">▌</span></div>
+              </div>
+            </div>"""
+        )
+        self._append_html(msg_html)
+        return stream_id
+
+    def _append_stream_chunk(self, stream_id: str, chunk: str) -> None:
+        # Once text starts arriving, reveal the chat instead of covering it
+        # with the loading overlay. Busy state still disables user actions.
+        self.loader_overlay.hide()
+        content_id = json.dumps(f"{stream_id}-content")
+        chunk_json = json.dumps(chunk, ensure_ascii=False)
+        self.chat.page().runJavaScript(
+            f"""var content=document.getElementById({content_id});
+if(content){{
+  var cursor=content.querySelector('[data-stream-cursor]');
+  if(cursor){{cursor.insertAdjacentText('beforebegin', {chunk_json});}}
+  window.scrollTo(0, document.body.scrollHeight);
+}}"""
+        )
+
+    def _finish_streaming_assistant(self, stream_id: str, answer: str) -> None:
+        self._last_qa = (self._last_qa[0], answer)
+        content_id = json.dumps(f"{stream_id}-content")
+        actions_id = json.dumps(f"{stream_id}-actions")
+        rendered_json = json.dumps(markdown_to_html(answer), ensure_ascii=False)
+        self.chat.page().runJavaScript(
+            f"""var content=document.getElementById({content_id});
+if(content){{content.innerHTML={rendered_json};content.style.whiteSpace='normal';}}
+var actions=document.getElementById({actions_id});
+if(actions){{actions.style.display='flex';}}
+window.scrollTo(0, document.body.scrollHeight);"""
+        )
+
+    def _on_stream_error(self, stream_id: str, message: str) -> None:
+        self._finish_streaming_assistant(stream_id, get_text("msg_generation_failed") + message)
+
     def _append_html(self, html_content: str) -> None:
         """Append HTML content to the chat WebView, preserving existing content."""
         self.chat.page().runJavaScript(
@@ -1556,7 +1643,51 @@ window.scrollTo(0, document.body.scrollHeight);
         return web_wrapper("\n".join(cards))
 
     def _welcome_html(self, chunk_count: str = "-", model_name: str = "DeepSeek") -> str:
-        return web_wrapper("""<div style="min-height:1px;"></div>""")
+        bubbles = get_chat_bubble_colors()
+        examples = [get_text(f"welcome_example_{index}") for index in range(1, 4)]
+        example_buttons = []
+        for example in examples:
+            question_json = json.dumps(example, ensure_ascii=False)
+            example_buttons.append(
+                f"""<button onclick='console.log("RAGGG_QUICK:" + {question_json})'
+                  style="display:block;width:100%;text-align:left;margin:8px 0;padding:11px 14px;
+                         border:1px solid {bubbles['border']};border-radius:12px;
+                         background:{bubbles['surface2']};color:{bubbles['text']};
+                         font-family:inherit;font-size:13px;line-height:1.5;cursor:pointer;"
+                  onmouseover="this.style.borderColor='{bubbles['accent']}';this.style.color='{bubbles['accent']}'"
+                  onmouseout="this.style.borderColor='{bubbles['border']}';this.style.color='{bubbles['text']}'">{html.escape(example)}</button>"""
+            )
+
+        status_parts = []
+        if chunk_count != "-":
+            status_parts.append(f"{get_text('startup_chunks_label')} {html.escape(chunk_count)}")
+        if model_name:
+            status_parts.append(f"{get_text('startup_llm_label')} {html.escape(model_name)}")
+        status_html = " · ".join(status_parts)
+
+        return web_wrapper(
+            f"""<div style="max-width:760px;margin:52px auto 36px auto;padding:0 24px;">
+              <div style="padding:22px 24px;border-radius:18px 18px 18px 4px;
+                          background:{bubbles['assistant_bg']};border:1px solid {bubbles['assistant_border']};
+                          box-shadow:0 14px 42px rgba(80,150,185,.12);color:{bubbles['text']};">
+                <div style="font-size:21px;font-weight:700;color:{bubbles['accent']};margin-bottom:12px;">
+                  {html.escape(get_text('welcome_title'))}
+                </div>
+                <p style="margin:0 0 9px 0;line-height:1.7;">{html.escape(get_text('welcome_intro'))}</p>
+                <p style="margin:0;line-height:1.7;color:{bubbles['muted']};">{html.escape(get_text('welcome_detail'))}</p>
+              </div>
+              <div style="margin-top:22px;">
+                <div style="font-size:14px;font-weight:700;color:{bubbles['text']};margin-bottom:8px;">
+                  {html.escape(get_text('welcome_examples_title'))}
+                </div>
+                {''.join(example_buttons)}
+                <div style="margin-top:10px;text-align:center;color:{bubbles['muted']};font-size:11px;">
+                  {html.escape(get_text('welcome_click_hint'))}
+                  {(' · ' + status_html) if status_html else ''}
+                </div>
+              </div>
+            </div>"""
+        )
 
     def _empty_sources_html(self, message: str | None = None) -> str:
         if message is None:

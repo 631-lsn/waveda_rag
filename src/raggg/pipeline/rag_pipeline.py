@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
 
 from raggg.config import Settings
@@ -36,20 +37,55 @@ class RAGPipeline:
         question: str,
         top_k: int = 6,
         conversation_history: ConversationHistory | None = None,
+        on_chunk: Callable[[str], None] | None = None,
     ) -> RAGAnswer:
         history = conversation_history or []
         sources = self.retriever.search(self._build_retrieval_query(question, history), top_k=top_k)
         prompt = build_prompt(question, sources, conversation_history=history)
         warning = None
         if self.client.is_configured:
-            try:
-                answer = self.client.complete(prompt)
-            except RuntimeError as exc:
-                answer = build_local_answer(question, sources)
-                warning = self._friendly_llm_warning(str(exc))
+            if on_chunk is not None:
+                answer, warning = self._complete_streaming(prompt, question, sources, on_chunk)
+            else:
+                try:
+                    answer = self.client.complete(prompt)
+                except RuntimeError as exc:
+                    answer = build_local_answer(question, sources)
+                    warning = self._friendly_llm_warning(str(exc))
         else:
             answer = build_local_answer(question, sources)
+            if on_chunk is not None:
+                on_chunk(answer)
         return RAGAnswer(question=question, answer=answer, sources=sources, warning=warning)
+
+    def _complete_streaming(
+        self,
+        prompt: str,
+        question: str,
+        sources: list[SearchResult],
+        on_chunk: Callable[[str], None],
+    ) -> tuple[str, str | None]:
+        parts: list[str] = []
+        try:
+            for chunk in self.client.complete_stream(prompt):
+                parts.append(chunk)
+                on_chunk(chunk)
+            if not parts:
+                raise RuntimeError("The model returned an empty streaming response.")
+            return "".join(parts), None
+        except RuntimeError as stream_error:
+            if parts:
+                return "".join(parts), self._friendly_llm_warning(str(stream_error))
+
+            # Preserve compatibility with providers that reject stream=true.
+            try:
+                answer = self.client.complete(prompt)
+                on_chunk(answer)
+                return answer, None
+            except RuntimeError as fallback_error:
+                answer = build_local_answer(question, sources)
+                on_chunk(answer)
+                return answer, self._friendly_llm_warning(str(fallback_error))
 
     @staticmethod
     def _build_retrieval_query(question: str, conversation_history: ConversationHistory) -> str:
