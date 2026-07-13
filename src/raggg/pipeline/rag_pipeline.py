@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from dataclasses import dataclass
+from typing import Callable
 
 from raggg.config import Settings
 from raggg.generation.llm_client import OpenAICompatibleClient
@@ -36,9 +37,14 @@ class RAGPipeline:
         question: str,
         top_k: int = 6,
         conversation_history: ConversationHistory | None = None,
+        progress: Callable[[str], None] | None = None,
     ) -> RAGAnswer:
         history = conversation_history or []
+        if progress:
+            progress("retrieving")
         sources = self.retriever.search(self._build_retrieval_query(question, history), top_k=top_k)
+        if progress:
+            progress("generating")
         prompt = build_prompt(question, sources, conversation_history=history)
         warning = None
         if self.client.is_configured:
