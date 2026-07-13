@@ -7,6 +7,11 @@ from typing import Any
 from uuid import NAMESPACE_URL, uuid4, uuid5
 
 from raggg.config import Settings, load_dotenv_file
+from raggg.desktop.providers import (
+    get_provider,
+    infer_provider_id,
+    provider_payloads,
+)
 
 
 def _now() -> str:
@@ -31,13 +36,22 @@ class DesktopStore:
         theme = theme if theme in {"dark", "light"} else "dark"
         locale = locale if locale in {"zh", "en"} else "zh"
         api_key = env.get("RAG_LLM_API_KEY", self.settings.llm_api_key)
+        model = env.get("RAG_LLM_MODEL", self.settings.llm_model)
+        base_url = env.get("RAG_LLM_BASE_URL", self.settings.llm_base_url)
+        configured_provider = env.get("RAG_LLM_PROVIDER", "")
+        try:
+            provider_id = get_provider(configured_provider).id
+        except ValueError:
+            provider_id = infer_provider_id(base_url, model)
         index_status, chunk_count = self._index_status()
         return {
             "locale": locale,
             "theme": theme,
             "apiConfigured": bool(api_key.strip()),
-            "model": env.get("RAG_LLM_MODEL", self.settings.llm_model),
-            "baseUrl": env.get("RAG_LLM_BASE_URL", self.settings.llm_base_url),
+            "model": model,
+            "baseUrl": base_url,
+            "providerId": provider_id,
+            "providers": provider_payloads(),
             "chunkCount": chunk_count,
             "indexStatus": index_status,
             "watcherStatus": "active",
@@ -169,6 +183,7 @@ class DesktopStore:
     def save_settings(self, update: dict[str, Any]) -> dict[str, Any]:
         env = load_dotenv_file(self.env_path)
         mapping = {
+            "providerId": "RAG_LLM_PROVIDER",
             "baseUrl": "RAG_LLM_BASE_URL",
             "model": "RAG_LLM_MODEL",
             "apiKey": "RAG_LLM_API_KEY",
@@ -189,6 +204,16 @@ class DesktopStore:
         lines = [f"{key}={value}" for key, value in env.items()]
         self.env_path.write_text("\n".join(lines) + "\n", encoding="utf-8")
         return self.bootstrap_payload()
+
+    def select_provider(self, provider_id: str) -> dict[str, Any]:
+        provider = get_provider(provider_id)
+        return self.save_settings(
+            {
+                "providerId": provider.id,
+                "baseUrl": provider.base_url,
+                "model": provider.model,
+            }
+        )
 
     def _index_status(self) -> tuple[str, int]:
         chunks_path = self.data_dir / "index" / "chunks.json"
