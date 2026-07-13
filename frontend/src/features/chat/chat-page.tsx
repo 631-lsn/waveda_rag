@@ -8,12 +8,14 @@ import { Button } from "@/components/ui/button";
 import { PromptInput } from "@/components/ui/ai-chat-input";
 import { Component as AiLoader } from "@/components/ui/ai-loader";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { ConversationMessage, Locale, ModelProvider } from "@/lib/contracts";
+import type { ConversationMessage, Locale, ModelProvider, Personality } from "@/lib/contracts";
 import { t } from "@/lib/i18n";
+import { getWelcomeCopy } from "@/lib/personality";
 import { cn } from "@/lib/utils";
 
 interface ChatPageProps {
   locale: Locale;
+  personality: Personality;
   messages: ConversationMessage[];
   question: string;
   busy: boolean;
@@ -30,6 +32,7 @@ interface ChatPageProps {
 
 export function ChatPage(props: ChatPageProps) {
   const lastMessage = props.messages.at(-1);
+  const welcome = getWelcomeCopy(props.locale, props.personality);
 
   return (
     <div className="chat-layout">
@@ -39,8 +42,9 @@ export function ChatPage(props: ChatPageProps) {
             <div className="welcome-card">
               <div className="welcome-orb" />
               <p className="eyebrow">RESEARCH COPILOT</p>
-              <h1>{t(props.locale, "welcome")}</h1>
-              <p>{t(props.locale, "welcomeBody")}</p>
+              <h1>{welcome.title}</h1>
+              <p className="font-medium text-[var(--text)]">{welcome.intro}</p>
+              <p>{welcome.detail}</p>
               <div className="mt-8 grid gap-3 sm:grid-cols-3">
                 {["波端口怎么设置？", "PML 边界为什么报错？", "如何导出 S 参数？"].map((sample) => (
                   <button key={sample} className="sample-card" onClick={() => props.onQuestionChange(sample)}>{sample}</button>

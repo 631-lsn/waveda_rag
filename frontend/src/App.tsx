@@ -269,6 +269,7 @@ export default function App({ bridge }: AppProps) {
       <Suspense fallback={<div className="grid h-full place-items-center text-sm text-[var(--muted)]">{t(locale, "loading")}</div>}>
         <ChatPage
           locale={locale}
+          personality={bootstrap.personality}
           messages={messages}
           question={question}
           busy={Boolean(busyText)}
