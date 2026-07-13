@@ -9,6 +9,7 @@ from raggg.config import Settings
 from raggg.desktop.store import DesktopStore
 from raggg.desktop.web_bridge import DesktopBridge
 from raggg.generation.personality import get_personality, set_personality
+from raggg.i18n import get_language, set_language
 from raggg.pipeline.rag_pipeline import RAGAnswer, RAGPipeline
 
 
@@ -61,6 +62,7 @@ class WebBridgeTests(unittest.TestCase):
 
     def tearDown(self) -> None:
         set_personality("normal", persist=False)
+        set_language("zh")
         self.tmp.cleanup()
 
     def test_rag_pipeline_reports_retrieval_then_generation(self) -> None:
@@ -161,10 +163,11 @@ class WebBridgeTests(unittest.TestCase):
             task_runner=run_immediately,
         )
 
-        payload = json.loads(bridge.save_settings('{"personality":"dog"}'))
+        payload = json.loads(bridge.save_settings('{"personality":"dog","locale":"en"}'))
 
         self.assertEqual(payload["personality"], "dog")
         self.assertEqual(get_personality(), "dog")
+        self.assertEqual(get_language(), "en")
 
 
 if __name__ == "__main__":
