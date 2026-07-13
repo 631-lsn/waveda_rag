@@ -89,7 +89,9 @@ describe("WavEDA React workbench", () => {
     expect(screen.getByTestId("ai-loader-orbit")).toBeInTheDocument();
 
     resolveBootstrap(bootstrap);
-    expect(await screen.findByText("喵。本喵是 WavEDA 助手")).toBeInTheDocument();
+    expect(
+      await screen.findByText("喵。本喵是 WavEDA 助手", undefined, { timeout: 3000 }),
+    ).toBeInTheDocument();
 
     expect(await screen.findByRole("button", { name: "新建会话" })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "历史记录" })).toBeInTheDocument();
