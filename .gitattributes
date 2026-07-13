@@ -1,2 +1,4 @@
 *.dll filter=lfs diff=lfs merge=lfs -text
 *.pak filter=lfs diff=lfs merge=lfs -text
+frontend/index.html text eol=lf
+frontend/dist/index.html text eol=lf
