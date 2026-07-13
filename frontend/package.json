@@ -15,8 +15,13 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
+    "katex": "^0.17.0",
+    "react-markdown": "^10.1.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
+    "rehype-katex": "^7.0.1",
+    "remark-gfm": "^4.0.1",
+    "remark-math": "^6.0.0",
     "styled-jsx": "^5.1.7",
     "tailwind-merge": "^3.3.1"
   },
