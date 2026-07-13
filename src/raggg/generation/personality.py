@@ -54,7 +54,7 @@ def get_personality_prompt(lang: str = "zh") -> str:
 
 
 def _env_path() -> Path:
-    return Path(__file__).resolve().parents[2] / "config" / ".env"
+    return Path(__file__).resolve().parents[3] / "config" / ".env"
 
 
 def _load_personality() -> str:
