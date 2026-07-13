@@ -14,6 +14,15 @@ export interface ModelOption {
   model: string;
 }
 
+export interface PromptInputLabels {
+  input: string;
+  open: string;
+  selectModel: string;
+  current: string;
+  send: string;
+  stop: string;
+}
+
 export interface PromptInputProps {
   value: string;
   onChange(value: string): void;
@@ -25,8 +34,18 @@ export interface PromptInputProps {
   selectedModelId: string;
   onModelChange(modelId: string): void;
   modelSwitching?: boolean;
+  labels?: Partial<PromptInputLabels>;
   className?: string;
 }
+
+const DEFAULT_LABELS: PromptInputLabels = {
+  input: "Prompt",
+  open: "Open prompt input",
+  selectModel: "Select model",
+  current: "Current",
+  send: "Send prompt",
+  stop: "Stop generation",
+};
 
 function MorphingText({ text }: { text: string }) {
   const spanRef = React.useRef<HTMLSpanElement>(null);
@@ -67,6 +86,7 @@ export const PromptInput = React.forwardRef<HTMLDivElement, PromptInputProps>(
       selectedModelId,
       onModelChange,
       modelSwitching = false,
+      labels: labelOverrides,
       className,
     },
     forwardedRef,
@@ -78,6 +98,7 @@ export const PromptInput = React.forwardRef<HTMLDivElement, PromptInputProps>(
     const rootRef = React.useRef<HTMLDivElement>(null);
     const textareaRef = React.useRef<HTMLTextAreaElement>(null);
     const currentModel = models.find((model) => model.id === selectedModelId) ?? models[0];
+    const labels = { ...DEFAULT_LABELS, ...labelOverrides };
     const canSubmit = value.trim().length > 0 && !modelSwitching;
 
     React.useImperativeHandle(forwardedRef, () => rootRef.current as HTMLDivElement);
@@ -145,7 +166,7 @@ export const PromptInput = React.forwardRef<HTMLDivElement, PromptInputProps>(
         >
           <textarea
             ref={textareaRef}
-            aria-label="Prompt"
+            aria-label={labels.input}
             value={value}
             onChange={(event) => {
               setSmoothResize(true);
@@ -176,7 +197,7 @@ export const PromptInput = React.forwardRef<HTMLDivElement, PromptInputProps>(
           <button
             type="button"
             onClick={expand}
-            aria-label="Open prompt input"
+            aria-label={labels.open}
             className={cn(
               "absolute inset-x-0 top-0 z-[1] h-12 px-5 pr-14 text-left text-sm font-medium text-muted-foreground outline-none",
               "transition-all duration-300",
@@ -199,10 +220,10 @@ export const PromptInput = React.forwardRef<HTMLDivElement, PromptInputProps>(
             <div className="relative min-w-0">
               <button
                 type="button"
-                disabled={modelSwitching || models.length === 0}
+                disabled={busy || modelSwitching || models.length === 0}
                 onMouseDown={(event) => event.preventDefault()}
                 onClick={() => setModelMenuOpen((open) => !open)}
-                aria-label={`Select model. Current: ${currentModel?.label ?? "Unavailable"}`}
+                aria-label={`${labels.selectModel}. ${labels.current}: ${currentModel?.label ?? "Unavailable"}`}
                 className={cn(
                   "flex max-w-52 items-center gap-1.5 rounded-full px-2 py-1 text-xs font-semibold text-muted-foreground",
                   "transition-colors hover:bg-accent hover:text-accent-foreground disabled:pointer-events-none disabled:opacity-50",
@@ -263,7 +284,7 @@ export const PromptInput = React.forwardRef<HTMLDivElement, PromptInputProps>(
             onMouseDown={(event) => event.preventDefault()}
             onClick={() => (busy ? onStop() : submit())}
             disabled={!busy && !canSubmit}
-            aria-label={busy ? "Stop generation" : "Send prompt"}
+            aria-label={busy ? labels.stop : labels.send}
             className={cn(
               "absolute bottom-2 right-2 z-20 flex size-8 items-center justify-center rounded-full",
               "bg-primary text-primary-foreground transition-all duration-300 hover:opacity-90",

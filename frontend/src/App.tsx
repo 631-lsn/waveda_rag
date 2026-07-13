@@ -43,6 +43,7 @@ export default function App({ bridge }: AppProps) {
   const [question, setQuestion] = useState("");
   const [conversationId, setConversationId] = useState<string | undefined>();
   const [busyText, setBusyText] = useState("");
+  const [modelSwitching, setModelSwitching] = useState(false);
   const [navOpen, setNavOpen] = useState(false);
   const [sourceOpen, setSourceOpen] = useState(false);
   const activeRequest = useRef<string | null>(null);
@@ -244,6 +245,20 @@ export default function App({ bridge }: AppProps) {
 
   const quickPreference = (update: SettingsUpdate) => void saveSettings(update);
 
+  const changeProvider = async (providerId: string) => {
+    if (!bootstrap || providerId === bootstrap.providerId || modelSwitching || activeRequest.current) return;
+    setModelSwitching(true);
+    try {
+      const payload = await bridge.selectProvider(providerId);
+      setBootstrap(payload);
+      setNotice(payload.locale === "zh" ? `已切换到 ${payload.model}` : `Switched to ${payload.model}`);
+    } catch (error) {
+      setNotice(error instanceof Error ? error.message : String(error));
+    } finally {
+      setModelSwitching(false);
+    }
+  };
+
   const content = useMemo(() => {
     if (!bootstrap) return null;
     if (activeView === "history") return <HistoryPage locale={locale} conversations={bootstrap.conversations} onOpen={openConversation} onRename={renameConversation} onDelete={deleteConversation} />;
@@ -252,10 +267,23 @@ export default function App({ bridge }: AppProps) {
     if (activeView === "settings") return <SettingsPage locale={locale} theme={bootstrap.theme} bootstrap={bootstrap} onSave={saveSettings} />;
     return (
       <Suspense fallback={<div className="grid h-full place-items-center text-sm text-[var(--muted)]">{t(locale, "loading")}</div>}>
-        <ChatPage locale={locale} messages={messages} question={question} busy={Boolean(busyText)} onQuestionChange={setQuestion} onAsk={ask} onImport={importDocument} onStop={stop} onSaveFavorite={saveFavorite} />
+        <ChatPage
+          locale={locale}
+          messages={messages}
+          question={question}
+          busy={Boolean(busyText)}
+          providers={bootstrap.providers}
+          providerId={bootstrap.providerId}
+          modelSwitching={modelSwitching}
+          onQuestionChange={setQuestion}
+          onAsk={ask}
+          onStop={stop}
+          onModelChange={changeProvider}
+          onSaveFavorite={saveFavorite}
+        />
       </Suspense>
     );
-  }, [activeView, bootstrap, busyText, locale, messages, question]);
+  }, [activeView, bootstrap, busyText, locale, messages, modelSwitching, question]);
 
   if (booting) return <AiLoader text={t(locale, "loading")} />;
 

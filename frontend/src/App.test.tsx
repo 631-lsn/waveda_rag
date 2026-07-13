@@ -40,6 +40,13 @@ function makeBridge() {
   const askMock = vi.fn<
     (requestId: string, question: string, conversationId?: string) => Promise<{ accepted: boolean }>
   >().mockResolvedValue({ accepted: true });
+  const selectProviderMock = vi.fn<(providerId: string) => Promise<BootstrapPayload>>()
+    .mockImplementation(async (providerId) => ({
+      ...bootstrap,
+      providerId,
+      model: providerId === "openai" ? "gpt-4o-mini" : "deepseek-chat",
+      baseUrl: providerId === "openai" ? "https://api.openai.com/v1" : "https://api.deepseek.com",
+    }));
   const bridge = {
     bootstrap: bootstrapMock,
     subscribe: vi.fn((next: (event: BridgeEvent) => void) => {
@@ -55,12 +62,14 @@ function makeBridge() {
     saveFavorite: vi.fn(),
     deleteFavorite: vi.fn(),
     saveSettings: vi.fn().mockResolvedValue(bootstrap),
+    selectProvider: selectProviderMock,
     rebuildIndex: vi.fn().mockResolvedValue({ accepted: true }),
   };
   return {
     bridge: bridge as unknown as DesktopBridgeClient,
     bootstrapMock,
     askMock,
+    selectProviderMock,
     emit(event: BridgeEvent) {
       act(() => listener?.(event));
     },
@@ -140,5 +149,20 @@ describe("WavEDA React workbench", () => {
 
     expect(await screen.findByText("无法连接桌面服务")).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "重新连接" })).toBeInTheDocument();
+  });
+
+  it("switches the active backend provider from the prompt input", async () => {
+    const setup = makeBridge();
+    const user = userEvent.setup();
+    render(<App bridge={setup.bridge} />);
+
+    await user.click(await screen.findByRole("button", { name: "询问 WavEDA 操作、仿真设置或错误排查…" }));
+    await user.click(screen.getByRole("button", { name: "选择模型. 当前: DeepSeek" }));
+    await user.click(screen.getByRole("button", { name: "OpenAI · gpt-4o-mini" }));
+
+    await waitFor(() => expect(setup.selectProviderMock).toHaveBeenCalledWith("openai"));
+    expect(await screen.findByRole("button", { name: "选择模型. 当前: OpenAI" })).toBeInTheDocument();
+    expect(screen.getAllByText("gpt-4o-mini").length).toBeGreaterThan(0);
+    expect(document.body.textContent).not.toContain("secret-value");
   });
 });

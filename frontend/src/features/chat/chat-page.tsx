@@ -1,13 +1,13 @@
-import { Heart, Paperclip, Send, Square } from "lucide-react";
-import type { KeyboardEvent } from "react";
+import { Heart } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import rehypeKatex from "rehype-katex";
 import remarkGfm from "remark-gfm";
 import remarkMath from "remark-math";
 
 import { Button } from "@/components/ui/button";
+import { PromptInput } from "@/components/ui/ai-chat-input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import type { ConversationMessage, Locale } from "@/lib/contracts";
+import type { ConversationMessage, Locale, ModelProvider } from "@/lib/contracts";
 import { t } from "@/lib/i18n";
 import { cn } from "@/lib/utils";
 
@@ -16,23 +16,18 @@ interface ChatPageProps {
   messages: ConversationMessage[];
   question: string;
   busy: boolean;
+  providers: ModelProvider[];
+  providerId: string;
+  modelSwitching: boolean;
   onQuestionChange(value: string): void;
   onAsk(): void;
-  onImport(): void;
   onStop(): void;
+  onModelChange(providerId: string): void;
   onSaveFavorite(): void;
 }
 
 export function ChatPage(props: ChatPageProps) {
-  const canAsk = props.question.trim().length > 0 && !props.busy;
   const lastMessage = props.messages.at(-1);
-
-  const handleKeyDown = (event: KeyboardEvent<HTMLTextAreaElement>) => {
-    if (event.key === "Enter" && !event.shiftKey) {
-      event.preventDefault();
-      if (canAsk) props.onAsk();
-    }
-  };
 
   return (
     <div className="chat-layout">
@@ -82,28 +77,27 @@ export function ChatPage(props: ChatPageProps) {
       </ScrollArea>
 
       <div className="composer-wrap">
-        <div className="composer-card">
-          <Button variant="ghost" size="icon" onClick={props.onImport} disabled={props.busy} aria-label={t(props.locale, "import")}>
-            <Paperclip className="size-5" />
-          </Button>
-          <textarea
-            aria-label={t(props.locale, "askLabel")}
-            value={props.question}
-            onChange={(event) => props.onQuestionChange(event.target.value)}
-            onKeyDown={handleKeyDown}
-            placeholder={t(props.locale, "placeholder")}
-            rows={1}
-          />
-          {props.busy ? (
-            <Button size="icon" variant="secondary" onClick={props.onStop} aria-label={t(props.locale, "stop")}>
-              <Square className="size-4 fill-current" />
-            </Button>
-          ) : (
-            <Button size="icon" onClick={props.onAsk} disabled={!canAsk} aria-label={t(props.locale, "send")}>
-              <Send className="size-4" />
-            </Button>
-          )}
-        </div>
+        <PromptInput
+          className="mx-auto max-w-[760px]"
+          value={props.question}
+          onChange={props.onQuestionChange}
+          onSubmit={props.onAsk}
+          busy={props.busy}
+          onStop={props.onStop}
+          placeholder={t(props.locale, "placeholder")}
+          models={props.providers}
+          selectedModelId={props.providerId}
+          onModelChange={props.onModelChange}
+          modelSwitching={props.modelSwitching}
+          labels={{
+            input: t(props.locale, "askLabel"),
+            open: t(props.locale, "placeholder"),
+            selectModel: props.locale === "zh" ? "选择模型" : "Select model",
+            current: props.locale === "zh" ? "当前" : "Current",
+            send: t(props.locale, "send"),
+            stop: t(props.locale, "stop"),
+          }}
+        />
         <p className="mt-2 text-center text-[11px] text-[var(--subtle)]">Enter {props.locale === "zh" ? "发送，Shift + Enter 换行" : "to send, Shift + Enter for a new line"}</p>
       </div>
     </div>
