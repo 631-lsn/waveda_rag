@@ -26,6 +26,7 @@ export interface QtBackend {
   save_favorite?: QtMethod;
   delete_favorite?: QtMethod;
   save_settings?: QtMethod;
+  select_provider?: QtMethod;
   rebuild_index?: QtMethod;
 }
 
@@ -102,6 +103,10 @@ export class DesktopBridgeClient {
 
   saveSettings(update: SettingsUpdate): Promise<BootstrapPayload> {
     return this.invoke("save_settings", update);
+  }
+
+  selectProvider(providerId: string): Promise<BootstrapPayload> {
+    return this.invoke("select_provider", { providerId });
   }
 
   rebuildIndex(requestId: string): Promise<{ accepted: boolean }> {

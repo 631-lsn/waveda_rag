@@ -1,4 +1,4 @@
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 
 import { DesktopBridgeClient, type QtBackend } from "./bridge";
 import type { BridgeEvent } from "./contracts";
@@ -18,14 +18,42 @@ class FakeSignal {
 
 function makeBackend() {
   const event_json = new FakeSignal();
+  const selectProvider = vi.fn((_payload: string, done: (result: string) => void) =>
+    done(
+      JSON.stringify({
+        locale: "zh",
+        theme: "dark",
+        apiConfigured: true,
+        providerId: "openai",
+        providers: [],
+        model: "gpt-4o-mini",
+        baseUrl: "https://api.openai.com/v1",
+        chunkCount: 4974,
+        indexStatus: "ready",
+        watcherStatus: "active",
+        conversations: [],
+        favorites: [],
+      }),
+    ),
+  );
   const backend: QtBackend = {
     event_json,
+    select_provider: selectProvider,
     bootstrap: (_payload, done) =>
       done(
         JSON.stringify({
           locale: "zh",
           theme: "dark",
           apiConfigured: true,
+          providerId: "deepseek",
+          providers: [
+            {
+              id: "deepseek",
+              label: "DeepSeek",
+              baseUrl: "https://api.deepseek.com",
+              model: "deepseek-chat",
+            },
+          ],
           model: "deepseek-chat",
           baseUrl: "https://api.deepseek.com",
           chunkCount: 4974,
@@ -36,7 +64,7 @@ function makeBackend() {
         }),
       ),
   };
-  return { backend, event_json };
+  return { backend, event_json, selectProvider };
 }
 
 describe("DesktopBridgeClient", () => {
@@ -84,5 +112,19 @@ describe("DesktopBridgeClient", () => {
         message: "Received an invalid desktop event.",
       },
     ]);
+  });
+
+  it("forwards provider selection and returns refreshed bootstrap data", async () => {
+    const { backend, selectProvider } = makeBackend();
+    const client = new DesktopBridgeClient(backend);
+
+    const result = await client.selectProvider("openai");
+
+    expect(selectProvider).toHaveBeenCalledWith(
+      JSON.stringify({ providerId: "openai" }),
+      expect.any(Function),
+    );
+    expect(result.providerId).toBe("openai");
+    expect(result.model).toBe("gpt-4o-mini");
   });
 });

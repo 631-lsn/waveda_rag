@@ -116,6 +116,41 @@ class WebBridgeTests(unittest.TestCase):
         self.assertEqual(terminal["answer"], "这是回答")
         self.assertTrue(terminal["conversation"]["id"])
 
+    def test_select_provider_refreshes_runtime_and_returns_sanitized_bootstrap(self) -> None:
+        env_path = self.root / "config" / ".env"
+        env_path.write_text("RAG_LLM_API_KEY=secret-value\n", encoding="utf-8")
+        bridge = DesktopBridge(
+            self.settings,
+            pipeline=FakePipeline(),
+            store=DesktopStore(self.settings),
+            task_runner=run_immediately,
+        )
+        refreshed_pipeline = object()
+        bridge._load_pipeline = lambda: refreshed_pipeline  # type: ignore[method-assign]
+
+        payload = json.loads(bridge.select_provider('{"providerId":"openai"}'))
+
+        self.assertEqual(payload["providerId"], "openai")
+        self.assertEqual(payload["model"], "gpt-4o-mini")
+        self.assertNotIn("apiKey", payload)
+        self.assertNotIn("secret-value", json.dumps(payload))
+        self.assertEqual(bridge.settings.llm_model, "gpt-4o-mini")
+        self.assertIs(bridge.pipeline, refreshed_pipeline)
+
+    def test_invalid_provider_keeps_current_pipeline(self) -> None:
+        current_pipeline = FakePipeline()
+        bridge = DesktopBridge(
+            self.settings,
+            pipeline=current_pipeline,
+            store=DesktopStore(self.settings),
+            task_runner=run_immediately,
+        )
+
+        payload = json.loads(bridge.select_provider('{"providerId":"missing"}'))
+
+        self.assertIn("Unknown provider", payload["error"])
+        self.assertIs(bridge.pipeline, current_pipeline)
+
 
 if __name__ == "__main__":
     unittest.main()

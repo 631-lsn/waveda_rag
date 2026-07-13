@@ -38,12 +38,21 @@ export interface FavoriteItem {
   createdAt: string;
 }
 
+export interface ModelProvider {
+  id: string;
+  label: string;
+  baseUrl: string;
+  model: string;
+}
+
 export interface BootstrapPayload {
   locale: Locale;
   theme: Theme;
   apiConfigured: boolean;
   model: string;
   baseUrl: string;
+  providerId: string;
+  providers: ModelProvider[];
   chunkCount: number;
   indexStatus: "ready" | "missing" | "building" | "error";
   watcherStatus: "active" | "idle" | "changed" | "rebuilding" | "error";
@@ -52,7 +61,7 @@ export interface BootstrapPayload {
 }
 
 export interface SettingsUpdate {
-  provider?: string;
+  providerId?: string;
   baseUrl?: string;
   model?: string;
   apiKey?: string;

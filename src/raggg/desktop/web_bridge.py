@@ -263,6 +263,23 @@ class DesktopBridge(QObject):
             return _encode({"error": str(exc)})
 
     @Slot(str, result=str)
+    def select_provider(self, payload: str) -> str:
+        try:
+            request = _decode(payload)
+            provider_id = self._required_text(request, "providerId")
+            result = self.store.select_provider(provider_id)
+            self._refresh_runtime_settings(
+                {
+                    "providerId": result["providerId"],
+                    "baseUrl": result["baseUrl"],
+                    "model": result["model"],
+                }
+            )
+            return _encode(result)
+        except (ValueError, OSError) as exc:
+            return _encode({"error": str(exc)})
+
+    @Slot(str, result=str)
     def rebuild_index(self, payload: str) -> str:
         try:
             request_id = self._required_text(_decode(payload), "requestId")

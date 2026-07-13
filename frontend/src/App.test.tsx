@@ -10,6 +10,21 @@ const bootstrap: BootstrapPayload = {
   locale: "zh",
   theme: "dark",
   apiConfigured: true,
+  providerId: "deepseek",
+  providers: [
+    {
+      id: "deepseek",
+      label: "DeepSeek",
+      baseUrl: "https://api.deepseek.com",
+      model: "deepseek-chat",
+    },
+    {
+      id: "openai",
+      label: "OpenAI",
+      baseUrl: "https://api.openai.com/v1",
+      model: "gpt-4o-mini",
+    },
+  ],
   model: "deepseek-chat",
   baseUrl: "https://api.deepseek.com",
   chunkCount: 4974,
