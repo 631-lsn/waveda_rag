@@ -908,6 +908,21 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "图片已附加。请在输入框中描述你想了解的问题，AI 将根据图片内容回答。",
         "en": "Image attached. Describe what you want to know and AI will answer based on the image.",
     },
+    "shortcut_prompt_title": {"zh": "桌面快捷方式", "en": "Desktop Shortcut"},
+    "shortcut_prompt_message": {
+        "zh": "是否在桌面创建 WavEDA 仿真软件助手快捷方式？",
+        "en": "Create a desktop shortcut for WavEDA Assistant?",
+    },
+    "shortcut_create": {"zh": "创建桌面快捷方式", "en": "Create Desktop Shortcut"},
+    "shortcut_created": {
+        "zh": "桌面快捷方式已创建：{path}",
+        "en": "Desktop shortcut created: {path}",
+    },
+    "shortcut_failed": {"zh": "创建桌面快捷方式失败。", "en": "Failed to create desktop shortcut."},
+    "shortcut_release_only": {
+        "zh": "桌面快捷方式仅支持 EXE 发布版。",
+        "en": "Desktop shortcuts are only available in the packaged EXE.",
+    },
 }
 
 

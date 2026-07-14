@@ -5,12 +5,13 @@ import html
 import json
 import os
 import re
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Callable
 
-from PySide6.QtCore import QEvent, QObject, QRectF, QRunnable, Qt, QThreadPool, QTimer, QUrl, Signal, Slot
+from PySide6.QtCore import QEvent, QObject, QRectF, QRunnable, QStandardPaths, Qt, QThreadPool, QTimer, QUrl, Signal, Slot
 from PySide6.QtGui import QColor, QBrush, QFont, QIcon, QLinearGradient, QPainter, QPen, QPixmap, QRadialGradient
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
@@ -34,7 +35,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from raggg.config import Settings, application_root, config_env_path, load_settings
+from raggg.config import Settings, application_root, config_env_path, load_dotenv_file, load_settings
 from raggg.desktop.session_manager import SessionManager
 from raggg.i18n import get_text, get_language, set_language, get_welcome_text
 from raggg.pipeline.builder import BuildReport, build_knowledge_base
@@ -47,6 +48,59 @@ from raggg.theme import get_theme, set_theme, get_colors, build_style, get_chat_
 # ── 动态主题 ──
 COLORS = get_colors()
 APP_STYLE = build_style()
+
+
+def _shortcut_path() -> Path:
+    desktop = Path(QStandardPaths.writableLocation(QStandardPaths.DesktopLocation))
+    return desktop / "WavEDA 仿真软件助手.lnk"
+
+
+def create_desktop_shortcut() -> Path:
+    if os.name != "nt" or not getattr(sys, "frozen", False):
+        raise RuntimeError(get_text("shortcut_release_only"))
+
+    shortcut = _shortcut_path()
+    env = dict(os.environ)
+    env.update({
+        "RAGGG_SHORTCUT_PATH": str(shortcut),
+        "RAGGG_SHORTCUT_TARGET": str(Path(sys.executable).resolve()),
+        "RAGGG_SHORTCUT_WORKDIR": str(Path(sys.executable).resolve().parent),
+    })
+    script = (
+        "$shell=New-Object -ComObject WScript.Shell;"
+        "$link=$shell.CreateShortcut($env:RAGGG_SHORTCUT_PATH);"
+        "$link.TargetPath=$env:RAGGG_SHORTCUT_TARGET;"
+        "$link.WorkingDirectory=$env:RAGGG_SHORTCUT_WORKDIR;"
+        "$link.IconLocation=$env:RAGGG_SHORTCUT_TARGET + ',0';"
+        "$link.Description='WavEDA 仿真软件助手';"
+        "$link.Save()"
+    )
+    subprocess.run(
+        ["powershell.exe", "-NoProfile", "-NonInteractive", "-Command", script],
+        check=True,
+        env=env,
+        creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0),
+    )
+    if not shortcut.exists():
+        raise RuntimeError(get_text("shortcut_failed"))
+    return shortcut
+
+
+def _save_env_value(key: str, value: str) -> None:
+    env_path = config_env_path()
+    env_path.parent.mkdir(parents=True, exist_ok=True)
+    lines = env_path.read_text(encoding="utf-8").splitlines() if env_path.exists() else []
+    updated: list[str] = []
+    found = False
+    for line in lines:
+        if line.startswith(key + "="):
+            updated.append(f"{key}={value}")
+            found = True
+        else:
+            updated.append(line)
+    if not found:
+        updated.append(f"{key}={value}")
+    env_path.write_text("\n".join(updated) + "\n", encoding="utf-8")
 
 
 @dataclass(frozen=True)
@@ -740,8 +794,23 @@ class SettingsDialog(QDialog):
         form.addRow(get_text("settings_theme_label") + ":", self.theme_combo)
 
         layout.addLayout(form)
+        shortcut_button = QPushButton(get_text("shortcut_create"))
+        shortcut_button.clicked.connect(self._create_desktop_shortcut)
+        layout.addWidget(shortcut_button)
         layout.addStretch()
         self.tabs.addTab(tab, get_text("settings_theme_tab"))
+
+    def _create_desktop_shortcut(self) -> None:
+        try:
+            shortcut = create_desktop_shortcut()
+        except Exception as exc:
+            QMessageBox.warning(self, get_text("shortcut_prompt_title"), f"{get_text('shortcut_failed')}\n{exc}")
+            return
+        QMessageBox.information(
+            self,
+            get_text("shortcut_prompt_title"),
+            get_text("shortcut_created").format(path=shortcut),
+        )
 
     # ─── WavEDA Paths Tab ─────────────────────────
     def _build_waveda_paths_tab(self) -> None:
@@ -937,7 +1006,9 @@ class WorkbenchWindow(QMainWindow):
         self._watch_pending_snapshot: SourceSnapshot | None = None
         self._watch_rebuild_requested = False
         self.setWindowTitle("WavEDA Knowledge Workbench")
-        icon_path = self._project_root / "wavEDA_docs" / "helpHtml" / "image" / "waveda.png"
+        icon_path = self._project_root / "deskphoto.jpg"
+        if not icon_path.exists():
+            icon_path = self._project_root / "wavEDA_docs" / "helpHtml" / "image" / "waveda.png"
         if icon_path.exists():
             self.setWindowIcon(QIcon(str(icon_path)))
         self.resize(1360, 840)
@@ -948,9 +1019,31 @@ class WorkbenchWindow(QMainWindow):
         self._show_loader("正在载入")
         self._load_pipeline_if_ready()
         QTimer.singleShot(700, self._hide_loader)
+        QTimer.singleShot(1400, self._offer_desktop_shortcut)
         self._start_source_watcher()
         # 后台预编码所有图片，用户第一次问就不慢了
         self._preload_images()
+
+    def _offer_desktop_shortcut(self) -> None:
+        if os.name != "nt" or not getattr(sys, "frozen", False) or _shortcut_path().exists():
+            return
+        env_values = load_dotenv_file(config_env_path())
+        if env_values.get("RAG_DESKTOP_SHORTCUT_PROMPTED") == "1":
+            return
+        reply = QMessageBox.question(
+            self,
+            get_text("shortcut_prompt_title"),
+            get_text("shortcut_prompt_message"),
+            QMessageBox.Yes | QMessageBox.No,
+            QMessageBox.Yes,
+        )
+        if reply == QMessageBox.Yes:
+            try:
+                create_desktop_shortcut()
+            except Exception as exc:
+                QMessageBox.warning(self, get_text("shortcut_prompt_title"), f"{get_text('shortcut_failed')}\n{exc}")
+                return
+        _save_env_value("RAG_DESKTOP_SHORTCUT_PROMPTED", "1")
 
     def _preload_images(self) -> None:
         """后台异步预编码所有图片到缓存，用户第一次提问时不再等待"""

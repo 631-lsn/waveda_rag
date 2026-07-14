@@ -2,9 +2,9 @@ from __future__ import annotations
 
 import json
 import shutil
-import struct
 import subprocess
 import sys
+import zipfile
 from datetime import date
 from pathlib import Path
 
@@ -14,6 +14,8 @@ APP_NAME = "WavEDA_Assistant"
 DIST_DIR = ROOT / "dist"
 APP_DIR = DIST_DIR / APP_NAME
 TEXT_SUFFIXES = {".md", ".txt", ".json", ".csv", ".html", ".htm"}
+IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp"}
+ARCHIVE_ROOT = "WavEDA"
 
 
 def _run(*args: str) -> None:
@@ -22,14 +24,26 @@ def _run(*args: str) -> None:
 
 
 def _create_windows_icon() -> None:
-    """Wrap the existing 96x96 PNG in a Windows ICO container."""
-    source = ROOT / "wavEDA_docs" / "helpHtml" / "image" / "waveda.png"
+    """Build a multi-resolution Windows icon from the project artwork."""
+    from PIL import Image
+
+    source = ROOT / "deskphoto.jpg"
     target = ROOT / "build" / "waveda.ico"
-    png = source.read_bytes()
+    if not source.exists():
+        raise FileNotFoundError(f"Desktop icon source is missing: {source}")
+
+    with Image.open(source) as opened:
+        image = opened.convert("RGBA")
+    side = min(image.size)
+    left = (image.width - side) // 2
+    top = (image.height - side) // 2
+    image = image.crop((left, top, left + side, top + side))
     target.parent.mkdir(parents=True, exist_ok=True)
-    header = struct.pack("<HHH", 0, 1, 1)
-    entry = struct.pack("<BBBBHHII", 96, 96, 0, 0, 1, 32, len(png), 22)
-    target.write_bytes(header + entry + png)
+    image.save(
+        target,
+        format="ICO",
+        sizes=[(16, 16), (24, 24), (32, 32), (48, 48), (64, 64), (128, 128), (256, 256)],
+    )
 
 
 def _portable_text(text: str) -> str:
@@ -83,6 +97,7 @@ def _sanitize_release_text() -> None:
 def _copy_release_files() -> None:
     for name in ("knowledge_base", "wavEDA_docs"):
         shutil.copytree(ROOT / name, APP_DIR / name, dirs_exist_ok=True)
+    shutil.copy2(ROOT / "deskphoto.jpg", APP_DIR / "deskphoto.jpg")
 
     shutil.copytree(ROOT / "data" / "index", APP_DIR / "data" / "index", dirs_exist_ok=True)
     (APP_DIR / "data" / "favorites.json").write_text("[]\n", encoding="utf-8")
@@ -175,10 +190,25 @@ def _validate_release() -> None:
 
 
 def _make_zip() -> Path:
-    archive_base = DIST_DIR / f"{APP_NAME}_Windows_{date.today():%Y%m%d}"
+    archive_base = DIST_DIR / f"{APP_NAME}_Windows_{date.today():%Y%m%d}_v3"
     archive = archive_base.with_suffix(".zip")
     archive.unlink(missing_ok=True)
-    shutil.make_archive(str(archive_base), "zip", root_dir=DIST_DIR, base_dir=APP_NAME)
+    with zipfile.ZipFile(archive, "w", allowZip64=True) as output:
+        for path in sorted(APP_DIR.rglob("*")):
+            if not path.is_file():
+                continue
+            relative = path.relative_to(APP_DIR)
+            archive_name = (Path(ARCHIVE_ROOT) / relative).as_posix()
+            compression = zipfile.ZIP_STORED if path.suffix.lower() in IMAGE_SUFFIXES else zipfile.ZIP_DEFLATED
+            output.write(path, archive_name, compress_type=compression, compresslevel=6)
+
+    with zipfile.ZipFile(archive) as check:
+        bad_member = check.testzip()
+        if bad_member:
+            raise RuntimeError(f"ZIP CRC validation failed: {bad_member}")
+        longest = max((len(name) for name in check.namelist()), default=0)
+        if longest > 200:
+            raise RuntimeError(f"ZIP contains an extraction-unfriendly path ({longest} characters).")
     return archive
 
 
