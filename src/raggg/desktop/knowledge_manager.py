@@ -130,9 +130,10 @@ class KnowledgeManager(QWidget):
         row2.addWidget(self.category_combo)
 
         row2.addWidget(QLabel(get_text("kbm_import_subdir") + ":"))
-        self.subdir_combo = QComboBox()
-        self._populate_subdirs()
-        row2.addWidget(self.subdir_combo)
+        self.subdir_btn = QPushButton(get_text("kbm_subdir_auto"))
+        self.subdir_btn.clicked.connect(self._popup_subdir_menu)
+        self._subdir_value = "__AUTO__"
+        row2.addWidget(self.subdir_btn)
 
         row2.addWidget(QLabel(get_text("kbm_priority_label") + ":"))
         self.priority_combo = QComboBox()
@@ -275,27 +276,51 @@ class KnowledgeManager(QWidget):
             self.category_combo.addItem(cat_label, cat_id)
 
     def _on_category_changed(self, _index: int) -> None:
-        self._populate_subdirs()
+        self._subdir_value = "__AUTO__"
+        self.subdir_btn.setText(get_text("kbm_subdir_auto"))
 
-    def _populate_subdirs(self) -> None:
+    def _popup_subdir_menu(self) -> None:
+        """弹出级联子目录菜单，鼠标悬停自动展开子级"""
         cat_id = self.category_combo.currentData()
         cat_path = self._kb_root / cat_id
-        self.subdir_combo.clear()
-        self.subdir_combo.addItem(get_text("kbm_subdir_auto"), "__AUTO__")
-        self.subdir_combo.addItem(get_text("kbm_subdir_root"), "")
-        if cat_path.exists():
-            self._add_subdir_options(self.subdir_combo, cat_path, "")
-        self.subdir_combo.setCurrentIndex(0)
+        menu = QMenu(self)
 
-    def _add_subdir_options(self, combo: QComboBox, base: Path, prefix: str, depth: int = 0) -> None:
-        """递归添加所有深度的子目录，用缩进体现层级"""
-        indent = "  " * depth + ("" if depth == 0 else "├ ")
+        # 首选项
+        auto_action = menu.addAction(get_text("kbm_subdir_auto"))
+        auto_action.triggered.connect(lambda: self._set_subdir("__AUTO__", get_text("kbm_subdir_auto")))
+        menu.addAction(get_text("kbm_subdir_root")).triggered.connect(
+            lambda: self._set_subdir("", get_text("kbm_subdir_root")))
+        menu.addSeparator()
+
+        if cat_path.exists():
+            self._build_subdir_menu(menu, cat_path, "")
+
+        menu.exec(self.subdir_btn.mapToGlobal(self.subdir_btn.rect().bottomLeft()))
+
+    def _build_subdir_menu(self, parent_menu: QMenu, base: Path, prefix: str) -> None:
+        """递归构建级联菜单，深层目录作为子菜单悬停展开"""
         for entry in sorted(base.iterdir()):
-            if entry.is_dir() and not entry.name.startswith("."):
-                display = self._CAT_I18N.get(entry.name, entry.name)
-                rel_path = (prefix + "/" + entry.name).lstrip("/")
-                combo.addItem(f"{indent}{display}", rel_path)
-                self._add_subdir_options(combo, entry, rel_path, depth + 1)
+            if not entry.is_dir() or entry.name.startswith("."):
+                continue
+            display = self._CAT_I18N.get(entry.name, entry.name)
+            rel_path = (prefix + "/" + entry.name).lstrip("/")
+            subdirs = [d for d in entry.iterdir() if d.is_dir() and not d.name.startswith(".")]
+
+            if subdirs:
+                submenu = QMenu(display, parent_menu)
+                parent_menu.addMenu(submenu)
+                # 子菜单里也加一个"选此目录"的选项
+                pick_action = submenu.addAction(f"[{display}]")
+                pick_action.triggered.connect(lambda checked=False, rp=rel_path, d=display: self._set_subdir(rp, d))
+                submenu.addSeparator()
+                self._build_subdir_menu(submenu, entry, rel_path)
+            else:
+                action = parent_menu.addAction(display)
+                action.triggered.connect(lambda checked=False, rp=rel_path, d=display: self._set_subdir(rp, d))
+
+    def _set_subdir(self, value: str, display: str) -> None:
+        self._subdir_value = value
+        self.subdir_btn.setText(display)
 
     # ── 文件选择 ────────────────────────────────
     def _select_file(self) -> None:
@@ -349,7 +374,7 @@ class KnowledgeManager(QWidget):
         cat_id = self.category_combo.currentData()
         base_dir = self._kb_root / cat_id
         user_desc = self.desc_edit.text().strip()
-        subdir_choice = self.subdir_combo.currentData()
+        subdir_choice = self._subdir_value
 
         if subdir_choice == "__AUTO__":
             all_subdirs = self._list_all_subdirs(base_dir)
