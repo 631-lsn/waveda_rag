@@ -5,6 +5,7 @@ import shutil
 import struct
 import subprocess
 import sys
+import zipfile
 from datetime import date
 from pathlib import Path
 
@@ -14,6 +15,8 @@ APP_NAME = "WavEDA_Assistant"
 DIST_DIR = ROOT / "dist"
 APP_DIR = DIST_DIR / APP_NAME
 TEXT_SUFFIXES = {".md", ".txt", ".json", ".csv", ".html", ".htm"}
+IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".gif", ".svg", ".ico", ".webp"}
+ARCHIVE_ROOT = "WavEDA"
 
 
 def _run(*args: str) -> None:
@@ -175,10 +178,25 @@ def _validate_release() -> None:
 
 
 def _make_zip() -> Path:
-    archive_base = DIST_DIR / f"{APP_NAME}_Windows_{date.today():%Y%m%d}"
+    archive_base = DIST_DIR / f"{APP_NAME}_Windows_{date.today():%Y%m%d}_v2"
     archive = archive_base.with_suffix(".zip")
     archive.unlink(missing_ok=True)
-    shutil.make_archive(str(archive_base), "zip", root_dir=DIST_DIR, base_dir=APP_NAME)
+    with zipfile.ZipFile(archive, "w", allowZip64=True) as output:
+        for path in sorted(APP_DIR.rglob("*")):
+            if not path.is_file():
+                continue
+            relative = path.relative_to(APP_DIR)
+            archive_name = (Path(ARCHIVE_ROOT) / relative).as_posix()
+            compression = zipfile.ZIP_STORED if path.suffix.lower() in IMAGE_SUFFIXES else zipfile.ZIP_DEFLATED
+            output.write(path, archive_name, compress_type=compression, compresslevel=6)
+
+    with zipfile.ZipFile(archive) as check:
+        bad_member = check.testzip()
+        if bad_member:
+            raise RuntimeError(f"ZIP CRC validation failed: {bad_member}")
+        longest = max((len(name) for name in check.namelist()), default=0)
+        if longest > 200:
+            raise RuntimeError(f"ZIP contains an extraction-unfriendly path ({longest} characters).")
     return archive
 
 
