@@ -248,6 +248,18 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "知识库尚未构建。",
         "en": "Knowledge base not yet built.",
     },
+    "source_file_not_found": {
+        "zh": "源文件未找到",
+        "en": "Source file not found",
+    },
+    "source_viewer_title": {
+        "zh": "源文档查看",
+        "en": "Source Viewer",
+    },
+    "btn_close": {
+        "zh": "关闭",
+        "en": "Close",
+    },
     "you_label": {
         "zh": "你",
         "en": "You",

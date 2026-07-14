@@ -884,6 +884,37 @@ class SettingsDialog(QDialog):
         self.accept()
 
 
+class SourceViewer(QDialog):
+    """独立的源文档查看窗口"""
+
+    def __init__(self, title: str, html_content: str, parent: QWidget | None = None) -> None:
+        super().__init__(parent)
+        self.setWindowTitle(f"{title} — {get_text('source_viewer_title')}")
+        self.resize(960, 680)
+        self.setMinimumSize(600, 400)
+        self.setAttribute(Qt.WA_DeleteOnClose)
+
+        layout = QVBoxLayout(self)
+        layout.setContentsMargins(0, 0, 0, 0)
+        layout.setSpacing(0)
+
+        self.viewer = QWebEngineView()
+        self.viewer.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
+        self.viewer.setHtml(html_content)
+
+        # Bottom bar with close button
+        bar = QHBoxLayout()
+        bar.setContentsMargins(12, 8, 12, 8)
+        bar.addStretch()
+        close_btn = QPushButton(get_text("btn_close"))
+        close_btn.setCursor(Qt.PointingHandCursor)
+        close_btn.clicked.connect(self.close)
+        bar.addWidget(close_btn)
+
+        layout.addWidget(self.viewer, stretch=1)
+        layout.addLayout(bar)
+
+
 class WorkbenchWindow(QMainWindow):
     def __init__(self, settings: Settings) -> None:
         super().__init__()
@@ -901,6 +932,7 @@ class WorkbenchWindow(QMainWindow):
         self._fav_file = settings.data_dir / "favorites.json"
         self._project_root = Path(__file__).resolve().parents[3]
         self._source_snapshot: SourceSnapshot = {}
+        self._source_paths: dict[int, str] = {}
         self._watch_pending_snapshot: SourceSnapshot | None = None
         self._watch_rebuild_requested = False
         self.setWindowTitle("WavEDA Knowledge Workbench")
@@ -1389,19 +1421,49 @@ class WorkbenchWindow(QMainWindow):
         self._refresh_session_list()
 
     def _on_src_url(self, url: QUrl) -> None:
-        """拦截 ragsrc:// 链接，在原位加载完整帮助页"""
-        if url.scheme() == "ragsrc":
-            html_rel = url.toString().replace("ragsrc://", "")
-            html_path = self._project_root / "wavEDA_docs" / html_rel
-            if html_path.exists():
-                with open(html_path, "r", encoding="utf-8") as f:
-                    html_content = f.read()
-                # Fix image sources to absolute paths
-                img_base = str(html_path.parent / "images").replace(os.sep, "/")
-                css_base = str(self._project_root / "wavEDA_docs" / "helpHtml" / "helpHtml" / "css").replace(os.sep, "/")
-                html_content = re.sub(r'src="\.?/?images/', f'src="file:///{img_base}/', html_content)
-                html_content = re.sub(r'href="\.\./css/', f'href="file:///{css_base}/', html_content)
-                self.sources.setHtml(html_content)
+        """拦截 #srcN 锚点链接，在新窗口显示原始知识文档"""
+        fragment = url.fragment()  # e.g. "src1"
+        if not fragment.startswith("src"):
+            return
+        try:
+            index = int(fragment[3:])
+            source_path = self._source_paths.get(index)
+            if not source_path:
+                return
+        except (ValueError, KeyError):
+            return
+
+        file_path = Path(source_path)
+        if not file_path.exists():
+            QMessageBox.warning(self, get_text("source_file_not_found"),
+                                f"{file_path.name}")
+            return
+
+        suffix = file_path.suffix.lower()
+        if suffix == ".md":
+            text = file_path.read_text(encoding="utf-8", errors="ignore")
+            html_body = markdown_to_html(text)
+            html_content = web_wrapper(html_body)
+        elif suffix in (".html", ".htm"):
+            with open(file_path, "r", encoding="utf-8") as f:
+                html_content = f.read()
+            img_base = str(file_path.parent / "images").replace(os.sep, "/")
+            css_base = str(self._project_root / "wavEDA_docs" / "helpHtml" / "helpHtml" / "css").replace(os.sep, "/")
+            html_content = re.sub(r'src="\.?/?images/', f'src="file:///{img_base}/', html_content)
+            html_content = re.sub(r'href="\.\./css/', f'href="file:///{css_base}/', html_content)
+        else:
+            try:
+                text = file_path.read_text(encoding="utf-8", errors="ignore")
+                html_content = web_wrapper(
+                    f"<pre style='white-space:pre-wrap;font-size:13px;line-height:1.6;'>{html.escape(text)}</pre>"
+                )
+            except Exception:
+                QMessageBox.warning(self, get_text("source_file_not_found"),
+                                    f"{file_path.name}")
+                return
+
+        viewer = SourceViewer(file_path.stem, html_content, self)
+        viewer.show()
 
     def _on_console_msg(self, level, msg: str, line: int, source: str) -> None:
         if msg == "RAGGG_FAV":
@@ -2026,6 +2088,7 @@ window.scrollTo(0, document.body.scrollHeight);
         )
 
     def _sources_html(self, sources: list[SearchResult]) -> str:
+        self._source_paths.clear()
         cards: list[str] = []
         for rank, result in enumerate(sources[:10], start=1):
             chunk = result.chunk
@@ -2037,14 +2100,10 @@ window.scrollTo(0, document.body.scrollHeight);
                 badge_label, badge_color = get_text("badge_team_tutorial"), "#1f472b"
             else:
                 badge_label, badge_color = get_text("badge_theory_notes"), "#1f2937"
-            source_link = chunk.relative_path
 
-            # Link to the original HTML help file (with images + CSS)
-            if chunk.source_type in ("waveda_help", "user_tutorial") and chunk.relative_path:
-                # Map extracted_pages/EM_Project/Boundary.md -> helpHtml/same_path.html
-                html_rel = chunk.relative_path.replace("extracted_pages/", "helpHtml/")
-                html_rel = re.sub(r"\.md$", ".html", html_rel)
-                source_link = f"<a href='ragsrc://{html_rel}' style='color:{COLORS['accent2']};cursor:pointer;'>{html.escape(chunk.relative_path)}</a>"
+            # Store source_path for click-to-view, make all sources clickable
+            self._source_paths[rank] = chunk.source_path
+            source_link = f"<a href='#src{rank}' style='color:{COLORS['accent2']};cursor:pointer;text-decoration:none;'>{html.escape(chunk.relative_path)}</a>"
 
             cards.append(
                 f"""<div style="background:{COLORS['surface2']};border:1px solid {COLORS['border']};border-radius:8px;padding:10px 12px;margin-bottom:8px;">
