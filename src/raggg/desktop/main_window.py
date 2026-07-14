@@ -34,7 +34,7 @@ from PySide6.QtWidgets import (
     QWidget,
 )
 
-from raggg.config import Settings, load_settings
+from raggg.config import Settings, application_root, config_env_path, load_settings
 from raggg.desktop.session_manager import SessionManager
 from raggg.i18n import get_text, get_language, set_language, get_welcome_text
 from raggg.pipeline.builder import BuildReport, build_knowledge_base
@@ -333,7 +333,7 @@ def _convert_image_refs(html_text: str) -> str:
     def _img_repl(match: re.Match[str]) -> str:
         img_rel = match.group(1)  # images/xxx.png
         # Find actual image in helpHtml
-        project_root = Path(__file__).resolve().parents[3]
+        project_root = application_root()
         help_base = project_root / "wavEDA_docs" / "helpHtml" / "helpHtml"
         # Search recursively for the image
         for root, dirs, files in os.walk(help_base):
@@ -821,7 +821,8 @@ class SettingsDialog(QDialog):
     def _save_all_and_accept(self) -> None:
         # 保存 API
         _, url, model = LLM_PROVIDERS[self.provider_combo.currentIndex()]
-        env_path = Path(__file__).resolve().parents[3] / "config" / ".env"
+        env_path = config_env_path()
+        env_path.parent.mkdir(parents=True, exist_ok=True)
         lines: list[str] = []
         if env_path.exists():
             lines = env_path.read_text(encoding="utf-8").splitlines()
@@ -930,7 +931,7 @@ class WorkbenchWindow(QMainWindow):
         self._temp_attached_name: str = ""
         self._stream_message_counter = 0
         self._fav_file = settings.data_dir / "favorites.json"
-        self._project_root = Path(__file__).resolve().parents[3]
+        self._project_root = settings.project_root
         self._source_snapshot: SourceSnapshot = {}
         self._source_paths: dict[int, str] = {}
         self._watch_pending_snapshot: SourceSnapshot | None = None

@@ -9,6 +9,15 @@ from typing import Mapping
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 
 
+def application_root() -> Path:
+    """Return the writable folder containing the source tree or packaged EXE."""
+    return Path(os.environ.get("RAGGG_PORTABLE_ROOT", str(PROJECT_ROOT))).resolve()
+
+
+def config_env_path() -> Path:
+    return application_root() / "config" / ".env"
+
+
 def _resolve_path(value: str, root: Path) -> Path:
     path = Path(value)
     if path.is_absolute():
@@ -52,7 +61,7 @@ class Settings:
     @classmethod
     def from_env(cls, env: Mapping[str, str] | None = None) -> "Settings":
         values = dict(os.environ if env is None else env)
-        project_root = Path(values.get("RAGGG_PORTABLE_ROOT", str(PROJECT_ROOT)))
+        project_root = Path(values.get("RAGGG_PORTABLE_ROOT", str(application_root()))).resolve()
         values.setdefault("WAVEDA_HELP_ROOT", "wavEDA_docs/helpHtml/helpHtml")
         values.setdefault("OBSIDIAN_VAULT_ROOT", "knowledge_base")
         return cls(
@@ -76,7 +85,7 @@ class Settings:
 
 
 def load_settings() -> Settings:
-    portable_root = Path(os.environ.get("RAGGG_PORTABLE_ROOT", str(PROJECT_ROOT)))
+    portable_root = application_root()
     dotenv_values = load_dotenv_file(portable_root / "config" / ".env")
     if not dotenv_values:
         dotenv_values = load_dotenv_file(portable_root / ".env")

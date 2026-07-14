@@ -11,6 +11,8 @@ data/raw_manifest.json
 runtime/
 .venv/
 .tmp/
+/build/
+/dist/
 __pycache__/
 *.pyc
 *.pyo

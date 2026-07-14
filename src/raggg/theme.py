@@ -5,6 +5,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from raggg.config import config_env_path
+
 THEMES: dict[str, dict] = {
     "light": {
         "colors": {
@@ -337,7 +339,7 @@ def get_chat_bubble_colors() -> dict:
 
 
 def _theme_env_path() -> Path:
-    return Path(__file__).resolve().parents[2] / "config" / ".env"
+    return config_env_path()
 
 
 def _load_theme() -> str:
@@ -354,6 +356,7 @@ def _load_theme() -> str:
 
 def _save_theme(name: str) -> None:
     env_path = _theme_env_path()
+    env_path.parent.mkdir(parents=True, exist_ok=True)
     lines: list[str] = []
     if env_path.exists():
         lines = env_path.read_text(encoding="utf-8").splitlines()

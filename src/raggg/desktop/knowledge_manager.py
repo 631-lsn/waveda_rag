@@ -39,7 +39,7 @@ class KnowledgeManager(QWidget):
     def __init__(self, settings: Settings, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.settings = settings
-        self._kb_root = Path(__file__).resolve().parents[3] / "knowledge_base"
+        self._kb_root = settings.obsidian_vault_root
         self._current_file: Path | None = None
         self._pending_import_path: str = ""
         self._pending_import_type: str = ""
