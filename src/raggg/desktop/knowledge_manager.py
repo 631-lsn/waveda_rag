@@ -287,14 +287,15 @@ class KnowledgeManager(QWidget):
             self._add_subdir_options(self.subdir_combo, cat_path, "")
         self.subdir_combo.setCurrentIndex(0)
 
-    def _add_subdir_options(self, combo: QComboBox, base: Path, prefix: str) -> None:
-        """递归添加所有子目录到下拉框，AI 可选择任意深度"""
+    def _add_subdir_options(self, combo: QComboBox, base: Path, prefix: str, depth: int = 0) -> None:
+        """递归添加所有深度的子目录，用缩进体现层级"""
+        indent = "  " * depth + ("" if depth == 0 else "├ ")
         for entry in sorted(base.iterdir()):
             if entry.is_dir() and not entry.name.startswith("."):
                 display = self._CAT_I18N.get(entry.name, entry.name)
-                path_key = (prefix + "/" + entry.name).lstrip("/")
-                combo.addItem(f"  {prefix}{display}", path_key)
-                self._add_subdir_options(combo, entry, prefix + entry.name + "/")
+                rel_path = (prefix + "/" + entry.name).lstrip("/")
+                combo.addItem(f"{indent}{display}", rel_path)
+                self._add_subdir_options(combo, entry, rel_path, depth + 1)
 
     # ── 文件选择 ────────────────────────────────
     def _select_file(self) -> None:
