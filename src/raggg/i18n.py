@@ -7,6 +7,8 @@ from __future__ import annotations
 import os
 from pathlib import Path
 
+from raggg.config import config_env_path
+
 # ── 当前语言（模块级缓存） ──────────────────────────────────
 _current_lang: str = "zh"
 
@@ -948,7 +950,7 @@ def set_language(lang: str) -> None:
 
 def _language_env_path() -> Path:
     """config/.env 路径"""
-    return Path(__file__).resolve().parents[2] / "config" / ".env"
+    return config_env_path()
 
 
 def _load_language() -> str:
@@ -968,6 +970,7 @@ def _load_language() -> str:
 def _save_language(lang: str) -> None:
     """保存语言设置到 config/.env"""
     env_path = _language_env_path()
+    env_path.parent.mkdir(parents=True, exist_ok=True)
     lines: list[str] = []
     if env_path.exists():
         lines = env_path.read_text(encoding="utf-8").splitlines()

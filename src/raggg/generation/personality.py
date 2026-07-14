@@ -6,6 +6,8 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from raggg.config import config_env_path
+
 PERSONALITIES: dict[str, dict[str, str]] = {
     "normal": {
         "zh": "你是一个专业、简洁的 WavEDA 软件助手，用平实的语言帮用户解决问题。",
@@ -54,7 +56,7 @@ def get_personality_prompt(lang: str = "zh") -> str:
 
 
 def _env_path() -> Path:
-    return Path(__file__).resolve().parents[3] / "config" / ".env"
+    return config_env_path()
 
 
 def _load_personality() -> str:
@@ -71,6 +73,7 @@ def _load_personality() -> str:
 
 def _save_personality(name: str) -> None:
     env_path = _env_path()
+    env_path.parent.mkdir(parents=True, exist_ok=True)
     lines: list[str] = []
     if env_path.exists():
         lines = env_path.read_text(encoding="utf-8").splitlines()

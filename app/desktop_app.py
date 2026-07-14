@@ -5,7 +5,12 @@ import os
 import sys
 from pathlib import Path
 
-ROOT = Path(__file__).resolve().parents[1]
+if getattr(sys, "frozen", False):
+    ROOT = Path(sys.executable).resolve().parent
+else:
+    ROOT = Path(__file__).resolve().parents[1]
+
+os.environ.setdefault("RAGGG_PORTABLE_ROOT", str(ROOT))
 sys.path.insert(0, str(ROOT / "src"))
 
 VENV_PYTHON = ROOT / ".venv" / "Scripts" / "python.exe"
