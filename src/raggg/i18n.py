@@ -679,8 +679,8 @@ TEXTS: dict[str, dict[str, str]] = {
         "en": "Notes Required",
     },
     "kbm_notes_required_msg": {
-        "zh": "请务必在备注栏填写文档内容描述，帮助 AI 准确分类。",
-        "en": "Please fill in a description of the document to help AI classify accurately.",
+        "zh": "请务必在备注栏填写文档内容描述，LLM将以此作为判据的一部分。",
+        "en": "Please describe the document content — the LLM will use this as part of its classification judgment.",
     },
     "kbm_confirm_import_btn": {
         "zh": "确认导入",
