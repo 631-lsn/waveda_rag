@@ -35,6 +35,7 @@ from PySide6.QtWidgets import (
 )
 
 from raggg.config import Settings, load_settings
+from raggg.desktop.session_manager import SessionManager
 from raggg.i18n import get_text, get_language, set_language, get_welcome_text
 from raggg.pipeline.builder import BuildReport, build_knowledge_base
 from raggg.pipeline.ingestion import IngestReport, ingest_document
@@ -893,6 +894,7 @@ class WorkbenchWindow(QMainWindow):
         self.is_busy = False
         self._last_qa: tuple[str, str] = ("", "")  # (question, answer)
         self._conversation_history: list[tuple[str, str]] = []
+        self._session_manager = SessionManager(settings.data_dir)
         self._temp_attached_text: str = ""
         self._temp_attached_name: str = ""
         self._stream_message_counter = 0
@@ -969,8 +971,9 @@ class WorkbenchWindow(QMainWindow):
         shell.setContentsMargins(14, 14, 14, 12)
         shell.setHorizontalSpacing(12)
         shell.setVerticalSpacing(0)
-        shell.setColumnStretch(0, 1)
-        shell.setColumnStretch(1, 0)
+        shell.setColumnStretch(0, 0)
+        shell.setColumnStretch(1, 1)
+        shell.setColumnStretch(2, 0)
         shell.setRowStretch(0, 1)
 
         main = QVBoxLayout()
@@ -980,6 +983,12 @@ class WorkbenchWindow(QMainWindow):
         top_bar = QHBoxLayout()
         top_bar.setContentsMargins(0, 0, 0, 0)
         top_bar.addStretch(1)
+        self.session_toggle_btn = QPushButton("☰")
+        self.session_toggle_btn.setObjectName("iconButton")
+        self.session_toggle_btn.setToolTip(get_text("session_toggle"))
+        self.session_toggle_btn.setCursor(Qt.PointingHandCursor)
+        self.session_toggle_btn.clicked.connect(self._toggle_session_panel)
+        top_bar.addWidget(self.session_toggle_btn)
         self.sidebar_toggle_button = QPushButton("◧")
         self.sidebar_toggle_button.setObjectName("iconButton")
         self.sidebar_toggle_button.setToolTip(get_text("sidebar_toggle_tooltip"))
@@ -1082,8 +1091,10 @@ class WorkbenchWindow(QMainWindow):
         self.sidebar_container = self._sidebar_panel()
         self.sidebar_container.hide()
 
-        shell.addLayout(main, 0, 0)
-        shell.addWidget(self.sidebar_container, 0, 1)
+        self.session_panel = self._build_session_panel()
+        shell.addWidget(self.session_panel, 0, 0)
+        shell.addLayout(main, 0, 1)
+        shell.addWidget(self.sidebar_container, 0, 2)
         self.loader_overlay = AILoaderOverlay(root, text="正在载入")
         self.loader_overlay.setGeometry(root.rect())
         self.loader_overlay.raise_()
@@ -1375,6 +1386,7 @@ class WorkbenchWindow(QMainWindow):
         model_color = COLORS["accent"] if self.settings.llm_api_key else COLORS["warning"]
         self.model_card.set_value(model_name, model_color)
         self.sources.setHtml(self._empty_sources_html())
+        self._refresh_session_list()
 
     def _on_src_url(self, url: QUrl) -> None:
         """拦截 ragsrc:// 链接，在原位加载完整帮助页"""
@@ -1571,6 +1583,158 @@ class WorkbenchWindow(QMainWindow):
         self.attach_remove_btn.hide()
         self.question.setPlaceholderText(get_text("placeholder_input"))
 
+    # ─── 多会话 ──────────────────────────────────
+    def _build_session_panel(self) -> QFrame:
+        panel = QFrame()
+        panel.setObjectName("panel")
+        panel.setFixedWidth(210)
+        layout = QVBoxLayout(panel)
+        layout.setContentsMargins(10, 12, 10, 12)
+        layout.setSpacing(6)
+
+        header = QHBoxLayout()
+        title = QLabel(get_text("session_panel_title"))
+        title.setStyleSheet(f"color:{COLORS['text']};font-weight:700;font-size:12px;")
+        header.addWidget(title, stretch=1)
+        new_btn = QPushButton("+")
+        new_btn.setObjectName("iconButton")
+        new_btn.setToolTip(get_text("session_new"))
+        new_btn.setCursor(Qt.PointingHandCursor)
+        new_btn.clicked.connect(self._new_session)
+        header.addWidget(new_btn)
+        layout.addLayout(header)
+
+        from PySide6.QtWidgets import QListWidget
+        self.session_list = QListWidget()
+        self.session_list.setStyleSheet(f"""
+            QListWidget {{ background: transparent; border: 0; }}
+            QListWidget::item {{ padding: 7px 10px; border-radius: 8px; margin: 1px 0;
+                color: {COLORS['muted']}; font-size: 11px; }}
+            QListWidget::item:hover {{ background: {COLORS['surface2']}; color: {COLORS['text']}; }}
+            QListWidget::item:selected {{ background: {COLORS['surface2']}; color: {COLORS['accent']}; font-weight: 600; }}
+        """)
+        self.session_list.currentRowChanged.connect(self._on_session_switched)
+        layout.addWidget(self.session_list, stretch=1)
+
+        del_btn = QPushButton(get_text("session_delete"))
+        del_btn.clicked.connect(self._delete_session)
+        del_btn.setStyleSheet(f"""
+            QPushButton {{ font-size:10px; padding:4px; border-radius:6px;
+                background: transparent; color: {COLORS['subtle']}; border: 1px solid {COLORS['border']}; }}
+            QPushButton:hover {{ color: {COLORS['danger']}; }}
+        """)
+        layout.addWidget(del_btn)
+        return panel
+
+    def _refresh_session_list(self) -> None:
+        self.session_list.blockSignals(True)
+        self.session_list.clear()
+        sessions = sorted(self._session_manager.sessions.values(),
+                         key=lambda s: s.created_at, reverse=True)
+        for s in sessions:
+            prefix = "● " if s.id == self._session_manager.current_id else "○ "
+            from PySide6.QtWidgets import QListWidgetItem
+            item = QListWidgetItem(f"{prefix}{s.title}")
+            item.setData(Qt.UserRole, s.id)
+            self.session_list.addItem(item)
+            if s.id == self._session_manager.current_id:
+                self.session_list.setCurrentItem(item)
+        self.session_list.blockSignals(False)
+
+    def _new_session(self) -> None:
+        self._session_manager.new_session()
+        self._conversation_history = []
+        self.chat.setHtml(self._welcome_html(
+            chunk_count=str(len(self.pipeline.store.chunks)) if self.pipeline else "-",
+            model_name=self.settings.llm_model if self.settings.llm_api_key else get_text("model_local"),
+        ))
+        self._refresh_session_list()
+
+    def _on_session_switched(self, _row: int) -> None:
+        item = self.session_list.currentItem()
+        if not item:
+            return
+        sid = item.data(Qt.UserRole)
+        if sid == self._session_manager.current_id:
+            return
+        self._session_manager.switch_to(sid)
+        history = self._session_manager.get_history()
+        self._conversation_history = history
+        if history:
+            self._show_session_content(history)
+        else:
+            self.chat.setHtml(self._welcome_html(
+                chunk_count=str(len(self.pipeline.store.chunks)) if self.pipeline else "-",
+                model_name=self.settings.llm_model if self.settings.llm_api_key else get_text("model_local"),
+            ))
+        self._refresh_session_list()
+
+    def _show_session_content(self, history: list[tuple[str, str]]) -> None:
+        """一次性渲染：欢迎语 + 全部历史消息"""
+        parts = []
+        # 构建欢迎区（纯 HTML，不用 web_wrapper 包）
+        model_name = self.settings.llm_model if self.settings.llm_api_key else get_text("model_local")
+        chunk_count = str(len(self.pipeline.store.chunks)) if self.pipeline else "-"
+        bubbles = get_chat_bubble_colors()
+        parts.append(f"""<div style="max-width:760px;margin:52px auto 36px auto;padding:0 24px;">
+          <div style="text-align:center;padding:60px 20px;">
+          <div style="font-size:22px;font-weight:700;color:{COLORS['accent']};margin-bottom:12px;">WavEDA Knowledge Workbench</div>
+          <div style="color:{COLORS['muted']};margin-bottom:24px;">{get_text('startup_brand_subtitle')}</div>
+          <div style="display:flex;justify-content:center;gap:12px;flex-wrap:wrap;">
+            <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
+              <div style="font-size:20px;font-weight:700;color:{COLORS['accent']};">{chunk_count}</div>
+              <div style="color:{COLORS['muted']};font-size:12px;">{get_text('startup_chunks_label')}</div>
+            </div>
+            <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
+              <div style="font-size:20px;font-weight:700;color:{COLORS['accent2']};">{get_text('badge_waveda_first')}</div>
+              <div style="color:{COLORS['muted']};font-size:12px;">{get_text('startup_strategy_label')}</div>
+            </div>
+            <div style="background:{COLORS['surface2']};border-radius:10px;padding:14px 18px;text-align:center;min-width:100px;">
+              <div style="font-size:20px;font-weight:700;color:{COLORS['warning']};">{model_name}</div>
+              <div style="color:{COLORS['muted']};font-size:12px;">{get_text('startup_llm_label')}</div>
+            </div>
+          </div>
+          <div style="margin-top:28px;color:{COLORS['subtle']};font-size:13px;">{get_text('startup_hint')}</div>
+          </div></div>""")
+
+        # 逐条追加历史
+        for q, a in history:
+            parts.append(f"""<div style="margin:16px 26px 8px 26px;display:flex;justify-content:flex-end;">
+              <div style="max-width:76%;padding:12px 15px;border-radius:18px 18px 4px 18px;background:{bubbles['user_bg']};border:1px solid {bubbles['user_border']};color:{bubbles['text']};line-height:1.58;">
+                {html.escape(q)}
+              </div>
+            </div>""")
+            rendered = markdown_to_html(a)
+            parts.append(f"""<div style="margin:16px 26px 18px 26px;display:flex;justify-content:flex-start;">
+              <div style="max-width:82%;">
+              <div style="padding:15px 17px;border-radius:18px 18px 18px 4px;background:{bubbles['assistant_bg']};border:1px solid {bubbles['assistant_border']};color:{bubbles['text']};line-height:1.6;">
+                {rendered}
+              </div>
+              </div>
+            </div>""")
+
+        self.chat.setHtml(web_wrapper("\n".join(parts)))
+
+    def _delete_session(self) -> None:
+        name = self._session_manager.current.title if self._session_manager.current else ""
+        reply = QMessageBox.question(
+            self, get_text("session_delete_confirm"),
+            get_text("session_delete_msg").replace("{name}", name),
+            QMessageBox.Yes | QMessageBox.No,
+        )
+        if reply != QMessageBox.Yes:
+            return
+        if self._session_manager.delete(self._session_manager.current_id):
+            self._conversation_history = self._session_manager.get_history()
+            self.chat.setHtml(self._welcome_html(
+                chunk_count=str(len(self.pipeline.store.chunks)) if self.pipeline else "-",
+                model_name=self.settings.llm_model if self.settings.llm_api_key else get_text("model_local"),
+            ))
+            self._refresh_session_list()
+
+    def _toggle_session_panel(self) -> None:
+        self.session_panel.setVisible(not self.session_panel.isVisible())
+
     def _rebuild_async(self) -> None:
         if self.is_busy:
             return
@@ -1668,7 +1832,7 @@ class WorkbenchWindow(QMainWindow):
         self.question.clear()
         self._append_user(text[:500] + ("..." if len(text) > 500 else ""))  # 展示截断版本
         self._set_busy(True, get_text("status_searching"))
-        conversation_history = list(self._conversation_history)
+        conversation_history = self._session_manager.get_history()
         stream_id = self._begin_streaming_assistant()
 
         def ask_with_streaming() -> AskResult:
@@ -1739,9 +1903,29 @@ class WorkbenchWindow(QMainWindow):
             QTimer.singleShot(0, self._trigger_watch_rebuild)
 
     def _remember_turn(self, question: str, answer: str, max_turns: int = 5) -> None:
-        self._conversation_history.append((question, answer))
-        if len(self._conversation_history) > max_turns:
-            self._conversation_history = self._conversation_history[-max_turns:]
+        self._session_manager.add_message(question, answer)
+        self._conversation_history = self._session_manager.get_history()
+        # AI 自动标题
+        if self._session_manager.current and self._session_manager.current.title == "新对话":
+            self._generate_session_title(question, answer)
+
+    def _generate_session_title(self, question: str, answer: str) -> None:
+        """AI 生成 8 字以内标题"""
+        if self.settings.llm_api_key:
+            prompt = f"将以下对话总结为8个字以内的标题，只回答标题不要解释。\n用户：{question[:200]}\n助手：{answer[:200]}"
+            try:
+                from raggg.generation.llm_client import OpenAICompatibleClient
+                client = OpenAICompatibleClient(
+                    self.settings.llm_base_url, self.settings.llm_api_key, self.settings.llm_model)
+                title = client.complete(prompt).strip().strip("\"'《》「」。. ")
+                if title and len(title) <= 20:
+                    self._session_manager.set_title(title)
+                    self._refresh_session_list()
+                    return
+            except Exception:
+                pass
+        self._session_manager.set_title(question[:20] + ("..." if len(question) > 20 else ""))
+        self._refresh_session_list()
 
     def _append_user(self, question: str) -> None:
         self._last_qa = (question, "")  # 记住问题，等回答来了配对

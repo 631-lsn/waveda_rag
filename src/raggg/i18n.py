@@ -876,6 +876,12 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "移除附件",
         "en": "Remove attachment",
     },
+    "session_panel_title": {"zh": "对话", "en": "Chats"},
+    "session_new": {"zh": "新建对话", "en": "New Chat"},
+    "session_toggle": {"zh": "显示/隐藏对话列表", "en": "Show/Hide Chats"},
+    "session_delete": {"zh": "删除当前对话", "en": "Delete Chat"},
+    "session_delete_confirm": {"zh": "确认删除", "en": "Confirm Delete"},
+    "session_delete_msg": {"zh": "确定要删除「{name}」吗？", "en": "Delete \"{name}\"?"},
     "upload_image_title": {
         "zh": "上传图片",
         "en": "Upload Image",
