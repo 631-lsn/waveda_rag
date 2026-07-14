@@ -87,12 +87,49 @@ def _copy_release_files() -> None:
     shutil.copytree(ROOT / "data" / "index", APP_DIR / "data" / "index", dirs_exist_ok=True)
     (APP_DIR / "data" / "favorites.json").write_text("[]\n", encoding="utf-8")
     # conversations.json is intentionally omitted; the app creates a clean session on first launch.
+    (APP_DIR / "data" / "conversations.json").unlink(missing_ok=True)
 
     config_dir = APP_DIR / "config"
     config_dir.mkdir(parents=True, exist_ok=True)
     shutil.copy2(ROOT / "config" / ".env.example", config_dir / ".env.example")
+    _write_release_env(config_dir / ".env")
     shutil.copy2(ROOT / "README-EXE.md", APP_DIR / "使用说明.md")
     _sanitize_release_text()
+
+
+def _read_env(path: Path) -> dict[str, str]:
+    values: dict[str, str] = {}
+    if not path.exists():
+        return values
+    for raw_line in path.read_text(encoding="utf-8").splitlines():
+        line = raw_line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, value = line.split("=", 1)
+        values[key.strip()] = value.strip()
+    return values
+
+
+def _write_release_env(target: Path) -> None:
+    local = _read_env(ROOT / "config" / ".env")
+    api_key = local.get("RAG_LLM_API_KEY", "")
+    if not api_key:
+        raise RuntimeError("The local API key is empty; refusing to create a preconfigured release.")
+    release_values = {
+        "RAG_LANGUAGE": local.get("RAG_LANGUAGE", "zh"),
+        "RAG_THEME": local.get("RAG_THEME", "light"),
+        "RAG_PERSONALITY": local.get("RAG_PERSONALITY", "normal"),
+        "RAG_LLM_BASE_URL": local.get("RAG_LLM_BASE_URL", "https://api.deepseek.com"),
+        "RAG_LLM_API_KEY": api_key,
+        "RAG_LLM_MODEL": local.get("RAG_LLM_MODEL", "deepseek-chat"),
+        "WAVEDA_ROOT": "",
+        "WAVEDA_HELP_ROOT": "wavEDA_docs/helpHtml/helpHtml",
+        "WAVEDA_EXAMPLE_ROOT": "",
+    }
+    target.write_text(
+        "\n".join(f"{key}={value}" for key, value in release_values.items()) + "\n",
+        encoding="utf-8",
+    )
 
 
 def _validate_release() -> None:
@@ -107,8 +144,13 @@ def _validate_release() -> None:
     missing = [str(path) for path in required if not path.exists()]
     if missing:
         raise RuntimeError(f"Release is incomplete: {missing}")
-    if (APP_DIR / "config" / ".env").exists():
-        raise RuntimeError("Private config/.env must not be included in a release.")
+    release_env = _read_env(APP_DIR / "config" / ".env")
+    if not release_env.get("RAG_LLM_API_KEY"):
+        raise RuntimeError("The release API key is missing.")
+    if release_env.get("WAVEDA_ROOT") or release_env.get("WAVEDA_EXAMPLE_ROOT"):
+        raise RuntimeError("Personal WavEDA folders must be empty in the release.")
+    if release_env.get("WAVEDA_HELP_ROOT") != "wavEDA_docs/helpHtml/helpHtml":
+        raise RuntimeError("The release help folder must use the bundled relative path.")
     if (APP_DIR / "data" / "conversations.json").exists():
         raise RuntimeError("Private conversation history must not be included in a release.")
 
