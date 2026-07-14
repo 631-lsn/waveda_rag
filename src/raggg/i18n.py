@@ -658,6 +658,50 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "导入文档（PDF / PPT → MD）",
         "en": "Import Documents (PDF / PPT to MD)",
     },
+    "kbm_select_file": {
+        "zh": "选择文件",
+        "en": "Select File",
+    },
+    "kbm_no_file": {
+        "zh": "未选择文件",
+        "en": "No file selected",
+    },
+    "kbm_no_file_msg": {
+        "zh": "请先点击\"选择文件\"上传要导入的 PDF 或 PPT。",
+        "en": "Please click \"Select File\" first to upload a PDF or PPT.",
+    },
+    "kbm_select_file_title": {
+        "zh": "选择要导入的文件",
+        "en": "Select file to import",
+    },
+    "kbm_notes_required": {
+        "zh": "需要填写备注",
+        "en": "Notes Required",
+    },
+    "kbm_notes_required_msg": {
+        "zh": "请务必在备注栏填写文档内容描述，帮助 AI 准确分类。",
+        "en": "Please fill in a description of the document to help AI classify accurately.",
+    },
+    "kbm_confirm_import_btn": {
+        "zh": "确认导入",
+        "en": "Confirm Import",
+    },
+    "kbm_delete_file": {
+        "zh": "删除文件",
+        "en": "Delete File",
+    },
+    "kbm_delete_confirm_title": {
+        "zh": "确认删除",
+        "en": "Confirm Delete",
+    },
+    "kbm_delete_confirm_msg": {
+        "zh": "确定要删除 {name} 吗？此操作不可撤销。",
+        "en": "Are you sure you want to delete {name}? This cannot be undone.",
+    },
+    "kbm_delete_error": {
+        "zh": "删除失败",
+        "en": "Delete Failed",
+    },
     "kbm_import_pdf": {
         "zh": "导入 PDF",
         "en": "Import PDF",

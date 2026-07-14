@@ -7,15 +7,16 @@ import json
 import os
 import re
 from pathlib import Path
-from typing import Callable
 
-from PySide6.QtCore import Qt, QThreadPool
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QAction
 from PySide6.QtWidgets import (
     QComboBox,
     QFileDialog,
     QHBoxLayout,
     QLabel,
     QLineEdit,
+    QMenu,
     QMessageBox,
     QPushButton,
     QSplitter,
@@ -34,13 +35,14 @@ COLORS = get_colors()
 
 
 class KnowledgeManager(QWidget):
-    """知识库管理面板：树形浏览 + 编辑 + 导入"""
 
     def __init__(self, settings: Settings, parent: QWidget | None = None) -> None:
         super().__init__(parent)
         self.settings = settings
         self._kb_root = Path(__file__).resolve().parents[3] / "knowledge_base"
         self._current_file: Path | None = None
+        self._pending_import_path: str = ""
+        self._pending_import_type: str = ""
         self._build_ui()
         self._load_tree()
 
@@ -49,16 +51,14 @@ class KnowledgeManager(QWidget):
         layout = QVBoxLayout(self)
         layout.setSpacing(10)
 
-        # ── 顶部说明 ──
         desc = QLabel(get_text("kbm_desc"))
         desc.setStyleSheet(f"color:{COLORS['muted']};font-size:12px;")
         desc.setWordWrap(True)
         layout.addWidget(desc)
 
-        # ── 左右分栏 ──
         splitter = QSplitter(Qt.Horizontal)
 
-        # 左侧：树
+        # 左侧：树 + 右键菜单
         left = QWidget()
         left_layout = QVBoxLayout(left)
         left_layout.setContentsMargins(0, 0, 0, 0)
@@ -70,7 +70,9 @@ class KnowledgeManager(QWidget):
 
         self.tree = QTreeWidget()
         self.tree.setHeaderHidden(True)
+        self.tree.setContextMenuPolicy(Qt.CustomContextMenu)
         self.tree.itemClicked.connect(self._on_tree_select)
+        self.tree.customContextMenuRequested.connect(self._on_tree_context_menu)
         left_layout.addWidget(self.tree)
 
         splitter.addWidget(left)
@@ -81,7 +83,6 @@ class KnowledgeManager(QWidget):
         right_layout.setContentsMargins(0, 0, 0, 0)
         right_layout.setSpacing(6)
 
-        # 文件信息栏
         info_bar = QHBoxLayout()
         self.file_label = QLabel(get_text("kbm_select_hint"))
         self.file_label.setStyleSheet(f"color:{COLORS['muted']};font-size:11px;")
@@ -90,7 +91,6 @@ class KnowledgeManager(QWidget):
         save_btn = QPushButton(get_text("kbm_save"))
         save_btn.clicked.connect(self._save_current)
         info_bar.addWidget(save_btn)
-
         right_layout.addLayout(info_bar)
 
         self.editor = QTextEdit()
@@ -111,66 +111,65 @@ class KnowledgeManager(QWidget):
         import_label.setStyleSheet(f"color:{COLORS['text']};font-weight:700;")
         import_layout.addWidget(import_label)
 
-        import_controls = QHBoxLayout()
-        import_controls.setSpacing(8)
+        # Row 1: 选择文件
+        row1 = QHBoxLayout(); row1.setSpacing(8)
+        self.file_select_btn = QPushButton(get_text("kbm_select_file"))
+        self.file_select_btn.clicked.connect(self._select_file)
+        row1.addWidget(self.file_select_btn)
+        self.file_status = QLabel(get_text("kbm_no_file"))
+        self.file_status.setStyleSheet(f"color:{COLORS['muted']};font-size:11px;")
+        row1.addWidget(self.file_status, stretch=1)
+        import_layout.addLayout(row1)
 
-        pdf_btn = QPushButton(get_text("kbm_import_pdf"))
-        pdf_btn.clicked.connect(self._import_pdf)
-        import_controls.addWidget(pdf_btn)
-
-        ppt_btn = QPushButton(get_text("kbm_import_ppt"))
-        ppt_btn.clicked.connect(self._import_ppt)
-        import_controls.addWidget(ppt_btn)
-
-        import_controls.addWidget(QLabel(get_text("kbm_import_target") + ":"))
+        # Row 2: 分类 + 子目录 + 重要度
+        row2 = QHBoxLayout(); row2.setSpacing(8)
+        row2.addWidget(QLabel(get_text("kbm_import_target") + ":"))
         self.category_combo = QComboBox()
         self._populate_categories()
         self.category_combo.currentIndexChanged.connect(self._on_category_changed)
-        import_controls.addWidget(self.category_combo)
+        row2.addWidget(self.category_combo)
 
-        import_controls.addWidget(QLabel(get_text("kbm_import_subdir") + ":"))
+        row2.addWidget(QLabel(get_text("kbm_import_subdir") + ":"))
         self.subdir_combo = QComboBox()
         self._populate_subdirs()
-        import_controls.addWidget(self.subdir_combo)
+        row2.addWidget(self.subdir_combo)
 
-        import_controls.addWidget(QLabel(get_text("kbm_priority_label") + ":"))
+        row2.addWidget(QLabel(get_text("kbm_priority_label") + ":"))
         self.priority_combo = QComboBox()
         for i in range(1, 6):
             self.priority_combo.addItem(get_text(f"kbm_priority_{i}"), i)
         self.priority_combo.setCurrentIndex(2)
-        import_controls.addWidget(self.priority_combo)
+        row2.addWidget(self.priority_combo)
+        import_layout.addLayout(row2)
 
-        import_controls.addWidget(QLabel(get_text("kbm_import_desc_label") + ":"))
+        # Row 3: 备注 + 确认导入
+        row3 = QHBoxLayout(); row3.setSpacing(8)
+        row3.addWidget(QLabel(get_text("kbm_import_desc_label") + " *:"))
         self.desc_edit = QLineEdit()
         self.desc_edit.setPlaceholderText(get_text("kbm_import_desc_placeholder"))
-        import_controls.addWidget(self.desc_edit, stretch=1)
+        row3.addWidget(self.desc_edit, stretch=1)
 
-        import_controls.addStretch()
-        import_layout.addLayout(import_controls)
+        self.confirm_btn = QPushButton(get_text("kbm_confirm_import_btn"))
+        self.confirm_btn.clicked.connect(self._confirm_import)
+        row3.addWidget(self.confirm_btn)
+        import_layout.addLayout(row3)
+
         layout.addWidget(import_section)
 
     # ─── Tree ──────────────────────────────────
+    _CAT_I18N = {
+        "01_team_tutorials": "kbm_cat_01", "02_software_manual": "kbm_cat_02",
+        "03_examples": "kbm_cat_03", "04_error_cases": "kbm_cat_04",
+        "05_reference": "kbm_cat_05", "06_theory_notes": "kbm_cat_06",
+        "tutorials": "kbm_sub_tutorials", "Circuit": "kbm_example_circuit",
+        "EM": "kbm_example_em", "Mech": "kbm_example_mech",
+        "Multi-Physics": "kbm_example_multi", "Thermal": "kbm_example_thermal",
+    }
+
     def _load_tree(self) -> None:
         self.tree.clear()
-        if not self._kb_root.exists():
-            return
-        self._add_tree_items(self.tree.invisibleRootItem(), self._kb_root)
-
-    # 目录名 → i18n key 映射
-    _CAT_I18N = {
-        "01_team_tutorials": "kbm_cat_01",
-        "02_software_manual": "kbm_cat_02",
-        "03_examples": "kbm_cat_03",
-        "04_error_cases": "kbm_cat_04",
-        "05_reference": "kbm_cat_05",
-        "06_theory_notes": "kbm_cat_06",
-        "tutorials": "kbm_sub_tutorials",
-        "Circuit": "kbm_example_circuit",
-        "EM": "kbm_example_em",
-        "Mech": "kbm_example_mech",
-        "Multi-Physics": "kbm_example_multi",
-        "Thermal": "kbm_example_thermal",
-    }
+        if self._kb_root.exists():
+            self._add_tree_items(self.tree.invisibleRootItem(), self._kb_root)
 
     def _add_tree_items(self, parent: QTreeWidgetItem, path: Path) -> None:
         for entry in sorted(path.iterdir()):
@@ -187,8 +186,6 @@ class KnowledgeManager(QWidget):
                 item = QTreeWidgetItem(parent, [entry.stem])
                 item.setData(0, Qt.UserRole, str(entry))
                 item.setToolTip(0, str(entry))
-
-        # Expand first level
         if parent == self.tree.invisibleRootItem():
             self.tree.expandAll()
 
@@ -216,6 +213,53 @@ class KnowledgeManager(QWidget):
         self._current_file.write_text(self.editor.toPlainText(), encoding="utf-8")
         QMessageBox.information(self, get_text("kbm_save"), get_text("kbm_save_ok"))
 
+    # ─── 右键菜单：删除文件 ─────────────────────
+    def _on_tree_context_menu(self, pos) -> None:
+        item = self.tree.itemAt(pos)
+        if not item:
+            return
+        filepath = item.data(0, Qt.UserRole)
+        if not filepath:
+            return
+        path = Path(filepath)
+        if not path.is_file():
+            return
+
+        menu = QMenu(self)
+        del_action = QAction(get_text("kbm_delete_file"), self)
+        del_action.triggered.connect(lambda: self._delete_file(path, item))
+        menu.addAction(del_action)
+        menu.exec(self.tree.viewport().mapToGlobal(pos))
+
+    def _delete_file(self, path: Path, item: QTreeWidgetItem) -> None:
+        name = path.name
+        reply = QMessageBox.question(
+            self,
+            get_text("kbm_delete_confirm_title"),
+            get_text("kbm_delete_confirm_msg").replace("{name}", name),
+            QMessageBox.Yes | QMessageBox.No,
+        )
+        if reply != QMessageBox.Yes:
+            return
+        try:
+            path.unlink()
+            parent = item.parent() or self.tree.invisibleRootItem()
+            parent.removeChild(item)
+            if self._current_file and str(self._current_file) == str(path):
+                self._current_file = None
+                self.editor.clear()
+                self.file_label.setText(get_text("kbm_select_hint"))
+            # 移除空目录
+            parent_path = Path(path.parent)
+            if parent_path != self._kb_root and not any(parent_path.iterdir()):
+                parent_path.rmdir()
+                self._load_tree()
+            # 重建索引
+            from raggg.pipeline.builder import build_knowledge_base
+            build_knowledge_base(self.settings)
+        except Exception as e:
+            QMessageBox.warning(self, get_text("kbm_delete_error"), str(e))
+
     # ─── Import ────────────────────────────────
     def _populate_categories(self) -> None:
         cats = [
@@ -234,37 +278,53 @@ class KnowledgeManager(QWidget):
         self._populate_subdirs()
 
     def _populate_subdirs(self) -> None:
-        """根据选中的大分类，列出所有子目录，外加 AI 自动推荐选项"""
         cat_id = self.category_combo.currentData()
         cat_path = self._kb_root / cat_id
         self.subdir_combo.clear()
-        # 首选项：AI 自动推荐
         self.subdir_combo.addItem(get_text("kbm_subdir_auto"), "__AUTO__")
-        # 根目录
         self.subdir_combo.addItem(get_text("kbm_subdir_root"), "")
         if cat_path.exists():
-            for entry in sorted(cat_path.iterdir()):
-                if entry.is_dir() and not entry.name.startswith("."):
-                    display = self._CAT_I18N.get(entry.name, entry.name)
-                    self.subdir_combo.addItem(f"  {display}", entry.name)
+            self._add_subdir_options(self.subdir_combo, cat_path, "")
         self.subdir_combo.setCurrentIndex(0)
 
-    def _import_pdf(self) -> None:
-        path, _ = QFileDialog.getOpenFileName(
-            self, get_text("kbm_import_pdf_title"), "", "PDF (*.pdf)"
-        )
-        if path:
-            self._import_file(path, "pdf")
+    def _add_subdir_options(self, combo: QComboBox, base: Path, prefix: str) -> None:
+        """递归添加所有子目录到下拉框，AI 可选择任意深度"""
+        for entry in sorted(base.iterdir()):
+            if entry.is_dir() and not entry.name.startswith("."):
+                display = self._CAT_I18N.get(entry.name, entry.name)
+                path_key = (prefix + "/" + entry.name).lstrip("/")
+                combo.addItem(f"  {prefix}{display}", path_key)
+                self._add_subdir_options(combo, entry, prefix + entry.name + "/")
 
-    def _import_ppt(self) -> None:
+    # ── 文件选择 ────────────────────────────────
+    def _select_file(self) -> None:
         path, _ = QFileDialog.getOpenFileName(
-            self, get_text("kbm_import_ppt_title"), "", "PowerPoint (*.pptx)"
+            self, get_text("kbm_select_file_title"), "",
+            "Documents (*.pdf *.pptx)"
         )
-        if path:
-            self._import_file(path, "pptx")
+        if not path:
+            return
+        self._pending_import_path = path
+        self._pending_import_type = "pdf" if path.lower().endswith(".pdf") else "pptx"
+        self.file_status.setText(f"📎 {Path(path).name}")
+        self.file_status.setStyleSheet(f"color:{COLORS['accent']};font-size:11px;")
+
+    # ── 确认导入（强制备注） ─────────────────────
+    def _confirm_import(self) -> None:
+        if not self._pending_import_path:
+            QMessageBox.information(self, get_text("kbm_no_file"), get_text("kbm_no_file_msg"))
+            return
+        user_desc = self.desc_edit.text().strip()
+        if not user_desc:
+            QMessageBox.information(self, get_text("kbm_notes_required"), get_text("kbm_notes_required_msg"))
+            return
+        self._import_file(self._pending_import_path, self._pending_import_type)
+        self._pending_import_path = ""
+        self._pending_import_type = ""
+        self.file_status.setText(get_text("kbm_no_file"))
+        self.file_status.setStyleSheet(f"color:{COLORS['muted']};font-size:11px;")
 
     def _import_file(self, filepath: str, filetype: str) -> None:
-        """转换 PDF/PPT → MD，用 LLM 建议分类，然后写入知识库"""
         filepath = Path(filepath)
 
         # 1. 提取文本
@@ -273,11 +333,9 @@ class KnowledgeManager(QWidget):
                 from raggg.pipeline.ingestion import _extract_pdf_text
                 text = _extract_pdf_text(filepath)
             except ImportError:
-                text = f"[PDF: {filepath.name}]\n\n(需要安装 pypdf 来提取PDF文本)"
-        elif filetype == "pptx":
-            text = self._extract_pptx_text(filepath)
+                text = f"[PDF: {filepath.name}]\n\n(需要安装 pypdf)"
         else:
-            return
+            text = self._extract_pptx_text(filepath)
 
         if not text.strip():
             QMessageBox.warning(self, get_text("kbm_import_failed"), get_text("kbm_import_empty"))
@@ -286,24 +344,22 @@ class KnowledgeManager(QWidget):
         # 2. 生成 Markdown
         markdown = self._build_markdown(filepath, text)
 
-        # 3. 获取目标路径（大分类 + 子目录）
+        # 3. 目标路径（大分类 + AI/手动子目录，支持多级深度）
         cat_id = self.category_combo.currentData()
         base_dir = self._kb_root / cat_id
         user_desc = self.desc_edit.text().strip()
-
-        # 确定子目录（手动选择 或 AI 自动推荐）
         subdir_choice = self.subdir_combo.currentData()
+
         if subdir_choice == "__AUTO__":
-            # 列出可选子目录让 AI 从中选择
-            avaialble_subdirs = self._list_subdirs(base_dir)
-            chosen_subdir = self._ai_suggest_subdir(text, filepath.stem, user_desc, avaialble_subdirs)
+            all_subdirs = self._list_all_subdirs(base_dir)
+            chosen_subdir = self._ai_suggest_subdir(text, filepath.stem, user_desc, all_subdirs)
             target_dir = base_dir / chosen_subdir if chosen_subdir else base_dir
         elif subdir_choice:
             target_dir = base_dir / subdir_choice
         else:
             target_dir = base_dir
 
-        # 4. 调用 LLM 辅助分析
+        # 4. AI 分析
         suggestion = self._ai_analyze(text, filepath.stem, user_desc)
 
         # 5. 预览并确认
@@ -314,32 +370,29 @@ class KnowledgeManager(QWidget):
             f"---\n{markdown[:500]}...\n"
         )
         reply = QMessageBox.question(
-            self,
-            get_text("kbm_confirm_import"),
-            preview,
+            self, get_text("kbm_confirm_import"), preview,
             QMessageBox.Yes | QMessageBox.No,
         )
         if reply != QMessageBox.Yes:
             return
 
-        # 6. 写入文件
+        # 6. 写入
         target_dir.mkdir(parents=True, exist_ok=True)
         safe_name = re.sub(r"[^\w\-.]", "_", filepath.stem)
         out_path = target_dir / f"{safe_name}.md"
         out_path.write_text(markdown, encoding="utf-8")
         self._load_tree()
 
-        # 7. 重建索引使新内容可检索
+        # 7. 重建索引
         from raggg.pipeline.builder import build_knowledge_base
         try:
             report = build_knowledge_base(self.settings)
             msg = f"{get_text('kbm_import_ok_msg')}: {out_path.relative_to(self._kb_root.parent)}\nChunks: {report.chunk_count}"
         except Exception:
-            msg = f"{get_text('kbm_import_ok_msg')}: {out_path.relative_to(self._kb_root.parent)}\n(索引重建失败，请手动重建)"
+            msg = f"{get_text('kbm_import_ok_msg')}: {out_path.relative_to(self._kb_root.parent)}\n(索引重建失败)"
         QMessageBox.information(self, get_text("kbm_import_done"), msg)
 
     def _build_markdown(self, filepath: Path, text: str) -> str:
-        """构建带 YAML 头部的 md 文件"""
         cat_id = self.category_combo.currentData()
         priority = self.priority_combo.currentData()
         return (
@@ -347,47 +400,49 @@ class KnowledgeManager(QWidget):
             f"title: \"{filepath.stem}\"\n"
             f"content_kind: \"imported\"\n"
             f"source_file: \"{filepath.name}\"\n"
-            f"imported_at: \"2026-07-09\"\n"
+            f"imported_at: \"2026-07-13\"\n"
             f"category: \"{cat_id}\"\n"
             f"priority: {priority}\n"
             "---\n\n"
-            f"# {filepath.stem}\n\n"
-            f"{text}\n"
+            f"# {filepath.stem}\n\n{text}\n"
         )
 
     @staticmethod
-    def _list_subdirs(base_dir: Path) -> list[str]:
-        """列出某大分类下的所有子目录名"""
+    def _list_all_subdirs(base_dir: Path) -> list[str]:
+        """递归列出所有深度子目录的相对路径"""
         subdirs = []
-        if base_dir.exists():
-            for entry in sorted(base_dir.iterdir()):
-                if entry.is_dir() and not entry.name.startswith("."):
-                    subdirs.append(entry.name)
+        if not base_dir.exists():
+            return subdirs
+        for entry in sorted(base_dir.iterdir()):
+            if entry.is_dir() and not entry.name.startswith("."):
+                subdirs.append(entry.name)
+                for child in entry.rglob("*"):
+                    if child.is_dir() and not child.name.startswith("."):
+                        rel = str(child.relative_to(base_dir)).replace("\\", "/")
+                        subdirs.append(rel)
         return subdirs
 
     def _ai_suggest_subdir(
         self, text: str, filename: str, user_desc: str, subdirs: list[str]
     ) -> str:
-        """让 AI 从可用子目录中推荐最匹配的一个"""
+        """让 AI 从所有深度子目录中推荐最佳匹配"""
         if not subdirs:
             return ""
         prompt = (
-            f"分析以下文档内容，从候选子目录中选择最合适的一个。\n"
+            f"分析文档内容，从候选目录中选择最匹配的一个（支持多级子目录如 Modeling/Stimulate）。\n"
             f"文档名：{filename}\n"
-            f"候选子目录：{', '.join(subdirs)}\n"
-            f"内容片段：{text[:1200]}\n"
+            f"候选目录：{', '.join(subdirs)}\n"
+            f"内容：{text[:1500]}\n"
         )
         if user_desc:
             prompt += f"管理员备注：{user_desc}\n"
-        prompt += "只回答子目录名，不要解释。如果不确定，回答 ROOT。"
+        prompt += "只回答目录路径，不要解释。不确定则回答 ROOT。"
 
         if self.settings.llm_api_key:
             try:
                 from raggg.generation.llm_client import OpenAICompatibleClient
                 client = OpenAICompatibleClient(
-                    self.settings.llm_base_url,
-                    self.settings.llm_api_key,
-                    self.settings.llm_model,
+                    self.settings.llm_base_url, self.settings.llm_api_key, self.settings.llm_model,
                 )
                 response = client.complete(prompt).strip()
                 if response in subdirs:
@@ -395,54 +450,49 @@ class KnowledgeManager(QWidget):
             except Exception:
                 pass
 
-        # 本地匹配回退
-        keyword_map = {}
-        for sub in subdirs:
+        # 关键词回退（支持多级匹配）
+        for sub in sorted(subdirs, key=lambda s: -len(s)):  # 深的优先
             lower = sub.lower()
+            keywords = [sub.split("/")[-1].lower()]
             if "em" in lower or "project" in lower:
-                keyword_map.update({"端口": sub, "激励": sub, "边界": sub, "远场": sub, "pml": sub})
+                keywords += ["端口", "激励", "边界", "远场", "pml", "s参数"]
             if "modeling" in lower:
-                keyword_map.update({"建模": sub, "几何": sub, "面": sub, "曲线": sub, "拉伸": sub})
+                keywords += ["建模", "几何", "曲线", "拉伸"]
+            if "stimulate" in lower:
+                keywords += ["端口", "激励", "lumped", "wave", "plane"]
             if "mesh" in lower:
-                keyword_map.update({"网格": sub, "mesh": sub})
+                keywords += ["网格", "mesh"]
             if "antenna" in lower:
-                keyword_map.update({"天线": sub})
+                keywords += ["天线"]
             if "filter" in lower:
-                keyword_map.update({"滤波器": sub})
-            if "circuit" in lower:
-                keyword_map.update({"电路": sub})
-        for kw, sub in keyword_map.items():
-            if kw in text.lower() or kw in filename.lower():
-                return sub
+                keywords += ["滤波器"]
+            if "design" in lower:
+                keywords += ["domain", "频率", "单位", "求解器"]
+            for kw in keywords:
+                if kw.lower() in text.lower() or kw.lower() in filename.lower():
+                    return sub
         return ""
 
     def _ai_analyze(self, text: str, filename: str, user_desc: str) -> str:
-        """调用 LLM 分析内容，给出分类建议"""
         prompt = (
-            f"你是知识库管理助手。分析以下文档内容，给出：\n"
-            f"1. 建议的分类节点（从：教程/软件手册/案例/错误排查/参考资料/理论笔记 中选一个）\n"
-            f"2. 3-5 个关键词\n"
-            f"3. 一句话摘要\n\n"
+            "你是知识库管理助手。分析文档内容，给出：\n"
+            "1. 建议分类\n2. 3-5 关键词\n3. 一句话摘要\n\n"
         )
         if user_desc:
             prompt += f"管理员备注：{user_desc}\n\n"
         prompt += f"文档名：{filename}\n内容片段：{text[:1500]}\n"
-        prompt += "\n请用中文简洁回答，格式：分类: xxx | 关键词: a,b,c | 摘要: xxx"
+        prompt += "格式：分类: xxx | 关键词: a,b,c | 摘要: xxx"
 
         if self.settings.llm_api_key:
             try:
                 from raggg.generation.llm_client import OpenAICompatibleClient
                 client = OpenAICompatibleClient(
-                    self.settings.llm_base_url,
-                    self.settings.llm_api_key,
-                    self.settings.llm_model,
+                    self.settings.llm_base_url, self.settings.llm_api_key, self.settings.llm_model,
                 )
-                response = client.complete(prompt)
-                return response.strip()
+                return client.complete(prompt).strip()
             except Exception:
                 pass
 
-        # LLM 不可用时用关键词匹配
         keywords_map = {
             "端口": "02_software_manual", "激励": "02", "边界": "02", "求解器": "02",
             "案例": "03_examples", "仿真": "03", "错误": "04_error_cases",
@@ -451,35 +501,29 @@ class KnowledgeManager(QWidget):
         }
         for kw, cat in keywords_map.items():
             if kw in text or kw in filename:
-                return f"分类: {cat} | 关键词: {kw} | 摘要: (本地匹配，安装API Key后可使用AI分析)"
+                return f"分类: {cat} | 关键词: {kw} | 摘要: (本地匹配)"
         return "分类: 02_software_manual | 关键词: 待补充 | 摘要: (本地匹配)"
 
     @staticmethod
     def _extract_pptx_text(filepath: Path) -> str:
-        """从 PPTX 提取文本"""
         try:
             from pptx import Presentation
         except ImportError:
-            return f"[PPT: {filepath.name}]\n\n(需要安装 python-pptx: pip install python-pptx)"
-
+            return f"[PPT: {filepath.name}]\n\n(需要安装 python-pptx)"
         prs = Presentation(str(filepath))
         slides = []
         for i, slide in enumerate(prs.slides, 1):
-            slide_lines = [f"## Slide {i}"]
+            lines = [f"## Slide {i}"]
             for shape in slide.shapes:
                 if shape.has_text_frame:
                     for para in shape.text_frame.paragraphs:
                         t = para.text.strip()
                         if t:
-                            slide_lines.append(t)
+                            lines.append(t)
                 if shape.has_table:
-                    table = shape.table
-                    rows = []
-                    for row in table.rows:
-                        cells = [cell.text.strip() for cell in row.cells]
-                        rows.append(" | ".join(cells))
+                    rows = [" | ".join(cell.text.strip() for cell in row.cells) for row in shape.table.rows]
                     if rows:
-                        slide_lines.append("\n| " + " |\n| ".join(rows) + " |")
-            if len(slide_lines) > 1:
-                slides.append("\n".join(slide_lines))
+                        lines.append("\n| " + " |\n| ".join(rows) + " |")
+            if len(lines) > 1:
+                slides.append("\n".join(lines))
         return "\n\n".join(slides) if slides else f"[PPT: {filepath.name} - 无可提取文本]"
