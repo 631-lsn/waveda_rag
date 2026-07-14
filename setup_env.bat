@@ -55,10 +55,31 @@ if defined USING_BUNDLED_PYTHON (
     echo [2/5] Skipping virtual environment creation.
     echo.
     echo [3/5] Checking bundled Python dependencies...
+
+    rem pypdf (PDF)
     "%PYTHON%" -B scripts\install_pdf_dependency.py
     if errorlevel 1 (
         echo [WARN] Failed to install optional PDF dependency pypdf.
-        echo        PDF import will show a clear error until this dependency is installed.
+    )
+
+    rem python-pptx (PPT)
+    "%PYTHON%" -c "import pptx" 2>nul
+    if errorlevel 1 (
+        echo Installing python-pptx for bundled Python...
+        "%PYTHON%" -m pip install python-pptx --quiet
+        if errorlevel 1 (
+            echo [WARN] Failed to install python-pptx. PPT import will be unavailable.
+        )
+    )
+
+    rem python-docx (Word)
+    "%PYTHON%" -c "import docx" 2>nul
+    if errorlevel 1 (
+        echo Installing python-docx for bundled Python...
+        "%PYTHON%" -m pip install python-docx --quiet
+        if errorlevel 1 (
+            echo [WARN] Failed to install python-docx. DOCX import will be unavailable.
+        )
     )
 ) else (
     echo.
