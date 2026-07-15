@@ -104,7 +104,17 @@ class SessionManager:
                 )
         except Exception:
             pass
+        # 清理空白会话（启动时自动删除没聊过的对话）
+        non_empty = {sid: s for sid, s in self._sessions.items() if s.messages}
+        if non_empty:
+            self._sessions = non_empty
+        elif self._sessions:
+            # 全是空的，保留一个最新的
+            newest = max(self._sessions.values(), key=lambda s: s.created_at)
+            self._sessions = {newest.id: newest}
+
         if not self._sessions:
             self.new_session()
         else:
             self._current_id = next(iter(self._sessions))
+        self._save()
