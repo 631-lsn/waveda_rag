@@ -26,7 +26,7 @@ def _run(*args: str) -> None:
 
 def _create_windows_icon() -> None:
     """Wrap the existing 96x96 PNG in a Windows ICO container."""
-    source = ROOT / "wavEDA_docs" / "helpHtml" / "image" / "waveda.png"
+    source = ROOT / "wavEDA_docs" / "helpHtml" / "image" / "助手图标.png"
     target = ROOT / "build" / "waveda.ico"
     png = source.read_bytes()
     target.parent.mkdir(parents=True, exist_ok=True)
@@ -178,7 +178,7 @@ def _validate_release() -> None:
 
 
 def _make_zip() -> Path:
-    archive_base = DIST_DIR / f"{APP_NAME}_Windows_{date.today():%Y%m%d}_v2"
+    archive_base = DIST_DIR / f"{APP_NAME}_Windows_{date.today():%Y%m%d}"
     archive = archive_base.with_suffix(".zip")
     archive.unlink(missing_ok=True)
     with zipfile.ZipFile(archive, "w", allowZip64=True) as output:
