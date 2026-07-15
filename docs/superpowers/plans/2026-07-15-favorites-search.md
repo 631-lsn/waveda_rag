@@ -55,7 +55,8 @@ def test_favorite_search_matches_question_and_answer_case_insensitively(self) ->
 Run:
 
 ```powershell
-.\runtime\python\python.exe -m unittest tests.test_desktop_layout.DesktopLayoutTests.test_favorite_search_matches_question_and_answer_case_insensitively -v
+$env:PYTHONPATH = (Join-Path (Get-Location) "src")
+& "D:\waveda_rag\.venv\Scripts\python.exe" -m unittest tests.test_desktop_layout.DesktopLayoutTests.test_favorite_search_matches_question_and_answer_case_insensitively -v
 ```
 
 Expected: import failure because `favorite_matches` does not exist.
@@ -146,7 +147,8 @@ Also add `import json` at the top of the test module.
 Run:
 
 ```powershell
-.\runtime\python\python.exe -m unittest tests.test_desktop_layout.DesktopLayoutTests.test_favorites_dialog_filters_question_and_answer_content -v
+$env:PYTHONPATH = (Join-Path (Get-Location) "src")
+& "D:\waveda_rag\.venv\Scripts\python.exe" -m unittest tests.test_desktop_layout.DesktopLayoutTests.test_favorites_dialog_filters_question_and_answer_content -v
 ```
 
 Expected: failure because `favoritesSearchInput` is missing.
@@ -189,7 +191,8 @@ The existing card order, HTML rendering, delete-index calculation, and JSON writ
 Run:
 
 ```powershell
-.\runtime\python\python.exe -m unittest tests.test_desktop_layout -v
+$env:PYTHONPATH = (Join-Path (Get-Location) "src")
+& "D:\waveda_rag\.venv\Scripts\python.exe" -m unittest tests.test_desktop_layout -v
 ```
 
 Expected: all desktop layout tests pass.
@@ -199,7 +202,8 @@ Expected: all desktop layout tests pass.
 Run:
 
 ```powershell
-.\runtime\python\python.exe -m unittest discover -s tests -v
+$env:PYTHONPATH = (Join-Path (Get-Location) "src")
+& "D:\waveda_rag\.venv\Scripts\python.exe" -m unittest discover -s tests -v
 ```
 
 Expected: all existing and new tests pass with zero failures and zero errors.

@@ -87,6 +87,16 @@ DISPLAY_MATH_RE = re.compile(r"\\\[(.+?)\\\]|\$\$(.+?)\$\$", re.DOTALL)
 FRAC_RE = re.compile(r"\\frac\{([^{}]+)\}\{([^{}]+)\}")
 
 
+def favorite_matches(favorite: dict, query: str) -> bool:
+    normalized_query = query.strip().casefold()
+    if not normalized_query:
+        return True
+    searchable_text = "\n".join(
+        str(favorite.get(field, "")) for field in ("question", "answer")
+    ).casefold()
+    return normalized_query in searchable_text
+
+
 def latex_formula_to_html(formula: str) -> str:
     replacements = {
         r"\partial": "∂",

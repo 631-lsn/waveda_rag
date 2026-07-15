@@ -10,7 +10,7 @@ os.environ.setdefault("QTWEBENGINE_DISABLE_SANDBOX", "1")
 from PySide6.QtWidgets import QApplication
 
 from raggg.config import Settings
-from raggg.desktop.main_window import AILoaderOverlay, WorkbenchWindow
+from raggg.desktop.main_window import AILoaderOverlay, WorkbenchWindow, favorite_matches
 
 
 def make_settings(root: Path) -> Settings:
@@ -95,6 +95,16 @@ class DesktopLayoutTests(unittest.TestCase):
         self.assertEqual(overlay.visual_mode, "orbital-glow")
         self.assertGreater(overlay._letter_intensity(18), overlay._letter_intensity(60))
         self.assertGreaterEqual(overlay._letter_lift(18), 2)
+
+    def test_favorite_search_matches_question_and_answer_case_insensitively(self) -> None:
+        favorite = {
+            "question": "How do I set a Wave Port?",
+            "answer": "在边界设置中选择端口截面。",
+        }
+        self.assertTrue(favorite_matches(favorite, "wave port"))
+        self.assertTrue(favorite_matches(favorite, "端口截面"))
+        self.assertTrue(favorite_matches(favorite, ""))
+        self.assertFalse(favorite_matches(favorite, "PML"))
 
 
 if __name__ == "__main__":
