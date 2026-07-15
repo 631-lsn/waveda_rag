@@ -94,9 +94,15 @@ def favorite_matches(favorite: dict, query: str) -> bool:
     searchable_text = "\n".join(
         str(favorite.get(field, "")) for field in ("question", "answer")
     ).casefold()
-    # 支持多关键词：空格分隔，全部匹配才算命中
+    # 也去掉搜索文本中的空格，支持 "s参数" 匹配 "s 参数"
+    searchable_compact = searchable_text.replace(" ", "")
     keywords = normalized_query.split()
-    return all(kw in searchable_text for kw in keywords) if keywords else True
+    query_compact = normalized_query.replace(" ", "")
+    # 先试精确匹配，再试去空格匹配
+    return (
+        all(kw in searchable_text for kw in keywords)
+        or query_compact in searchable_compact
+    )
 
 
 def favorite_score(favorite: dict, query: str) -> int:
@@ -108,7 +114,12 @@ def favorite_score(favorite: dict, query: str) -> int:
     searchable_text = "\n".join(
         str(favorite.get(field, "")) for field in ("question", "answer")
     ).casefold()
-    return sum(searchable_text.count(kw) for kw in keywords)
+    score = sum(searchable_text.count(kw) for kw in keywords)
+    # 去空格后也计分
+    query_compact = normalized_query.replace(" ", "")
+    searchable_compact = searchable_text.replace(" ", "")
+    score += searchable_compact.count(query_compact) * 2
+    return score
 
 
 def highlight_keywords(html_text: str, query: str) -> str:
@@ -379,10 +390,14 @@ body {{
     margin: 0;
     padding: 0;
     overflow-x: hidden;
+    counter-reset: ordered-item 0;
 }}
 p {{ margin: 7px 0; line-height: 1.58; }}
-ol, ul {{ margin: 8px 0; padding-left: 24px; }}
-li {{ margin: 4px 0; }}
+ol {{ margin: 8px 0; padding-left: 24px; list-style: none; }}
+ol li {{ margin: 4px 0; counter-increment: ordered-item; }}
+ol li::before {{ content: counter(ordered-item) ". "; color: {COLORS["accent"]}; font-weight: 600; }}
+ul {{ margin: 8px 0; padding-left: 24px; }}
+ul li {{ margin: 4px 0; }}
 strong {{ color: {COLORS["accent"]}; }}
 blockquote {{ margin: 8px 0; padding: 8px 12px; border-left: 3px solid {COLORS["accent"]}; color: {COLORS["muted"]}; }}
 a {{ color: {COLORS["accent2"]}; }}
