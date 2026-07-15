@@ -927,6 +927,7 @@ class WorkbenchWindow(QMainWindow):
         self._build_ui()
         self._show_loader("正在载入")
         self._load_pipeline_if_ready()
+        self._new_session()
         QTimer.singleShot(700, self._hide_loader)
         self._start_source_watcher()
         # 图片按需编码，避免启动时把整个帮助目录载入内存。
