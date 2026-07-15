@@ -98,7 +98,7 @@ git commit -m "test: define favorites search matching"
 
 **Interfaces:**
 - Consumes: `favorite_matches(favorite: dict, query: str) -> bool` from Task 1 and localized strings from `get_text()`.
-- Produces: a `QLineEdit` named `favoritesSearchInput`, favorite cards named `favoriteCard`, and a localized empty-result `QLabel` named `favoritesNoResults`.
+- Produces: a `QLineEdit` named `favoritesSearchInput`, existing `metricCard` favorite cards, and a localized empty-result `QLabel` named `favoritesNoResults`.
 
 - [ ] **Step 1: Write the failing dialog filtering test**
 
@@ -170,7 +170,7 @@ Add to `TEXTS` in `i18n.py`:
 
 - [ ] **Step 4: Add the search field and live card visibility updates**
 
-In `_open_favorites()`, insert a `QLineEdit` before the scroll area, name it `favoritesSearchInput`, and use the localized placeholder. Name each card `favoriteCard` and retain `(card, favorite)` pairs. Add a `QLabel` named `favoritesNoResults` after the cards and hide it initially. Connect `search_input.textChanged` to this function:
+In `_open_favorites()`, insert a `QLineEdit` before the scroll area, name it `favoritesSearchInput`, and use the localized placeholder. Preserve each card's existing `metricCard` object name for theme compatibility and retain `(card, favorite)` pairs. Add a `QLabel` named `favoritesNoResults` after the cards and hide it initially. Connect `search_input.textChanged` to this function:
 
 ```python
 def filter_cards(query: str) -> None:

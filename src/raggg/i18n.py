@@ -646,6 +646,14 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "已收藏",
         "en": "Saved",
     },
+    "favorites_search_placeholder": {
+        "zh": "搜索问题和回答…",
+        "en": "Search questions and answers…",
+    },
+    "favorites_no_results": {
+        "zh": "未找到相关收藏",
+        "en": "No matching favorites",
+    },
 
     # ── 知识库管理 ──────────────────────────────────
     "kbm_desc": {
