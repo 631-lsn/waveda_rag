@@ -87,6 +87,16 @@ DISPLAY_MATH_RE = re.compile(r"\\\[(.+?)\\\]|\$\$(.+?)\$\$", re.DOTALL)
 FRAC_RE = re.compile(r"\\frac\{([^{}]+)\}\{([^{}]+)\}")
 
 
+def favorite_matches(favorite: dict, query: str) -> bool:
+    normalized_query = query.strip().casefold()
+    if not normalized_query:
+        return True
+    searchable_text = "\n".join(
+        str(favorite.get(field, "")) for field in ("question", "answer")
+    ).casefold()
+    return normalized_query in searchable_text
+
+
 def latex_formula_to_html(formula: str) -> str:
     replacements = {
         r"\partial": "∂",
@@ -1480,9 +1490,14 @@ class WorkbenchWindow(QMainWindow):
         dialog.setWindowTitle(get_text("favorites_title"))
         dialog.resize(750, 550)
         layout = QVBoxLayout(dialog)
+        search_input = QLineEdit()
+        search_input.setObjectName("favoritesSearchInput")
+        search_input.setPlaceholderText(get_text("favorites_search_placeholder"))
+        layout.addWidget(search_input)
         from PySide6.QtWidgets import QScrollArea
         scroll = QWidget()
         scroll_layout = QVBoxLayout(scroll)
+        favorite_cards = []
         for i, f in enumerate(reversed(favs)):
             card = QFrame()
             card.setObjectName("metricCard")
@@ -1507,12 +1522,28 @@ class WorkbenchWindow(QMainWindow):
             del_btn.clicked.connect(lambda ch=False, idx=real_idx: self._do_fav_del(idx, dialog))
             card_layout.addWidget(del_btn)
             scroll_layout.addWidget(card)
+            favorite_cards.append((card, f))
+        no_results = QLabel(get_text("favorites_no_results"))
+        no_results.setObjectName("favoritesNoResults")
+        no_results.setAlignment(Qt.AlignCenter)
+        no_results.hide()
+        scroll_layout.addWidget(no_results)
         scroll.setMinimumSize(700, len(favs) * 180)
         scroll_layout.addStretch(1)
         area = QScrollArea()
         area.setWidgetResizable(True)
         area.setWidget(scroll)
         layout.addWidget(area, stretch=1)
+
+        def filter_cards(query: str) -> None:
+            visible_count = 0
+            for favorite_card, favorite in favorite_cards:
+                matches = favorite_matches(favorite, query)
+                favorite_card.setVisible(matches)
+                visible_count += int(matches)
+            no_results.setVisible(visible_count == 0)
+
+        search_input.textChanged.connect(filter_cards)
         dialog.exec()
 
     def _do_fav_del(self, idx: int, dialog: QDialog) -> None:
