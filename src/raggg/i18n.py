@@ -820,6 +820,10 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "文件已导入",
         "en": "File imported",
     },
+    "kbm_index_update_queued": {
+        "zh": "知识库索引将在后台自动更新。",
+        "en": "The knowledge index will update automatically in the background.",
+    },
     "kbm_no_file_selected": {
         "zh": "请先选择要编辑的文件。",
         "en": "Please select a file to edit first.",

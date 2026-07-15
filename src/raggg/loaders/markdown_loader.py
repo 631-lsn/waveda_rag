@@ -7,6 +7,14 @@ from raggg.models import Document
 
 
 WIKILINK_RE = re.compile(r"\[\[([^\]|#]+)(?:[#|][^\]]*)?\]\]")
+FRONTMATTER_RE = re.compile(r"\A---\s*\n(.*?)\n---\s*(?:\n|\Z)", re.DOTALL)
+KNOWLEDGE_LAYER_METADATA = {
+    "01_team_tutorials": (5, "team_tutorial"),
+    "02_software_manual": (4, "software_manual"),
+    "03_examples": (4, "worked_example"),
+    "04_error_cases": (3, "error_reference"),
+    "05_reference": (2, "reference"),
+}
 
 
 def _relative(path: Path, root: Path) -> str:
@@ -21,23 +29,52 @@ def _title_from_markdown(text: str, fallback: str) -> str:
     return fallback
 
 
+def knowledge_path_metadata(relative_path: str) -> dict[str, int | str]:
+    top_level = relative_path.split("/", 1)[0]
+    priority, knowledge_layer = KNOWLEDGE_LAYER_METADATA.get(top_level, (3, "uncategorized"))
+    return {"priority": priority, "knowledge_layer": knowledge_layer}
+
+
+def _frontmatter_values(text: str) -> dict[str, str]:
+    match = FRONTMATTER_RE.match(text.replace("\r\n", "\n").replace("\r", "\n"))
+    if not match:
+        return {}
+    values: dict[str, str] = {}
+    for line in match.group(1).splitlines():
+        if ":" not in line:
+            continue
+        key, value = line.split(":", 1)
+        values[key.strip()] = value.strip().strip('"\'')
+    return values
+
+
 def load_markdown_document(path: Path, root: Path) -> Document:
     text = path.read_text(encoding="utf-8", errors="ignore")
     links = WIKILINK_RE.findall(text)
     has_formula = any(token in text for token in ("$$", "\\nabla", "\\partial", "∇", "∮", "∫"))
+    relative_path = _relative(path, root)
+    frontmatter = _frontmatter_values(text)
+    path_metadata = knowledge_path_metadata(relative_path)
+    try:
+        declared_priority = int(frontmatter.get("priority", ""))
+    except ValueError:
+        declared_priority = int(path_metadata["priority"])
+    if 1 <= declared_priority <= 5:
+        path_metadata["priority"] = declared_priority
     return Document(
         source_type="obsidian_note",
         source_path=path,
-        relative_path=_relative(path, root),
+        relative_path=relative_path,
         title=_title_from_markdown(text, path.stem),
         text=text,
         links=links,
         images=re.findall(r"!\[[^\]]*\]\(([^)]+)\)", text),
         metadata={
             "domain": "multiphysics",
-            "content_type": "note",
+            "content_type": frontmatter.get("content_kind", "note"),
             "has_formula": has_formula,
             "has_wikilink": bool(links),
+            **path_metadata,
         },
     )
 

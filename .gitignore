@@ -7,6 +7,9 @@ data/index/
 data/processed_chunks.json
 data/raw_manifest.json
 
+# Local runtime user data
+data/conversations.json
+
 # Local Python environments and temporary files
 runtime/
 .venv/
