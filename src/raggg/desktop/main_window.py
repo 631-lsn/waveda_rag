@@ -94,7 +94,35 @@ def favorite_matches(favorite: dict, query: str) -> bool:
     searchable_text = "\n".join(
         str(favorite.get(field, "")) for field in ("question", "answer")
     ).casefold()
-    return normalized_query in searchable_text
+    # 支持多关键词：空格分隔，全部匹配才算命中
+    keywords = normalized_query.split()
+    return all(kw in searchable_text for kw in keywords) if keywords else True
+
+
+def favorite_score(favorite: dict, query: str) -> int:
+    """多关键词命中次数，用于排序"""
+    normalized_query = query.strip().casefold()
+    if not normalized_query:
+        return 0
+    keywords = normalized_query.split()
+    searchable_text = "\n".join(
+        str(favorite.get(field, "")) for field in ("question", "answer")
+    ).casefold()
+    return sum(searchable_text.count(kw) for kw in keywords)
+
+
+def highlight_keywords(html_text: str, query: str) -> str:
+    """在 HTML 文本中高亮关键词"""
+    if not query.strip():
+        return html_text
+    result = html_text
+    for kw in query.strip().split():
+        pattern = re.compile(re.escape(kw), re.IGNORECASE)
+        result = pattern.sub(
+            f'<mark style="background:#5f93d6;color:#fff;padding:1px 3px;border-radius:3px;">{kw}</mark>',
+            result,
+        )
+    return result
 
 
 def latex_formula_to_html(formula: str) -> str:
@@ -1514,62 +1542,152 @@ class WorkbenchWindow(QMainWindow):
         if not favs:
             QMessageBox.information(self, get_text("favorites_title"), get_text("msg_favorites_empty"))
             return
+
         dialog = QDialog(self)
         dialog.setWindowTitle(get_text("favorites_title"))
-        dialog.resize(750, 550)
+        dialog.resize(780, 600)
+        dialog.setStyleSheet(f"QDialog {{ background: {COLORS['bg']}; }}")
+
         layout = QVBoxLayout(dialog)
+        layout.setSpacing(10)
+
+        # ── 搜索栏 ──
+        search_row = QHBoxLayout()
+        search_icon = QLabel("🔍")
+        search_icon.setStyleSheet(f"font-size:16px;")
+        search_row.addWidget(search_icon)
         search_input = QLineEdit()
-        search_input.setObjectName("favoritesSearchInput")
         search_input.setPlaceholderText(get_text("favorites_search_placeholder"))
-        layout.addWidget(search_input)
+        search_input.setStyleSheet(f"""
+            QLineEdit {{ background: {COLORS['surface2']}; color: {COLORS['text']};
+                border: 1px solid {COLORS['border']}; border-radius: 12px;
+                padding: 10px 14px; font-size: 13px; }}
+            QLineEdit:focus {{ border-color: {COLORS['accent']}; }}
+        """)
+        search_row.addWidget(search_input, stretch=1)
+        layout.addLayout(search_row)
+
+        # ── 结果计数 ──
+        self._fav_count_label = QLabel(f"{len(favs)} 条收藏")
+        self._fav_count_label.setStyleSheet(f"color:{COLORS['muted']};font-size:11px;")
+        layout.addWidget(self._fav_count_label)
+
+        # ── 卡片列表 ──
         from PySide6.QtWidgets import QScrollArea
         scroll = QWidget()
         scroll_layout = QVBoxLayout(scroll)
-        favorite_cards = []
-        for i, f in enumerate(reversed(favs)):
+        scroll_layout.setSpacing(10)
+
+        favorite_cards: list[tuple[QFrame, dict, QTextEdit]] = []
+        for i, f_item in enumerate(reversed(favs)):
             card = QFrame()
             card.setObjectName("metricCard")
+            card.setStyleSheet(f"""
+                QFrame#metricCard {{ background: {COLORS['surface2']}; border-radius: 14px;
+                    border: 1px solid {COLORS['border']}; padding: 2px; }}
+            """)
             card_layout = QVBoxLayout(card)
-            # Q&A 合并显示在一个文本框里，统一背景
+            card_layout.setSpacing(6)
+
+            # 标题行：Q + 时间 + 删除
+            title_row = QHBoxLayout()
+            q_label = QLabel("Q")
+            q_label.setStyleSheet(f"background:{COLORS['accent']};color:#fff;font-weight:700;font-size:11px;border-radius:6px;padding:2px 8px;")
+            title_row.addWidget(q_label)
+            q_text = QLabel(html.escape(f_item.get('question', '')[:60]))
+            q_text.setStyleSheet(f"color:{COLORS['text']};font-weight:600;font-size:13px;")
+            title_row.addWidget(q_text, stretch=1)
+            time_label = QLabel(f_item.get('time', ''))
+            time_label.setStyleSheet(f"color:{COLORS['subtle']};font-size:10px;")
+            title_row.addWidget(time_label)
+
+            del_btn = QPushButton("✕")
+            del_btn.setFixedSize(22, 22)
+            del_btn.setCursor(Qt.PointingHandCursor)
+            del_btn.setStyleSheet(f"""
+                QPushButton {{ background: transparent; color: {COLORS['subtle']}; border: 0; font-size: 12px; border-radius: 11px; }}
+                QPushButton:hover {{ background: {COLORS['danger']}; color: #fff; }}
+            """)
+            real_idx = len(favs) - 1 - i
+            del_btn.clicked.connect(lambda ch=False, idx=real_idx: self._do_fav_del(idx, dialog))
+            title_row.addWidget(del_btn)
+            card_layout.addLayout(title_row)
+
+            # 答案内容
             from PySide6.QtWidgets import QTextEdit
             qa_text = QTextEdit()
             qa_text.setReadOnly(True)
-            html_body = (
-                f"<p style='color:{COLORS['accent']};font-weight:700;margin:0;'>Q: {html.escape(f['question'])}</p>"
-                f"<p style='color:{COLORS['subtle']};font-size:11px;margin:2px 0 6px 0;'>{f.get('time','')}</p>"
-                f"<hr style='border-color:{COLORS['border']};margin:6px 0;'>"
-                f"<p style='color:{COLORS['text']};line-height:1.55;margin:0;white-space:pre-wrap;'>{html.escape(f['answer'])}</p>"
-            )
-            qa_text.setHtml(html_body)
-            qa_text.setMaximumHeight(250)
-            qa_text.setStyleSheet(f"background:{COLORS['surface2']};border:0;")
+            raw_answer = f_item.get('answer', '')
+            # 截断纯文本避免卡片太长
+            if len(raw_answer) > 800:
+                raw_answer = raw_answer[:800] + "..."
+            rendered = markdown_to_html(raw_answer)
+            qa_text.setHtml(f"<div style='color:{COLORS['text']};line-height:1.55;'>{rendered}</div>")
+            qa_text.setMaximumHeight(200)
+            qa_text.setStyleSheet(f"background:{COLORS['surface']};border:0;border-radius:8px;padding:4px;")
             card_layout.addWidget(qa_text)
-            del_btn = QPushButton(get_text("btn_delete"))
-            del_btn.setStyleSheet(f"background:{COLORS['danger']};color:#fff;border:0;padding:2px 8px;font-size:11px;")
-            real_idx = len(favs) - 1 - i
-            del_btn.clicked.connect(lambda ch=False, idx=real_idx: self._do_fav_del(idx, dialog))
-            card_layout.addWidget(del_btn)
+
             scroll_layout.addWidget(card)
-            favorite_cards.append((card, f))
+            favorite_cards.append((card, f_item, qa_text))
+
         no_results = QLabel(get_text("favorites_no_results"))
-        no_results.setObjectName("favoritesNoResults")
+        no_results.setStyleSheet(f"color:{COLORS['muted']};font-size:14px;padding:40px;")
         no_results.setAlignment(Qt.AlignCenter)
         no_results.hide()
         scroll_layout.addWidget(no_results)
-        scroll.setMinimumSize(700, len(favs) * 180)
         scroll_layout.addStretch(1)
+
         area = QScrollArea()
         area.setWidgetResizable(True)
         area.setWidget(scroll)
+        area.setStyleSheet(f"QScrollArea {{ background: transparent; border: 0; }}")
         layout.addWidget(area, stretch=1)
 
+        # ── 搜索逻辑 ──
         def filter_cards(query: str) -> None:
-            visible_count = 0
-            for favorite_card, favorite in favorite_cards:
-                matches = favorite_matches(favorite, query)
-                favorite_card.setVisible(matches)
-                visible_count += int(matches)
-            no_results.setVisible(visible_count == 0)
+            if not query.strip():
+                # 空搜索：全部显示
+                for card, _, _ in favorite_cards:
+                    card.setVisible(True)
+                no_results.hide()
+                self._fav_count_label.setText(f"{len(favs)} 条收藏")
+                # 恢复原始内容
+                for _, f_item, qa in favorite_cards:
+                    raw_answer = f_item.get('answer', '')
+                    if len(raw_answer) > 800:
+                        raw_answer = raw_answer[:800] + "..."
+                    rendered = markdown_to_html(raw_answer)
+                    qa.setHtml(f"<div style='color:{COLORS['text']};line-height:1.55;'>{rendered}</div>")
+                return
+
+            # 按得分排序
+            scored = []
+            for card, f_item, qa in favorite_cards:
+                if favorite_matches(f_item, query):
+                    score = favorite_score(f_item, query)
+                    scored.append((score, card, f_item, qa))
+                else:
+                    card.setVisible(False)
+
+            scored.sort(key=lambda x: -x[0])
+
+            # 重新排序显示
+            for rank, (score, card, f_item, qa) in enumerate(scored):
+                card.setVisible(True)
+                # 移到最上面
+                scroll_layout.removeWidget(card)
+                scroll_layout.insertWidget(rank, card)
+                # 高亮关键词
+                raw_answer = f_item.get('answer', '')
+                if len(raw_answer) > 800:
+                    raw_answer = raw_answer[:800] + "..."
+                rendered = markdown_to_html(raw_answer)
+                highlighted = highlight_keywords(rendered, query)
+                qa.setHtml(f"<div style='color:{COLORS['text']};line-height:1.55;'>{highlighted}</div>")
+
+            visible = len(scored)
+            no_results.setVisible(visible == 0)
+            self._fav_count_label.setText(f"{visible}/{len(favs)} 条匹配")
 
         search_input.textChanged.connect(filter_cards)
         dialog.exec()
