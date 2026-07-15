@@ -947,6 +947,7 @@ class WorkbenchWindow(QMainWindow):
         self._build_ui()
         self._show_loader("正在载入")
         self._load_pipeline_if_ready()
+        self._new_session()
         QTimer.singleShot(700, self._hide_loader)
         self._start_source_watcher()
         # 后台预编码所有图片，用户第一次问就不慢了
