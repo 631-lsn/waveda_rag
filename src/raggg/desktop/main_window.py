@@ -390,12 +390,13 @@ body {{
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    counter-reset: ordered-item 0;
 }}
 p {{ margin: 7px 0; line-height: 1.58; }}
 ol {{ margin: 8px 0; padding-left: 24px; list-style: none; }}
 ol li {{ margin: 4px 0; counter-increment: ordered-item; }}
 ol li::before {{ content: counter(ordered-item) ". "; color: {COLORS["accent"]}; font-weight: 600; }}
+ul {{ margin: 8px 0; padding-left: 24px; }}
+ul li {{ margin: 4px 0; }}
 ul {{ margin: 8px 0; padding-left: 24px; }}
 ul li {{ margin: 4px 0; }}
 strong {{ color: {COLORS["accent"]}; }}
@@ -2202,7 +2203,7 @@ class WorkbenchWindow(QMainWindow):
         rendered = markdown_to_html(answer)
         bubbles = get_chat_bubble_colors()
         msg_html = web_wrapper(
-            f"""<div style="margin:16px 26px 18px 26px;display:flex;justify-content:flex-start;">
+            f"""<div style="margin:16px 26px 18px 26px;display:flex;justify-content:flex-start;counter-reset:ordered-item 0;">
               <div style="max-width:82%;">
               <div style="display:flex;align-items:center;gap:8px;margin-left:2px;margin-bottom:6px;">
                 <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='{get_text("btn_copied")}';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
