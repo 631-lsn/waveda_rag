@@ -8,7 +8,9 @@ from unittest.mock import patch
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 os.environ.setdefault("QTWEBENGINE_DISABLE_SANDBOX", "1")
 
-from PySide6.QtWidgets import QApplication, QDialog, QFrame, QLabel, QLineEdit
+from PySide6.QtCore import Qt
+from PySide6.QtGui import QKeySequence, QShortcut
+from PySide6.QtWidgets import QApplication, QDialog, QFrame, QLabel, QLineEdit, QPushButton
 
 from raggg.config import Settings
 from raggg.desktop.main_window import AILoaderOverlay, WorkbenchWindow, favorite_matches
@@ -62,6 +64,105 @@ class DesktopLayoutTests(unittest.TestCase):
 
             window.sidebar_toggle_button.click()
             self.assertTrue(window.sidebar_container.isHidden())
+
+    def test_basic_shortcuts_are_window_scoped(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+
+            expected = {
+                "focusQuestionShortcut": "Ctrl+L",
+                "newSessionShortcut": "Ctrl+N",
+                "toggleSidebarShortcut": "Ctrl+B",
+            }
+            shortcuts = {
+                shortcut.objectName(): shortcut
+                for shortcut in window.findChildren(QShortcut)
+            }
+
+            self.assertEqual(set(shortcuts), set(expected))
+            for name, sequence in expected.items():
+                self.assertEqual(shortcuts[name].key(), QKeySequence(sequence))
+                self.assertEqual(shortcuts[name].context(), Qt.WindowShortcut)
+
+    def test_ctrl_l_focuses_and_selects_question_text(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+
+            window.show()
+            self.app.processEvents()
+            window.question.setText("replace me")
+            window.focus_question_shortcut.activated.emit()
+
+            self.assertTrue(window.question.hasFocus())
+            self.assertEqual(window.question.selectedText(), "replace me")
+
+    def test_ctrl_n_creates_session_only_while_idle(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+
+            window.show()
+            self.app.processEvents()
+            original_id = window._session_manager.current_id
+            window.new_session_shortcut.activated.emit()
+            idle_id = window._session_manager.current_id
+
+            self.assertNotEqual(idle_id, original_id)
+            self.assertTrue(window.question.hasFocus())
+
+            window.is_busy = True
+            window.new_session_shortcut.activated.emit()
+
+            self.assertEqual(window._session_manager.current_id, idle_id)
+
+    def test_ctrl_b_toggles_only_data_sidebar(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+
+            session_was_hidden = window.session_panel.isHidden()
+            self.assertTrue(window.sidebar_container.isHidden())
+
+            window.toggle_sidebar_shortcut.activated.emit()
+
+            self.assertFalse(window.sidebar_container.isHidden())
+            self.assertEqual(window.session_panel.isHidden(), session_was_hidden)
+
+    def test_shortcuts_are_discoverable_in_tooltips(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+
+            self.assertIn("Ctrl+L", window.question.toolTip())
+            self.assertIn("Ctrl+B", window.sidebar_toggle_button.toolTip())
+            new_session_buttons = [
+                button
+                for button in window.session_panel.findChildren(QPushButton)
+                if "Ctrl+N" in button.toolTip()
+            ]
+            self.assertEqual(len(new_session_buttons), 1)
 
     def test_startup_loader_is_visible_with_initial_message(self) -> None:
         with TemporaryDirectory() as tmp:

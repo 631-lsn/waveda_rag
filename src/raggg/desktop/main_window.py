@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Callable
 
 from PySide6.QtCore import QEvent, QObject, QRectF, QRunnable, Qt, QThreadPool, QTimer, QUrl, Signal, Slot
-from PySide6.QtGui import QColor, QBrush, QFont, QIcon, QLinearGradient, QPainter, QPen, QPixmap, QRadialGradient
+from PySide6.QtGui import QColor, QBrush, QFont, QIcon, QKeySequence, QLinearGradient, QPainter, QPen, QPixmap, QRadialGradient, QShortcut
 from PySide6.QtWebEngineWidgets import QWebEngineView
 from PySide6.QtWebEngineCore import QWebEngineSettings, QWebEnginePage
 from PySide6.QtWidgets import (
@@ -935,6 +935,7 @@ class WorkbenchWindow(QMainWindow):
         self._image_index: dict[str, str] = {}  # filename -> absolute_path
         self._build_image_index()
         self._build_ui()
+        self._setup_shortcuts()
         self._show_loader("正在载入")
         self._load_pipeline_if_ready()
         self._new_session()
@@ -1011,7 +1012,7 @@ class WorkbenchWindow(QMainWindow):
         top_bar.addWidget(self.session_toggle_btn)
         self.sidebar_toggle_button = QPushButton("◧")
         self.sidebar_toggle_button.setObjectName("iconButton")
-        self.sidebar_toggle_button.setToolTip(get_text("sidebar_toggle_tooltip"))
+        self.sidebar_toggle_button.setToolTip(f"{get_text('sidebar_toggle_tooltip')} (Ctrl+B)")
         self.sidebar_toggle_button.setCursor(Qt.PointingHandCursor)
         self.sidebar_toggle_button.clicked.connect(self._toggle_sidebar)
         top_bar.addWidget(self.sidebar_toggle_button)
@@ -1088,6 +1089,7 @@ class WorkbenchWindow(QMainWindow):
 
         self.question = QLineEdit()
         self.question.setPlaceholderText(get_text("placeholder_input"))
+        self.question.setToolTip("Ctrl+L")
         self.question.returnPressed.connect(self._ask)
 
         self.ask_button = QPushButton("↑")
@@ -1374,6 +1376,32 @@ class WorkbenchWindow(QMainWindow):
 
     def _toggle_sidebar(self) -> None:
         self.sidebar_container.setHidden(not self.sidebar_container.isHidden())
+
+    def _setup_shortcuts(self) -> None:
+        self.focus_question_shortcut = QShortcut(QKeySequence("Ctrl+L"), self)
+        self.focus_question_shortcut.setObjectName("focusQuestionShortcut")
+        self.focus_question_shortcut.setContext(Qt.WindowShortcut)
+        self.focus_question_shortcut.activated.connect(self._focus_question_input)
+
+        self.new_session_shortcut = QShortcut(QKeySequence("Ctrl+N"), self)
+        self.new_session_shortcut.setObjectName("newSessionShortcut")
+        self.new_session_shortcut.setContext(Qt.WindowShortcut)
+        self.new_session_shortcut.activated.connect(self._new_session_from_shortcut)
+
+        self.toggle_sidebar_shortcut = QShortcut(QKeySequence("Ctrl+B"), self)
+        self.toggle_sidebar_shortcut.setObjectName("toggleSidebarShortcut")
+        self.toggle_sidebar_shortcut.setContext(Qt.WindowShortcut)
+        self.toggle_sidebar_shortcut.activated.connect(self._toggle_sidebar)
+
+    def _focus_question_input(self) -> None:
+        self.question.setFocus(Qt.ShortcutFocusReason)
+        self.question.selectAll()
+
+    def _new_session_from_shortcut(self) -> None:
+        if self.is_busy:
+            return
+        self._new_session()
+        self._focus_question_input()
 
     def eventFilter(self, watched: QObject, event: QEvent) -> bool:
         if event.type() == QEvent.Resize and hasattr(self, "loader_overlay"):
@@ -1670,7 +1698,7 @@ class WorkbenchWindow(QMainWindow):
         header.addWidget(title, stretch=1)
         new_btn = QPushButton("+")
         new_btn.setObjectName("iconButton")
-        new_btn.setToolTip(get_text("session_new"))
+        new_btn.setToolTip(f"{get_text('session_new')} (Ctrl+N)")
         new_btn.setCursor(Qt.PointingHandCursor)
         new_btn.clicked.connect(self._new_session)
         header.addWidget(new_btn)
