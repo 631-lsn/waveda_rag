@@ -8,7 +8,7 @@ from unittest.mock import Mock, patch
 import zipfile
 
 from raggg.config import Settings
-from raggg.pipeline.builder import build_knowledge_base
+from raggg.pipeline.builder import _iter_knowledge_base_documents, build_knowledge_base
 
 
 def make_settings(root: Path) -> Settings:
@@ -41,6 +41,48 @@ def write_docx(path: Path, *paragraphs: str) -> None:
 
 
 class BuilderDocumentTests(unittest.TestCase):
+    def test_reuses_unchanged_documents_and_embeddings(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            kb = root / "knowledge_base"
+            kb.mkdir()
+            first_path = kb / "first.md"
+            first_path.write_text("# First\n\nPort setup", encoding="utf-8")
+            (kb / "second.md").write_text("# Second\n\nMesh setup", encoding="utf-8")
+            settings = make_settings(root)
+
+            first_report = build_knowledge_base(settings)
+            second_report = build_knowledge_base(settings)
+
+            self.assertEqual(first_report.rebuilt_document_count, 2)
+            self.assertEqual(first_report.embedded_chunk_count, first_report.chunk_count)
+            self.assertEqual(second_report.rebuilt_document_count, 0)
+            self.assertEqual(second_report.reused_document_count, 2)
+            self.assertEqual(second_report.embedded_chunk_count, 0)
+
+            first_path.write_text("# First\n\nUpdated port setup", encoding="utf-8")
+            changed_report = build_knowledge_base(settings)
+
+            self.assertEqual(changed_report.rebuilt_document_count, 1)
+            self.assertEqual(changed_report.reused_document_count, 1)
+            self.assertEqual(changed_report.embedded_chunk_count, 1)
+
+    def test_excludes_raw_error_tables_from_semantic_index(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp) / "knowledge_base"
+            error_dir = root / "04_error_cases"
+            error_dir.mkdir(parents=True)
+            (error_dir / "error_message_index.md").write_text("# Curated\n\nUseful", encoding="utf-8")
+            (error_dir / "error_message_index.csv.md").write_text("# Generated CSV", encoding="utf-8")
+            (error_dir / "raw_ui_messages.csv.md").write_text("# Raw UI", encoding="utf-8")
+
+            documents = _iter_knowledge_base_documents(root)
+            relative_paths = {document.relative_path for document in documents}
+
+            self.assertIn("04_error_cases/error_message_index.md", relative_paths)
+            self.assertNotIn("04_error_cases/error_message_index.csv.md", relative_paths)
+            self.assertNotIn("04_error_cases/raw_ui_messages.csv.md", relative_paths)
+
     def test_build_indexes_pdf_and_docx_files_in_knowledge_base(self) -> None:
         with TemporaryDirectory() as tmp:
             root = Path(tmp)

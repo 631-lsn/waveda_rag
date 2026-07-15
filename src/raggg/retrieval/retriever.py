@@ -22,6 +22,12 @@ GENERIC_TITLES = {
     "文件",
     "仿真",
     "电磁结果",
+    "端口",
+    "材料",
+    "快照",
+    "结果",
+    "错误",
+    "常见问题",
 }
 
 
@@ -58,25 +64,27 @@ class Retriever:
         for index, chunk in enumerate(self.store.chunks):
             vector_score = float(vector_scores[index]) if len(vector_scores) else 0.0
             lexical_score = _lexical_overlap(query_tokens, f"{chunk.title} {chunk.section} {chunk.content}")
-            score = 0.65 * vector_score + 0.35 * lexical_score
+            heading_score = _lexical_overlap(query_tokens, f"{chunk.title} {chunk.section}")
+            score = 0.5 * vector_score + 0.3 * lexical_score + 0.2 * heading_score
 
             # 优先级加权 (1-5, 默认3) — 高优先级文档获得额外得分
             priority = int(chunk.metadata.get("priority", 3))
             score *= 0.9 + 0.07 * priority  # priority=3 → 1.11x, priority=5 → 1.25x
 
             chunk_text_lower = f"{chunk.title} {chunk.section} {chunk.content}".lower()
-            is_helpful = chunk.source_type in ("waveda_help", "user_tutorial")
+            is_helpful = chunk.source_type in ("waveda_help", "user_tutorial") or priority >= 4
             if is_helpful and any(term in query_lower for term in WAVEDA_TERMS):
                 score += 0.08
             compact_query = query_lower.replace(" ", "").replace("？", "").replace("?", "")
             compact_title = chunk.title.lower().replace(" ", "")
+            title_tokens = set(tokenize(chunk.title))
             if (
                 is_helpful
-                and len(compact_title) >= 2
+                and len(title_tokens) >= 2
                 and compact_title not in GENERIC_TITLES
                 and compact_title in compact_query
             ):
-                score += 0.85
+                score += 0.45
             matched_special_terms = [
                 term
                 for term in WAVEDA_TERMS | FORMULA_TERMS
@@ -105,4 +113,14 @@ class Retriever:
             )
 
         results.sort(key=lambda item: item.score, reverse=True)
-        return results[:top_k]
+        selected: list[SearchResult] = []
+        per_document: dict[str, int] = {}
+        for result in results:
+            relative_path = result.chunk.relative_path
+            if per_document.get(relative_path, 0) >= 2:
+                continue
+            selected.append(result)
+            per_document[relative_path] = per_document.get(relative_path, 0) + 1
+            if len(selected) >= top_k:
+                break
+        return selected

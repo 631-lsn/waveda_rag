@@ -9,6 +9,11 @@ from raggg.preprocessing.cleaner import clean_text
 
 HEADING_RE = re.compile(r"^(#{1,6})\s+(.+)$")
 FORMULA_MARKERS = ("$$", "\\nabla", "\\partial", "\\cdot", "\\times", "∇", "∮", "∫")
+TRANSPARENT_HEADINGS = {"正文抽取", "案例教程抽取"}
+MAINTENANCE_SECTION_HEADINGS = {"待补图片清单", "页内/相关链接", "后续图片补充"}
+MAINTENANCE_NOTE_RE = re.compile(
+    r"^>?\s*(?:图示要点|图片说明)[：:].*(?:后续审查|再补图|后续补图)"
+)
 
 
 def _chunk_id(source_type: str, relative_path: str, index: int, content: str) -> str:
@@ -25,8 +30,38 @@ def _paragraphs(text: str) -> list[str]:
     return paragraphs
 
 
+def _prepare_index_text(text: str) -> str:
+    """Remove editorial scaffolding while preserving the source Markdown."""
+    kept_lines: list[str] = []
+    skipped_section_level: int | None = None
+
+    for raw_line in text.replace("\r\n", "\n").replace("\r", "\n").split("\n"):
+        stripped = raw_line.strip()
+        heading = HEADING_RE.match(stripped)
+
+        if skipped_section_level is not None:
+            if not heading or len(heading.group(1)) > skipped_section_level:
+                continue
+            skipped_section_level = None
+
+        if heading:
+            level = len(heading.group(1))
+            title = heading.group(2).strip()
+            if title in MAINTENANCE_SECTION_HEADINGS:
+                skipped_section_level = level
+                continue
+            if title in TRANSPARENT_HEADINGS:
+                continue
+
+        if MAINTENANCE_NOTE_RE.match(stripped):
+            continue
+        kept_lines.append(raw_line)
+
+    return "\n".join(kept_lines)
+
+
 def chunk_document(document: Document, target_chars: int = 800) -> list[Chunk]:
-    text = clean_text(document.text)
+    text = clean_text(_prepare_index_text(document.text))
     paragraphs = _paragraphs(text)
     if not paragraphs:
         return []
@@ -37,6 +72,9 @@ def chunk_document(document: Document, target_chars: int = 800) -> list[Chunk]:
 
     def flush() -> None:
         if not current:
+            return
+        if all(HEADING_RE.match(item) for item in current):
+            current.clear()
             return
         content = "\n\n".join(current).strip()
         index = len(chunks)
