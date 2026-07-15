@@ -3,12 +3,10 @@
 """
 from __future__ import annotations
 
-import json
-import os
 import re
 from pathlib import Path
 
-from PySide6.QtCore import Qt
+from PySide6.QtCore import Qt, Signal
 from PySide6.QtGui import QAction
 from PySide6.QtWidgets import (
     QComboBox,
@@ -29,12 +27,20 @@ from PySide6.QtWidgets import (
 
 from raggg.config import Settings
 from raggg.i18n import get_text
+from raggg.pipeline.knowledge_import import (
+    analyze_document,
+    build_import_markdown,
+    extract_pptx_text,
+    list_all_subdirs,
+    suggest_subdir,
+)
 from raggg.theme import get_colors
 
 COLORS = get_colors()
 
 
 class KnowledgeManager(QWidget):
+    knowledge_changed = Signal()
 
     def __init__(self, settings: Settings, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -212,6 +218,7 @@ class KnowledgeManager(QWidget):
             QMessageBox.information(self, get_text("kbm_save"), get_text("kbm_no_file_selected"))
             return
         self._current_file.write_text(self.editor.toPlainText(), encoding="utf-8")
+        self.knowledge_changed.emit()
         QMessageBox.information(self, get_text("kbm_save"), get_text("kbm_save_ok"))
 
     # ─── 右键菜单：删除文件 ─────────────────────
@@ -255,9 +262,7 @@ class KnowledgeManager(QWidget):
             if parent_path != self._kb_root and not any(parent_path.iterdir()):
                 parent_path.rmdir()
                 self._load_tree()
-            # 重建索引
-            from raggg.pipeline.builder import build_knowledge_base
-            build_knowledge_base(self.settings)
+            self.knowledge_changed.emit()
         except Exception as e:
             QMessageBox.warning(self, get_text("kbm_delete_error"), str(e))
 
@@ -361,24 +366,27 @@ class KnowledgeManager(QWidget):
             except ImportError:
                 text = f"[PDF: {filepath.name}]\n\n(需要安装 pypdf)"
         else:
-            text = self._extract_pptx_text(filepath)
+            text = extract_pptx_text(filepath)
 
         if not text.strip():
             QMessageBox.warning(self, get_text("kbm_import_failed"), get_text("kbm_import_empty"))
             return
 
         # 2. 生成 Markdown
-        markdown = self._build_markdown(filepath, text)
+        cat_id = self.category_combo.currentData()
+        priority = int(self.priority_combo.currentData())
+        markdown = build_import_markdown(filepath, text, cat_id, priority)
 
         # 3. 目标路径（大分类 + AI/手动子目录，支持多级深度）
-        cat_id = self.category_combo.currentData()
         base_dir = self._kb_root / cat_id
         user_desc = self.desc_edit.text().strip()
         subdir_choice = self._subdir_value
 
         if subdir_choice == "__AUTO__":
-            all_subdirs = self._list_all_subdirs(base_dir)
-            chosen_subdir = self._ai_suggest_subdir(text, filepath.stem, user_desc, all_subdirs)
+            all_subdirs = list_all_subdirs(base_dir)
+            chosen_subdir = suggest_subdir(
+                self.settings, text, filepath.stem, user_desc, all_subdirs
+            )
             target_dir = base_dir / chosen_subdir if chosen_subdir else base_dir
         elif subdir_choice:
             target_dir = base_dir / subdir_choice
@@ -386,7 +394,7 @@ class KnowledgeManager(QWidget):
             target_dir = base_dir
 
         # 4. AI 分析
-        suggestion = self._ai_analyze(text, filepath.stem, user_desc)
+        suggestion = analyze_document(self.settings, text, filepath.stem, user_desc)
 
         # 5. 预览并确认
         preview = (
@@ -408,148 +416,12 @@ class KnowledgeManager(QWidget):
         out_path = target_dir / f"{safe_name}.md"
         out_path.write_text(markdown, encoding="utf-8")
         self._load_tree()
+        self.knowledge_changed.emit()
 
-        # 7. 重建索引
-        from raggg.pipeline.builder import build_knowledge_base
-        try:
-            report = build_knowledge_base(self.settings)
-            msg = f"{get_text('kbm_import_ok_msg')}: {out_path.relative_to(self._kb_root.parent)}\nChunks: {report.chunk_count}"
-        except Exception:
-            msg = f"{get_text('kbm_import_ok_msg')}: {out_path.relative_to(self._kb_root.parent)}\n(索引重建失败)"
+        # 7. 主窗口收到信号后在后台增量更新索引
+        msg = (
+            f"{get_text('kbm_import_ok_msg')}: "
+            f"{out_path.relative_to(self._kb_root.parent)}\n"
+            f"{get_text('kbm_index_update_queued')}"
+        )
         QMessageBox.information(self, get_text("kbm_import_done"), msg)
-
-    def _build_markdown(self, filepath: Path, text: str) -> str:
-        cat_id = self.category_combo.currentData()
-        priority = self.priority_combo.currentData()
-        return (
-            "---\n"
-            f"title: \"{filepath.stem}\"\n"
-            f"content_kind: \"imported\"\n"
-            f"source_file: \"{filepath.name}\"\n"
-            f"imported_at: \"2026-07-13\"\n"
-            f"category: \"{cat_id}\"\n"
-            f"priority: {priority}\n"
-            "---\n\n"
-            f"# {filepath.stem}\n\n{text}\n"
-        )
-
-    @staticmethod
-    def _list_all_subdirs(base_dir: Path) -> list[str]:
-        """递归列出所有深度子目录的相对路径"""
-        subdirs = []
-        if not base_dir.exists():
-            return subdirs
-        for entry in sorted(base_dir.iterdir()):
-            if entry.is_dir() and not entry.name.startswith("."):
-                subdirs.append(entry.name)
-                for child in entry.rglob("*"):
-                    if child.is_dir() and not child.name.startswith("."):
-                        rel = str(child.relative_to(base_dir)).replace("\\", "/")
-                        subdirs.append(rel)
-        return subdirs
-
-    def _ai_suggest_subdir(
-        self, text: str, filename: str, user_desc: str, subdirs: list[str]
-    ) -> str:
-        """让 AI 从所有深度子目录中推荐最佳匹配"""
-        if not subdirs:
-            return ""
-        prompt = (
-            f"分析文档内容，从候选目录中选择最匹配的一个（支持多级子目录如 Modeling/Stimulate）。\n"
-            f"文档名：{filename}\n"
-            f"候选目录：{', '.join(subdirs)}\n"
-            f"内容：{text[:1500]}\n"
-        )
-        if user_desc:
-            prompt += f"管理员备注：{user_desc}\n"
-        prompt += "只回答目录路径，不要解释。不确定则回答 ROOT。"
-
-        if self.settings.llm_api_key:
-            try:
-                from raggg.generation.llm_client import OpenAICompatibleClient
-                client = OpenAICompatibleClient(
-                    self.settings.llm_base_url, self.settings.llm_api_key, self.settings.llm_model,
-                )
-                response = client.complete(prompt).strip()
-                if response in subdirs:
-                    return response
-            except Exception:
-                pass
-
-        # 关键词回退（支持多级匹配）
-        for sub in sorted(subdirs, key=lambda s: -len(s)):  # 深的优先
-            lower = sub.lower()
-            keywords = [sub.split("/")[-1].lower()]
-            if "em" in lower or "project" in lower:
-                keywords += ["端口", "激励", "边界", "远场", "pml", "s参数"]
-            if "modeling" in lower:
-                keywords += ["建模", "几何", "曲线", "拉伸"]
-            if "stimulate" in lower:
-                keywords += ["端口", "激励", "lumped", "wave", "plane"]
-            if "mesh" in lower:
-                keywords += ["网格", "mesh"]
-            if "antenna" in lower:
-                keywords += ["天线"]
-            if "filter" in lower:
-                keywords += ["滤波器"]
-            if "design" in lower:
-                keywords += ["domain", "频率", "单位", "求解器"]
-            for kw in keywords:
-                if kw.lower() in text.lower() or kw.lower() in filename.lower():
-                    return sub
-        return ""
-
-    def _ai_analyze(self, text: str, filename: str, user_desc: str) -> str:
-        prompt = (
-            "你是知识库管理助手。分析文档内容，给出：\n"
-            "1. 建议分类\n2. 3-5 关键词\n3. 一句话摘要\n\n"
-        )
-        if user_desc:
-            prompt += f"管理员备注：{user_desc}\n\n"
-        prompt += f"文档名：{filename}\n内容片段：{text[:1500]}\n"
-        prompt += "格式：分类: xxx | 关键词: a,b,c | 摘要: xxx"
-
-        if self.settings.llm_api_key:
-            try:
-                from raggg.generation.llm_client import OpenAICompatibleClient
-                client = OpenAICompatibleClient(
-                    self.settings.llm_base_url, self.settings.llm_api_key, self.settings.llm_model,
-                )
-                return client.complete(prompt).strip()
-            except Exception:
-                pass
-
-        keywords_map = {
-            "端口": "02_software_manual", "激励": "02", "边界": "02", "求解器": "02",
-            "案例": "03_examples", "仿真": "03", "错误": "04_error_cases",
-            "教程": "01_team_tutorials", "FAQ": "01",
-            "材料": "05_reference", "理论": "06_theory_notes",
-        }
-        for kw, cat in keywords_map.items():
-            if kw in text or kw in filename:
-                return f"分类: {cat} | 关键词: {kw} | 摘要: (本地匹配)"
-        return "分类: 02_software_manual | 关键词: 待补充 | 摘要: (本地匹配)"
-
-    @staticmethod
-    def _extract_pptx_text(filepath: Path) -> str:
-        try:
-            from pptx import Presentation
-        except ImportError:
-            return f"[PPT: {filepath.name}]\n\n(需要安装 python-pptx)"
-        prs = Presentation(str(filepath))
-        slides = []
-        for i, slide in enumerate(prs.slides, 1):
-            lines = [f"## Slide {i}"]
-            for shape in slide.shapes:
-                if shape.has_text_frame:
-                    for para in shape.text_frame.paragraphs:
-                        t = para.text.strip()
-                        if t:
-                            lines.append(t)
-                if shape.has_table:
-                    rows = [" | ".join(cell.text.strip() for cell in row.cells) for row in shape.table.rows]
-                    if rows:
-                        lines.append("\n| " + " |\n| ".join(rows) + " |")
-            if len(lines) > 1:
-                slides.append("\n".join(lines))
-        return "\n\n".join(slides) if slides else f"[PPT: {filepath.name} - 无可提取文本]"

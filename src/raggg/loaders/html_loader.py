@@ -72,6 +72,8 @@ def load_html_document(path: Path, root: Path) -> Document:
         metadata={
             "domain": "waveda",
             "content_type": "help_page",
+            "priority": 3,
+            "knowledge_layer": "official_help",
             "has_formula": any(token in text for token in ("\\", "$$", "∇", "积分")),
             "has_wikilink": False,
         },

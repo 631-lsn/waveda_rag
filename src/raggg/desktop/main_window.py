@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import base64
 import html
 import json
 import os
@@ -35,6 +34,7 @@ from PySide6.QtWidgets import (
 )
 
 from raggg.config import Settings, application_root, config_env_path, load_settings
+from raggg.desktop.image_cache import ImageDataUriCache
 from raggg.desktop.session_manager import SessionManager
 from raggg.i18n import get_text, get_language, set_language, get_welcome_text
 from raggg.pipeline.builder import BuildReport, build_knowledge_base
@@ -253,34 +253,12 @@ IMAGE_PATH_PREFIXES = (
 )
 IMAGE_EXTENSIONS = (".png", ".jpg", ".jpeg", ".gif", ".svg")
 
-MIME_MAP = {".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
-            ".gif": "image/gif", ".svg": "image/svg+xml"}
-
-
-_data_uri_cache: dict[str, str] = {}
+_data_uri_cache = ImageDataUriCache()
 
 
 def _path_to_data_uri(filepath: str) -> str:
-    """将本地图片文件转为 base64 data URI，带缓存"""
-    if filepath in _data_uri_cache:
-        return _data_uri_cache[filepath]
-    try:
-        with open(filepath, "rb") as f:
-            data = f.read()
-        ext = os.path.splitext(filepath)[1].lower()
-        mime = MIME_MAP.get(ext, "image/png")
-        b64 = base64.b64encode(data).decode("ascii")
-        result = f"data:{mime};base64,{b64}"
-        _data_uri_cache[filepath] = result
-        return result
-    except Exception:
-        return ""
-
-
-def _preload_all_images(image_index: dict[str, str]) -> None:
-    """后台线程：预编码所有图片为data URI"""
-    for path in set(image_index.values()):
-        _path_to_data_uri(path)
+    """将本地图片文件转为带容量限制的缓存 data URI。"""
+    return _data_uri_cache.get(filepath)
 
 
 
@@ -573,6 +551,7 @@ VISION_MODELS = {
 
 class SettingsDialog(QDialog):
     """统一设置窗口，使用标签页组织：API + 语言（可扩展）"""
+    knowledge_changed = Signal()
 
     def __init__(self, settings: Settings, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -815,6 +794,7 @@ class SettingsDialog(QDialog):
     def _build_knowledge_base_tab(self) -> None:
         from raggg.desktop.knowledge_manager import KnowledgeManager
         tab = KnowledgeManager(self.settings)
+        tab.knowledge_changed.connect(self.knowledge_changed.emit)
         self.tabs.addTab(tab, get_text("kbm_tab"))
 
     # ─── Save ────────────────────────────────────
@@ -950,15 +930,11 @@ class WorkbenchWindow(QMainWindow):
         self._new_session()
         QTimer.singleShot(700, self._hide_loader)
         self._start_source_watcher()
-        # 后台预编码所有图片，用户第一次问就不慢了
+        # 图片按需编码，避免启动时把整个帮助目录载入内存。
         self._preload_images()
 
     def _preload_images(self) -> None:
-        """后台异步预编码所有图片到缓存，用户第一次提问时不再等待"""
-        from functools import partial
-        worker = Worker(partial(_preload_all_images, self._image_index))
-        worker.signals.finished.connect(lambda: print("Image preload complete"))
-        self._start_worker(worker)
+        """Compatibility hook: image data is now encoded lazily by the bounded cache."""
 
     def _build_image_index(self) -> None:
         """Build image index with project assets first, then user WavEDA paths."""
@@ -1550,6 +1526,7 @@ class WorkbenchWindow(QMainWindow):
 
     def _open_api_settings(self) -> None:
         dialog = SettingsDialog(self.settings, self)
+        dialog.knowledge_changed.connect(self._check_source_changes)
         if dialog.exec() == QDialog.Accepted:
             self.settings = load_settings()
             self._load_pipeline_if_ready()
@@ -1617,8 +1594,8 @@ class WorkbenchWindow(QMainWindow):
             except Exception:
                 text = f"[PDF: {filepath.name}]"
         elif suffix == ".pptx":
-            from raggg.desktop.knowledge_manager import KnowledgeManager
-            text = KnowledgeManager._extract_pptx_text(filepath)
+            from raggg.pipeline.knowledge_import import extract_pptx_text
+            text = extract_pptx_text(filepath)
         elif suffix == ".docx":
             try:
                 from raggg.pipeline.ingestion import _extract_docx_text
