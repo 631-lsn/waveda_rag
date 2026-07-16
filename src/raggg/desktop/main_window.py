@@ -94,7 +94,46 @@ def favorite_matches(favorite: dict, query: str) -> bool:
     searchable_text = "\n".join(
         str(favorite.get(field, "")) for field in ("question", "answer")
     ).casefold()
-    return normalized_query in searchable_text
+    # 也去掉搜索文本中的空格，支持 "s参数" 匹配 "s 参数"
+    searchable_compact = searchable_text.replace(" ", "")
+    keywords = normalized_query.split()
+    query_compact = normalized_query.replace(" ", "")
+    # 先试精确匹配，再试去空格匹配
+    return (
+        all(kw in searchable_text for kw in keywords)
+        or query_compact in searchable_compact
+    )
+
+
+def favorite_score(favorite: dict, query: str) -> int:
+    """多关键词命中次数，用于排序"""
+    normalized_query = query.strip().casefold()
+    if not normalized_query:
+        return 0
+    keywords = normalized_query.split()
+    searchable_text = "\n".join(
+        str(favorite.get(field, "")) for field in ("question", "answer")
+    ).casefold()
+    score = sum(searchable_text.count(kw) for kw in keywords)
+    # 去空格后也计分
+    query_compact = normalized_query.replace(" ", "")
+    searchable_compact = searchable_text.replace(" ", "")
+    score += searchable_compact.count(query_compact) * 2
+    return score
+
+
+def highlight_keywords(html_text: str, query: str) -> str:
+    """在 HTML 文本中高亮关键词"""
+    if not query.strip():
+        return html_text
+    result = html_text
+    for kw in query.strip().split():
+        pattern = re.compile(re.escape(kw), re.IGNORECASE)
+        result = pattern.sub(
+            f'<mark style="background:#5f93d6;color:#fff;padding:1px 3px;border-radius:3px;">{kw}</mark>',
+            result,
+        )
+    return result
 
 
 def latex_formula_to_html(formula: str) -> str:
@@ -353,8 +392,13 @@ body {{
     overflow-x: hidden;
 }}
 p {{ margin: 7px 0; line-height: 1.58; }}
-ol, ul {{ margin: 8px 0; padding-left: 24px; }}
-li {{ margin: 4px 0; }}
+ol {{ margin: 8px 0; padding-left: 24px; list-style: none; }}
+ol li {{ margin: 4px 0; counter-increment: ordered-item; }}
+ol li::before {{ content: counter(ordered-item) ". "; color: {COLORS["accent"]}; font-weight: 600; }}
+ul {{ margin: 8px 0; padding-left: 24px; }}
+ul li {{ margin: 4px 0; }}
+ul {{ margin: 8px 0; padding-left: 24px; }}
+ul li {{ margin: 4px 0; }}
 strong {{ color: {COLORS["accent"]}; }}
 blockquote {{ margin: 8px 0; padding: 8px 12px; border-left: 3px solid {COLORS["accent"]}; color: {COLORS["muted"]}; }}
 a {{ color: {COLORS["accent2"]}; }}
@@ -1514,62 +1558,177 @@ class WorkbenchWindow(QMainWindow):
         if not favs:
             QMessageBox.information(self, get_text("favorites_title"), get_text("msg_favorites_empty"))
             return
+
         dialog = QDialog(self)
         dialog.setWindowTitle(get_text("favorites_title"))
-        dialog.resize(750, 550)
+        dialog.resize(780, 600)
+        dialog.setStyleSheet(f"QDialog {{ background: {COLORS['bg']}; }}")
+
         layout = QVBoxLayout(dialog)
+        layout.setSpacing(10)
+
+        # ── 搜索栏 ──
+        search_row = QHBoxLayout()
+        search_icon = QLabel("🔍")
+        search_icon.setStyleSheet(f"font-size:16px;")
+        search_row.addWidget(search_icon)
         search_input = QLineEdit()
-        search_input.setObjectName("favoritesSearchInput")
         search_input.setPlaceholderText(get_text("favorites_search_placeholder"))
-        layout.addWidget(search_input)
+        search_input.setStyleSheet(f"""
+            QLineEdit {{ background: {COLORS['surface2']}; color: {COLORS['text']};
+                border: 1px solid {COLORS['border']}; border-radius: 12px;
+                padding: 10px 14px; font-size: 13px; }}
+            QLineEdit:focus {{ border-color: {COLORS['accent']}; }}
+        """)
+        search_row.addWidget(search_input, stretch=1)
+        layout.addLayout(search_row)
+
+        # ── 结果计数 ──
+        self._fav_count_label = QLabel(f"{len(favs)} 条收藏")
+        self._fav_count_label.setStyleSheet(f"color:{COLORS['muted']};font-size:11px;")
+        layout.addWidget(self._fav_count_label)
+
+        # ── 卡片列表（点击展开） ──
         from PySide6.QtWidgets import QScrollArea
         scroll = QWidget()
         scroll_layout = QVBoxLayout(scroll)
-        favorite_cards = []
-        for i, f in enumerate(reversed(favs)):
+        scroll_layout.setSpacing(8)
+
+        favorite_items: list[dict] = []
+        for i, f_item in enumerate(reversed(favs)):
+            real_idx = len(favs) - 1 - i
+
+            # 折叠卡片
             card = QFrame()
             card.setObjectName("metricCard")
+            card.setCursor(Qt.PointingHandCursor)
+            card.setStyleSheet(f"""
+                QFrame#metricCard {{ background: {COLORS['surface2']}; border-radius: 12px;
+                    border: 1px solid {COLORS['border']}; }}
+                QFrame#metricCard:hover {{ border-color: {COLORS['accent']}; }}
+            """)
             card_layout = QVBoxLayout(card)
-            # Q&A 合并显示在一个文本框里，统一背景
-            from PySide6.QtWidgets import QTextEdit
-            qa_text = QTextEdit()
-            qa_text.setReadOnly(True)
-            html_body = (
-                f"<p style='color:{COLORS['accent']};font-weight:700;margin:0;'>Q: {html.escape(f['question'])}</p>"
-                f"<p style='color:{COLORS['subtle']};font-size:11px;margin:2px 0 6px 0;'>{f.get('time','')}</p>"
-                f"<hr style='border-color:{COLORS['border']};margin:6px 0;'>"
-                f"<p style='color:{COLORS['text']};line-height:1.55;margin:0;white-space:pre-wrap;'>{html.escape(f['answer'])}</p>"
-            )
-            qa_text.setHtml(html_body)
-            qa_text.setMaximumHeight(250)
-            qa_text.setStyleSheet(f"background:{COLORS['surface2']};border:0;")
-            card_layout.addWidget(qa_text)
-            del_btn = QPushButton(get_text("btn_delete"))
-            del_btn.setStyleSheet(f"background:{COLORS['danger']};color:#fff;border:0;padding:2px 8px;font-size:11px;")
-            real_idx = len(favs) - 1 - i
+            card_layout.setSpacing(4)
+
+            # 简略行：Q badge + 问题前60字 + 时间 + 删除
+            brief_row = QHBoxLayout()
+            q_badge = QLabel("Q")
+            q_badge.setFixedSize(20, 20)
+            q_badge.setAlignment(Qt.AlignCenter)
+            q_badge.setStyleSheet(f"background:{COLORS['accent']};color:#fff;font-weight:700;font-size:10px;border-radius:10px;")
+            brief_row.addWidget(q_badge)
+            q_preview = QLabel(html.escape(f_item.get('question', '')[:80]))
+            q_preview.setStyleSheet(f"color:{COLORS['text']};font-size:13px;")
+            brief_row.addWidget(q_preview, stretch=1)
+            time_lbl = QLabel(f_item.get('time', ''))
+            time_lbl.setStyleSheet(f"color:{COLORS['subtle']};font-size:10px;")
+            brief_row.addWidget(time_lbl)
+
+            expand_arrow = QLabel("▸")
+            expand_arrow.setStyleSheet(f"color:{COLORS['muted']};font-size:12px;")
+            brief_row.addWidget(expand_arrow)
+
+            del_btn = QPushButton("✕")
+            del_btn.setFixedSize(20, 20)
+            del_btn.setCursor(Qt.PointingHandCursor)
+            del_btn.setStyleSheet(f"""
+                QPushButton {{ background: transparent; color: {COLORS['subtle']}; border: 0; font-size: 11px; border-radius: 10px; }}
+                QPushButton:hover {{ background: {COLORS['danger']}; color: #fff; }}
+            """)
             del_btn.clicked.connect(lambda ch=False, idx=real_idx: self._do_fav_del(idx, dialog))
-            card_layout.addWidget(del_btn)
+            brief_row.addWidget(del_btn)
+            card_layout.addLayout(brief_row)
+
+            # 展开区域（默认隐藏）
+            from PySide6.QtWidgets import QTextEdit
+            detail_widget = QWidget()
+            detail_layout = QVBoxLayout(detail_widget)
+            detail_layout.setContentsMargins(0, 4, 0, 0)
+            q_full = QLabel(f"<b style='color:{COLORS['accent']};'>Q:</b> {html.escape(f_item.get('question', ''))}")
+            q_full.setWordWrap(True)
+            q_full.setStyleSheet(f"color:{COLORS['text']};font-size:12px;")
+            detail_layout.addWidget(q_full)
+
+            a_text = QTextEdit()
+            a_text.setReadOnly(True)
+            raw = f_item.get('answer', '')
+            a_text.setHtml(f"<div style='color:{COLORS['text']};line-height:1.55;'>{markdown_to_html(raw)}</div>")
+            a_text.setMaximumHeight(300)
+            a_text.setStyleSheet(f"background:{COLORS['surface']};border:0;border-radius:8px;padding:4px;")
+            detail_layout.addWidget(a_text)
+            detail_widget.hide()
+            card_layout.addWidget(detail_widget)
+
+            # 点击切换展开
+            info = {
+                "card": card, "arrow": expand_arrow, "detail": detail_widget,
+                "f_item": f_item, "a_text": a_text,
+            }
+            favorite_items.append(info)
+
+            def make_toggle(d=detail_widget, a=expand_arrow):
+                def handler(_ev=None):
+                    d.setVisible(not d.isVisible())
+                    a.setText("▾" if d.isVisible() else "▸")
+                return handler
+
+            card.mousePressEvent = make_toggle()
+
             scroll_layout.addWidget(card)
-            favorite_cards.append((card, f))
+
         no_results = QLabel(get_text("favorites_no_results"))
-        no_results.setObjectName("favoritesNoResults")
+        no_results.setStyleSheet(f"color:{COLORS['muted']};font-size:14px;padding:40px;")
         no_results.setAlignment(Qt.AlignCenter)
         no_results.hide()
         scroll_layout.addWidget(no_results)
-        scroll.setMinimumSize(700, len(favs) * 180)
         scroll_layout.addStretch(1)
+
         area = QScrollArea()
         area.setWidgetResizable(True)
         area.setWidget(scroll)
+        area.setStyleSheet(f"QScrollArea {{ background: transparent; border: 0; }}")
         layout.addWidget(area, stretch=1)
 
+        # ── 搜索逻辑 ──
         def filter_cards(query: str) -> None:
-            visible_count = 0
-            for favorite_card, favorite in favorite_cards:
-                matches = favorite_matches(favorite, query)
-                favorite_card.setVisible(matches)
-                visible_count += int(matches)
-            no_results.setVisible(visible_count == 0)
+            if not query.strip():
+                for item in favorite_items:
+                    item["card"].setVisible(True)
+                    # 收起所有展开
+                    item["detail"].hide()
+                    item["arrow"].setText("▸")
+                no_results.hide()
+                self._fav_count_label.setText(f"{len(favs)} 条收藏")
+                return
+
+            scored = []
+            for item in favorite_items:
+                f_item = item["f_item"]
+                if favorite_matches(f_item, query):
+                    score = favorite_score(f_item, query)
+                    scored.append((score, item))
+                else:
+                    item["card"].setVisible(False)
+
+            scored.sort(key=lambda x: -x[0])
+
+            for rank, (score, item) in enumerate(scored):
+                item["card"].setVisible(True)
+                # 自动展开匹配项
+                item["detail"].setVisible(True)
+                item["arrow"].setText("▾")
+                # 移到顶部
+                scroll_layout.removeWidget(item["card"])
+                scroll_layout.insertWidget(rank, item["card"])
+                # 高亮
+                raw = item["f_item"].get('answer', '')
+                rendered = markdown_to_html(raw)
+                highlighted = highlight_keywords(rendered, query)
+                item["a_text"].setHtml(f"<div style='color:{COLORS['text']};line-height:1.55;'>{highlighted}</div>")
+
+            visible = len(scored)
+            no_results.setVisible(visible == 0)
+            self._fav_count_label.setText(f"{visible}/{len(favs)} 条匹配")
 
         search_input.textChanged.connect(filter_cards)
         dialog.exec()
@@ -2044,7 +2203,7 @@ class WorkbenchWindow(QMainWindow):
         rendered = markdown_to_html(answer)
         bubbles = get_chat_bubble_colors()
         msg_html = web_wrapper(
-            f"""<div style="margin:16px 26px 18px 26px;display:flex;justify-content:flex-start;">
+            f"""<div style="margin:16px 26px 18px 26px;display:flex;justify-content:flex-start;counter-reset:ordered-item 0;">
               <div style="max-width:82%;">
               <div style="display:flex;align-items:center;gap:8px;margin-left:2px;margin-bottom:6px;">
                 <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='{get_text("btn_copied")}';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"

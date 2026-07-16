@@ -331,12 +331,18 @@ class KnowledgeManager(QWidget):
     def _select_file(self) -> None:
         path, _ = QFileDialog.getOpenFileName(
             self, get_text("kbm_select_file_title"), "",
-            "Documents (*.pdf *.pptx)"
+            "Documents (*.pdf *.pptx *.md)"
         )
         if not path:
             return
+        suffix = path.lower()
+        if suffix.endswith(".pdf"):
+            self._pending_import_type = "pdf"
+        elif suffix.endswith(".pptx"):
+            self._pending_import_type = "pptx"
+        else:
+            self._pending_import_type = "md"
         self._pending_import_path = path
-        self._pending_import_type = "pdf" if path.lower().endswith(".pdf") else "pptx"
         self.file_status.setText(f"📎 {Path(path).name}")
         self.file_status.setStyleSheet(f"color:{COLORS['accent']};font-size:11px;")
 
@@ -359,7 +365,14 @@ class KnowledgeManager(QWidget):
         filepath = Path(filepath)
 
         # 1. 提取文本
-        if filetype == "pdf":
+        if filetype == "md":
+            text = filepath.read_text(encoding="utf-8", errors="ignore")
+            # 去掉 YAML front matter
+            if text.startswith("---"):
+                end = text.find("---", 3)
+                if end > 0:
+                    text = text[end + 3:].strip()
+        elif filetype == "pdf":
             try:
                 from raggg.pipeline.ingestion import _extract_pdf_text
                 text = _extract_pdf_text(filepath)
