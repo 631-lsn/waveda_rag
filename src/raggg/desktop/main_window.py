@@ -1573,6 +1573,7 @@ class WorkbenchWindow(QMainWindow):
         search_icon.setStyleSheet(f"font-size:16px;")
         search_row.addWidget(search_icon)
         search_input = QLineEdit()
+        search_input.setObjectName("favoritesSearchInput")
         search_input.setPlaceholderText(get_text("favorites_search_placeholder"))
         search_input.setStyleSheet(f"""
             QLineEdit {{ background: {COLORS['surface2']}; color: {COLORS['text']};
@@ -1677,6 +1678,7 @@ class WorkbenchWindow(QMainWindow):
             scroll_layout.addWidget(card)
 
         no_results = QLabel(get_text("favorites_no_results"))
+        no_results.setObjectName("favoritesNoResults")
         no_results.setStyleSheet(f"color:{COLORS['muted']};font-size:14px;padding:40px;")
         no_results.setAlignment(Qt.AlignCenter)
         no_results.hide()
