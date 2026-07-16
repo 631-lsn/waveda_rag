@@ -65,6 +65,27 @@ class DesktopLayoutTests(unittest.TestCase):
             window.sidebar_toggle_button.click()
             self.assertTrue(window.sidebar_container.isHidden())
 
+    def test_sidebar_has_manual_rebuild_button_and_busy_state(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+
+            button = getattr(window, "rebuild_index_button", None)
+            self.assertIsNotNone(button)
+            self.assertEqual(button.text(), "重建索引")
+            with patch.object(window, "_rebuild_async") as rebuild:
+                button.click()
+                rebuild.assert_called_once_with()
+
+            window._set_busy(True, "正在重建知识库")
+            self.assertFalse(button.isEnabled())
+            window._set_busy(False, "就绪")
+            self.assertTrue(button.isEnabled())
+
     def test_basic_shortcuts_are_window_scoped(self) -> None:
         with TemporaryDirectory() as tmp:
             root = Path(tmp)

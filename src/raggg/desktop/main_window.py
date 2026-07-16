@@ -795,6 +795,10 @@ class WorkbenchWindow(QMainWindow):
         status_grid.addWidget(self.watch_card, 1, 1)
         layout.addLayout(status_grid)
 
+        self.rebuild_index_button = self._button(get_text("btn_rebuild_index"), primary=True)
+        self.rebuild_index_button.clicked.connect(self._rebuild_async)
+        layout.addWidget(self.rebuild_index_button)
+
         actions = QHBoxLayout()
         actions.setSpacing(8)
         self.api_button = self._button(get_text("btn_api_settings"))
@@ -1082,6 +1086,7 @@ class WorkbenchWindow(QMainWindow):
         search_icon.setStyleSheet(f"font-size:16px;")
         search_row.addWidget(search_icon)
         search_input = QLineEdit()
+        search_input.setObjectName("favoritesSearchInput")
         search_input.setPlaceholderText(get_text("favorites_search_placeholder"))
         search_input.setStyleSheet(f"""
             QLineEdit {{ background: {COLORS['surface2']}; color: {COLORS['text']};
@@ -1186,6 +1191,7 @@ class WorkbenchWindow(QMainWindow):
             scroll_layout.addWidget(card)
 
         no_results = QLabel(get_text("favorites_no_results"))
+        no_results.setObjectName("favoritesNoResults")
         no_results.setStyleSheet(f"color:{COLORS['muted']};font-size:14px;padding:40px;")
         no_results.setAlignment(Qt.AlignCenter)
         no_results.hide()
@@ -1266,6 +1272,7 @@ class WorkbenchWindow(QMainWindow):
         # 侧边栏按钮
         self.api_button.setText(get_text("btn_api_settings"))
         self.fav_button.setText(get_text("btn_favorites"))
+        self.rebuild_index_button.setText(get_text("btn_rebuild_index"))
 
     def _import_document(self) -> None:
         """临时上传文件/图片用于当前提问，不写入知识库"""
@@ -1664,7 +1671,7 @@ class WorkbenchWindow(QMainWindow):
         self.activity_label.setText(text)
         self.activity_label.setVisible(busy)
         self.activity_label.setStyleSheet(f"color: {COLORS['warning' if busy else 'accent']};")
-        for button in (self.ask_button, self.import_button):
+        for button in (self.ask_button, self.import_button, self.rebuild_index_button):
             button.setDisabled(busy)
         if not busy and self._watch_rebuild_requested and self._watch_pending_snapshot is not None:
             self._watch_rebuild_requested = False

@@ -20,7 +20,7 @@ class LoaderThemeTests(unittest.TestCase):
         overlay.resize(480, 320)
         image = QImage(overlay.size(), QImage.Format_ARGB32)
         image.fill(0)
-        with patch("raggg.desktop.main_window.get_theme", return_value=theme):
+        with patch("raggg.desktop.widgets.get_theme", return_value=theme):
             overlay.render(image)
         overlay.close()
         return image.pixelColor(12, 12).lightness()
