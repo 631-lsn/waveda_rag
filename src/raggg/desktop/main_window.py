@@ -70,9 +70,7 @@ def favorite_matches(favorite: dict, query: str) -> bool:
     normalized_query = query.strip().casefold()
     if not normalized_query:
         return True
-    searchable_text = "\n".join(
-        str(favorite.get(field, "")) for field in ("question", "answer")
-    ).casefold()
+    searchable_text = str(favorite.get("question", "")).casefold()
     searchable_compact = normalize_favorite_search_text(searchable_text)
     keywords = normalized_query.split()
     query_compact = normalize_favorite_search_text(query)
@@ -88,9 +86,7 @@ def favorite_score(favorite: dict, query: str) -> int:
     if not normalized_query:
         return 0
     keywords = normalized_query.split()
-    searchable_text = "\n".join(
-        str(favorite.get(field, "")) for field in ("question", "answer")
-    ).casefold()
+    searchable_text = str(favorite.get("question", "")).casefold()
     score = sum(searchable_text.count(kw) for kw in keywords)
     query_compact = normalize_favorite_search_text(query)
     searchable_compact = normalize_favorite_search_text(searchable_text)
