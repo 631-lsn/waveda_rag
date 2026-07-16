@@ -72,28 +72,32 @@ class Retriever:
         if not self.store.chunks:
             return []
         query_vector = self.store.embedding_model.embed_text(query)
-        vector_scores = self.store.vectors @ query_vector
         query_tokens = set(tokenize(query))
         query_lower = query.lower()
 
         results: list[SearchResult] = []
         for index, chunk in enumerate(self.store.chunks):
-            vector_score = float(vector_scores[index]) if len(vector_scores) else 0.0
-            lexical_score = _lexical_overlap(query_tokens, f"{chunk.title} {chunk.section} {chunk.content}")
-            heading_score = _lexical_overlap(query_tokens, f"{chunk.title} {chunk.section}")
+            # The section is the FAQ question heading (the text after Q:).
+            # Retrieval deliberately ignores the document title and body;
+            # the matched chunk still carries its body for answer context.
+            question_heading = chunk.section or ""
+            heading_vector = self.store.embedding_model.embed_text(question_heading)
+            vector_score = float(heading_vector @ query_vector)
+            lexical_score = _lexical_overlap(query_tokens, question_heading)
+            heading_score = lexical_score
             score = 0.5 * vector_score + 0.3 * lexical_score + 0.2 * heading_score
 
             # 优先级加权 (1-5, 默认3) — 高优先级文档获得额外得分
             priority = int(chunk.metadata.get("priority", 3))
             score *= 0.9 + 0.07 * priority  # priority=3 → 1.11x, priority=5 → 1.25x
 
-            chunk_text_lower = f"{chunk.title} {chunk.section} {chunk.content}".lower()
+            chunk_text_lower = question_heading.lower()
             is_helpful = chunk.source_type in ("waveda_help", "user_tutorial") or priority >= 4
             if is_helpful and any(term in query_lower for term in WAVEDA_TERMS):
                 score += 0.08
             compact_query = query_lower.replace(" ", "").replace("？", "").replace("?", "")
-            compact_title = chunk.title.lower().replace(" ", "")
-            title_tokens = set(tokenize(chunk.title))
+            compact_title = question_heading.lower().replace(" ", "")
+            title_tokens = set(tokenize(question_heading))
             if (
                 is_helpful
                 and len(title_tokens) >= 2
@@ -114,10 +118,6 @@ class Retriever:
             if any(term in query_lower for term in DEFINITION_TERMS):
                 if "是什么" in compact_title or compact_title in compact_query or compact_query in compact_title:
                     score += 0.45
-            if chunk.metadata.get("has_formula") and any(term in query_lower for term in FORMULA_TERMS):
-                score += 0.5
-            if chunk.source_type == "obsidian_note" and any(term in query_lower for term in FORMULA_TERMS):
-                score += 0.08
 
             results.append(
                 SearchResult(
