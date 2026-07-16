@@ -13,7 +13,7 @@ from PySide6.QtGui import QKeySequence, QShortcut
 from PySide6.QtWidgets import QApplication, QDialog, QFrame, QLabel, QLineEdit, QPushButton
 
 from raggg.config import Settings
-from raggg.desktop.main_window import AILoaderOverlay, WorkbenchWindow, favorite_matches
+from raggg.desktop.main_window import AILoaderOverlay, WorkbenchWindow, favorite_matches, favorite_score
 
 
 def make_settings(root: Path) -> Settings:
@@ -207,6 +207,26 @@ class DesktopLayoutTests(unittest.TestCase):
         self.assertTrue(favorite_matches(favorite, "端口截面"))
         self.assertTrue(favorite_matches(favorite, ""))
         self.assertFalse(favorite_matches(favorite, "PML"))
+
+    def test_favorite_search_ignores_all_whitespace_variants(self) -> None:
+        favorite = {
+            "question": "How do I set a Wave Port?",
+            "answer": "选择\u00a0端口\t截面。",
+        }
+
+        for query in (
+            "waveport",
+            "wave   port",
+            "wave\tport",
+            "wave\u3000port",
+            "选择端口截面",
+            "选择\n端口\u00a0截面",
+        ):
+            with self.subTest(query=query):
+                self.assertTrue(favorite_matches(favorite, query))
+                self.assertGreater(favorite_score(favorite, query), 0)
+
+        self.assertTrue(favorite_matches(favorite, " \t\u00a0\n"))
 
     def test_favorites_dialog_filters_question_and_answer_content(self) -> None:
         with TemporaryDirectory() as tmp:
