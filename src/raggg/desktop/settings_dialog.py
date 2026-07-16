@@ -3,6 +3,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
+from PySide6.QtCore import Signal
 from PySide6.QtWidgets import (
     QComboBox,
     QDialog,
@@ -43,6 +44,7 @@ VISION_MODELS = {
 
 class SettingsDialog(QDialog):
     """统一设置窗口，使用标签页组织：个性化 + API + 路径 + 知识库"""
+    knowledge_changed = Signal()
 
     def __init__(self, settings: Settings, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -230,6 +232,7 @@ class SettingsDialog(QDialog):
     def _build_knowledge_base_tab(self) -> None:
         from raggg.desktop.knowledge_manager import KnowledgeManager
         tab = KnowledgeManager(self.settings)
+        tab.knowledge_changed.connect(self.knowledge_changed.emit)
         self.tabs.addTab(tab, get_text("kbm_tab"))
 
     # ─── Save ────────────────────────────────────
