@@ -49,33 +49,8 @@ COLORS = get_colors()
 APP_STYLE = build_style()
 
 
-@dataclass(frozen=True)
-class AskResult:
-    question: str
-    answer: RAGAnswer
+from raggg.desktop.workers import AskResult, WorkerSignals, Worker
 
-
-class WorkerSignals(QObject):
-    result = Signal(object)
-    progress = Signal(object)
-    error = Signal(str)
-    finished = Signal()
-
-
-class Worker(QRunnable):
-    def __init__(self, fn: Callable[[], object]) -> None:
-        super().__init__()
-        self.fn = fn
-        self.signals = WorkerSignals()
-
-    @Slot()
-    def run(self) -> None:
-        try:
-            self.signals.result.emit(self.fn())
-        except Exception as exc:
-            self.signals.error.emit(str(exc))
-        finally:
-            self.signals.finished.emit()
 
 
 IMAGE_MD_RE = re.compile(r">?\s*[^:\n]{0,16}:\s*`?\.?/([^`)]+\.(?:png|jpg|jpeg|gif|svg))`?", re.IGNORECASE)
@@ -409,36 +384,7 @@ from raggg.desktop.widgets import MetricCard, AILoaderOverlay
 
 from raggg.desktop.settings_dialog import LLM_PROVIDERS, VISION_MODELS, SettingsDialog
 
-class SourceViewer(QDialog):
-    """独立的源文档查看窗口"""
-
-    def __init__(self, title: str, html_content: str, parent: QWidget | None = None) -> None:
-        super().__init__(parent)
-        self.setWindowTitle(f"{title} — {get_text('source_viewer_title')}")
-        self.resize(960, 680)
-        self.setMinimumSize(600, 400)
-        self.setAttribute(Qt.WA_DeleteOnClose)
-
-        layout = QVBoxLayout(self)
-        layout.setContentsMargins(0, 0, 0, 0)
-        layout.setSpacing(0)
-
-        self.viewer = QWebEngineView()
-        self.viewer.settings().setAttribute(QWebEngineSettings.LocalContentCanAccessFileUrls, True)
-        self.viewer.setHtml(html_content)
-
-        # Bottom bar with close button
-        bar = QHBoxLayout()
-        bar.setContentsMargins(12, 8, 12, 8)
-        bar.addStretch()
-        close_btn = QPushButton(get_text("btn_close"))
-        close_btn.setCursor(Qt.PointingHandCursor)
-        close_btn.clicked.connect(self.close)
-        bar.addWidget(close_btn)
-
-        layout.addWidget(self.viewer, stretch=1)
-        layout.addLayout(bar)
-
+from raggg.desktop.source_viewer import SourceViewer
 
 class WorkbenchWindow(QMainWindow):
     def __init__(self, settings: Settings) -> None:
