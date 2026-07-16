@@ -41,6 +41,20 @@ def write_docx(path: Path, *paragraphs: str) -> None:
 
 
 class BuilderDocumentTests(unittest.TestCase):
+    def test_excludes_non_indexed_framework_documents(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp) / "knowledge_base"
+            root.mkdir()
+            (root / "guide.md").write_text("# Real guide\n\nUseful", encoding="utf-8")
+            (root / "_README.md").write_text(
+                "---\nindexing: false\n---\n\n# Folder instructions",
+                encoding="utf-8",
+            )
+
+            documents = _iter_knowledge_base_documents(root)
+
+            self.assertEqual([document.relative_path for document in documents], ["guide.md"])
+
     def test_reuses_unchanged_documents_and_embeddings(self) -> None:
         with TemporaryDirectory() as tmp:
             root = Path(tmp)

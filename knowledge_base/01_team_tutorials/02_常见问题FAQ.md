@@ -1,6 +1,7 @@
 ---
 title: "WavEDA 常见问题 FAQ"
 content_kind: "markdown"
+physics_domain: "em_rf"
 updated_at: "2026-07-08"
 ---
 

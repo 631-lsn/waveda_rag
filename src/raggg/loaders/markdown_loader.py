@@ -14,6 +14,7 @@ KNOWLEDGE_LAYER_METADATA = {
     "03_examples": (4, "worked_example"),
     "04_error_cases": (3, "error_reference"),
     "05_reference": (2, "reference"),
+    "06_theory_notes": (1, "theory_note"),
 }
 
 
@@ -35,6 +36,27 @@ def knowledge_path_metadata(relative_path: str) -> dict[str, int | str]:
     return {"priority": priority, "knowledge_layer": knowledge_layer}
 
 
+def infer_physics_domain(relative_path: str) -> str:
+    normalized = relative_path.replace("\\", "/").lower()
+    if any(token in normalized for token in ("photonics", "光子", "光波导")):
+        return "photonics"
+    if any(token in normalized for token in ("multi-physics", "multiphysics", "多物理场")):
+        return "multiphysics"
+    if any(token in normalized for token in ("thermal", "热学", "热传导")):
+        return "thermal"
+    if any(token in normalized for token in ("acoustic", "声学", "弹性波", "压电")):
+        return "acoustic_piezoelectric"
+    if any(token in normalized for token in ("/mech/", "mechanical", "结构力学", "力学模块")):
+        return "mechanical"
+    if any(token in normalized for token in ("circuit", "电路")):
+        return "circuit"
+    if any(token in normalized for token in ("layout", "版图", "封装")):
+        return "layout_packaging"
+    if any(token in normalized for token in ("em_project", "/em/", "电磁", "射频")):
+        return "em_rf"
+    return "common"
+
+
 def _frontmatter_values(text: str) -> dict[str, str]:
     match = FRONTMATTER_RE.match(text.replace("\r\n", "\n").replace("\r", "\n"))
     if not match:
@@ -46,6 +68,13 @@ def _frontmatter_values(text: str) -> dict[str, str]:
         key, value = line.split(":", 1)
         values[key.strip()] = value.strip().strip('"\'')
     return values
+
+
+def _frontmatter_bool(values: dict[str, str], key: str, default: bool = True) -> bool:
+    value = values.get(key)
+    if value is None:
+        return default
+    return value.strip().lower() not in {"false", "no", "0", "off"}
 
 
 def load_markdown_document(path: Path, root: Path) -> Document:
@@ -72,6 +101,13 @@ def load_markdown_document(path: Path, root: Path) -> Document:
         metadata={
             "domain": "multiphysics",
             "content_type": frontmatter.get("content_kind", "note"),
+            "indexing": _frontmatter_bool(frontmatter, "indexing"),
+            "physics_domain": frontmatter.get(
+                "physics_domain", infer_physics_domain(relative_path)
+            ),
+            "waveda_module": frontmatter.get("waveda_module", ""),
+            "software_version": frontmatter.get("software_version", ""),
+            "status": frontmatter.get("status", ""),
             "has_formula": has_formula,
             "has_wikilink": bool(links),
             **path_metadata,
