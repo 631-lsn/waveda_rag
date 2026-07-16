@@ -3,6 +3,7 @@ from __future__ import annotations
 from html.parser import HTMLParser
 from pathlib import Path
 
+from raggg.loaders.markdown_loader import infer_physics_domain
 from raggg.models import Document
 
 
@@ -74,6 +75,7 @@ def load_html_document(path: Path, root: Path) -> Document:
             "content_type": "help_page",
             "priority": 3,
             "knowledge_layer": "official_help",
+            "physics_domain": infer_physics_domain(_relative(path, root)),
             "has_formula": any(token in text for token in ("\\", "$$", "∇", "积分")),
             "has_wikilink": False,
         },

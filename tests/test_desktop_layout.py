@@ -191,6 +191,29 @@ class DesktopLayoutTests(unittest.TestCase):
             self.assertFalse(window.loader_overlay.isHidden())
             self.assertEqual(window.loader_overlay.text, "正在检索")
 
+    def test_busy_loader_keeps_side_panels_visible(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+
+            window.show()
+            window.session_panel.show()
+            window.sidebar_container.show()
+            self.app.processEvents()
+            window._set_busy(True, "正在检索")
+            self.app.processEvents()
+
+            self.assertFalse(window.session_panel.isHidden())
+            self.assertFalse(window.sidebar_container.isHidden())
+            self.assertEqual(window.loader_overlay.geometry(), window.main_workspace.geometry())
+            self.assertFalse(window.loader_overlay.geometry().intersects(window.session_panel.geometry()))
+            self.assertFalse(window.loader_overlay.geometry().intersects(window.sidebar_container.geometry()))
+            window.close()
+
     def test_loader_uses_orbital_glow_animation_contract(self) -> None:
         overlay = AILoaderOverlay(text="生成中")
 

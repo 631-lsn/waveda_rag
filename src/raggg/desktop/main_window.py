@@ -982,7 +982,7 @@ class WorkbenchWindow(QMainWindow):
         self._build_image_index()
         self._build_ui()
         self._setup_shortcuts()
-        self._show_loader("正在载入")
+        self._show_loader("正在载入", full_window=True)
         self._load_pipeline_if_ready()
         self._new_session()
         QTimer.singleShot(700, self._hide_loader)
@@ -1043,7 +1043,8 @@ class WorkbenchWindow(QMainWindow):
         shell.setColumnStretch(2, 0)
         shell.setRowStretch(0, 1)
 
-        main = QVBoxLayout()
+        self.main_workspace = QWidget(root)
+        main = QVBoxLayout(self.main_workspace)
         main.setContentsMargins(0, 0, 0, 0)
         main.setSpacing(0)
 
@@ -1161,12 +1162,14 @@ class WorkbenchWindow(QMainWindow):
 
         self.session_panel = self._build_session_panel()
         shell.addWidget(self.session_panel, 0, 0)
-        shell.addLayout(main, 0, 1)
+        shell.addWidget(self.main_workspace, 0, 1)
         shell.addWidget(self.sidebar_container, 0, 2)
         self.loader_overlay = AILoaderOverlay(root, text="正在载入")
+        self._loader_full_window = True
         self.loader_overlay.setGeometry(root.rect())
         self.loader_overlay.raise_()
         root.installEventFilter(self)
+        self.main_workspace.installEventFilter(self)
 
     def _header(self) -> QHBoxLayout:
         header = QHBoxLayout()
@@ -1450,14 +1453,20 @@ class WorkbenchWindow(QMainWindow):
         self._focus_question_input()
 
     def eventFilter(self, watched: QObject, event: QEvent) -> bool:
-        if event.type() == QEvent.Resize and hasattr(self, "loader_overlay"):
-            self.loader_overlay.setGeometry(self.centralWidget().rect())
+        if event.type() in (QEvent.Move, QEvent.Resize) and hasattr(self, "loader_overlay"):
+            self.loader_overlay.setGeometry(self._loader_geometry())
             self.loader_overlay.raise_()
         return super().eventFilter(watched, event)
 
-    def _show_loader(self, text: str) -> None:
+    def _loader_geometry(self):
+        if not self._loader_full_window:
+            return self.main_workspace.geometry()
+        return self.centralWidget().rect()
+
+    def _show_loader(self, text: str, *, full_window: bool = False) -> None:
+        self._loader_full_window = full_window
         self.loader_overlay.set_text(text)
-        self.loader_overlay.setGeometry(self.centralWidget().rect())
+        self.loader_overlay.setGeometry(self._loader_geometry())
         self.loader_overlay.raise_()
         self.loader_overlay.show()
 
@@ -1530,6 +1539,8 @@ class WorkbenchWindow(QMainWindow):
     def _on_console_msg(self, level, msg: str, line: int, source: str) -> None:
         if msg == "RAGGG_FAV":
             self._do_fav()
+        elif msg == "RAGGG_FIX":
+            self._do_fix_answer()
         elif msg.startswith("RAGGG_QUICK:"):
             question = msg.partition(":")[2].strip()
             if question:
@@ -1546,6 +1557,68 @@ class WorkbenchWindow(QMainWindow):
             with open(self._fav_file, "w", encoding="utf-8") as f:
                 import json as _json; _json.dump(favs, f, ensure_ascii=False, indent=2)
             self.status_card.set_value(get_text("favorites_saved"), COLORS["accent"])
+
+    def _do_fix_answer(self) -> None:
+        """纠正回答：用户提供修正意见，LLM 润色后存入 FAQ"""
+        q, a = self._last_qa
+        if not q or not a:
+            return
+
+        from PySide6.QtWidgets import QDialog, QDialogButtonBox, QTextEdit as QTE
+        dlg = QDialog(self)
+        dlg.setWindowTitle(get_text("fix_dialog_title"))
+        dlg.resize(500, 350)
+        layout = QVBoxLayout(dlg)
+        layout.addWidget(QLabel(get_text("fix_dialog_desc")))
+        text_edit = QTE()
+        text_edit.setPlaceholderText(get_text("fix_placeholder"))
+        layout.addWidget(text_edit)
+        buttons = QDialogButtonBox(QDialogButtonBox.Ok | QDialogButtonBox.Cancel)
+        buttons.accepted.connect(dlg.accept)
+        buttons.rejected.connect(dlg.reject)
+        layout.addWidget(buttons)
+
+        if dlg.exec() != QDialog.Accepted:
+            return
+        user_fix = text_edit.toPlainText().strip()
+        if not user_fix:
+            QMessageBox.information(self, get_text("fix_dialog_title"), get_text("fix_empty"))
+            return
+
+        fix_prompt = (
+            f"用户问题：{q}\n\nAI原始回答：{a[:2000]}\n\n"
+            f"用户指出的问题：{user_fix}\n\n"
+            f"请根据修正意见，润色为一组准确流畅的FAQ，只输出：\nQ: <问题>\nA: <回答>"
+        )
+        refined = ""
+        if self.settings.llm_api_key:
+            try:
+                from raggg.generation.llm_client import OpenAICompatibleClient
+                client = OpenAICompatibleClient(
+                    self.settings.llm_base_url, self.settings.llm_api_key, self.settings.llm_model)
+                refined = client.complete(fix_prompt).strip()
+            except Exception:
+                pass
+        if not refined:
+            refined = f"Q: {q}\nA: {a[:500]}\n\n(修正意见: {user_fix})"
+
+        faq_path = self._project_root / "knowledge_base" / "01_team_tutorials" / "02_常见问题FAQ.md"
+        ts = __import__("datetime").datetime.now().strftime("%Y-%m-%d %H:%M")
+        entry = f"\n\n## {q[:60]}\n\n{refined}\n\n> 修正于 {ts}"
+        with open(faq_path, "a", encoding="utf-8") as f:
+            f.write(entry)
+
+        # 增量重建索引，使新FAQ立即可搜索
+        try:
+            from raggg.pipeline.ingestion import ingest_document
+            report = ingest_document(self.settings, str(faq_path))
+            self._load_pipeline_if_ready()
+            msg = get_text("fix_done").replace("{file}", str(faq_path.relative_to(self._project_root)))
+            msg += f"\nChunks: {report.chunk_count}"
+        except Exception:
+            msg = get_text("fix_done").replace("{file}", str(faq_path.relative_to(self._project_root)))
+
+        QMessageBox.information(self, get_text("fix_dialog_title"), msg)
 
     def _load_favs(self) -> list:
         import json as _json
@@ -2216,6 +2289,9 @@ class WorkbenchWindow(QMainWindow):
                 <button onclick="console.log('RAGGG_FAV');this.innerHTML='{get_text("btn_faved")}';this.style.color='{bubbles['accent']}';setTimeout(function(){{this.innerHTML='{get_text("btn_fav")}';this.style.color='{bubbles['muted']}'}}.bind(this),1500)"
                   style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;"
                   onmouseover="this.style.color='{bubbles['accent']}'" onmouseout="this.style.color='{bubbles['muted']}'">{get_text("btn_fav")}</button>
+                <button onclick="console.log('RAGGG_FIX')"
+                  style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;"
+                  onmouseover="this.style.color='{bubbles['accent']}'" onmouseout="this.style.color='{bubbles['muted']}'">{get_text("btn_fix")}</button>
               </div>
               <div style="padding:15px 17px;border-radius:18px 18px 18px 4px;background:{bubbles['assistant_bg']};border:1px solid {bubbles['assistant_border']};box-shadow:0 14px 42px rgba(80,150,185,.12);color:{bubbles['text']};line-height:1.6;">
                 {rendered}
@@ -2239,6 +2315,8 @@ class WorkbenchWindow(QMainWindow):
                   style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;">{get_text("btn_copy")}</button>
                 <button onclick="console.log('RAGGG_FAV');this.innerHTML='{get_text("btn_faved")}';this.style.color='{bubbles['accent']}';setTimeout(function(){{this.innerHTML='{get_text("btn_fav")}';this.style.color='{bubbles['muted']}'}}.bind(this),1500)"
                   style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;">{get_text("btn_fav")}</button>
+                <button onclick="console.log('RAGGG_FIX')"
+                  style="background:{bubbles['surface2']};color:{bubbles['muted']};border:1px solid {bubbles['border']};border-radius:10px;padding:3px 10px;font-size:11px;cursor:pointer;">{get_text("btn_fix")}</button>
               </div>
               <div id="{content_id}" style="padding:15px 17px;border-radius:18px 18px 18px 4px;background:{bubbles['assistant_bg']};border:1px solid {bubbles['assistant_border']};box-shadow:0 14px 42px rgba(80,150,185,.12);color:{bubbles['text']};line-height:1.6;white-space:pre-wrap;"><span data-stream-cursor style="color:{bubbles['accent']};">▌</span></div>
               </div>

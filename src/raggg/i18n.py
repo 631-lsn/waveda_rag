@@ -90,6 +90,30 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "已收藏",
         "en": "Saved",
     },
+    "btn_fix": {
+        "zh": "纠错",
+        "en": "Fix",
+    },
+    "fix_dialog_title": {
+        "zh": "纠正回答",
+        "en": "Correct Answer",
+    },
+    "fix_dialog_desc": {
+        "zh": "请描述回答中不准确的地方，AI 将修正并存入FAQ知识库：",
+        "en": "Describe what is inaccurate. The AI will correct it and save to the FAQ knowledge base:",
+    },
+    "fix_placeholder": {
+        "zh": "例如：S参数的导出步骤应该是...",
+        "en": "E.g. The correct S-parameter export steps are...",
+    },
+    "fix_empty": {
+        "zh": "请填写修正意见。",
+        "en": "Please describe the correction.",
+    },
+    "fix_done": {
+        "zh": "修正后的 FAQ 已存入：{file}",
+        "en": "Corrected FAQ saved to: {file}",
+    },
 
     # ── 快捷问题 ──────────────────────────────────
     "quick_questions_label": {

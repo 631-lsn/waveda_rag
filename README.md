@@ -90,7 +90,14 @@ knowledge_base/
 - WavEDA 操作教学型 Agent 知识库
 - 用户补充资料
 
-`setup_env.bat` 会把这些 Markdown 文档和 `wavEDA_docs/helpHtml/helpHtml` 中的官方 HTML 帮助一起构建成本地索引。
+知识库已经预留电磁与射频、光子与波导、电路、热学、结构力学、声学与压电、多物理场耦合、版图与封装等目录。交付后的维护人员新增内容前，请先阅读：
+
+- [多物理场知识库放置指南](KNOWLEDGE_BASE_CONTRIBUTION_GUIDE.md)
+- [完整知识库结构](KNOWLEDGE_BASE_STRUCTURE.md)
+
+预留目录中的 `_README.md` 使用 `indexing: false`，只用于说明放置范围，不会被 Agent 当成知识答案检索。
+
+`setup_env.bat` 会把可索引的 Markdown 文档和 `wavEDA_docs/helpHtml/helpHtml` 中的官方 HTML 帮助一起构建成本地索引。
 
 ## 回答中的图片
 
@@ -129,9 +136,9 @@ WAVEDA_EXAMPLE_ROOT=D:\Program Files\WavEDA\Example
 
 最简单的方式仍然是重新双击 `setup_env.bat`，它会重新构建索引。
 
-桌面界面左侧也提供 `导入资料入库` 按钮，可选择单个 `.md`、`.markdown`、`.html`、`.htm`、`.txt`、`.pdf` 或 `.docx` 文件。导入文件会保存到 `knowledge_base/05_reference/imported/`，随后自动重建索引并重新载入。
+桌面界面左侧也提供 `导入资料入库` 按钮，可选择单个 `.md`、`.markdown`、`.html`、`.htm`、`.txt`、`.pdf` 或 `.docx` 文件。导入后会在后台增量更新索引并重新载入。
 
-软件运行时会自动监听 `knowledge_base/` 下的支持格式文件。手动修改、增加或删除这些文件后，界面会在文件稳定后自动后台重建索引并重新载入；重建期间提问和导入按钮会暂时禁用。
+软件运行时会自动监听 `knowledge_base/` 下的支持格式文件。手动修改、增加或删除这些文件后，界面会在文件稳定后自动后台增量更新索引并重新载入；更新期间提问和导入按钮会暂时禁用。
 
 ## 常见问题
 
