@@ -4,7 +4,8 @@ content_kind: "imported"
 source_file: "！金建铭Theory and Computation of Electromagnetic Fields(2nd edition)_Jian-Ming Jin 2015.pdf"
 imported_at: "2026-07-15"
 category: "06_theory_notes"
-priority: 3
+physics_domain: "em_rf"
+priority: 1
 ---
 
 # ！金建铭Theory and Computation of Electromagnetic Fields(2nd edition)_Jian-Ming Jin 2015

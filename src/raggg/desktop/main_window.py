@@ -980,7 +980,7 @@ class WorkbenchWindow(QMainWindow):
         self._build_image_index()
         self._build_ui()
         self._setup_shortcuts()
-        self._show_loader("正在载入")
+        self._show_loader("正在载入", full_window=True)
         self._load_pipeline_if_ready()
         self._new_session()
         QTimer.singleShot(700, self._hide_loader)
@@ -1041,7 +1041,8 @@ class WorkbenchWindow(QMainWindow):
         shell.setColumnStretch(2, 0)
         shell.setRowStretch(0, 1)
 
-        main = QVBoxLayout()
+        self.main_workspace = QWidget(root)
+        main = QVBoxLayout(self.main_workspace)
         main.setContentsMargins(0, 0, 0, 0)
         main.setSpacing(0)
 
@@ -1159,12 +1160,14 @@ class WorkbenchWindow(QMainWindow):
 
         self.session_panel = self._build_session_panel()
         shell.addWidget(self.session_panel, 0, 0)
-        shell.addLayout(main, 0, 1)
+        shell.addWidget(self.main_workspace, 0, 1)
         shell.addWidget(self.sidebar_container, 0, 2)
         self.loader_overlay = AILoaderOverlay(root, text="正在载入")
+        self._loader_full_window = True
         self.loader_overlay.setGeometry(root.rect())
         self.loader_overlay.raise_()
         root.installEventFilter(self)
+        self.main_workspace.installEventFilter(self)
 
     def _header(self) -> QHBoxLayout:
         header = QHBoxLayout()
@@ -1448,14 +1451,20 @@ class WorkbenchWindow(QMainWindow):
         self._focus_question_input()
 
     def eventFilter(self, watched: QObject, event: QEvent) -> bool:
-        if event.type() == QEvent.Resize and hasattr(self, "loader_overlay"):
-            self.loader_overlay.setGeometry(self.centralWidget().rect())
+        if event.type() in (QEvent.Move, QEvent.Resize) and hasattr(self, "loader_overlay"):
+            self.loader_overlay.setGeometry(self._loader_geometry())
             self.loader_overlay.raise_()
         return super().eventFilter(watched, event)
 
-    def _show_loader(self, text: str) -> None:
+    def _loader_geometry(self):
+        if not self._loader_full_window:
+            return self.main_workspace.geometry()
+        return self.centralWidget().rect()
+
+    def _show_loader(self, text: str, *, full_window: bool = False) -> None:
+        self._loader_full_window = full_window
         self.loader_overlay.set_text(text)
-        self.loader_overlay.setGeometry(self.centralWidget().rect())
+        self.loader_overlay.setGeometry(self._loader_geometry())
         self.loader_overlay.raise_()
         self.loader_overlay.show()
 

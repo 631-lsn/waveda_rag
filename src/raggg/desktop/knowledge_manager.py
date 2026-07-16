@@ -41,6 +41,14 @@ COLORS = get_colors()
 
 class KnowledgeManager(QWidget):
     knowledge_changed = Signal()
+    _CATEGORY_DEFAULT_PRIORITY = {
+        "01_team_tutorials": 5,
+        "02_software_manual": 4,
+        "03_examples": 4,
+        "04_error_cases": 3,
+        "05_reference": 2,
+        "06_theory_notes": 1,
+    }
 
     def __init__(self, settings: Settings, parent: QWidget | None = None) -> None:
         super().__init__(parent)
@@ -145,7 +153,7 @@ class KnowledgeManager(QWidget):
         self.priority_combo = QComboBox()
         for i in range(1, 6):
             self.priority_combo.addItem(get_text(f"kbm_priority_{i}"), i)
-        self.priority_combo.setCurrentIndex(2)
+        self._sync_priority_for_category()
         row2.addWidget(self.priority_combo)
         import_layout.addLayout(row2)
 
@@ -283,6 +291,14 @@ class KnowledgeManager(QWidget):
     def _on_category_changed(self, _index: int) -> None:
         self._subdir_value = "__AUTO__"
         self.subdir_btn.setText(get_text("kbm_subdir_auto"))
+        if hasattr(self, "priority_combo"):
+            self._sync_priority_for_category()
+
+    def _sync_priority_for_category(self) -> None:
+        priority = self._CATEGORY_DEFAULT_PRIORITY.get(self.category_combo.currentData(), 3)
+        index = self.priority_combo.findData(priority)
+        if index >= 0:
+            self.priority_combo.setCurrentIndex(index)
 
     def _popup_subdir_menu(self) -> None:
         """弹出级联子目录菜单，鼠标悬停自动展开子级"""

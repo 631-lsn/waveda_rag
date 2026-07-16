@@ -11,7 +11,11 @@ from raggg.config import Settings
 from raggg.indexing.embeddings import HashedEmbeddingModel
 from raggg.indexing.vector_store import VectorStore
 from raggg.loaders.html_loader import iter_html_documents
-from raggg.loaders.markdown_loader import iter_markdown_documents, knowledge_path_metadata
+from raggg.loaders.markdown_loader import (
+    infer_physics_domain,
+    iter_markdown_documents,
+    knowledge_path_metadata,
+)
 from raggg.models import Chunk, Document
 from raggg.pipeline.ingestion import _extract_docx_text, _extract_pdf_text
 from raggg.preprocessing.chunker import chunk_document
@@ -143,6 +147,7 @@ def _iter_knowledge_base_documents(root: Path) -> list[Document]:
         document
         for document in iter_markdown_documents(root)
         if document.relative_path not in SEMANTIC_INDEX_EXCLUDED_PATHS
+        and document.metadata.get("indexing", True)
     ]
     if not root.exists():
         return documents
@@ -173,6 +178,7 @@ def _iter_knowledge_base_documents(root: Path) -> list[Document]:
                     "content_type": "document",
                     "has_formula": any(token in text for token in ("$$", "\\nabla", "\\partial")),
                     "has_wikilink": False,
+                    "physics_domain": infer_physics_domain(relative_path),
                     **knowledge_path_metadata(relative_path),
                 },
             )
