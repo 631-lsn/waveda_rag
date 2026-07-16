@@ -45,7 +45,23 @@ def _lexical_overlap(query_tokens: set[str], content: str) -> float:
     content_tokens = set(tokenize(content))
     if not content_tokens:
         return 0.0
-    return len(query_tokens & content_tokens) / len(query_tokens)
+    token_score = len(query_tokens & content_tokens) / len(query_tokens)
+
+    # Chinese bigrams are useful for precision, but some of them depend on
+    # the order in which the user happened to phrase the question (for
+    # example, ``数如`` appears in ``S参数如何导出`` but not in the reversed
+    # wording).  Keep the bigram score while also measuring stable atoms:
+    # ASCII words/numbers and individual CJK characters.  This prevents an
+    # incidental cross-word bigram from lowering an otherwise equivalent
+    # query's coverage.
+    stable_query_tokens = {token for token in query_tokens if token.isascii() or len(token) == 1}
+    stable_content_tokens = {token for token in content_tokens if token.isascii() or len(token) == 1}
+    stable_score = (
+        len(stable_query_tokens & stable_content_tokens) / len(stable_query_tokens)
+        if stable_query_tokens
+        else 0.0
+    )
+    return max(token_score, stable_score)
 
 
 class Retriever:
