@@ -54,6 +54,10 @@ TEXTS: dict[str, dict[str, str]] = {
         "zh": "重新载入索引",
         "en": "Reload Index",
     },
+    "btn_rebuild_index": {
+        "zh": "重建索引",
+        "en": "Rebuild Index",
+    },
     "btn_api_settings": {
         "zh": "设置",
         "en": "Settings",
