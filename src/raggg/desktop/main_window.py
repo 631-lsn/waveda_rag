@@ -62,6 +62,10 @@ DISPLAY_MATH_RE = re.compile(r"\\\[(.+?)\\\]|\$\$(.+?)\$\$", re.DOTALL)
 FRAC_RE = re.compile(r"\\frac\{([^{}]+)\}\{([^{}]+)\}")
 
 
+def normalize_favorite_search_text(text: object) -> str:
+    return "".join(str(text).casefold().split())
+
+
 def favorite_matches(favorite: dict, query: str) -> bool:
     normalized_query = query.strip().casefold()
     if not normalized_query:
@@ -69,11 +73,9 @@ def favorite_matches(favorite: dict, query: str) -> bool:
     searchable_text = "\n".join(
         str(favorite.get(field, "")) for field in ("question", "answer")
     ).casefold()
-    # 也去掉搜索文本中的空格，支持 "s参数" 匹配 "s 参数"
-    searchable_compact = searchable_text.replace(" ", "")
+    searchable_compact = normalize_favorite_search_text(searchable_text)
     keywords = normalized_query.split()
-    query_compact = normalized_query.replace(" ", "")
-    # 先试精确匹配，再试去空格匹配
+    query_compact = normalize_favorite_search_text(query)
     return (
         all(kw in searchable_text for kw in keywords)
         or query_compact in searchable_compact
@@ -90,10 +92,10 @@ def favorite_score(favorite: dict, query: str) -> int:
         str(favorite.get(field, "")) for field in ("question", "answer")
     ).casefold()
     score = sum(searchable_text.count(kw) for kw in keywords)
-    # 去空格后也计分
-    query_compact = normalized_query.replace(" ", "")
-    searchable_compact = searchable_text.replace(" ", "")
-    score += searchable_compact.count(query_compact) * 2
+    query_compact = normalize_favorite_search_text(query)
+    searchable_compact = normalize_favorite_search_text(searchable_text)
+    if query_compact:
+        score += searchable_compact.count(query_compact) * 2
     return score
 
 
