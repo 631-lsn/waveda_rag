@@ -1597,8 +1597,17 @@ class WorkbenchWindow(QMainWindow):
         with open(faq_path, "a", encoding="utf-8") as f:
             f.write(entry)
 
-        QMessageBox.information(self, get_text("fix_dialog_title"),
-            get_text("fix_done").replace("{file}", str(faq_path.relative_to(self._project_root))))
+        # 增量重建索引，使新FAQ立即可搜索
+        try:
+            from raggg.pipeline.ingestion import ingest_document
+            report = ingest_document(self.settings, str(faq_path))
+            self._load_pipeline_if_ready()
+            msg = get_text("fix_done").replace("{file}", str(faq_path.relative_to(self._project_root)))
+            msg += f"\nChunks: {report.chunk_count}"
+        except Exception:
+            msg = get_text("fix_done").replace("{file}", str(faq_path.relative_to(self._project_root)))
+
+        QMessageBox.information(self, get_text("fix_dialog_title"), msg)
 
     def _load_favs(self) -> list:
         import json as _json
