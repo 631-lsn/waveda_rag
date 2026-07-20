@@ -358,6 +358,27 @@ class DesktopLayoutTests(unittest.TestCase):
 
             focus_source.assert_called_once_with(2)
 
+    def test_citation_focus_opens_corresponding_source_document(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            source_path = root / "port.md"
+            source_path.write_text("# Port setup\n\nConfigure the port here.", encoding="utf-8")
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+
+            window._source_paths[1] = str(source_path)
+            self.assertTrue(window.sidebar_container.isHidden())
+            with patch.object(window.sources, "setHtml") as set_html:
+                window._focus_source(1)
+
+            self.assertFalse(window.sidebar_container.isHidden())
+            rendered_html = set_html.call_args.args[0]
+            self.assertIn("Port setup", rendered_html)
+            self.assertIn("Configure the port here.", rendered_html)
+
     def test_loader_progress_text_updates_during_rebuild(self) -> None:
         with TemporaryDirectory() as tmp:
             root = Path(tmp)

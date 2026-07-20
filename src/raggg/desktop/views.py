@@ -990,14 +990,46 @@ class WorkbenchViewsMixin(QMainWindow):
             pass
 
     def _focus_source(self, rank: int) -> None:
-        if rank not in self._source_paths:
+        source_path = self._source_paths.get(rank)
+        if not source_path:
             return
-        source_id = json.dumps(f"source-{rank}")
-        self.sources.page().runJavaScript(
-            f"""const card=document.getElementById({source_id});
-if(card){{card.scrollIntoView({{behavior:'smooth',block:'center'}});
-card.classList.add('citation-target');
-setTimeout(()=>card.classList.remove('citation-target'),1600);}}"""
+        file_path = Path(source_path)
+        if not file_path.exists():
+            QMessageBox.warning(self, get_text("source_file_not_found"), file_path.name)
+            return
+
+        suffix = file_path.suffix.lower()
+        if suffix == ".md":
+            text = file_path.read_text(encoding="utf-8", errors="ignore")
+            html_content = web_wrapper(markdown_to_html(text))
+        elif suffix in (".html", ".htm"):
+            html_content = file_path.read_text(encoding="utf-8", errors="ignore")
+            img_base = str(file_path.parent / "images").replace(os.sep, "/")
+            css_base = str(
+                self._project_root / "wavEDA_docs" / "helpHtml" / "helpHtml" / "css"
+            ).replace(os.sep, "/")
+            html_content = re.sub(
+                r'src="\.?/?images/',
+                f'src="file:///{img_base}/',
+                html_content,
+            )
+            html_content = re.sub(
+                r'href="\.\./css/',
+                f'href="file:///{css_base}/',
+                html_content,
+            )
+        else:
+            text = file_path.read_text(encoding="utf-8", errors="ignore")
+            html_content = web_wrapper(
+                "<pre style='white-space:pre-wrap;font-size:13px;line-height:1.6;'>"
+                f"{html.escape(text)}</pre>"
+            )
+
+        self.sidebar_container.show()
+        base_url = QUrl.fromLocalFile(str(file_path.parent.resolve()) + os.sep)
+        self.sources.setHtml(
+            html_content,
+            base_url,
         )
 
     def _do_fav(self) -> None:
