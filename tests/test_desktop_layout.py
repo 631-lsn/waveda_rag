@@ -395,6 +395,20 @@ class DesktopLayoutTests(unittest.TestCase):
             self.assertNotEqual(window._session_manager.current_id, second.id)
             self.assertEqual(window._source_paths, {})
 
+    def test_new_session_clears_previous_sources(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+            window._source_paths[1] = str(root / "previous.html")
+
+            window._new_session()
+
+            self.assertEqual(window._source_paths, {})
+
 
 if __name__ == "__main__":
     unittest.main()

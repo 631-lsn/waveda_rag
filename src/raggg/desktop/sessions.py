@@ -65,6 +65,12 @@ class SessionPanel(QFrame):
 
 
 class SessionsMixin:
+    def _clear_sources_for_session_change(self) -> None:
+        self._source_paths.clear()
+        self.sources.setHtml(
+            self._empty_sources_html(get_text("sources_empty"))
+        )
+
     def _build_session_panel(self) -> QFrame:
         panel = SessionPanel(self)
         self.session_list = panel.session_list
@@ -93,6 +99,7 @@ class SessionsMixin:
     def _new_session(self) -> None:
         self._session_manager.new_session()
         self._conversation_history = []
+        self._clear_sources_for_session_change()
         self.chat.setHtml(
             self._welcome_html(
                 chunk_count=(
@@ -115,10 +122,7 @@ class SessionsMixin:
         if session_id == self._session_manager.current_id:
             return
         self._session_manager.switch_to(session_id)
-        self._source_paths.clear()
-        self.sources.setHtml(
-            self._empty_sources_html(get_text("sources_empty"))
-        )
+        self._clear_sources_for_session_change()
         history = self._session_manager.get_history()
         self._conversation_history = history
         if history:
@@ -158,6 +162,7 @@ class SessionsMixin:
             return
         if self._session_manager.delete(self._session_manager.current_id):
             self._conversation_history = self._session_manager.get_history()
+            self._clear_sources_for_session_change()
             self.chat.setHtml(self._welcome_html())
             self._refresh_session_list()
 

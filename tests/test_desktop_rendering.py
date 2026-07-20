@@ -18,6 +18,7 @@ class DesktopRenderingTests(unittest.TestCase):
         rendered = markdown_to_html("[1](https://example.com)")
 
         self.assertNotIn("RAGGG_CITATION", rendered)
+        self.assertIn("[1](https://example.com)", rendered)
 
     def test_historical_citations_render_without_click_handler(self) -> None:
         rendered = markdown_to_html("结论。[1]", citations_clickable=False)
