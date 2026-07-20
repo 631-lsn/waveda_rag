@@ -64,8 +64,24 @@ TEXTS_PROMPT: dict[str, dict[str, str]] = {
 
     # ── LLM 错误 ──────────────────────────────────
     "error_llm_auth": {
-        "zh": "模型暂不可用：API 认证失败，已使用本地知识库回答。请检查 API key。",
-        "en": "LLM unavailable: API authentication failed. Using local knowledge base. Please check your API key.",
+        "zh": "API Key 无效或已过期，请打开设置检查并更新。已使用本地知识库回答。",
+        "en": "Invalid or expired API Key. Please check your settings. Using local knowledge base.",
+    },
+    "error_llm_rate_limit": {
+        "zh": "API 额度用尽或请求太频繁，请稍后重试或检查余额。已使用本地知识库回答。",
+        "en": "API quota exhausted or rate limited. Please retry later or check your balance. Using local knowledge base.",
+    },
+    "error_llm_server": {
+        "zh": "模型服务暂时不可用，请稍后重试。已使用本地知识库回答。",
+        "en": "Model service temporarily unavailable. Please retry later. Using local knowledge base.",
+    },
+    "error_llm_timeout": {
+        "zh": "请求超时（已自动重试），请检查网络或切换模型。已使用本地知识库回答。",
+        "en": "Request timed out (auto-retried). Please check your network or switch models. Using local knowledge base.",
+    },
+    "error_llm_connection": {
+        "zh": "网络连接失败，请检查网络或 API 地址。已使用本地知识库回答。",
+        "en": "Network connection failed. Please check your network or API address. Using local knowledge base.",
     },
     "error_llm_unavailable": {
         "zh": "模型暂不可用，已使用本地知识库回答。",

@@ -194,6 +194,7 @@ def markdown_to_html(text: str) -> str:
     output: list[str] = []
     list_mode: str | None = None
     list_prefix: str = ""  # 缓存列表项间空白
+    last_ol_num: int = 0
 
     def close_list() -> None:
         nonlocal list_mode, list_prefix
@@ -211,11 +212,14 @@ def markdown_to_html(text: str) -> str:
         ordered = ORDERED_RE.match(line)
         unordered = UNORDERED_RE.match(line)
         if ordered:
+            num = int(ordered.group(1))
             if list_mode != "ol":
                 close_list()
-                output.append(list_prefix + "<ol>")
+                start = f' start="{last_ol_num + 1}"' if last_ol_num > 0 else ""
+                output.append(f"{list_prefix}<ol{start}>")
                 list_prefix = ""
                 list_mode = "ol"
+            last_ol_num = num
             output.append(f"<li>{render_inline_markdown(ordered.group(2))}</li>")
             continue
         if unordered:
@@ -228,6 +232,7 @@ def markdown_to_html(text: str) -> str:
                 continue
             if list_mode != "ul":
                 close_list()
+                last_ol_num = 0
                 output.append(list_prefix + "<ul>")
                 list_prefix = ""
                 list_mode = "ul"
@@ -244,6 +249,7 @@ def markdown_to_html(text: str) -> str:
                 f"{render_inline_markdown(line.lstrip('> ').strip())}</blockquote>"
             )
         elif line.startswith("#"):
+            last_ol_num = 0
             heading = line.lstrip("#").strip()
             output.append(
                 f"<div style='margin:12px 0 6px 0;color:{COLORS['accent']};font-weight:700;'>"
@@ -256,8 +262,8 @@ def markdown_to_html(text: str) -> str:
     if list_prefix:
         output.append(list_prefix)
     result = "\n".join(output)
-    # Merge broken ordered lists: </ol>...<ol> -> nothing
-    result = re.sub(r"</ol>(<div[^>]*></div>)<ol>", r"\1", result)
+    # Merge broken ordered lists: </ol>...<ol start="N"> -> just spacer
+    result = re.sub(r"</ol>(<div[^>]*></div>)<ol start=\"\d+\">", r"\1", result)
     # Convert image markdown to actual <img> tags pointing to helpHtml
     result = _convert_image_refs(result)
     return result
@@ -365,9 +371,8 @@ body {{
     overflow-x: hidden;
 }}
 p {{ margin: 7px 0; line-height: 1.58; }}
-ol {{ margin: 8px 0; padding-left: 24px; list-style: none; }}
-ol li {{ margin: 4px 0; counter-increment: ordered-item; }}
-ol li::before {{ content: counter(ordered-item) ". "; color: {COLORS["accent"]}; font-weight: 600; }}
+ol {{ margin: 8px 0; padding-left: 24px; }}
+ol li {{ margin: 4px 0; }}
 ul {{ margin: 8px 0; padding-left: 24px; }}
 ul li {{ margin: 4px 0; }}
 ul {{ margin: 8px 0; padding-left: 24px; }}
@@ -1645,6 +1650,9 @@ class WorkbenchWindow(QMainWindow):
         else:
             self._finish_streaming_assistant(stream_id, result.answer.answer)
         self._remember_turn(result.question, result.answer.answer)
+        # 显示 LLM 错误警告
+        if result.answer.warning:
+            self._append_assistant(markdown_to_html(f"> ⚠️ {result.answer.warning}"))
         all_images = _extract_images_from_sources(result.answer.sources, self._image_index)
         if all_images:
             img_html = '<div style="margin:12px 0 8px 0;"><div style="color:' + COLORS["accent2"] + ';font-weight:700;margin-bottom:8px;">' + get_text("screenshot_label") + '</div>'
@@ -1726,7 +1734,7 @@ class WorkbenchWindow(QMainWindow):
         rendered = markdown_to_html(answer)
         bubbles = get_chat_bubble_colors()
         msg_html = web_wrapper(
-            f"""<div style="margin:16px 26px 18px 26px;display:flex;justify-content:flex-start;counter-reset:ordered-item 0;">
+            f"""<div style="margin:16px 26px 18px 26px;display:flex;justify-content:flex-start;">
               <div style="max-width:82%;">
               <div style="display:flex;align-items:center;gap:8px;margin-left:2px;margin-bottom:6px;">
                 <button onclick="var p=this.parentElement.nextElementSibling;var t=document.createElement('textarea');t.value=p.innerText;document.body.appendChild(t);t.select();document.execCommand('copy');document.body.removeChild(t);var s=this.innerHTML;this.innerHTML='{get_text("btn_copied")}';setTimeout(function(){{this.innerHTML=s;}}.bind(this),1000)"
