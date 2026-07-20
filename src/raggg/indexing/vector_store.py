@@ -6,7 +6,7 @@ from pathlib import Path
 
 import numpy as np
 
-from raggg.indexing.embeddings import HashedEmbeddingModel
+from raggg.indexing.embeddings import EmbeddingModel, HashedEmbeddingModel
 from raggg.models import Chunk
 
 
@@ -14,13 +14,13 @@ from raggg.models import Chunk
 class VectorStore:
     chunks: list[Chunk]
     vectors: np.ndarray
-    embedding_model: HashedEmbeddingModel
+    embedding_model: EmbeddingModel
 
     @classmethod
     def from_chunks(
         cls,
         chunks: list[Chunk],
-        embedding_model: HashedEmbeddingModel | None = None,
+        embedding_model: EmbeddingModel | None = None,
     ) -> "VectorStore":
         model = embedding_model or HashedEmbeddingModel()
         vectors = model.embed_many([chunk.content for chunk in chunks])
@@ -38,10 +38,15 @@ class VectorStore:
     def load(
         cls,
         index_dir: Path,
-        embedding_model: HashedEmbeddingModel | None = None,
+        embedding_model: EmbeddingModel | None = None,
     ) -> "VectorStore":
         model = embedding_model or HashedEmbeddingModel()
         chunks_data = json.loads((index_dir / "chunks.json").read_text(encoding="utf-8"))
         chunks = [Chunk.from_dict(item) for item in chunks_data]
         vectors = np.load(index_dir / "vectors.npy")
+        if vectors.ndim == 2 and vectors.shape[1] != model.dimensions:
+            raise ValueError(
+                f"索引向量维度 ({vectors.shape[1]}) 与嵌入模型 {model.model_id} "
+                f"({model.dimensions}) 不一致，请用同一模型重建索引。"
+            )
         return cls(chunks=chunks, vectors=vectors, embedding_model=model)
