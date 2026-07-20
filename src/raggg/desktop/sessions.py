@@ -115,6 +115,10 @@ class SessionsMixin:
         if session_id == self._session_manager.current_id:
             return
         self._session_manager.switch_to(session_id)
+        self._source_paths.clear()
+        self.sources.setHtml(
+            self._empty_sources_html(get_text("sources_empty"))
+        )
         history = self._session_manager.get_history()
         self._conversation_history = history
         if history:
@@ -137,7 +141,7 @@ class SessionsMixin:
                 "<div style='margin:16px 26px;display:flex;justify-content:flex-start;'>"
                 f"<div style='max-width:82%;padding:15px 17px;border-radius:18px;"
                 f"background:{bubbles['assistant_bg']};color:{bubbles['text']};'>"
-                f"{markdown_to_html(answer)}</div></div>"
+                f"{markdown_to_html(answer, citations_clickable=False)}</div></div>"
             )
         self.chat.setHtml(web_wrapper("\n".join(parts)))
 

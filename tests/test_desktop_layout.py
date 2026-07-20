@@ -372,6 +372,29 @@ class DesktopLayoutTests(unittest.TestCase):
             self.assertIn("正在生成向量", window.loader_overlay.progress_label.text())
             self.assertIn("3/10", window.loader_overlay.progress_label.text())
 
+    def test_switching_sessions_clears_stale_source_mapping(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+            first_id = window._session_manager.current_id
+            window._session_manager.add_message("Q", "A [1]")
+            second = window._session_manager.new_session()
+            window._refresh_session_list()
+            window._source_paths[1] = str(root / "unrelated.html")
+            for row in range(window.session_list.count()):
+                item = window.session_list.item(row)
+                if item.data(Qt.UserRole) == first_id:
+                    window.session_list.setCurrentRow(row)
+                    break
+
+            self.assertEqual(window._session_manager.current_id, first_id)
+            self.assertNotEqual(window._session_manager.current_id, second.id)
+            self.assertEqual(window._source_paths, {})
+
 
 if __name__ == "__main__":
     unittest.main()

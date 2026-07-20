@@ -225,8 +225,6 @@ def build_knowledge_base(
         on_progress,
         "chunk",
         "正在复用或切分文档",
-        0,
-        len(documents),
     )
     previous_fingerprints, previous_chunks = _load_reusable_chunks(settings.data_dir)
     fingerprints: dict[str, str] = {}
@@ -248,8 +246,6 @@ def build_knowledge_base(
         on_progress,
         "embed",
         "正在生成向量",
-        len(chunks),
-        len(chunks),
     )
     embedding_model = HashedEmbeddingModel()
     vectors, embedded_chunk_count = _build_incremental_vectors(

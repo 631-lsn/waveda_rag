@@ -132,6 +132,9 @@ class BuilderDocumentTests(unittest.TestCase):
                 ["scan", "chunk", "embed", "save", "complete"],
             )
             self.assertTrue(all(event.message for event in events))
+            stage_events = {event.stage: event for event in events}
+            self.assertIsNone(stage_events["chunk"].current)
+            self.assertIsNone(stage_events["embed"].current)
 
 
 if __name__ == "__main__":

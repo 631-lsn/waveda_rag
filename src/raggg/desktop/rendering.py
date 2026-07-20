@@ -20,7 +20,7 @@ UNORDERED_RE = re.compile(r"^\s*[-*]\s+(.+)$")
 INLINE_MATH_RE = re.compile(r"\\\((.+?)\\\)")
 DISPLAY_MATH_RE = re.compile(r"\\\[(.+?)\\\]|\$\$(.+?)\$\$", re.DOTALL)
 FRAC_RE = re.compile(r"\\frac\{([^{}]+)\}\{([^{}]+)\}")
-CITATION_RE = re.compile(r"(?<![\w/])\[(\d+)\]")
+CITATION_RE = re.compile(r"(?<![\w/])\[(\d+)\](?!\s*\()")
 
 WEBVIEW_BG = "transparent"
 WEBVIEW_TEXT = COLORS["text"]
@@ -106,9 +106,11 @@ def latex_to_readable(text: str) -> str:
     return INLINE_MATH_RE.sub(inline_repl, text)
 
 
-def render_citations(text: str) -> str:
+def render_citations(text: str, *, clickable: bool = True) -> str:
     def replace(match: re.Match[str]) -> str:
         rank = match.group(1)
+        if not clickable:
+            return f'<sup class="citation">[{rank}]</sup>'
         return (
             '<sup class="citation"><a href="#" '
             f"onclick=\"console.log('RAGGG_CITATION:{rank}');return false;\">"
@@ -118,17 +120,25 @@ def render_citations(text: str) -> str:
     return CITATION_RE.sub(replace, text)
 
 
-def render_inline_markdown(text: str) -> str:
+def render_inline_markdown(
+    text: str,
+    *,
+    citations_clickable: bool = True,
+) -> str:
     escaped = html.escape(latex_to_readable(text), quote=False)
     escaped = re.sub(r'&lt;span style="(.+?)"&gt;', r'<span style="\1">', escaped)
     escaped = re.sub(r"&lt;span style=&quot;(.+?)&quot;&gt;", r'<span style="\1">', escaped)
     escaped = escaped.replace("&lt;/span&gt;", "</span>")
     escaped = escaped.replace("&lt;sub&gt;", "<sub>").replace("&lt;/sub&gt;", "</sub>")
-    escaped = render_citations(escaped)
+    escaped = render_citations(escaped, clickable=citations_clickable)
     return INLINE_BOLD_RE.sub(r"<strong>\1</strong>", escaped)
 
 
-def markdown_to_html(text: str) -> str:
+def markdown_to_html(
+    text: str,
+    *,
+    citations_clickable: bool = True,
+) -> str:
     lines = text.strip().splitlines()
     output: list[str] = []
     list_mode: str | None = None
@@ -155,7 +165,9 @@ def markdown_to_html(text: str) -> str:
                 output.append(list_prefix + "<ol>")
                 list_prefix = ""
                 list_mode = "ol"
-            output.append(f"<li>{render_inline_markdown(ordered.group(2))}</li>")
+            output.append(
+                f"<li>{render_inline_markdown(ordered.group(2), citations_clickable=citations_clickable)}</li>"
+            )
             continue
         if unordered:
             if list_mode == "ol":
@@ -163,7 +175,10 @@ def markdown_to_html(text: str) -> str:
                     output[-1] = (
                         output[-1][:-5]
                         + "<br>"
-                        + render_inline_markdown(unordered.group(1))
+                        + render_inline_markdown(
+                            unordered.group(1),
+                            citations_clickable=citations_clickable,
+                        )
                         + "</li>"
                     )
                 continue
@@ -172,7 +187,9 @@ def markdown_to_html(text: str) -> str:
                 output.append(list_prefix + "<ul>")
                 list_prefix = ""
                 list_mode = "ul"
-            output.append(f"<li>{render_inline_markdown(unordered.group(1))}</li>")
+            output.append(
+                f"<li>{render_inline_markdown(unordered.group(1), citations_clickable=citations_clickable)}</li>"
+            )
             continue
 
         close_list()
@@ -181,18 +198,18 @@ def markdown_to_html(text: str) -> str:
             list_prefix = ""
         if line.startswith(">"):
             output.append(
-                f"<blockquote>{render_inline_markdown(line.lstrip('> ').strip())}</blockquote>"
+                f"<blockquote>{render_inline_markdown(line.lstrip('> ').strip(), citations_clickable=citations_clickable)}</blockquote>"
             )
         elif line.startswith("#"):
             heading = line.lstrip("#").strip()
             output.append(
                 f"<div style='margin:12px 0 6px 0;color:{COLORS['accent']};"
-                f"font-weight:700;'>{render_inline_markdown(heading)}</div>"
+                f"font-weight:700;'>{render_inline_markdown(heading, citations_clickable=citations_clickable)}</div>"
             )
         else:
             output.append(
                 f"<p style='margin:7px 0;line-height:1.58;'>"
-                f"{render_inline_markdown(line)}</p>"
+                f"{render_inline_markdown(line, citations_clickable=citations_clickable)}</p>"
             )
 
     close_list()

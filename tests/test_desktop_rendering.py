@@ -14,6 +14,17 @@ class DesktopRenderingTests(unittest.TestCase):
         self.assertIn("RAGGG_CITATION:2", rendered)
         self.assertEqual(rendered.count("<sup"), 2)
 
+    def test_markdown_numeric_link_is_not_rewritten_as_citation(self) -> None:
+        rendered = markdown_to_html("[1](https://example.com)")
+
+        self.assertNotIn("RAGGG_CITATION", rendered)
+
+    def test_historical_citations_render_without_click_handler(self) -> None:
+        rendered = markdown_to_html("结论。[1]", citations_clickable=False)
+
+        self.assertIn("<sup", rendered)
+        self.assertNotIn("RAGGG_CITATION", rendered)
+
     def test_image_index_maps_relative_path_and_filename(self) -> None:
         with TemporaryDirectory() as tmp:
             root = Path(tmp)

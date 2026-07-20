@@ -12,6 +12,12 @@ from raggg.desktop.favorites import (
     highlight_keywords,
     normalize_favorite_search_text,
 )
+from raggg.desktop.image_index import ImageIndex
+from raggg.desktop.rendering import (
+    markdown_to_html,
+    render_inline_markdown,
+    web_wrapper,
+)
 from raggg.desktop.views import WorkbenchViewsMixin
 from raggg.desktop.sessions import SessionsMixin
 from raggg.desktop.widgets import AILoaderOverlay
