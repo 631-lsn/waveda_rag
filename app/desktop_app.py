@@ -57,6 +57,59 @@ def _offer_desktop_shortcut() -> None:
     subprocess.run(["powershell", "-Command", ps_cmd], capture_output=True)
 
 
+def _check_env_config() -> None:
+    """启动时检查 config/.env 是否存在，缺失则弹出修复指引"""
+    import json
+    env_path = ROOT / "config" / ".env"
+    example_path = ROOT / "config" / ".env.example"
+
+    # .env 存在且内容正常 → 通过
+    if env_path.exists():
+        try:
+            content = env_path.read_text(encoding="utf-8")
+            if content.strip():
+                return  # 一切正常
+        except Exception:
+            pass  # 损坏了，继续走修复逻辑
+
+    # ── 以下：.env 缺失或损坏 ──
+    if getattr(sys, "frozen", False):
+        # EXE 版用 Windows 弹窗
+        import ctypes
+        msg = (
+            "配置文件 config\\.env 缺失或损坏。\n\n"
+            "解决方法：\n"
+            "1. 右键软件目录下的 config\\.env.example\n"
+        )
+        if example_path.exists():
+            msg += "2. 复制它并重命名为 config\\.env\n"
+            msg += "3. 打开 config\\.env，填入你的 API Key\n"
+        else:
+            msg += "2. 在 config\\ 文件夹里新建 .env 文件\n"
+            msg += "3. 写入：\n"
+            msg += "   RAG_LLM_BASE_URL=https://api.deepseek.com\n"
+            msg += "   RAG_LLM_API_KEY=你的Key\n"
+            msg += "   RAG_LLM_MODEL=deepseek-chat\n"
+        msg += "\n不配 API Key 也可以使用本地检索模式。"
+        ctypes.windll.user32.MessageBoxW(0, msg, "配置文件缺失", 0)
+    else:
+        # 开发版用控制台提示
+        print("\n" + "=" * 50)
+        print("  config\\.env 缺失或损坏")
+        print("=" * 50)
+        if example_path.exists():
+            print(f"  请复制 {example_path} 为 {env_path}")
+            print(f"  然后编辑 {env_path}，填入你的 API Key")
+        else:
+            print(f"  请在 {env_path} 中新建文件并写入：")
+            print("    RAG_LLM_BASE_URL=https://api.deepseek.com")
+            print("    RAG_LLM_API_KEY=你的Key")
+            print("    RAG_LLM_MODEL=deepseek-chat")
+        print("\n  不配 API Key 也可以使用本地检索模式。")
+        print("=" * 50 + "\n")
+
+
 if __name__ == "__main__":
     _offer_desktop_shortcut()
+    _check_env_config()
     raise SystemExit(run_desktop_app())
