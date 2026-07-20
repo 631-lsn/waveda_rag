@@ -35,22 +35,14 @@ jobs:
 
       - name: 安装依赖
         run: |
-          echo "=== pip ===" && pip --version
-          echo "=== requirements ===" && pip install -r requirements.txt 2>&1
-          echo "=== build deps ===" && pip install -r requirements-build.txt 2>&1
+          pip install -r requirements.txt
+          pip install -r requirements-build.txt
 
       - name: 构建知识库索引
-        run: |
-          python scripts/build_knowledge_base.py 2>&1
-          echo "Index built, chunks:"
-          python -c "import json; print(len(json.load(open('data/index/chunks.json', encoding='utf-8'))))" 2>&1 || echo "No index"
+        run: python scripts/build_knowledge_base.py
 
       - name: 打包 EXE
-        run: |
-          python scripts/build_exe_release.py 2>&1
-          echo "Dist contents:"
-          ls -la dist/ 2>&1 || echo "No dist"
-          ls -la dist/WavEDA_Assistant/ 2>&1 || echo "No app folder"
+        run: python scripts/build_exe_release.py
 
       - name: 上传到 Release
         shell: bash
