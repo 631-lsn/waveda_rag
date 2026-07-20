@@ -31,6 +31,13 @@ def _resolve_optional_path(value: str | None, root: Path) -> Path | None:
     return _resolve_path(value.strip(), root)
 
 
+def _parse_float(value: str, default: float = 0.0) -> float:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return default
+
+
 def load_dotenv_file(path: Path) -> dict[str, str]:
     """Load simple KEY=VALUE lines without requiring python-dotenv."""
     if not path.exists():
@@ -57,6 +64,7 @@ class Settings:
     llm_base_url: str
     llm_api_key: str
     llm_model: str
+    retrieval_min_score: float = 0.0
 
     @classmethod
     def from_env(cls, env: Mapping[str, str] | None = None) -> "Settings":
@@ -81,6 +89,7 @@ class Settings:
             llm_base_url=values.get("RAG_LLM_BASE_URL", "https://api.deepseek.com"),
             llm_api_key=values.get("RAG_LLM_API_KEY", ""),
             llm_model=values.get("RAG_LLM_MODEL", "deepseek-chat"),
+            retrieval_min_score=_parse_float(values.get("RAG_RETRIEVAL_MIN_SCORE", "20")),
         )
 
 

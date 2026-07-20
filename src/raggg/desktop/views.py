@@ -1977,4 +1977,3 @@ window.scrollTo(0, document.body.scrollHeight);
 
     def _show_error(self, title: str, message: str) -> None:
         QMessageBox.warning(self, title, message)
-

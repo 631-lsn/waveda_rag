@@ -2,13 +2,18 @@
 
 这是一个面向 WavEDA 初学者的本地 RAG 问答工具。它会优先检索项目内置的 WavEDA 教程、官方帮助文档、案例和常见错误排查资料，再结合大模型生成更适合新手阅读的回答。
 
+普通使用和项目交付文档：
+
+- [普通用户简明手册](docs/README-使用手册.md)
+- [WavEDA Agent 使用与维护手册](docs/WavEDA_Agent_使用与维护手册.md)
+
 ## 第一次使用
 
 Windows 用户按下面三步来：
 
 1. 双击 `setup_env.bat`
    - 优先使用项目内置的 `runtime/python`
-   - 如果没有内置 Python，才会自动创建本地虚拟环境 `.venv` 并安装依赖
+   - Git clone 默认不包含被忽略的 `runtime/`；没有内置 Python 时会使用本机 `py` 创建 `.venv` 并安装依赖
    - 自动构建本地知识库索引 `data/index`
    - 最后会跑一次基础问答验证
 
@@ -20,15 +25,15 @@ Windows 用户按下面三步来：
 
 3. 双击 `start.bat`
    - 打开 WavEDA Knowledge Workbench 桌面界面
-   - 第一次提问前，可以在左侧点击 `API 设置`，填入自己的 API Key
+   - 第一次提问前，可以按 `Ctrl+B` 展开右侧资料栏，点击 `设置` 填入自己的 API Key
 
 如果你不确定有没有安装好，双击 `run_smoke_test.bat`。它会跑三条基础问题，能看到来源说明就表示核心检索链路正常。
 
 ## 需要提前准备什么
 
 - Windows 10/11
-- 正常从 GitHub 下载完整仓库时，不需要提前安装 Python
-- 如果你的版本里缺少 `runtime/python`，则需要安装 Python 3.11 或更新版本，并确保本机有 Python 启动器 `py`
+- 从 GitHub clone 源码仓库时，需要安装 Python 3.11 或更新版本，并确保本机有 Python 启动器 `py`
+- 只有专门制作且包含 `runtime/python` 的源码便携包不需要本机 Python；普通用户更推荐使用 EXE 发布包
 
 如果双击 `setup_env.bat` 时提示找不到内置 Python，也找不到 `py`，请先安装 Python 3.11 或更新版本，并勾选 “Add python.exe to PATH” 或安装 Python Launcher。
 
@@ -37,7 +42,8 @@ Windows 用户按下面三步来：
 - 回答 WavEDA 基础操作问题，例如端口设置、边界条件、激励源、求解器、后处理等
 - 回答常见错误和排查问题，例如端口与 PML 冲突、模型设置不完整、结果异常等
 - 检索案例、官方帮助、团队自编教程，并在回答中显示来源
-- 在桌面界面中导入 `.md`、`.html`、`.txt`、`.pdf`、`.docx` 资料并自动重建本地索引
+- 在聊天框临时附加 PDF、PPTX、DOCX、Markdown、TXT、HTML，用于当前一次提问
+- 在“设置 → 知识库管理”中永久导入 PDF、PPTX、Markdown，并自动后台重建索引
 - API 不可用时，仍然可以基于本地知识库片段给出保底回答
 
 ## 支持的大模型
@@ -136,7 +142,7 @@ WAVEDA_EXAMPLE_ROOT=D:\Program Files\WavEDA\Example
 
 最简单的方式仍然是重新双击 `setup_env.bat`，它会重新构建索引。
 
-桌面界面左侧也提供 `导入资料入库` 按钮，可选择单个 `.md`、`.markdown`、`.html`、`.htm`、`.txt`、`.pdf` 或 `.docx` 文件。导入后会在后台增量更新索引并重新载入。
+桌面聊天框旁的 `+` 只会把文件临时附加到下一次提问，不会永久入库。长期资料请打开“设置 → 知识库管理”，导入 PDF、PPTX 或 Markdown；也可以直接把经过审核的源文件放到正确的 `knowledge_base/` 目录。
 
 软件运行时会自动监听 `knowledge_base/` 下的支持格式文件。手动修改、增加或删除这些文件后，界面会在文件稳定后自动后台增量更新索引并重新载入；更新期间提问和导入按钮会暂时禁用。
 

@@ -3,8 +3,24 @@ from __future__ import annotations
 import hashlib
 import math
 import re
+from typing import Protocol
 
 import numpy as np
+
+
+class EmbeddingModel(Protocol):
+    """嵌入模型协议：向量维度 + 模型标识 + 单条/批量编码。"""
+
+    dimensions: int
+    model_id: str
+
+    def embed_text(self, text: str) -> np.ndarray: ...
+
+    def embed_many(self, texts: list[str]) -> np.ndarray: ...
+
+    def embed_query(self, text: str) -> np.ndarray:
+        """查询侧编码。检索模型（BGE/E5 等）查询与文档的编码方式不同。"""
+        ...
 
 
 TOKEN_RE = re.compile(r"[A-Za-z0-9_]+|[\u4e00-\u9fff]+")
@@ -26,6 +42,7 @@ def tokenize(text: str) -> list[str]:
 class HashedEmbeddingModel:
     def __init__(self, dimensions: int = 384) -> None:
         self.dimensions = dimensions
+        self.model_id = f"local-hashed-vectors:{dimensions}"
 
     def embed_text(self, text: str) -> np.ndarray:
         vector = np.zeros(self.dimensions, dtype=np.float32)
@@ -43,3 +60,7 @@ class HashedEmbeddingModel:
         if not texts:
             return np.zeros((0, self.dimensions), dtype=np.float32)
         return np.vstack([self.embed_text(text) for text in texts])
+
+    def embed_query(self, text: str) -> np.ndarray:
+        # 哈希袋词向量查询与文档同构，直接复用 embed_text
+        return self.embed_text(text)
