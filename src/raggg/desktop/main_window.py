@@ -963,7 +963,13 @@ class WorkbenchWindow(QMainWindow):
         viewer.show()
 
     def _on_console_msg(self, level, msg: str, line: int, source: str) -> None:
-        if msg == "RAGGG_FAV":
+        if msg.startswith("RAGGG_CITATION:"):
+            try:
+                rank = int(msg.partition(":")[2])
+            except ValueError:
+                return
+            self._focus_source(rank)
+        elif msg == "RAGGG_FAV":
             self._do_fav()
         elif msg == "RAGGG_FIX":
             self._do_fix_answer()
@@ -974,6 +980,17 @@ class WorkbenchWindow(QMainWindow):
         elif msg.startswith("RAGGG_FAVDEL:"):
             # Not used here; favorites dialog uses Qt buttons now
             pass
+
+    def _focus_source(self, rank: int) -> None:
+        if rank not in self._source_paths:
+            return
+        source_id = json.dumps(f"source-{rank}")
+        self.sources.page().runJavaScript(
+            f"""const card=document.getElementById({source_id});
+if(card){{card.scrollIntoView({{behavior:'smooth',block:'center'}});
+card.classList.add('citation-target');
+setTimeout(()=>card.classList.remove('citation-target'),1600);}}"""
+        )
 
     def _do_fav(self) -> None:
         q, a = self._last_qa
@@ -1821,7 +1838,7 @@ window.scrollTo(0, document.body.scrollHeight);
             source_link = f"<a href='#src{rank}' style='color:{COLORS['accent2']};cursor:pointer;text-decoration:none;'>{html.escape(chunk.relative_path)}</a>"
 
             cards.append(
-                f"""<div style="background:{COLORS['surface2']};border:1px solid {COLORS['border']};border-radius:8px;padding:10px 12px;margin-bottom:8px;">
+                f"""<div id="source-{rank}" style="background:{COLORS['surface2']};border:1px solid {COLORS['border']};border-radius:8px;padding:10px 12px;margin-bottom:8px;">
                   <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
                     <span style="font-weight:700;color:{COLORS['text']};">[{rank}] {html.escape(chunk.title)}</span>
                     <span style="background:{badge_color};color:{color};border-radius:8px;padding:2px 10px;font-size:11px;font-weight:600;">{badge_label}</span>
@@ -1830,7 +1847,11 @@ window.scrollTo(0, document.body.scrollHeight);
                   <div style="color:{color};font-size:11px;">{get_text("match_score")} {score_pct:.1%}</div>
                 </div>"""
             )
-        return web_wrapper("\n".join(cards))
+        return web_wrapper(
+            "\n".join(cards),
+            ".citation-target { outline:2px solid "
+            f"{COLORS['accent2']}; box-shadow:0 0 0 4px rgba(110,174,196,.18); }}"
+        )
 
     def _welcome_html(self, chunk_count: str = "-", model_name: str = "DeepSeek") -> str:
         bubbles = get_chat_bubble_colors()

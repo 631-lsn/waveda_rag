@@ -14,6 +14,8 @@ from PySide6.QtWidgets import QApplication, QDialog, QFrame, QLabel, QLineEdit, 
 
 from raggg.config import Settings
 from raggg.desktop.main_window import AILoaderOverlay, WorkbenchWindow, favorite_matches, favorite_score
+from raggg.models import Chunk
+from raggg.retrieval.retriever import SearchResult
 
 
 def make_settings(root: Path) -> Settings:
@@ -315,6 +317,43 @@ class DesktopLayoutTests(unittest.TestCase):
 
         self.assertTrue(favorite_matches(favorite, "export S parameters"))
         self.assertFalse(favorite_matches(favorite, "port result tree"))
+
+    def test_source_cards_have_stable_citation_ids(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+            chunk = Chunk(
+                id="source-1",
+                source_type="waveda_help",
+                source_path=str(root / "port.html"),
+                relative_path="guide/port.html",
+                title="Port",
+                section="Setup",
+                content="Port setup",
+            )
+            result = SearchResult(chunk, 0.9, 0.8, 0.1)
+
+            rendered = window._sources_html([result])
+
+            self.assertIn('id="source-1"', rendered)
+
+    def test_citation_console_message_focuses_matching_source(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+
+            with patch.object(window, "_focus_source") as focus_source:
+                window._on_console_msg(0, "RAGGG_CITATION:2", 0, "")
+
+            focus_source.assert_called_once_with(2)
 
 
 if __name__ == "__main__":
