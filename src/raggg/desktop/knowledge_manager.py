@@ -347,7 +347,7 @@ class KnowledgeManager(QWidget):
     def _select_file(self) -> None:
         path, _ = QFileDialog.getOpenFileName(
             self, get_text("kbm_select_file_title"), "",
-            "Documents (*.pdf *.pptx *.md)"
+            "Documents (*.pdf *.pptx *.docx *.md)"
         )
         if not path:
             return
@@ -356,6 +356,8 @@ class KnowledgeManager(QWidget):
             self._pending_import_type = "pdf"
         elif suffix.endswith(".pptx"):
             self._pending_import_type = "pptx"
+        elif suffix.endswith(".docx"):
+            self._pending_import_type = "docx"
         else:
             self._pending_import_type = "md"
         self._pending_import_path = path
@@ -388,6 +390,12 @@ class KnowledgeManager(QWidget):
                 end = text.find("---", 3)
                 if end > 0:
                     text = text[end + 3:].strip()
+        elif filetype == "docx":
+            try:
+                from raggg.pipeline.ingestion import _extract_docx_text
+                text = _extract_docx_text(filepath)
+            except ImportError:
+                text = f"[DOCX: {filepath.name}]\n\n(需要安装 python-docx)"
         elif filetype == "pdf":
             try:
                 from raggg.pipeline.ingestion import _extract_pdf_text
