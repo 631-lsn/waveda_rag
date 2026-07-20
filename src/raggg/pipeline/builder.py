@@ -9,8 +9,9 @@ from typing import Callable
 import numpy as np
 
 from raggg.config import Settings
-from raggg.indexing.embeddings import HashedEmbeddingModel
-from raggg.indexing.vector_store import VectorStore
+from raggg.indexing.embeddings import EmbeddingModel
+from raggg.indexing.semantic_embeddings import create_embedding_model
+from raggg.indexing.vector_store import VectorStore, chunk_retrieval_text
 from raggg.loaders.html_loader import iter_html_documents
 from raggg.loaders.markdown_loader import (
     infer_physics_domain,
@@ -27,7 +28,7 @@ SEMANTIC_INDEX_EXCLUDED_PATHS = {
     "04_error_cases/raw_ui_messages.csv.md",
 }
 CHUNK_SCHEMA_VERSION = 2
-EMBEDDING_SCHEMA_VERSION = 2
+EMBEDDING_SCHEMA_VERSION = 3
 
 
 @dataclass(frozen=True)
@@ -139,12 +140,15 @@ def _load_reusable_chunks(data_dir: Path) -> tuple[dict[str, str], dict[str, lis
     return fingerprints, chunks_by_document
 
 
-def _load_reusable_vectors(data_dir: Path) -> dict[str, np.ndarray]:
+def _load_reusable_vectors(data_dir: Path, model: EmbeddingModel) -> dict[str, np.ndarray]:
     meta = _read_json(data_dir / "index" / "build_meta.json")
     if not isinstance(meta, dict) or meta.get("embedding_schema_version") != EMBEDDING_SCHEMA_VERSION:
         return {}
+    # 嵌入模型换了就必须全量重算，不能复用旧模型的向量
+    if meta.get("embedding_model") != model.model_id:
+        return {}
     try:
-        store = VectorStore.load(data_dir / "index")
+        store = VectorStore.load(data_dir / "index", embedding_model=model)
     except (OSError, ValueError, TypeError, json.JSONDecodeError):
         return {}
     if len(store.chunks) != len(store.vectors):
@@ -153,11 +157,11 @@ def _load_reusable_vectors(data_dir: Path) -> dict[str, np.ndarray]:
 
 
 def _build_incremental_vectors(
-    chunks: list[Chunk], data_dir: Path, model: HashedEmbeddingModel
+    chunks: list[Chunk], data_dir: Path, model: EmbeddingModel
 ) -> tuple[np.ndarray, int]:
-    reusable = _load_reusable_vectors(data_dir)
+    reusable = _load_reusable_vectors(data_dir, model)
     missing_chunks = [chunk for chunk in chunks if chunk.id not in reusable]
-    embedded = model.embed_many([chunk.content for chunk in missing_chunks])
+    embedded = model.embed_many([chunk_retrieval_text(chunk) for chunk in missing_chunks])
     for index, chunk in enumerate(missing_chunks):
         reusable[chunk.id] = embedded[index]
     if not chunks:
@@ -247,7 +251,7 @@ def build_knowledge_base(
         "embed",
         "正在生成向量",
     )
-    embedding_model = HashedEmbeddingModel()
+    embedding_model = create_embedding_model(settings.embedding_model)
     vectors, embedded_chunk_count = _build_incremental_vectors(
         chunks, settings.data_dir, embedding_model
     )
@@ -265,6 +269,7 @@ def build_knowledge_base(
             {
                 "chunk_schema_version": CHUNK_SCHEMA_VERSION,
                 "embedding_schema_version": EMBEDDING_SCHEMA_VERSION,
+                "embedding_model": embedding_model.model_id,
             },
             indent=2,
         ),
