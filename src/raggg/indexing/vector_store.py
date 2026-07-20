@@ -10,6 +10,11 @@ from raggg.indexing.embeddings import EmbeddingModel, HashedEmbeddingModel
 from raggg.models import Chunk
 
 
+def chunk_retrieval_text(chunk: Chunk) -> str:
+    """Return the question heading used for retrieval."""
+    return (chunk.section or "").strip()
+
+
 @dataclass
 class VectorStore:
     chunks: list[Chunk]
@@ -23,7 +28,7 @@ class VectorStore:
         embedding_model: EmbeddingModel | None = None,
     ) -> "VectorStore":
         model = embedding_model or HashedEmbeddingModel()
-        vectors = model.embed_many([chunk.content for chunk in chunks])
+        vectors = model.embed_many([chunk_retrieval_text(chunk) for chunk in chunks])
         return cls(chunks=chunks, vectors=vectors, embedding_model=model)
 
     def save(self, index_dir: Path) -> None:

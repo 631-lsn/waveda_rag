@@ -4,7 +4,14 @@ from collections.abc import Callable
 from dataclasses import dataclass
 
 from raggg.config import Settings
-from raggg.generation.llm_client import OpenAICompatibleClient
+from raggg.generation.llm_client import (
+    LLMAuthError,
+    LLMConnectionError,
+    LLMRateLimitError,
+    LLMServerError,
+    LLMTimeoutError,
+    OpenAICompatibleClient,
+)
 from raggg.generation.prompt_builder import build_local_answer, build_prompt
 from raggg.i18n import get_text
 from raggg.indexing.semantic_embeddings import create_embedding_model
@@ -78,9 +85,9 @@ class RAGPipeline:
             else:
                 try:
                     answer = self.client.complete(prompt)
-                except RuntimeError as exc:
+                except Exception as exc:
                     answer = build_local_answer(question, sources)
-                    warning = self._friendly_llm_warning(str(exc))
+                    warning = self._friendly_llm_warning(exc)
         else:
             answer = build_local_answer(question, sources)
             if on_chunk is not None:
@@ -104,17 +111,16 @@ class RAGPipeline:
             return "".join(parts), None
         except RuntimeError as stream_error:
             if parts:
-                return "".join(parts), self._friendly_llm_warning(str(stream_error))
+                return "".join(parts), self._friendly_llm_warning(stream_error)
 
-            # Preserve compatibility with providers that reject stream=true.
             try:
                 answer = self.client.complete(prompt)
                 on_chunk(answer)
                 return answer, None
-            except RuntimeError as fallback_error:
+            except Exception as fallback_error:
                 answer = build_local_answer(question, sources)
                 on_chunk(answer)
-                return answer, self._friendly_llm_warning(str(fallback_error))
+                return answer, self._friendly_llm_warning(fallback_error)
 
     @staticmethod
     def _filter_by_bm25_floor(
@@ -149,7 +155,15 @@ class RAGPipeline:
         return f"{previous}\n{question}" if previous else question
 
     @staticmethod
-    def _friendly_llm_warning(error_message: str) -> str:
-        if "401" in error_message or "Authorization" in error_message:
+    def _friendly_llm_warning(error: Exception) -> str:
+        if isinstance(error, LLMAuthError):
             return get_text("error_llm_auth")
+        if isinstance(error, LLMRateLimitError):
+            return get_text("error_llm_rate_limit")
+        if isinstance(error, LLMServerError):
+            return get_text("error_llm_server")
+        if isinstance(error, LLMTimeoutError):
+            return get_text("error_llm_timeout")
+        if isinstance(error, LLMConnectionError):
+            return get_text("error_llm_connection")
         return get_text("error_llm_unavailable")

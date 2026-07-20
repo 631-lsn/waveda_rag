@@ -8,6 +8,11 @@ from raggg.retrieval.retriever import SearchResult
 
 
 ConversationHistory = list[tuple[str, str]]
+CITATION_INSTRUCTION = (
+    "引用规则：凡是由检索资料支持的事实，请在对应句末标注来源编号，如 [1]；"
+    "多个来源连续写成 [1][2]。只能使用上方实际存在的编号，不得编造；"
+    "没有资料支持的内容不要添加引用。"
+)
 
 
 def build_prompt(
@@ -44,7 +49,8 @@ def build_prompt(
         f"{history_section}"
         f"{get_text('prompt_question_prefix')}：{question}\n\n"
         f"{context}\n\n"
-        f"{get_text('prompt_final_instruction')}"
+        f"{get_text('prompt_final_instruction')}\n\n"
+        f"{CITATION_INSTRUCTION}"
     )
 
 

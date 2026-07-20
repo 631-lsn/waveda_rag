@@ -7,7 +7,7 @@ from dataclasses import dataclass
 import numpy as np
 
 from raggg.indexing.embeddings import tokenize
-from raggg.indexing.vector_store import VectorStore
+from raggg.indexing.vector_store import VectorStore, chunk_retrieval_text
 from raggg.models import Chunk
 
 
@@ -53,18 +53,35 @@ def _lexical_overlap(query_tokens: set[str], content: str) -> float:
     content_tokens = set(tokenize(content))
     if not content_tokens:
         return 0.0
-    return len(query_tokens & content_tokens) / len(query_tokens)
+    token_score = len(query_tokens & content_tokens) / len(query_tokens)
+
+    # Chinese bigrams are useful for precision, but some of them depend on
+    # the order in which the user happened to phrase the question (for
+    # example, ``数如`` appears in ``S参数如何导出`` but not in the reversed
+    # wording).  Keep the bigram score while also measuring stable atoms:
+    # ASCII words/numbers and individual CJK characters.  This prevents an
+    # incidental cross-word bigram from lowering an otherwise equivalent
+    # query's coverage.
+    stable_query_tokens = {token for token in query_tokens if token.isascii() or len(token) == 1}
+    stable_content_tokens = {token for token in content_tokens if token.isascii() or len(token) == 1}
+    stable_score = (
+        len(stable_query_tokens & stable_content_tokens) / len(stable_query_tokens)
+        if stable_query_tokens
+        else 0.0
+    )
+    return max(token_score, stable_score)
 
 
 class Retriever:
     def __init__(self, store: VectorStore) -> None:
         self.store = store
-        # BM25 语料统计：词频、文档频率、文档长度（标题+小节+正文）
+        # Only question headings participate in retrieval. The selected
+        # chunk still carries its full body as answer context.
         self._term_counts: list[Counter[str]] = []
         df: Counter[str] = Counter()
         doc_lengths: list[int] = []
         for chunk in store.chunks:
-            counts = Counter(tokenize(f"{chunk.title} {chunk.section} {chunk.content}"))
+            counts = Counter(tokenize(chunk_retrieval_text(chunk)))
             self._term_counts.append(counts)
             doc_lengths.append(sum(counts.values()))
             for term in counts:
@@ -113,11 +130,12 @@ class Retriever:
 
         results: list[SearchResult] = []
         for index, chunk in enumerate(self.store.chunks):
+            question_heading = chunk_retrieval_text(chunk)
             vector_score = float(vector_scores[index]) if len(vector_scores) else 0.0
             lexical_score = float(lexical_scores[index])
             # 配比由评测集网格搜索标定（41 题，2026-07）：
             # 0.4 向量 + 0.6 BM25 在 hash/bge 两种嵌入下均为最优或并列最优。
-            # heading 通道已删除——BM25 语料含标题+小节，独立通道冗余。
+            # 向量与 BM25 均基于问题标题，不让正文里的偶然词语影响命中。
             score = 0.4 * vector_score + 0.6 * lexical_score
 
             # 以下为领域硬编码加分。A7 消融实验结论（2026-07，41 题评测集）：
@@ -127,13 +145,13 @@ class Retriever:
             priority = int(chunk.metadata.get("priority", 3))
             score *= 0.9 + 0.07 * priority  # priority=3 → 1.11x, priority=5 → 1.25x
 
-            chunk_text_lower = f"{chunk.title} {chunk.section} {chunk.content}".lower()
+            chunk_text_lower = question_heading.lower()
             is_helpful = chunk.source_type in ("waveda_help", "user_tutorial") or priority >= 4
             if is_helpful and any(term in query_lower for term in WAVEDA_TERMS):
                 score += 0.08
             compact_query = query_lower.replace(" ", "").replace("？", "").replace("?", "")
-            compact_title = chunk.title.lower().replace(" ", "")
-            title_tokens = set(tokenize(chunk.title))
+            compact_title = question_heading.lower().replace(" ", "")
+            title_tokens = set(tokenize(question_heading))
             if (
                 is_helpful
                 and len(title_tokens) >= 2
@@ -154,10 +172,6 @@ class Retriever:
             if any(term in query_lower for term in DEFINITION_TERMS):
                 if "是什么" in compact_title or compact_title in compact_query or compact_query in compact_title:
                     score += 0.45
-            if chunk.metadata.get("has_formula") and any(term in query_lower for term in FORMULA_TERMS):
-                score += 0.5
-            if chunk.source_type == "obsidian_note" and any(term in query_lower for term in FORMULA_TERMS):
-                score += 0.08
 
             results.append(
                 SearchResult(

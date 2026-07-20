@@ -4,13 +4,14 @@ import hashlib
 import json
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Callable
 
 import numpy as np
 
 from raggg.config import Settings
 from raggg.indexing.embeddings import EmbeddingModel
 from raggg.indexing.semantic_embeddings import create_embedding_model
-from raggg.indexing.vector_store import VectorStore
+from raggg.indexing.vector_store import VectorStore, chunk_retrieval_text
 from raggg.loaders.html_loader import iter_html_documents
 from raggg.loaders.markdown_loader import (
     infer_physics_domain,
@@ -27,7 +28,7 @@ SEMANTIC_INDEX_EXCLUDED_PATHS = {
     "04_error_cases/raw_ui_messages.csv.md",
 }
 CHUNK_SCHEMA_VERSION = 2
-EMBEDDING_SCHEMA_VERSION = 2
+EMBEDDING_SCHEMA_VERSION = 3
 
 
 @dataclass(frozen=True)
@@ -40,6 +41,28 @@ class BuildReport:
     rebuilt_document_count: int = 0
     reused_document_count: int = 0
     embedded_chunk_count: int = 0
+
+
+@dataclass(frozen=True)
+class BuildProgress:
+    stage: str
+    message: str
+    current: int | None = None
+    total: int | None = None
+
+
+ProgressCallback = Callable[[BuildProgress], None]
+
+
+def _report_progress(
+    callback: ProgressCallback | None,
+    stage: str,
+    message: str,
+    current: int | None = None,
+    total: int | None = None,
+) -> None:
+    if callback is not None:
+        callback(BuildProgress(stage, message, current, total))
 
 
 def _document_key(source_type: str, relative_path: str) -> str:
@@ -138,7 +161,7 @@ def _build_incremental_vectors(
 ) -> tuple[np.ndarray, int]:
     reusable = _load_reusable_vectors(data_dir, model)
     missing_chunks = [chunk for chunk in chunks if chunk.id not in reusable]
-    embedded = model.embed_many([chunk.content for chunk in missing_chunks])
+    embedded = model.embed_many([chunk_retrieval_text(chunk) for chunk in missing_chunks])
     for index, chunk in enumerate(missing_chunks):
         reusable[chunk.id] = embedded[index]
     if not chunks:
@@ -190,14 +213,23 @@ def _iter_knowledge_base_documents(root: Path) -> list[Document]:
     return documents
 
 
-def build_knowledge_base(settings: Settings) -> BuildReport:
+def build_knowledge_base(
+    settings: Settings,
+    on_progress: ProgressCallback | None = None,
+) -> BuildReport:
     settings.data_dir.mkdir(parents=True, exist_ok=True)
+    _report_progress(on_progress, "scan", "正在扫描知识文档")
     documents = []
     waveda_docs = iter_html_documents(settings.waveda_help_root)
     obsidian_docs = _iter_knowledge_base_documents(settings.obsidian_vault_root)
     documents.extend(waveda_docs)
     documents.extend(obsidian_docs)
 
+    _report_progress(
+        on_progress,
+        "chunk",
+        "正在复用或切分文档",
+    )
     previous_fingerprints, previous_chunks = _load_reusable_chunks(settings.data_dir)
     fingerprints: dict[str, str] = {}
     chunks: list[Chunk] = []
@@ -214,15 +246,22 @@ def build_knowledge_base(settings: Settings) -> BuildReport:
             chunks.extend(chunk_document(document))
             rebuilt_document_count += 1
 
+    _report_progress(
+        on_progress,
+        "embed",
+        "正在生成向量",
+    )
+    embedding_model = create_embedding_model(settings.embedding_model)
+    vectors, embedded_chunk_count = _build_incremental_vectors(
+        chunks, settings.data_dir, embedding_model
+    )
+
+    _report_progress(on_progress, "save", "正在写入索引")
     (settings.data_dir / "raw_manifest.json").write_text(
         json.dumps(_document_manifest(documents, fingerprints), ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
     _write_chunks(settings.data_dir / "processed_chunks.json", chunks)
-    embedding_model = create_embedding_model(settings.embedding_model)
-    vectors, embedded_chunk_count = _build_incremental_vectors(
-        chunks, settings.data_dir, embedding_model
-    )
     store = VectorStore(chunks=chunks, vectors=vectors, embedding_model=embedding_model)
     store.save(settings.data_dir / "index")
     (settings.data_dir / "index" / "build_meta.json").write_text(
@@ -237,7 +276,7 @@ def build_knowledge_base(settings: Settings) -> BuildReport:
         encoding="utf-8",
     )
 
-    return BuildReport(
+    report = BuildReport(
         document_count=len(documents),
         chunk_count=len(chunks),
         waveda_document_count=len(waveda_docs),
@@ -247,3 +286,11 @@ def build_knowledge_base(settings: Settings) -> BuildReport:
         reused_document_count=reused_document_count,
         embedded_chunk_count=embedded_chunk_count,
     )
+    _report_progress(
+        on_progress,
+        "complete",
+        "索引构建完成",
+        len(documents),
+        len(documents),
+    )
+    return report

@@ -89,10 +89,32 @@ class AILoaderOverlay(QWidget):
         self._timer.setInterval(32)
         self._timer.timeout.connect(self._advance)
         self._timer.start()
+        self.progress_label = QLabel(self)
+        self.progress_label.setAlignment(Qt.AlignCenter)
+        self.progress_label.setWordWrap(True)
+        self.progress_label.setStyleSheet(
+            "background:transparent;color:rgba(33,55,76,210);"
+            "font:12px 'Microsoft YaHei UI';"
+        )
+        self.progress_label.hide()
 
     def set_text(self, text: str) -> None:
         self.text = text or "请稍候"
         self.update()
+
+    def set_progress_text(self, text: str) -> None:
+        self.progress_label.setText(text)
+        self.progress_label.setVisible(bool(text))
+
+    def resizeEvent(self, event) -> None:
+        super().resizeEvent(event)
+        label_width = min(520, max(220, self.width() - 80))
+        self.progress_label.setGeometry(
+            (self.width() - label_width) // 2,
+            self.height() // 2 + 108,
+            label_width,
+            48,
+        )
 
     def _advance(self) -> None:
         self._angle = (self._angle + 2) % 360

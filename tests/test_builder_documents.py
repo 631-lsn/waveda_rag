@@ -117,6 +117,25 @@ class BuilderDocumentTests(unittest.TestCase):
             self.assertIn("DOCX paragraph", joined)
             self.assertIn("PDF paragraph", joined)
 
+    def test_build_reports_ordered_progress_stages(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            kb = root / "knowledge_base"
+            kb.mkdir()
+            (kb / "one.md").write_text("# One\n\nPort setup", encoding="utf-8")
+            events = []
+
+            build_knowledge_base(make_settings(root), on_progress=events.append)
+
+            self.assertEqual(
+                [event.stage for event in events],
+                ["scan", "chunk", "embed", "save", "complete"],
+            )
+            self.assertTrue(all(event.message for event in events))
+            stage_events = {event.stage: event for event in events}
+            self.assertIsNone(stage_events["chunk"].current)
+            self.assertIsNone(stage_events["embed"].current)
+
 
 if __name__ == "__main__":
     unittest.main()

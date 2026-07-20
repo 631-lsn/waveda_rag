@@ -24,8 +24,8 @@ TEXTS_KB: dict[str, dict[str, str]] = {
         "en": "Select a file to edit Markdown here...",
     },
     "kbm_import_title": {
-        "zh": "导入文档（PDF / PPT → MD）",
-        "en": "Import Documents (PDF / PPT to MD)",
+        "zh": "导入文档",
+        "en": "Import Documents",
     },
     "kbm_select_file": {
         "zh": "选择文件",
