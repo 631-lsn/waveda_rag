@@ -378,6 +378,16 @@ a {{ color: {COLORS["accent2"]}; }}
 {extra_css}
 </style></head><body>{body_html}</body></html>"""
 
+from raggg.desktop.image_index import (
+    ImageIndex,
+    extract_images_from_sources as _extract_images_from_sources,
+)
+from raggg.desktop.rendering import (
+    markdown_to_html,
+    path_to_data_uri as _path_to_data_uri,
+    render_inline_markdown,
+    web_wrapper,
+)
 from raggg.desktop.widgets import MetricCard, AILoaderOverlay
 
 from raggg.desktop.settings_dialog import LLM_PROVIDERS, VISION_MODELS, SettingsDialog
@@ -427,38 +437,18 @@ class WorkbenchWindow(QMainWindow):
 
     def _build_image_index(self) -> None:
         """Build image index with project assets first, then user WavEDA paths."""
-        image_roots = [
-            (self._project_root / "knowledge_base" / "assets" / "images", ""),
-            (self._project_root / "assets" / "images", ""),
-            (self._project_root / "wavEDA_docs" / "helpHtml" / "helpHtml", ""),
-        ]
-        if self.settings.waveda_help_root:
-            image_roots.append((self.settings.waveda_help_root, ""))
-        if self.settings.waveda_root:
-            image_roots.append((self.settings.waveda_root / "Example", "Example"))
-            image_roots.append((self.settings.waveda_root / "documentation" / "helpHtml", ""))
-            image_roots.append((self.settings.waveda_root / "helpHtml", ""))
-            image_roots.append((self.settings.waveda_root / "helpHtml" / "helpHtml", ""))
-        if self.settings.waveda_example_root:
-            image_roots.append((self.settings.waveda_example_root, "Example"))
-
-        for root, key_prefix in image_roots:
-            if root.exists():
-                self._add_images_from_root(root, key_prefix=key_prefix)
-        print(f"Image index: {len(set(self._image_index.values()))} files, {len(self._image_index)} keys loaded")
-
-    def _add_images_from_root(self, root: Path, key_prefix: str = "") -> None:
-        root = root.resolve()
-        for image_path in root.rglob("*"):
-            if not image_path.is_file() or image_path.suffix.lower() not in IMAGE_EXTENSIONS:
-                continue
-            abs_path = str(image_path).replace(os.sep, "/")
-            rel_key = _normalize_image_key(image_path.relative_to(root).as_posix())
-            name_key = image_path.name.lower()
-            self._image_index.setdefault(rel_key, abs_path)
-            if key_prefix:
-                self._image_index.setdefault(_normalize_image_key(f"{key_prefix}/{rel_key}"), abs_path)
-            self._image_index.setdefault(name_key, abs_path)
+        self.image_index = ImageIndex(
+            self._project_root,
+            waveda_help_root=self.settings.waveda_help_root,
+            waveda_root=self.settings.waveda_root,
+            waveda_example_root=self.settings.waveda_example_root,
+        )
+        self.image_index.build()
+        self._image_index = self.image_index.paths
+        print(
+            f"Image index: {len(set(self._image_index.values()))} files, "
+            f"{len(self._image_index)} keys loaded"
+        )
 
     def _build_ui(self) -> None:
         root = QWidget()
