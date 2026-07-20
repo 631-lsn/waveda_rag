@@ -1025,12 +1025,8 @@ class WorkbenchViewsMixin(QMainWindow):
                 f"{html.escape(text)}</pre>"
             )
 
-        self.sidebar_container.show()
-        base_url = QUrl.fromLocalFile(str(file_path.parent.resolve()) + os.sep)
-        self.sources.setHtml(
-            html_content,
-            base_url,
-        )
+        viewer = SourceViewer(file_path.stem, html_content, self)
+        viewer.show()
 
     def _do_fav(self) -> None:
         q, a = self._last_qa

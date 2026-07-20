@@ -362,7 +362,10 @@ class DesktopLayoutTests(unittest.TestCase):
         with TemporaryDirectory() as tmp:
             root = Path(tmp)
             source_path = root / "port.md"
-            source_path.write_text("# Port setup\n\nConfigure the port here.", encoding="utf-8")
+            source_path.write_text(
+                "# Port setup\n\nConfigure the port here.",
+                encoding="utf-8",
+            )
             with patch.object(WorkbenchWindow, "_build_image_index"), \
                  patch.object(WorkbenchWindow, "_preload_images"), \
                  patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
@@ -371,13 +374,15 @@ class DesktopLayoutTests(unittest.TestCase):
 
             window._source_paths[1] = str(source_path)
             self.assertTrue(window.sidebar_container.isHidden())
-            with patch.object(window.sources, "setHtml") as set_html:
+            with patch("raggg.desktop.views.SourceViewer") as viewer_type:
                 window._focus_source(1)
 
-            self.assertFalse(window.sidebar_container.isHidden())
-            rendered_html = set_html.call_args.args[0]
-            self.assertIn("Port setup", rendered_html)
+            self.assertTrue(window.sidebar_container.isHidden())
+            title, rendered_html, parent = viewer_type.call_args.args
+            self.assertEqual(title, "port")
             self.assertIn("Configure the port here.", rendered_html)
+            self.assertIs(parent, window)
+            viewer_type.return_value.show.assert_called_once_with()
 
     def test_loader_progress_text_updates_during_rebuild(self) -> None:
         with TemporaryDirectory() as tmp:
