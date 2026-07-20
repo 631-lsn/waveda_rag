@@ -14,8 +14,10 @@ from PySide6.QtWidgets import QApplication, QDialog, QFrame, QLabel, QLineEdit, 
 
 from raggg.config import Settings
 from raggg.desktop.main_window import AILoaderOverlay, WorkbenchWindow, favorite_matches, favorite_score
+from raggg.desktop.workers import AskResult
 from raggg.models import Chunk
 from raggg.pipeline.builder import BuildProgress
+from raggg.pipeline.rag_pipeline import RAGAnswer
 from raggg.retrieval.retriever import SearchResult
 
 
@@ -408,6 +410,34 @@ class DesktopLayoutTests(unittest.TestCase):
             window._new_session()
 
             self.assertEqual(window._source_paths, {})
+
+    def test_answer_warning_is_rendered_after_answer(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+            result = AskResult(
+                "question",
+                RAGAnswer(
+                    question="question",
+                    answer="answer",
+                    sources=[],
+                    warning="API warning",
+                ),
+            )
+
+            with patch.object(window, "_append_assistant") as append_assistant, \
+                 patch.object(window, "_remember_turn"), \
+                 patch.object(window, "_sources_html", return_value="<html></html>"):
+                window._on_answer_done(result)
+
+            self.assertEqual(
+                [item.args[0] for item in append_assistant.call_args_list],
+                ["answer", "> ⚠️ API warning"],
+            )
 
 
 if __name__ == "__main__":

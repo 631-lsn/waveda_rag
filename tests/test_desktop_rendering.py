@@ -26,6 +26,11 @@ class DesktopRenderingTests(unittest.TestCase):
         self.assertIn("<sup", rendered)
         self.assertNotIn("RAGGG_CITATION", rendered)
 
+    def test_ordered_list_resumes_number_after_intervening_paragraph(self) -> None:
+        rendered = markdown_to_html("1. First\n\nParagraph\n\n2. Second")
+
+        self.assertIn('<ol start="2">', rendered)
+
     def test_image_index_maps_relative_path_and_filename(self) -> None:
         with TemporaryDirectory() as tmp:
             root = Path(tmp)

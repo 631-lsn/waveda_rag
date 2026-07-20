@@ -1682,6 +1682,10 @@ setTimeout(()=>card.classList.remove('citation-target'),1600);}}"""
         else:
             self._finish_streaming_assistant(stream_id, result.answer.answer)
         self._remember_turn(result.question, result.answer.answer)
+        if result.answer.warning:
+            previous_last_qa = self._last_qa
+            self._append_assistant(f"> ⚠️ {result.answer.warning}")
+            self._last_qa = previous_last_qa
         all_images = _extract_images_from_sources(result.answer.sources, self._image_index)
         if all_images:
             img_html = '<div style="margin:12px 0 8px 0;"><div style="color:' + COLORS["accent2"] + ';font-weight:700;margin-bottom:8px;">' + get_text("screenshot_label") + '</div>'

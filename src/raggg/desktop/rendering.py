@@ -143,6 +143,7 @@ def markdown_to_html(
     output: list[str] = []
     list_mode: str | None = None
     list_prefix = ""
+    last_ordered_number = 0
 
     def close_list() -> None:
         nonlocal list_mode, list_prefix
@@ -160,11 +161,18 @@ def markdown_to_html(
         ordered = ORDERED_RE.match(line)
         unordered = UNORDERED_RE.match(line)
         if ordered:
+            ordered_number = int(ordered.group(1))
             if list_mode != "ol":
                 close_list()
-                output.append(list_prefix + "<ol>")
+                start = (
+                    f' start="{last_ordered_number + 1}"'
+                    if last_ordered_number > 0
+                    else ""
+                )
+                output.append(f"{list_prefix}<ol{start}>")
                 list_prefix = ""
                 list_mode = "ol"
+            last_ordered_number = ordered_number
             output.append(
                 f"<li>{render_inline_markdown(ordered.group(2), citations_clickable=citations_clickable)}</li>"
             )
@@ -184,6 +192,7 @@ def markdown_to_html(
                 continue
             if list_mode != "ul":
                 close_list()
+                last_ordered_number = 0
                 output.append(list_prefix + "<ul>")
                 list_prefix = ""
                 list_mode = "ul"
@@ -201,6 +210,7 @@ def markdown_to_html(
                 f"<blockquote>{render_inline_markdown(line.lstrip('> ').strip(), citations_clickable=citations_clickable)}</blockquote>"
             )
         elif line.startswith("#"):
+            last_ordered_number = 0
             heading = line.lstrip("#").strip()
             output.append(
                 f"<div style='margin:12px 0 6px 0;color:{COLORS['accent']};"
@@ -216,7 +226,11 @@ def markdown_to_html(
     if list_prefix:
         output.append(list_prefix)
     result = "\n".join(output)
-    result = re.sub(r"</ol>(<div[^>]*></div>)<ol>", r"\1", result)
+    result = re.sub(
+        r'</ol>(<div[^>]*></div>)<ol start="\d+">',
+        r"\1",
+        result,
+    )
     return convert_image_refs(result)
 
 
@@ -256,9 +270,8 @@ body {{
     overflow-x: hidden;
 }}
 p {{ margin: 7px 0; line-height: 1.58; }}
-ol {{ margin: 8px 0; padding-left: 24px; list-style: none; }}
-ol li {{ margin: 4px 0; counter-increment: ordered-item; }}
-ol li::before {{ content: counter(ordered-item) ". "; color: {COLORS["accent"]}; font-weight: 600; }}
+ol {{ margin: 8px 0; padding-left: 24px; }}
+ol li {{ margin: 4px 0; }}
 ul {{ margin: 8px 0; padding-left: 24px; }}
 ul li {{ margin: 4px 0; }}
 strong {{ color: {COLORS["accent"]}; }}

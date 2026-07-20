@@ -1,0 +1,48 @@
+name: 打包发布 EXE
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+
+      - name: 创建临时 .env（Release 用占位 Key）
+        shell: bash
+        run: |
+          cat > config/.env << 'EOF'
+          RAG_LLM_BASE_URL=https://api.deepseek.com
+          RAG_LLM_API_KEY=YOUR_API_KEY_HERE
+          RAG_LLM_MODEL=deepseek-chat
+          RAG_LANGUAGE=zh
+          EOF
+
+      - name: 安装依赖
+        run: |
+          pip install -r requirements.txt
+          pip install -r requirements-build.txt
+
+      - name: 构建知识库索引
+        run: python scripts/build_knowledge_base.py
+
+      - name: 打包 EXE
+        run: python scripts/build_exe_release.py
+
+      - name: 上传到 Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: dist/WavEDA_Assistant_Windows_*.zip
+          generate_release_notes: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
