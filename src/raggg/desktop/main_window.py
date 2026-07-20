@@ -1683,21 +1683,30 @@ class WorkbenchWindow(QMainWindow):
             self._generate_session_title(question, answer)
 
     def _generate_session_title(self, question: str, answer: str) -> None:
-        """AI 生成 8 字以内标题"""
-        if self.settings.llm_api_key:
+        """AI 生成标题，根据语言切换中英文"""
+        lang = get_language()
+        if lang == "en":
+            prompt = f"Summarize this conversation in 6 words or fewer as a title. Answer with ONLY the title.\nUser: {question[:200]}\nAssistant: {answer[:200]}"
+            fallback = question[:30] + ("..." if len(question) > 30 else "")
+            max_title_len = 40
+        else:
             prompt = f"将以下对话总结为8个字以内的标题，只回答标题不要解释。\n用户：{question[:200]}\n助手：{answer[:200]}"
+            fallback = question[:20] + ("..." if len(question) > 20 else "")
+            max_title_len = 20
+
+        if self.settings.llm_api_key:
             try:
                 from raggg.generation.llm_client import OpenAICompatibleClient
                 client = OpenAICompatibleClient(
                     self.settings.llm_base_url, self.settings.llm_api_key, self.settings.llm_model)
                 title = client.complete(prompt).strip().strip("\"'《》「」。. ")
-                if title and len(title) <= 20:
+                if title and len(title) <= max_title_len:
                     self._session_manager.set_title(title)
                     self._refresh_session_list()
                     return
             except Exception:
                 pass
-        self._session_manager.set_title(question[:20] + ("..." if len(question) > 20 else ""))
+        self._session_manager.set_title(fallback)
         self._refresh_session_list()
 
     def _append_user(self, question: str) -> None:
