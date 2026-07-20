@@ -44,8 +44,13 @@ jobs:
       - name: 上传到 Release
         shell: bash
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ github.token }}
         run: |
-          ZIP=$(ls dist/WavEDA_Assistant_Windows_*.zip | head -1)
-          echo "Uploading: $ZIP"
+          ls -la dist/
+          ZIP=$(ls dist/WavEDA_Assistant_Windows_*.zip 2>/dev/null | head -1)
+          if [ -z "$ZIP" ]; then
+            echo "ERROR: ZIP not found!"
+            exit 1
+          fi
+          echo "Uploading: $ZIP ($(du -h "$ZIP" | cut -f1))"
           gh release create "${{ github.ref_name }}" "$ZIP" --title "WavEDA Assistant ${{ github.ref_name }}" --generate-notes
