@@ -15,6 +15,7 @@ from PySide6.QtWidgets import QApplication, QDialog, QFrame, QLabel, QLineEdit, 
 from raggg.config import Settings
 from raggg.desktop.main_window import AILoaderOverlay, WorkbenchWindow, favorite_matches, favorite_score
 from raggg.models import Chunk
+from raggg.pipeline.builder import BuildProgress
 from raggg.retrieval.retriever import SearchResult
 
 
@@ -354,6 +355,22 @@ class DesktopLayoutTests(unittest.TestCase):
                 window._on_console_msg(0, "RAGGG_CITATION:2", 0, "")
 
             focus_source.assert_called_once_with(2)
+
+    def test_loader_progress_text_updates_during_rebuild(self) -> None:
+        with TemporaryDirectory() as tmp:
+            root = Path(tmp)
+            with patch.object(WorkbenchWindow, "_build_image_index"), \
+                 patch.object(WorkbenchWindow, "_preload_images"), \
+                 patch.object(WorkbenchWindow, "_load_pipeline_if_ready"), \
+                 patch.object(WorkbenchWindow, "_start_source_watcher"):
+                window = WorkbenchWindow(make_settings(root))
+
+            window._on_build_progress(
+                BuildProgress("embed", "正在生成向量", 3, 10)
+            )
+
+            self.assertIn("正在生成向量", window.loader_overlay.progress_label.text())
+            self.assertIn("3/10", window.loader_overlay.progress_label.text())
 
 
 if __name__ == "__main__":

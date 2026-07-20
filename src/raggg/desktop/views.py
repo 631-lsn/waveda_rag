@@ -37,7 +37,7 @@ from raggg.config import Settings, application_root, config_env_path, load_setti
 from raggg.desktop.image_cache import ImageDataUriCache
 from raggg.desktop.session_manager import SessionManager
 from raggg.i18n import get_text, get_language, set_language, get_welcome_text
-from raggg.pipeline.builder import BuildReport, build_knowledge_base
+from raggg.pipeline.builder import BuildProgress, BuildReport, build_knowledge_base
 from raggg.pipeline.ingestion import IngestReport, ingest_document
 from raggg.pipeline.rag_pipeline import RAGAnswer, RAGPipeline
 from raggg.pipeline.source_watch import SourceSnapshot, scan_source_tree, snapshot_changed
@@ -905,6 +905,7 @@ class WorkbenchViewsMixin(QMainWindow):
 
     def _hide_loader(self) -> None:
         if not self.is_busy:
+            self.loader_overlay.set_progress_text("")
             self.loader_overlay.hide()
 
     def _load_pipeline_if_ready(self) -> None:
@@ -1526,7 +1527,15 @@ setTimeout(()=>card.classList.remove('citation-target'),1600);}}"""
         if self.is_busy:
             return
         self._set_busy(True, get_text("status_building"))
-        worker = Worker(lambda: build_knowledge_base(self.settings))
+
+        def rebuild() -> BuildReport:
+            return build_knowledge_base(
+                self.settings,
+                on_progress=worker.signals.progress.emit,
+            )
+
+        worker = Worker(rebuild)
+        worker.signals.progress.connect(self._on_build_progress)
         worker.signals.result.connect(self._on_rebuild_done)
         worker.signals.error.connect(lambda message: self._show_error(get_text("error_rebuild_title"), message))
         worker.signals.finished.connect(lambda: self._set_busy(False, get_text("status_ready")))
@@ -1536,6 +1545,12 @@ setTimeout(()=>card.classList.remove('citation-target'),1600);}}"""
         self.chunk_card.set_value(str(report.chunk_count), COLORS["warning"])
         self._load_pipeline_if_ready()
         self._sync_watch_snapshot()
+
+    def _on_build_progress(self, progress: BuildProgress) -> None:
+        suffix = ""
+        if progress.current is not None and progress.total:
+            suffix = f" ({progress.current}/{progress.total})"
+        self.loader_overlay.set_progress_text(progress.message + suffix)
 
     def _start_source_watcher(self) -> None:
         self._sync_watch_snapshot()
@@ -1579,7 +1594,15 @@ setTimeout(()=>card.classList.remove('citation-target'),1600);}}"""
         snapshot_after_change = self._watch_pending_snapshot
         self._set_busy(True, get_text("watch_busy_msg"))
         self.watch_card.set_value(get_text("watch_rebuilding"), COLORS["warning"])
-        worker = Worker(lambda: build_knowledge_base(self.settings))
+
+        def rebuild() -> BuildReport:
+            return build_knowledge_base(
+                self.settings,
+                on_progress=worker.signals.progress.emit,
+            )
+
+        worker = Worker(rebuild)
+        worker.signals.progress.connect(self._on_build_progress)
         worker.signals.result.connect(lambda report: self._on_watch_rebuild_done(report, snapshot_after_change))
         worker.signals.error.connect(lambda message: self._show_error(get_text("watch_rebuild_error"), message))
         worker.signals.finished.connect(lambda: self._set_busy(False, get_text("status_ready")))
