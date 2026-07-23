@@ -398,6 +398,7 @@ from raggg.desktop.sessions import SessionPanel
 from raggg.desktop.widgets import MetricCard, AILoaderOverlay
 
 from raggg.desktop.settings_dialog import LLM_PROVIDERS, VISION_MODELS, SettingsDialog
+from raggg.desktop.script_generator_dialog import ScriptGeneratorDialog
 
 from raggg.desktop.source_viewer import SourceViewer
 
@@ -646,6 +647,10 @@ class WorkbenchViewsMixin(QMainWindow):
         self.import_button = self._button(get_text("import_button"), primary=True)
         self.import_button.clicked.connect(self._import_document)
         layout.addWidget(self.import_button)
+
+        self.script_gen_button = self._button("脚本生成器", primary=True)
+        self.script_gen_button.clicked.connect(self._open_script_generator)
+        layout.addWidget(self.script_gen_button)
 
         self.api_button = self._button(get_text("btn_api_settings"))
         self.api_button.clicked.connect(self._open_api_settings)
@@ -1279,6 +1284,10 @@ setTimeout(()=>card.classList.remove('citation-target'),1600);}}"""
             self._refresh_ui_language()
             QMessageBox.information(self, get_text("settings_title"), get_text("msg_api_saved"))
 
+    def _open_script_generator(self) -> None:
+        dialog = ScriptGeneratorDialog(self.settings, self)
+        dialog.exec()
+
     def _refresh_ui_language(self) -> None:
         """刷新所有 UI 文本以反映当前语言设置"""
         lang = get_language()
@@ -1710,7 +1719,7 @@ setTimeout(()=>card.classList.remove('citation-target'),1600);}}"""
         self.activity_label.setText(text)
         self.activity_label.setVisible(busy)
         self.activity_label.setStyleSheet(f"color: {COLORS['warning' if busy else 'accent']};")
-        for button in (self.ask_button, self.import_button, self.rebuild_index_button):
+        for button in (self.ask_button, self.import_button, self.rebuild_index_button, self.script_gen_button):
             button.setDisabled(busy)
         if not busy and self._watch_rebuild_requested and self._watch_pending_snapshot is not None:
             self._watch_rebuild_requested = False
