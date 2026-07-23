@@ -799,6 +799,10 @@ class WorkbenchViewsMixin(QMainWindow):
         self.rebuild_index_button.clicked.connect(self._rebuild_async)
         layout.addWidget(self.rebuild_index_button)
 
+        self.script_gen_button = self._button("脚本生成器", primary=True)
+        self.script_gen_button.clicked.connect(self._open_script_generator)
+        layout.addWidget(self.script_gen_button)
+
         actions = QHBoxLayout()
         actions.setSpacing(8)
         self.api_button = self._button(get_text("btn_api_settings"))
