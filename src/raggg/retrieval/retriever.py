@@ -11,7 +11,7 @@ from raggg.indexing.vector_store import VectorStore, chunk_retrieval_text
 from raggg.models import Chunk
 
 
-WAVEDA_TERMS = {"waveda", "端口", "边界", "pml", "网格", "仿真", "菜单", "设置", "波端口", "集总端口"}
+WAVEDA_TERMS = {"waveda", "端口", "边界", "pml", "网格", "仿真", "菜单", "设置", "波端口", "集总端口", "脚本", "扫参", "xml", "matlab", "python", "批量", "scan", "sweep", "循环", "重试", "诊断", "退出码", "mesh", "sim", "export"}
 FORMULA_TERMS = {"公式", "方程", "maxwell", "麦克斯韦", "推导", "积分", "微分", "边界条件"}
 DEFINITION_TERMS = {"什么是", "是什么", "定义"}
 GENERIC_TITLES = {

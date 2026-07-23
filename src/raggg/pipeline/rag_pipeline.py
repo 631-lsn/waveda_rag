@@ -64,7 +64,7 @@ class RAGPipeline:
     def ask(
         self,
         question: str,
-        top_k: int = 6,
+        top_k: int = 8,
         conversation_history: ConversationHistory | None = None,
         on_chunk: Callable[[str], None] | None = None,
     ) -> RAGAnswer:

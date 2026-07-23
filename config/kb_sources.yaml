@@ -40,3 +40,9 @@ sources:
     type: markdown
     desc: "多物理场理论笔记（Obsidian vault内容）"
     recursive: true
+
+  # ---- 脚本自动化 ----
+  - path: ./knowledge_base/07_scripting_automation_all/
+    type: markdown
+    desc: "WavEDA脚本生成、批量仿真编排与故障恢复"
+    recursive: true

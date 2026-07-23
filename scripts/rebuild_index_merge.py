@@ -81,6 +81,7 @@ def main() -> None:
         ROOT / "knowledge_base/04_error_cases",
         ROOT / "knowledge_base/05_reference",
         ROOT / "knowledge_base/06_theory_notes",
+        ROOT / "knowledge_base/07_scripting_automation_all",
     ]:
         if source.exists():
             docs = list(iter_markdown_documents(source))
