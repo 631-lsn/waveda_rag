@@ -537,7 +537,7 @@ num_steps = round((var_end - var_start) / var_step) + 1
 param_list = [var_start + i * var_step for i in range(num_steps)]
 num_params = len(param_list)
 
-print(f'扫描变量: {$TSP_VAR_NAME}  ({var_start:.2f}~{var_end:.2f}, {num_params}组)\n')
+print(f'扫描变量: {var_name}  ({var_start:.2f}~{var_end:.2f}, {num_params}组)\n')
 
 all_s11_min = [0.0] * num_params
 all_freq_min = [0.0] * num_params
@@ -553,7 +553,7 @@ all_freq = [None] * num_params
 
 for i, current_val in enumerate(param_list):
 
-    print(f'[{i+1}/{num_params}] {$TSP_VAR_NAME} = {current_val:.2f}')
+    print(f'[{i+1}/{num_params}] {var_name} = {current_val:.2f}')
 
     # ---- Part I: 修改 XML ----
     port_file = os.path.join(work_path, f'port_data_{i+1}.txt')
@@ -635,11 +635,11 @@ fig1, ax1 = plt.subplots(figsize=(10, 6))
 for i in range(num_params):
     if all_freq[i] is not None:
         ax1.plot(all_freq[i], all_s11[i], linewidth=1.5,
-                 label=f'{$TSP_VAR_NAME}={param_list[i]:.2f} (min={all_s11_min[i]:.2f} dB)')
+                 label=f'{var_name}={param_list[i]:.2f} (min={all_s11_min[i]:.2f} dB)')
 ax1.axhline(y=s11_threshold, color='r', linestyle='--')
 ax1.axvline(x=target_freq, color='g', linestyle='--')
 ax1.set_xlabel('Frequency (GHz)'); ax1.set_ylabel('|S11| (dB)')
-ax1.set_title(f'S11 Comparison — {$TSP_VAR_NAME}')
+ax1.set_title(f'S11 Comparison — {var_name}')
 ax1.legend(loc='best', fontsize=8); ax1.grid(True)
 fig1.tight_layout()
 
@@ -715,7 +715,7 @@ template_xml    = [work_path 'template.xml'];
 temp_script_xml = [work_path 'temp_script.xml'];
 
 % ---- 扫描参数 ----
-var_name  = '$TSP_VAR_NAME';
+var_name  = '{var_name}';
 var_start = {var_values[0]};  var_step = {var_values[1] - var_values[0]};  var_end = {var_values[-1]};
 
 % ---- 数据集名称（.tsp 工程里定义的，不区分大小写） ----
@@ -779,7 +779,7 @@ waveda_exe = r'{waveda_exe}'
 template_xml    = os.path.join(work_path, 'template.xml')
 temp_script_xml = os.path.join(work_path, 'temp_script.xml')
 
-var_name  = '$TSP_VAR_NAME'
+var_name  = '{var_name}'
 var_start = {var_values[0]}
 var_step  = {var_values[1] - var_values[0]}
 var_end   = {var_values[-1]}
