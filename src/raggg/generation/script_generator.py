@@ -1,6 +1,7 @@
 """
 WavEDA 脚本自动生成引擎
-从统一 task_config.json 生成可直接运行的 XML / MATLAB / Python / README 文件包。
+基于 07_scripting_automation_all 知识库中已验证的模板代码，
+只替换用户配置区，保持核心逻辑不变。
 """
 from __future__ import annotations
 
@@ -10,93 +11,21 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any
 
-# ── XML 转义 ─────────────────────────────────────────
-_XML_ESCAPE_TABLE = str.maketrans({
-    "&": "&amp;", "<": "&lt;", ">": "&gt;",
-    '"': "&quot;", "'": "&apos;",
-})
+# ═══════════════════════════════════════════════════════════════
+#  已验证的代码模板（来自 knowledge_base/07_.../templates/）
+#  标记 <<<CONFIG_START>>> ... <<<CONFIG_END>>> 为用户配置区
+# ═══════════════════════════════════════════════════════════════
 
-
-def _xml_escape(text: str) -> str:
-    return text.translate(_XML_ESCAPE_TABLE)
-
-
-def _safe_filename(value: float) -> str:
-    """将参数值转为合法文件名，处理负号和小数点。"""
-    s = f"{value:.6g}"
-    return s.replace("-", "m").replace(".", "p")
-
-
-# ── XML 模板生成 ──────────────────────────────────────
-
-def generate_xml_template(config: dict[str, Any]) -> str:
-    """生成单参数外部循环的 XML 模板。"""
-    project_file = _xml_escape(config.get("project_file", "<PROJECT_FILE>"))
-    port_name = _xml_escape(config["results"][0]["name"]) if config.get("results") else "Port_S_data_1"
-    port_file = _xml_escape(config.get("output_dir", "<OUTPUT_DIR>") + "/port_data_<INDEX>.txt")
-
-    lines = [
-        '<?xml version="1.0" encoding="UTF-8"?>',
-        '<script version="1.0">',
-        f'    <command cmdType="load" obj1="project" file="{project_file}" />',
-    ]
-    # 为每个扫描变量生成 modify 占位
-    sweep_vars = config.get("sweep", {}).get("variables", {})
-    for var_name in sweep_vars:
-        lines.append(f'    <command cmdType="modify" obj1="var" name="{var_name}" value="<{var_name}_VALUE>" />')
-
-    lines.extend([
-        '    <command cmdType="delete" obj1="mesh" />',
-        '    <command cmdType="sim" solver="auto" />',
-    ])
-
-    for result in config.get("results", []):
-        rtype = result.get("type", "port")
-        rname = _xml_escape(result["name"])
-        if rtype in ("port",):
-            lines.append(f'    <command cmdType="export" obj1="result" obj2="port" name="{rname}" file="<PORT_FILE>" />')
-        elif rtype in ("observer", "obv"):
-            lines.append(f'    <command cmdType="export" obj1="result" obj2="observer" name="{rname}" file="<OBSERVER_FILE>" />')
-
-    lines.extend([
-        '    <command cmdType="close" obj1="project" />',
-        '    <command cmdType="close" obj1="gui" />',
-        '</script>',
-    ])
-    return "\n".join(lines) + "\n"
-
-
-def _generate_matlab_modify_script(config: dict[str, Any]) -> str:
-    """生成 modify_script.m 子程序（通用，支持多变量和 observer/port 路径替换）。"""
-    sweep_vars = list(config.get("sweep", {}).get("variables", {}).keys())
-    has_observer = any(r.get("type") in ("observer", "obv") for r in config.get("results", []))
-    has_port = any(r.get("type") == "port" for r in config.get("results", []))
-    obv_name = ""
-    port_name = ""
-    for r in config.get("results", []):
-        if r.get("type") in ("observer", "obv") and not obv_name:
-            obv_name = r["name"]
-        if r.get("type") == "port" and not port_name:
-            port_name = r["name"]
-
-    var_modify_lines = []
-    for var_name in sweep_vars:
-        var_modify_lines.append(
-            f'        if strcmpi(cmdNode.getAttribute(\'name\'), \'{var_name}\')\n'
-            f'            cmdNode.setAttribute(\'value\', var_values{{strcmp(var_names, \'{var_name}\')}});\n'
-            f'            ret = ret + 1;\n'
-            f'        end'
-        )
-
-    return f'''%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  modify_script.m — 通用 XML 修改子程序（自动生成，不需要改动）
+# ── modify_script.m（单参数，来自 01_single_param/modify_script_m.md）──
+MODIFY_SCRIPT_M = r"""%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  modify_script.m — 通用子程序（不需要改动）
 %  功能：读模板 XML → 修改变量值 + 输出文件名 → 写出新 XML
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %  输入:
 %     src_file   - 模板 XML 路径
 %     dst_file   - 目标 XML 路径
-%     var_names  - 变量名 cell array
-%     var_values - 变量新值 cell array（字符串）
+%     var_name   - 变量名
+%     var_value  - 变量新值 (字符串)
 %     obv_set    - Observer 数据集名称（不需要则传 ''）
 %     obv_file   - Observer 输出文件路径（不需要则传 ''）
 %     port_set   - Port S参数数据集名称
@@ -105,7 +34,7 @@ def _generate_matlab_modify_script(config: dict[str, Any]) -> str:
 %     ret        - 修改成功的变量个数
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function ret = modify_script(src_file, dst_file, var_names, var_values, ...
+function ret = modify_script(src_file, dst_file, var_name, var_value, ...
                               obv_set, obv_file, port_set, port_file)
     ret = 0;
     xmlTree = xmlread(src_file);
@@ -123,184 +52,98 @@ function ret = modify_script(src_file, dst_file, var_names, var_values, ...
 
         % modify:var → 修改变量值
         if strcmpi(cmdType, 'modify') && strcmpi(obj1Type, 'var')
-{chr(10).join(var_modify_lines)}
+            if strcmpi(cmdNode.getAttribute('name'), var_name)
+                cmdNode.setAttribute('value', var_value);
+                ret = ret + 1;
+            end
         end
 
         % export:result → 修改输出文件路径
         if strcmpi(cmdType, 'export') && strcmpi(obj1Type, 'result')
             nodeName = cmdNode.getAttribute('name');
-{_gen_matlab_export_block(has_observer, has_port, obv_name, port_name)}
+            if strcmpi(obj2Type, 'obv') || strcmpi(obj2Type, 'observer')
+                if strcmpi(nodeName, obv_set)
+                    cmdNode.setAttribute('file', obv_file);
+                end
+            end
+            if strcmpi(obj2Type, 'port')
+                if strcmpi(nodeName, port_set)
+                    cmdNode.setAttribute('file', port_file);
+                end
+            end
         end
     end
     xmlwrite(dst_file, xmlTree);
 end
-'''
+"""
 
-
-def _gen_matlab_export_block(has_observer: bool, has_port: bool, obv_name: str, port_name: str) -> str:
-    lines = []
-    if has_observer:
-        lines.append(f'            if strcmpi(obj2Type, \'obv\') || strcmpi(obj2Type, \'observer\')')
-        lines.append(f'                if strcmpi(nodeName, \'{obv_name}\')')
-        lines.append( '                    cmdNode.setAttribute(\'file\', obv_file);')
-        lines.append( '                end')
-        lines.append( '            end')
-    if has_port:
-        lines.append(f'            if strcmpi(obj2Type, \'port\')')
-        lines.append(f'                if strcmpi(nodeName, \'{port_name}\')')
-        lines.append( '                    cmdNode.setAttribute(\'file\', port_file);')
-        lines.append( '                end')
-        lines.append( '            end')
-    return "\n".join(lines)
-
-
-def generate_matlab_sweep(config: dict[str, Any]) -> str:
-    """生成完整的 MATLAB 单参数扫参主控程序。"""
-    work_path = config.get("output_dir", "<OUTPUT_DIR>")
-    waveda_exe = config.get("waveda_exe", '"C:\\Program Files\\WavEDA\\WavEDA.exe"')
-    sweep_vars = list(config.get("sweep", {}).get("variables", {}).items())
-    if not sweep_vars:
-        return "% ERROR: No sweep variables defined\n"
-
-    var_name = sweep_vars[0][0]
-    var_values = sweep_vars[0][1]
-    var_start = var_values[0]
-    var_end = var_values[-1]
-    var_step = var_values[1] - var_values[0] if len(var_values) > 1 else 1
-
-    has_observer = any(r.get("type") in ("observer", "obv") for r in config.get("results", []))
-    obv_name = ""
-    port_name = "Port_S_data_1"
-    for r in config.get("results", []):
-        if r.get("type") in ("observer", "obv") and not obv_name:
-            obv_name = r["name"]
-        if r.get("type") == "port" and port_name == "Port_S_data_1":
-            port_name = r["name"]
-
-    target_freq = config.get("target_freq", 2.45)
-    s11_threshold = config.get("s11_threshold", -10)
-
-    # Observer block
-    observer_init = ""
-    observer_load = ""
-    observer_plot = ""
-    observer_summary = ""
-    if has_observer:
-        observer_init = "all_e_max = zeros(num_params,1); all_e_max_time = zeros(num_params,1);\nall_obv = {};"
-        observer_load = '''
-    % --- Observer ---
-    if exist(obv_file, 'file')
-        o = load(obv_file); t_vec = o(:,1); e_vec = o(:,2); all_obv{i} = o;
-        [all_e_max(i), e_idx] = max(abs(e_vec));
-        all_e_max_time(i) = t_vec(e_idx);
-    else t_vec=[]; e_vec=[];
-    end'''
-        observer_plot = '''
-    if ~isempty(t_vec)
-        subplot(2, num_params, i); plot(t_vec, e_vec, 'b-'); hold on;
-        plot(all_e_max_time(i), all_e_max(i)*sign(e_vec(e_idx)), 'ro', 'MarkerSize',6,'MarkerFaceColor','r');
-        title(sprintf('%s=%.2f',var_name,current_val),'FontSize',9); xlabel('Time');
-    end'''
-        observer_summary = "% E场指标"
-
-    modify_script = _generate_matlab_modify_script(config)
-
-    # Dual param mode
-    is_dual = len(sweep_vars) == 2
-    if is_dual:
-        return _generate_matlab_dual_sweep(config)
-
-    return f'''%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  sweep_main.m — WavEDA 单参数扫参 (自动生成)
-%  生成时间: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-%  使用前只改下方【用户配置区】（已根据你的设置预填）
+# ── 单参数 sweep_main.m（来自 01_single_param/sweep_main_m.md）──
+SWEEP_MAIN_M = r"""%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  sweep_main.m — WavEDA 单参数扫参 + S参数 & Observer 双数据分析
+%
+%  功能：自动扫参数 → 算 S11 + E场指标 → 画汇总图 → 导出报告
+%  使用前只改下方【用户配置区】
+%  生成时间: $GEN_TIME
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 clear; clc; close all;
 
-fprintf('===============================================================\\n');
-fprintf('    WavEDA 单参数扫参\\n');
-fprintf('===============================================================\\n\\n');
+fprintf('===============================================================\n');
+fprintf('    WavEDA 单参数扫参 — S参数 + Observer 分析\n');
+fprintf('===============================================================\n\n');
 
 
 %% ╔══════════════════════════════════════════════════════════════╗
-%% ║                    【用户配置区】 改这里！                      ║
+%% ║                    【用户配置区】 改这里！                     ║
 %% ╚══════════════════════════════════════════════════════════════╝
-
-% ---- 路径 ----
-work_path  = '{work_path}\\';
-waveda_exe = '{waveda_exe}';
-
-waveda_exe_clean = strrep(waveda_exe, '"', '');
-[waveda_dir, waveda_name, waveda_ext] = fileparts(waveda_exe_clean);
-waveda_cmd = [waveda_name waveda_ext];
-
-% ---- 文件 ----
-template_xml    = [work_path 'template.xml'];
-temp_script_xml = [work_path 'temp_script.xml'];
-
-% ---- 扫描参数 ----
-var_name  = '{var_name}';
-var_start = {var_start};  var_step = {var_step};  var_end = {var_end};
-
-% ---- 数据集名称（.tsp 工程里定义的，不区分大小写） ----
-obv_dataset_name  = '{obv_name}';    % 不需要Observer则传 ''
-port_dataset_name = '{port_name}';
-
-% ---- S参数分析目标 ----
-target_freq   = {target_freq};   % 关心的频率 (GHz)
-s11_threshold = {s11_threshold};    % 带宽判定门限 (dB)
-
-
+$USER_CONFIG
 %% ╔══════════════════════════════════════════════════════════════╗
 %% ║                    初始化                                    ║
 %% ╚══════════════════════════════════════════════════════════════╝
 
 param_list = var_start : var_step : var_end;
 num_params = length(param_list);
-fprintf('扫描变量: %s  (%.2f~%.2f, %d组)\\n\\n', var_name, var_start, var_end, num_params);
+fprintf('扫描变量: %s  (%.2f~%.2f, %d组)\n\n', var_name, var_start, var_end, num_params);
 
 % S参数存储
 all_s11_min = zeros(num_params,1); all_freq_min = zeros(num_params,1);
 all_bw = nan(num_params,1); all_center_f = nan(num_params,1);
 all_s11_target = zeros(num_params,1);
 all_s11 = {{}}; all_freq = {{}};
-{observer_init}
-
+$OBS_INIT
 
 %% ╔══════════════════════════════════════════════════════════════╗
 %% ║              预热跑（解决第一次启动慢/易崩的问题）             ║
 %% ╚══════════════════════════════════════════════════════════════╝
 
-fprintf('>>> 预热跑: 启动 WavEDA 初始化引擎...\\n');
+fprintf('>>> 预热跑: 启动 WavEDA 初始化引擎...\n');
 port_warmup = [work_path 'port_warmup.txt'];
 
-modify_script(template_xml, temp_script_xml, ...
-              {{'{var_name}'}}, {{num2str(param_list(1))}}, ...
+modify_script(template_xml, temp_script_xml, var_name, num2str(param_list(1)), ...
               obv_dataset_name, [work_path 'obv_warmup.txt'], ...
               port_dataset_name, port_warmup);
 
 bat_file = [work_path 'run_waveda.bat'];
 fid = fopen(bat_file, 'w');
-fprintf(fid, 'cd /d "%s"\\r\\n', waveda_dir);
-fprintf(fid, '%s "script=%s"\\r\\n', waveda_cmd, temp_script_xml);
+fprintf(fid, 'cd /d "%s"\r\n', waveda_dir);
+fprintf(fid, '%s "script=%s"\r\n', waveda_cmd, temp_script_xml);
 fclose(fid);
 
 max_retries = 5;
 warm_ok = false;
 for retry = 1:max_retries
     tic; system(bat_file); elapsed = toc;
-    fprintf('          预热尝试 %d/%d, 耗时: %.1f 秒\\n', retry, max_retries, elapsed);
+    fprintf('          预热尝试 %d/%d, 耗时: %.1f 秒\n', retry, max_retries, elapsed);
     pause(5);
     if exist(port_warmup, 'file') == 2
-        fprintf('          ✅ 预热成功\\n\\n');
+        fprintf('          ✅ 预热成功\n\n');
         warm_ok = true;
         break;
     else
-        fprintf('          ⚠ 预热失败，重试...\\n');
+        fprintf('          ⚠ 预热失败，重试...\n');
     end
 end
-if ~warm_ok; fprintf('          ❌ 预热跑 %d 次均失败，脚本终止\\n', max_retries); return; end
+if ~warm_ok; fprintf('          ❌ 预热跑 %d 次均失败，脚本终止\n', max_retries); return; end
 
 
 %% ╔══════════════════════════════════════════════════════════════╗
@@ -309,45 +152,44 @@ if ~warm_ok; fprintf('          ❌ 预热跑 %d 次均失败，脚本终止\\n'
 
 for i = 1:num_params
     current_val = param_list(i);
-    fprintf('─────────────────────────────────────────────\\n');
-    fprintf('[%d/%d] %s = %.2f\\n', i, num_params, var_name, current_val);
+    fprintf('─────────────────────────────────────────────\n');
+    fprintf('[%d/%d] %s = %.2f\n', i, num_params, var_name, current_val);
 
     % ===== Part I: 生成脚本 =====
-    fprintf('  [Part I] 生成脚本...\\n');
-    obv_file  = sprintf('%sobv_data_%%d.txt',  work_path, i);
-    port_file = sprintf('%sport_data_%%d.txt', work_path, i);
+    fprintf('  [Part I] 生成脚本...\n');
+    obv_file  = sprintf('%sobv_data_%d.txt',  work_path, i);
+    port_file = sprintf('%sport_data_%d.txt', work_path, i);
 
-    ret = modify_script(template_xml, temp_script_xml, ...
-                         {{'{var_name}'}}, {{num2str(current_val)}}, ...
+    ret = modify_script(template_xml, temp_script_xml, var_name, num2str(current_val), ...
                          obv_dataset_name, obv_file, port_dataset_name, port_file);
-    fprintf('          修改变量数: %%d\\n', ret);
+    fprintf('          修改变量数: %d\n', ret);
 
     % ===== Part II: 运行仿真 =====
-    fprintf('  [Part II] 运行仿真...\\n');
+    fprintf('  [Part II] 运行仿真...\n');
 
     fid = fopen(bat_file, 'w');
-    fprintf(fid, 'cd /d "%s"\\r\\n', waveda_dir);
-    fprintf(fid, '%s "script=%s"\\r\\n', waveda_cmd, temp_script_xml);
+    fprintf(fid, 'cd /d "%s"\r\n', waveda_dir);
+    fprintf(fid, '%s "script=%s"\r\n', waveda_cmd, temp_script_xml);
     fclose(fid);
 
     max_retries = 3;
     success = false;
     for retry = 1:max_retries
         tic; [status, cmdout] = system(bat_file); elapsed = toc;
-        fprintf('          尝试 %d/%d, 耗时: %.1f 秒\\n', retry, max_retries, elapsed);
+        fprintf('          尝试 %d/%d, 耗时: %.1f 秒\n', retry, max_retries, elapsed);
         pause(5);
         if exist(port_file, 'file') == 2
-            fprintf('          ✅ 数据文件已生成\\n');
+            fprintf('          ✅ 数据文件已生成\n');
             success = true;
             break;
         else
-            fprintf('          ⚠ 文件未生成，重试...\\n');
+            fprintf('          ⚠ 文件未生成，重试...\n');
         end
     end
-    if ~success; fprintf('          ❌ 重试失败\\n'); continue; end
+    if ~success; fprintf('          ❌ 重试失败\n'); continue; end
 
     % ===== Part III: 读数据 & 算指标 =====
-    fprintf('  [Part III] 提取数据...\\n');
+    fprintf('  [Part III] 提取数据...\n');
 
     % --- S参数 ---
     if exist(port_file, 'file')
@@ -365,33 +207,33 @@ for i = 1:num_params
 
     [~, t_idx] = min(abs(freq - target_freq));
     all_s11_target(i) = s11_db(t_idx);
-{observer_load}
+$OBS_LOAD
 
     % 打印
     fprintf('          S11: min=%.3fdB @%.4fGHz', all_s11_min(i), all_freq_min(i));
     if ~isnan(all_bw(i)); fprintf('  %ddB BW=%.4fGHz', s11_threshold, all_bw(i));
     else fprintf('  BW=未达到'); end
-    fprintf('  @%.2fGHz=%.2fdB\\n', target_freq, all_s11_target(i));
-    if ~isempty(e_vec); fprintf('          E场: max|E|=%.4f @t=%.4f\\n', all_e_max(i), all_e_max_time(i)); end
+    fprintf('  @%.2fGHz=%.2fdB\n', target_freq, all_s11_target(i));
+$OBS_PRINT
 
     % --- 单组图 ---
     figure(1);
-{observer_plot}
+$OBS_PLOT_SINGLE
     subplot(2, num_params, num_params+i);
     plot(freq, s11_db, 'b-'); hold on;
     plot(all_freq_min(i), all_s11_min(i), 'ro', 'MarkerSize',6,'MarkerFaceColor','r');
     yline(s11_threshold,'r--'); xline(target_freq,'g--');
     title(sprintf('%s=%.2f',var_name,current_val),'FontSize',9); xlabel('Freq(GHz)');
-    fprintf('\\n');
+    fprintf('\n');
 end
 
 
 %% ╔══════════════════════════════════════════════════════════════╗
-%% ║           汇总图表                                           ║
+%% ║           汇总图表                                            ║
 %% ╚══════════════════════════════════════════════════════════════╝
 
-fprintf('===============================================================\\n');
-fprintf('    生成汇总图表...\\n\\n');
+fprintf('===============================================================\n');
+fprintf('    生成汇总图表...\n\n');
 
 % --- 图2: 全部S11叠加 ---
 figure(2); clf; set(gcf,'Position',[50 50 900 500]); hold on;
@@ -404,23 +246,26 @@ for i = 1:num_params
 end
 yline(s11_threshold,'r--'); xline(target_freq,'g--');
 if ~isempty(v_leg); legend(v_leg,'Location','best','FontSize',8); end
-xlabel('频率(GHz)'); ylabel('|S_{{11}}|(dB)'); title(sprintf('S_{{11}} 对比 — %s',var_name)); grid on;
+xlabel('频率(GHz)'); ylabel('|S_{11}|(dB)'); title(sprintf('S_{11} 对比 — %s',var_name)); grid on;
+$OBS_PLOT_OVERLAY
 
-% --- 图3: 指标面板 ---
+% --- 图4: 指标面板 ---
 figure(4); clf; set(gcf,'Position',[150 150 900 700]);
 subplot(2,4,1); plot(param_list,all_s11_min,'bo-','LineWidth',1.5,'MarkerSize',8,'MarkerFaceColor','b');
-xlabel(var_name); ylabel('Min|S11|(dB)'); title('最小S11'); grid on;
+xlabel(var_name); ylabel('Min|S11|(dB)'); title('S: 最小S11'); grid on;
 subplot(2,4,2); plot(param_list,all_freq_min,'ro-','LineWidth',1.5,'MarkerSize',8,'MarkerFaceColor','r');
-xlabel(var_name); ylabel('Freq(GHz)'); title('谐振频率'); grid on;
+xlabel(var_name); ylabel('Freq(GHz)'); title('S: 谐振频率'); grid on;
 subplot(2,4,3); v=~isnan(all_bw); if any(v); plot(param_list(v),all_bw(v),'go-','LineWidth',1.5,'MarkerSize',8,'MarkerFaceColor','g'); end
-xlabel(var_name); ylabel('BW(GHz)'); title(sprintf('%ddB带宽',s11_threshold)); grid on;
+xlabel(var_name); ylabel('BW(GHz)'); title(sprintf('S: %ddB带宽',s11_threshold)); grid on;
 subplot(2,4,4); plot(param_list,all_s11_target,'co-','LineWidth',1.5,'MarkerSize',8,'MarkerFaceColor','c'); yline(s11_threshold,'r--');
-xlabel(var_name); ylabel('S11(dB)'); title(sprintf('@%.2fGHz',target_freq)); grid on;
+xlabel(var_name); ylabel('S11(dB)'); title(sprintf('S: @%.2fGHz',target_freq)); grid on;
+$OBS_PANEL
 subplot(2,4,[7 8]); axis off;
-[~,bi]=min(all_s11_min);
+[~,bi]=min(all_s11_min); [~,be]=max(all_e_max);
 txt={{'====== 扫参汇总 ======', ...
     sprintf('变量:%s (%.2f~%.2f,%d组)',var_name,var_start,var_end,num_params),'', ...
-    sprintf('★ S最优:%s=%.2f  min|S11|=%.3fdB @%.4fGHz',var_name,param_list(bi),all_s11_min(bi),all_freq_min(bi)),''}};
+    sprintf('★ S最优:%s=%.2f  min|S11|=%.3fdB @%.4fGHz',var_name,param_list(bi),all_s11_min(bi),all_freq_min(bi)), ...
+    sprintf('★ E最优:%s=%.2f  max|E|=%.4f @t=%.4f',var_name,param_list(be),all_e_max(be),all_e_max_time(be)),''}};
 if ~isnan(all_bw(bi)); txt{{end+1}}=sprintf('  (S最优) %ddB BW=%.4fGHz',s11_threshold,all_bw(bi)); end
 txt{{end+1}}=sprintf('  (S最优) S11@%.2fGHz=%.3fdB',target_freq,all_s11_target(bi));
 text(0,0.5,txt,'FontSize',10,'VerticalAlignment','middle','FontName','FixedWidth');
@@ -431,253 +276,268 @@ text(0,0.5,txt,'FontSize',10,'VerticalAlignment','middle','FontName','FixedWidth
 %% ╚══════════════════════════════════════════════════════════════╝
 
 sf=[work_path 'sweep_summary.txt']; fid=fopen(sf,'w');
-fprintf(fid,'=====================================================\\n');
-fprintf(fid,'  WavEDA 单参数扫参 汇总报告\\n  %s\\n',datestr(now));
-fprintf(fid,'=====================================================\\n\\n');
-fprintf(fid,'  变量:%s (%.2f~%.2f, %d组)\\n\\n',var_name,var_start,var_end,num_params);
-fprintf(fid,'  %-8s | %-10s | %-12s | %-10s | %-10s\\n', ...
-    var_name,'Min|S11|','Freq@Min','BW','S11@Tgt');
-fprintf(fid,'  %s\\n',repmat('-',1,75));
+fprintf(fid,'=====================================================\n');
+fprintf(fid,'  WavEDA 单参数扫参 汇总报告\n  %s\n',datestr(now));
+fprintf(fid,'=====================================================\n\n');
+fprintf(fid,'  变量:%s (%.2f~%.2f, %d组)\n\n',var_name,var_start,var_end,num_params);
+fprintf(fid,'  %-8s | %-10s | %-12s | %-10s | %-10s | %-10s | %-10s\n', ...
+    var_name,'Min|S11|','Freq@Min','BW','S11@Tgt','|E|max','E@Time');
+fprintf(fid,'  %s\n',repmat('-',1,95));
 for i=1:num_params
     bw_s='N/A'; if ~isnan(all_bw(i)); bw_s=sprintf('%.4f',all_bw(i)); end
-    fprintf(fid,'  %-8.2f | %-10.3f | %-12.4f | %-10s | %-10.3f\\n', ...
-        param_list(i),all_s11_min(i),all_freq_min(i),bw_s,all_s11_target(i));
+    fprintf(fid,'  %-8.2f | %-10.3f | %-12.4f | %-10s | %-10.3f | %-10.4f | %-10.4f\n', ...
+        param_list(i),all_s11_min(i),all_freq_min(i),bw_s,all_s11_target(i),all_e_max(i),all_e_max_time(i));
 end
 [~,bi]=min(all_s11_min);
-fprintf(fid,'\\n  ★ Best(by S11): %s=%.2f\\n',var_name,param_list(bi));
+fprintf(fid,'\n  ★ Best(by S11): %s=%.2f\n',var_name,param_list(bi));
 fclose(fid);
-fprintf('\\n✅ 汇总表: %s\\n',sf);
-fprintf('===============================================================\\n    完成！\\n===============================================================\\n');
-'''
+fprintf('\n✅ 汇总表: %s\n',sf);
+fprintf('===============================================================\n    完成！\n===============================================================\n');
+"""
 
+# ── modify_script_2var.m（双参数，来自 02_dual_param/modify_script_2var_m.md）──
+MODIFY_SCRIPT_2VAR_M = r"""%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  modify_script_2var.m — 通用子程序（不需要改动）
+%  功能：读模板 XML → 修改两个变量值 + Port输出文件名 → 写出新 XML
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+function ret = modify_script_2var(src, dst, v1n, v1v, v2n, v2v, pset, pfile)
+    ret = 0;
+    t = xmlread(src); r = t.item(0);
+    for c = 1:r.getChildNodes.getLength
+        n = r.getChildNodes.item(c-1);
+        if ~n.hasAttributes; continue; end
+        ct = n.getAttribute('cmdType'); o1 = n.getAttribute('obj1'); o2 = n.getAttribute('obj2');
+        if strcmpi(ct,'modify') && strcmpi(o1,'var')
+            nn = n.getAttribute('name');
+            if strcmpi(nn,v1n); n.setAttribute('value',v1v); ret=ret+1; end
+            if strcmpi(nn,v2n); n.setAttribute('value',v2v); ret=ret+1; end
+        end
+        if strcmpi(ct,'export') && strcmpi(o1,'result') && strcmpi(o2,'port')
+            if strcmpi(n.getAttribute('name'),pset); n.setAttribute('file',pfile); end
+        end
+    end
+    xmlwrite(dst,t);
+end
+"""
 
-def _generate_matlab_dual_sweep(config: dict[str, Any]) -> str:
-    """生成双参数 MATLAB 扫参程序。"""
-    work_path = config.get("output_dir", "<OUTPUT_DIR>")
-    waveda_exe = config.get("waveda_exe", '"C:\\Program Files\\WavEDA\\WavEDA.exe"')
-    sweep_vars = list(config.get("sweep", {}).get("variables", {}).items())
-    var1_name, var1_vals = sweep_vars[0]
-    var2_name, var2_vals = sweep_vars[1]
-    n1, n2 = len(var1_vals), len(var2_vals)
-    port_name = config["results"][0]["name"] if config.get("results") else "Port_S_data_1"
-    target_freq = config.get("target_freq", 2.45)
-    s11_threshold = config.get("s11_threshold", -10)
-
-    return f'''%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%  sweep_main_2var.m — WavEDA 双参数扫参 (自动生成)
-%  生成时间: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-%  总组合: {n1}×{n2}={n1 * n2}
+# ── 双参数 sweep_main_2var.m（来自 02_dual_param/sweep_main_2var_m.md）──
+SWEEP_MAIN_2VAR_M = r"""%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%  sweep_main_2var.m — WavEDA 双参数扫参（嵌套循环遍历所有组合）
+%
+%  功能：两变量嵌套循环 → S参数分析 → 1D对比 + 2D热力图 + 3D曲面
+%  使用前只改下方【用户配置区】
+%  生成时间: $GEN_TIME
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 clear; clc; close all;
 
-fprintf('===============================================================\\n');
-fprintf('    WavEDA 双参数扫参\\n');
-fprintf('===============================================================\\n\\n');
+fprintf('===============================================================\n');
+fprintf('    WavEDA 双参数扫参\n');
+fprintf('===============================================================\n\n');
 
-% ---- 路径 ----
-work_path  = '{work_path}\\';
-waveda_exe = '{waveda_exe}';
 
-waveda_exe_clean = strrep(waveda_exe, '"', '');
-[waveda_dir, waveda_name, waveda_ext] = fileparts(waveda_exe_clean);
-waveda_cmd = [waveda_name waveda_ext];
+%% ╔══════════════════════════════════════════════════════════════╗
+%% ║                    【用户配置区】 改这里！                     ║
+%% ╚══════════════════════════════════════════════════════════════╝
+$USER_CONFIG
+%% ╔══════════════════════════════════════════════════════════════╗
+%% ║                    初始化                                    ║
+%% ╚══════════════════════════════════════════════════════════════╝
 
-template_xml    = [work_path 'template.xml'];
-temp_script_xml = [work_path 'temp_script.xml'];
+p1 = var1_start:var1_step:var1_end; p2 = var2_start:var2_step:var2_end;
+n1=length(p1); n2=length(p2); N=n1*n2;
+fprintf('变量1:%s (%.2f~%.2f,%d组)\n',var1_name,var1_start,var1_end,n1);
+fprintf('变量2:%s (%.2f~%.2f,%d组)\n',var2_name,var2_start,var2_end,n2);
+fprintf('总组合:%d×%d=%d\n\n',n1,n2,N);
 
-var1_name = '{var1_name}';
-var2_name = '{var2_name}';
-p1 = [{', '.join(str(v) for v in var1_vals)}];
-p2 = [{', '.join(str(v) for v in var2_vals)}];
-n1 = length(p1); n2 = length(p2); N = n1 * n2;
+all_s11_min=zeros(n1,n2); all_freq_min=zeros(n1,n2);
+all_bw=nan(n1,n2); all_center_f=nan(n1,n2); all_s11_target=zeros(n1,n2);
+all_s11=cell(n1,n2); all_freq=cell(n1,n2);
 
-port_dataset_name = '{port_name}';
-target_freq = {target_freq};
-s11_threshold = {s11_threshold};
 
-fprintf('变量1:%s (%d组)\\n', var1_name, n1);
-fprintf('变量2:%s (%d组)\\n', var2_name, n2);
-fprintf('总组合:%d×%d=%d\\n\\n', n1, n2, N);
+%% ╔══════════════════════════════════════════════════════════════╗
+%% ║              预热跑                                          ║
+%% ╚══════════════════════════════════════════════════════════════╝
 
-all_s11_min = zeros(n1,n2); all_freq_min = zeros(n1,n2);
-all_bw = nan(n1,n2); all_s11_target = zeros(n1,n2);
-all_s11 = cell(n1,n2); all_freq = cell(n1,n2);
+fprintf('>>> 预热跑...\n');
+pw=[work_path 'port_warmup.txt'];
+modify_script_2var(template_xml,temp_script_xml,var1_name,num2str(p1(1)),var2_name,num2str(p2(1)),port_dataset_name,pw);
 
-% 预热跑
-fprintf('>>> 预热跑...\\n');
-pw = [work_path 'port_warmup.txt'];
-modify_script(template_xml, temp_script_xml, ...
-              {{var1_name, var2_name}}, {{num2str(p1(1)), num2str(p2(1))}}, ...
-              '', '', port_dataset_name, pw);
+bf=[work_path 'run_waveda.bat']; fid=fopen(bf,'w');
+fprintf(fid,'cd /d "%s"\r\n%s "script=%s"\r\n',waveda_dir,waveda_cmd,temp_script_xml); fclose(fid);
 
-bf = [work_path 'run_waveda.bat'];
-fid = fopen(bf, 'w');
-fprintf(fid, 'cd /d "%s"\\r\\n%s "script=%s"\\r\\n', waveda_dir, waveda_cmd, temp_script_xml);
-fclose(fid);
-
-wo = false;
-for r = 1:5
-    tic; system(bf); elapsed = toc;
-    fprintf('          预热尝试 %d/5, 耗时: %.1f 秒\\n', r, elapsed); pause(5);
-    if exist(pw, 'file') == 2; fprintf('          ✅ 预热成功\\n\\n'); wo = true; break;
-    else fprintf('          ⚠ 预热失败，重试...\\n'); end
+wo=false;
+for r=1:5
+    tic; system(bf); elapsed=toc;
+    fprintf('          预热尝试 %d/5, 耗时: %.1f 秒\n',r,elapsed); pause(5);
+    if exist(pw,'file')==2; fprintf('          ✅ 预热成功\n\n'); wo=true; break;
+    else fprintf('          ⚠ 预热失败，重试...\n'); end
 end
-if ~wo; fprintf('          ❌ 预热失败，脚本终止\\n'); return; end
+if ~wo; fprintf('          ❌ 预热失败，脚本终止\n'); return; end
 
-% 双参数扫参主循环
-k = 0;
-for i = 1:n1
-  for j = 1:n2
-    k = k + 1; v1 = p1(i); v2 = p2(j);
-    fprintf('─────────────────────────────────────────────\\n');
-    fprintf('[%d/%d] %s=%.2f, %s=%.2f\\n', k, N, var1_name, v1, var2_name, v2);
 
-    pf = sprintf('%sport_%%d_%%d.txt', work_path, i, j);
-    ret = modify_script(template_xml, temp_script_xml, ...
-                         {{var1_name, var2_name}}, {{num2str(v1), num2str(v2)}}, ...
-                         '', '', port_dataset_name, pf);
-    fprintf('          修改变量数: %d\\n', ret);
+%% ╔══════════════════════════════════════════════════════════════╗
+%% ║              双参数扫参主循环（嵌套）                          ║
+%% ╚══════════════════════════════════════════════════════════════╝
 
-    fid = fopen(bf, 'w');
-    fprintf(fid, 'cd /d "%s"\\r\\n%s "script=%s"\\r\\n', waveda_dir, waveda_cmd, temp_script_xml);
-    fclose(fid);
+k=0;
+for i=1:n1
+  for j=1:n2
+    k=k+1; v1=p1(i); v2=p2(j);
+    fprintf('─────────────────────────────────────────────\n');
+    fprintf('[%d/%d] %s=%.2f, %s=%.2f\n',k,N,var1_name,v1,var2_name,v2);
 
-    ok = false;
-    for r = 1:3
-        tic; system(bf); elapsed = toc;
-        fprintf('          尝试 %d/3, 耗时: %.1f 秒\\n', r, elapsed); pause(5);
-        if exist(pf, 'file') == 2; fprintf('          ✅ 数据文件已生成\\n'); ok = true; break;
-        else fprintf('          ⚠ 文件未生成，重试...\\n'); end
+    % Part I
+    fprintf('  [Part I] 生成脚本...\n');
+    pf=sprintf('%sport_%d_%d.txt',work_path,i,j);
+    ret=modify_script_2var(template_xml,temp_script_xml,var1_name,num2str(v1),var2_name,num2str(v2),port_dataset_name,pf);
+    fprintf('          修改变量数:%d\n',ret);
+
+    % Part II
+    fprintf('  [Part II] 运行仿真...\n');
+    fid=fopen(bf,'w'); fprintf(fid,'cd /d "%s"\r\n%s "script=%s"\r\n',waveda_dir,waveda_cmd,temp_script_xml); fclose(fid);
+
+    ok=false;
+    for r=1:3
+        tic; system(bf); elapsed=toc;
+        fprintf('          尝试 %d/3, 耗时: %.1f 秒\n',r,elapsed); pause(5);
+        if exist(pf,'file')==2; fprintf('          ✅ 数据文件已生成\n'); ok=true; break;
+        else fprintf('          ⚠ 文件未生成，重试...\n'); end
     end
-    if ~ok; fprintf('          ❌ 重试失败\\n'); continue; end
+    if ~ok; fprintf('          ❌ 重试失败\n'); continue; end
 
-    if exist(pf, 'file')
-        d = load(pf); freq = d(:,1); s11 = d(:,2);
-        all_freq{{i,j}} = freq; all_s11{{i,j}} = s11;
+    % Part III
+    fprintf('  [Part III] 提取数据...\n');
+    if exist(pf,'file')
+        d=load(pf); freq=d(:,1); s11=d(:,2); all_freq{{i,j}}=freq; all_s11{{i,j}}=s11;
     else continue; end
 
-    [all_s11_min(i,j), idx] = min(s11); all_freq_min(i,j) = freq(idx);
-    bi = find(s11 <= s11_threshold);
-    if ~isempty(bi) && length(bi) >= 2
-        all_bw(i,j) = freq(bi(end)) - freq(bi(1));
-    end
-    [~, ti] = min(abs(freq - target_freq));
-    all_s11_target(i,j) = s11(ti);
+    [all_s11_min(i,j),idx]=min(s11); all_freq_min(i,j)=freq(idx);
+    bi=find(s11<=s11_threshold);
+    if ~isempty(bi)&&length(bi)>=2; all_bw(i,j)=freq(bi(end))-freq(bi(1)); all_center_f(i,j)=(freq(bi(1))+freq(bi(end)))/2; end
+    [~,ti]=min(abs(freq-target_freq)); all_s11_target(i,j)=s11(ti);
 
-    fprintf('          最小S11:%.3fdB @%.4fGHz\\n', all_s11_min(i,j), all_freq_min(i,j));
-    if ~isnan(all_bw(i,j)); fprintf('          %ddB BW=%.4fGHz\\n', s11_threshold, all_bw(i,j));
-    else fprintf('          BW=未达到\\n'); end
+    fprintf('          最小S11:%.3fdB @%.4fGHz',all_s11_min(i,j),all_freq_min(i,j));
+    if ~isnan(all_bw(i,j)); fprintf('  %ddB BW=%.4fGHz\n',s11_threshold,all_bw(i,j));
+    else fprintf('  BW=未达到\n'); end
+    fprintf('\n');
   end
 end
 
-% 汇总图
-fprintf('===============================================================\\n    生成汇总图表...\\n\\n');
-figure(1); clf; set(gcf, 'Position', [50 50 900 600]); hold on;
-C = lines(N); vl = {{}}; ci = 0;
-for i = 1:n1; for j = 1:n2; if ~isempty(all_freq{{i,j}})
-    ci = ci + 1; plot(all_freq{{i,j}}, all_s11{{i,j}}, 'LineWidth', 1.5, 'Color', C(ci,:));
-    vl{{end+1}} = sprintf('%s=%.2f %s=%.2f', var1_name, p1(i), var2_name, p2(j));
+
+%% ╔══════════════════════════════════════════════════════════════╗
+%% ║           图1: 全部S11叠加                                   ║
+%% ╚══════════════════════════════════════════════════════════════╝
+
+fprintf('===============================================================\n    生成汇总图表...\n\n');
+figure(1);clf;set(gcf,'Position',[50 50 900 600]);hold on;
+C=lines(N); vl={{}}; ci=0;
+for i=1:n1 for j=1:n2; if ~isempty(all_freq{{i,j}})
+    ci=ci+1; plot(all_freq{{i,j}},all_s11{{i,j}},'LineWidth',1.5,'Color',C(ci,:));
+    vl{{end+1}}=sprintf('%s=%.2f %s=%.2f',var1_name,p1(i),var2_name,p2(j));
 end; end; end
-yline(s11_threshold, 'r--'); xline(target_freq, 'g--');
-if ~isempty(vl); legend(vl, 'Location', 'bestoutside', 'FontSize', 7); end
-xlabel('Freq(GHz)'); ylabel('|S11|(dB)');
-title(sprintf('S11对比 — %s×%s(%d组)', var1_name, var2_name, N)); grid on;
+yline(s11_threshold,'r--'); xline(target_freq,'g--');
+if ~isempty(vl); legend(vl,'Location','bestoutside','FontSize',7); end
+xlabel('Freq(GHz)');ylabel('|S11|(dB)');title(sprintf('S11对比 — %s×%s(%d组)',var1_name,var2_name,N));grid on;
 
-% 2D热力图
-figure(2); clf; set(gcf, 'Position', [100 100 1000 750]);
-subplot(2,2,1); imagesc(p2, p1, all_s11_min); xlabel(var2_name); ylabel(var1_name);
-title('Min|S11|(dB)'); colorbar; colormap jet; set(gca, 'YDir', 'normal');
-subplot(2,2,2); imagesc(p2, p1, all_freq_min); xlabel(var2_name); ylabel(var1_name);
-title('谐振频率(GHz)'); colorbar; colormap jet; set(gca, 'YDir', 'normal');
+% --- 图2: 2D热力图 ---
+figure(2);clf;set(gcf,'Position',[100 100 1000 750]);
+subplot(2,2,1); imagesc(p2,p1,all_s11_min); xlabel(var2_name);ylabel(var1_name);title('Min|S11|(dB)');colorbar;colormap jet;set(gca,'YDir','normal');
+for i=1:n1 for j=1:n2; if all_s11_min(i,j)~=0; text(p2(j),p1(i),sprintf('%.1f',all_s11_min(i,j)),'HorizontalAlignment','center','Color','w','FontSize',8,'FontWeight','bold');end;end;end
+subplot(2,2,2); imagesc(p2,p1,all_freq_min); xlabel(var2_name);ylabel(var1_name);title('谐振频率(GHz)');colorbar;colormap jet;set(gca,'YDir','normal');
+for i=1:n1 for j=1:n2; if all_freq_min(i,j)~=0; text(p2(j),p1(i),sprintf('%.2f',all_freq_min(i,j)),'HorizontalAlignment','center','Color','w','FontSize',7,'FontWeight','bold');end;end;end
+subplot(2,2,3); imagesc(p2,p1,all_bw); xlabel(var2_name);ylabel(var1_name);title(sprintf('%ddB带宽(GHz)',s11_threshold));colorbar;colormap jet;set(gca,'YDir','normal');
+for i=1:n1 for j=1:n2; if ~isnan(all_bw(i,j)); text(p2(j),p1(i),sprintf('%.3f',all_bw(i,j)),'HorizontalAlignment','center','Color','w','FontSize',7,'FontWeight','bold');end;end;end
+subplot(2,2,4); imagesc(p2,p1,all_s11_target); xlabel(var2_name);ylabel(var1_name);title(sprintf('S11@%.2fGHz(dB)',target_freq));colorbar;colormap jet;set(gca,'YDir','normal');
+for i=1:n1 for j=1:n2; if all_s11_target(i,j)~=0; text(p2(j),p1(i),sprintf('%.2f',all_s11_target(i,j)),'HorizontalAlignment','center','Color','w','FontSize',7,'FontWeight','bold');end;end;end
 
-% 导出
-sf = [work_path 'sweep_summary_2var.txt'];
-fid = fopen(sf, 'w');
-fprintf(fid, 'WavEDA 双参数扫参 汇总报告\\n%s\\n', datestr(now));
-fprintf(fid, '%s: [%s]  %s: [%s]  共%d组\\n\\n', var1_name, num2str(p1), var2_name, num2str(p2), N);
-for i = 1:n1; for j = 1:n2
-    bw_s = 'N/A';
-    if ~isnan(all_bw(i,j)); bw_s = sprintf('%.4f', all_bw(i,j)); end
-    fprintf(fid, '%-8.2f | %-8.2f | %-10.3f | %-12.4f | %-10s\\n', ...
-        p1(i), p2(j), all_s11_min(i,j), all_freq_min(i,j), bw_s);
+% --- 图3: 3D曲面 + 切片 ---
+figure(3);clf;set(gcf,'Position',[150 150 900 600]);
+[mv,mi]=min(all_s11_min(:)); [bi,bj]=ind2sub([n1 n2],mi);
+subplot(2,3,1); surf(p2,p1,all_s11_min,'EdgeColor','none'); xlabel(var2_name);ylabel(var1_name);zlabel('Min|S11|');title('Min|S11| 3D');colorbar;
+subplot(2,3,2); for j=1:n2; plot(p1,all_s11_min(:,j),'o-','LineWidth',1.5);hold on;end; xlabel(var1_name);ylabel('Min|S11|');title(sprintf('vs %s',var1_name));legend(string(p2));grid on;
+subplot(2,3,3); for i=1:n1; plot(p2,all_s11_min(i,:),'o-','LineWidth',1.5);hold on;end; xlabel(var2_name);ylabel('Min|S11|');title(sprintf('vs %s',var2_name));legend(string(p1));grid on;
+subplot(2,3,4); surf(p2,p1,all_freq_min,'EdgeColor','none'); xlabel(var2_name);ylabel(var1_name);zlabel('Freq');title('谐振频率 3D');colorbar;
+subplot(2,3,5); surf(p2,p1,all_bw,'EdgeColor','none'); xlabel(var2_name);ylabel(var1_name);zlabel('BW');title(sprintf('%ddB BW 3D',s11_threshold));colorbar;
+subplot(2,3,6);axis off;
+txt={{'====== 双参数扫参 ======',sprintf('%s:%.2f~%.2f',var1_name,var1_start,var1_end),sprintf('%s:%.2f~%.2f',var2_name,var2_start,var2_end),sprintf('共%d组',N),'',sprintf('★最优:%s=%.2f, %s=%.2f',var1_name,p1(bi),var2_name,p2(bj)),sprintf('  min|S11|=%.3fdB @%.4fGHz',all_s11_min(bi,bj),all_freq_min(bi,bj)),''}};
+if ~isnan(all_bw(bi,bj)); txt{{end+1}}=sprintf('  %ddB BW=%.4fGHz',s11_threshold,all_bw(bi,bj)); end
+text(0,0.5,txt,'FontSize',10,'VerticalAlignment','middle','FontName','FixedWidth');
+
+
+%% ╔══════════════════════════════════════════════════════════════╗
+%% ║              导出汇总表                                      ║
+%% ╚══════════════════════════════════════════════════════════════╝
+
+sf=[work_path 'sweep_summary_2var.txt']; fid=fopen(sf,'w');
+fprintf(fid,'=====================================================\n');
+fprintf(fid,'  WavEDA 双参数扫参 汇总报告\n  %s\n',datestr(now));
+fprintf(fid,'=====================================================\n\n');
+fprintf(fid,'  %s:%.2f~%.2f  %s:%.2f~%.2f  共%d组\n\n',var1_name,var1_start,var1_end,var2_name,var2_start,var2_end,N);
+fprintf(fid,'  %-8s | %-8s | %-10s | %-12s | %-10s | %-10s | %-12s\n',var1_name,var2_name,'Min|S11|','Freq@Min','BW','CenterF',sprintf('S11@%.2f',target_freq));
+fprintf(fid,'  %s\n',repmat('-',1,95));
+for i=1:n1 for j=1:n2
+    bw='N/A';cf='N/A'; if ~isnan(all_bw(i,j)); bw=sprintf('%.4f',all_bw(i,j)); cf=sprintf('%.4f',all_center_f(i,j)); end
+    fprintf(fid,'  %-8.2f | %-8.2f | %-10.3f | %-12.4f | %-10s | %-10s | %-12.3f\n',p1(i),p2(j),all_s11_min(i,j),all_freq_min(i,j),bw,cf,all_s11_target(i,j));
 end; end
+fprintf(fid,'\n  ★ Best: %s=%.2f, %s=%.2f  (min|S11|=%.3fdB @%.4fGHz)\n',var1_name,p1(bi),var2_name,p2(bj),all_s11_min(bi,bj),all_freq_min(bi,bj));
 fclose(fid);
-fprintf('\\n✅ 汇总表: %s\\n', sf);
-fprintf('===============================================================\\n    完成！\\n===============================================================\\n');
-'''
+fprintf('\n✅ 汇总表:%s\n',sf);
+fprintf('===============================================================\n    完成！\n===============================================================\n');
+"""
 
-
-# ── Python 模板生成 ────────────────────────────────────
-
-def generate_python_sweep(config: dict[str, Any]) -> str:
-    """生成 Python 版单参数扫参程序（标准库 xml.etree + subprocess）。"""
-    work_path = config.get("output_dir", "<OUTPUT_DIR>")
-    waveda_exe = config.get("waveda_exe", "C:/Program Files/WavEDA/WavEDA.exe")
-    sweep_vars = list(config.get("sweep", {}).get("variables", {}).items())
-    if not sweep_vars:
-        return "# ERROR: No sweep variables defined\n"
-
-    var_name = sweep_vars[0][0]
-    var_values = sweep_vars[0][1]
-    var_start = var_values[0]
-    var_end = var_values[-1]
-    var_step = var_values[1] - var_values[0] if len(var_values) > 1 else 1
-    port_name = config["results"][0]["name"] if config.get("results") else "Port_S_data_1"
-    target_freq = config.get("target_freq", 2.45)
-    s11_threshold = config.get("s11_threshold", -10)
-
-    return f'''##################################################################
-#  sweep_main.py — WavEDA 单参数扫参 (Python 版, 自动生成)
-#  生成时间: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-#  依赖: pip install matplotlib
-#  使用前只改下方【用户配置区】（已根据你的设置预填）
+# ── Python sweep_main.py（来自 04_python/sweep_main_py.md）──
+SWEEP_MAIN_PY = r"""##################################################################
+#  sweep_main.py — WavEDA 单参数扫参 (Python 版)
+#  生成时间: $GEN_TIME
+#  pip install matplotlib
 ##################################################################
 
 import subprocess
 import os
-import sys
-import time
 import xml.etree.ElementTree as ET
-from pathlib import Path
-from datetime import datetime as dt
-
-try:
-    import matplotlib.pyplot as plt
-    HAS_MPL = True
-except ImportError:
-    HAS_MPL = False
-    print("[WARN] matplotlib 未安装, 将跳过图表生成. pip install matplotlib")
+import matplotlib.pyplot as plt
+from datetime import datetime
+import time
 
 
 # ================================================================
-#  用户配置区
+#  数据提取函数（不依赖 pandas/numpy）
 # ================================================================
 
-WORK_PATH  = r'{work_path}'
-WAVEDA_EXE = r'{waveda_exe}'
+def extract_col(filepath, marker, col_idx):
+    '''从空格分隔的文本文件中提取第 col_idx 列数据，跳过注释行'''
+    vals = []
+    try:
+        with open(filepath, 'r') as f:
+            for line in f:
+                stripped = line.strip()
+                if not stripped or stripped.startswith(marker):
+                    continue
+                parts = stripped.split()
+                if len(parts) > col_idx:
+                    try:
+                        vals.append(float(parts[col_idx]))
+                    except ValueError:
+                        pass
+    except FileNotFoundError:
+        print(f'  WARNING 文件不存在: {{filepath}}')
+    return vals
 
-TEMPLATE_XML    = os.path.join(WORK_PATH, 'template.xml')
-TEMP_SCRIPT_XML = os.path.join(WORK_PATH, 'temp_script.xml')
 
-VAR_NAME  = '{var_name}'
-VAR_START = {var_start}
-VAR_STEP  = {var_step}
-VAR_END   = {var_end}
-
-PORT_DATASET_NAME = '{port_name}'
-TARGET_FREQ   = {target_freq}
-S11_THRESHOLD = {s11_threshold}
-
-
+# ================================================================
+#  【用户配置区】
+# ================================================================
+$USER_CONFIG_PY
 # ================================================================
 #  初始化
 # ================================================================
 
-num_params = round((VAR_END - VAR_START) / VAR_STEP) + 1
-param_list = [VAR_START + i * VAR_STEP for i in range(num_params)]
+num_steps = round((var_end - var_start) / var_step) + 1
+param_list = [var_start + i * var_step for i in range(num_steps)]
+num_params = len(param_list)
 
-print(f'扫描变量: {{VAR_NAME}}  ({{VAR_START:.2f}}~{{VAR_END:.2f}}, {{num_params}}组)\\n')
+print(f'扫描变量: {$TSP_VAR_NAME}  ({{var_start:.2f}}~{{var_end:.2f}}, {{num_params}}组)\n')
 
 all_s11_min = [0.0] * num_params
 all_freq_min = [0.0] * num_params
@@ -687,132 +547,80 @@ all_s11 = [None] * num_params
 all_freq = [None] * num_params
 
 
-def extract_col(filepath, col_idx):
-    """从空格分隔文本文件中提取列数据"""
-    vals = []
-    try:
-        with open(filepath, 'r', encoding='utf-8', errors='ignore') as f:
-            for line in f:
-                s = line.strip()
-                if not s or s.startswith('%'):
-                    continue
-                parts = s.split()
-                if len(parts) > col_idx:
-                    try:
-                        vals.append(float(parts[col_idx]))
-                    except ValueError:
-                        pass
-    except FileNotFoundError:
-        pass
-    return vals
-
-
 # ================================================================
-#  预热跑
-# ================================================================
-
-print('>>> 预热跑: 启动 WavEDA 初始化引擎...')
-port_warmup = os.path.join(WORK_PATH, 'port_warmup.txt')
-if os.path.exists(port_warmup):
-    os.remove(port_warmup)
-
-tree = ET.parse(TEMPLATE_XML)
-root = tree.getroot()
-for cmd in root.iter('command'):
-    ct = (cmd.get('cmdType') or '').lower()
-    o1 = (cmd.get('obj1') or '').lower()
-    o2 = (cmd.get('obj2') or '').lower()
-    if ct == 'modify' and o1 in ('var', 'variable'):
-        if (cmd.get('name') or '').lower() == VAR_NAME.lower():
-            cmd.set('value', f'{{param_list[0]:.2f}}')
-    elif ct == 'export' and o1 == 'result' and o2 == 'port':
-        if (cmd.get('name') or '').lower() == PORT_DATASET_NAME.lower():
-            cmd.set('file', port_warmup)
-tree.write(TEMP_SCRIPT_XML, encoding='utf-8', xml_declaration=True)
-
-waveda_dir = os.path.dirname(WAVEDA_EXE)
-waveda_name = os.path.basename(WAVEDA_EXE)
-bat_file = os.path.join(WORK_PATH, 'run_waveda.bat')
-with open(bat_file, 'w') as f:
-    f.write(f'cd /d "{{waveda_dir}}"\\n')
-    f.write(f'{{waveda_name}} "script={{TEMP_SCRIPT_XML}}"\\n')
-
-warm_ok = False
-for retry in range(5):
-    subprocess.run(bat_file, shell=True, capture_output=True)
-    time.sleep(5)
-    if os.path.exists(port_warmup):
-        print(f'          ✅ 预热成功\\n')
-        warm_ok = True
-        break
-    print(f'          ⚠ 预热失败, 重试 ({{retry+1}}/5)')
-if not warm_ok:
-    print(f'          ❌ 预热失败, 脚本终止')
-    sys.exit(1)
-
-
-# ================================================================
-#  扫参主循环
+#  Part I & II & III: 扫参主循环
 # ================================================================
 
 for i, current_val in enumerate(param_list):
-    print(f'[{{i+1}}/{{num_params}}] {{VAR_NAME}} = {{current_val:.2f}}')
 
-    # Part I: 生成 XML
-    port_file = os.path.join(WORK_PATH, f'port_data_{{i+1}}.txt')
-    if os.path.exists(port_file):
-        os.remove(port_file)
+    print(f'[{{i+1}}/{{num_params}}] {$TSP_VAR_NAME} = {{current_val:.2f}}')
 
-    tree = ET.parse(TEMPLATE_XML)
+    # ---- Part I: 修改 XML ----
+    port_file = os.path.join(work_path, f'port_data_{{i+1}}.txt')
+
+    tree = ET.parse(template_xml)
     root = tree.getroot()
+
     for cmd in root.iter('command'):
-        ct = (cmd.get('cmdType') or '').lower()
-        o1 = (cmd.get('obj1') or '').lower()
-        o2 = (cmd.get('obj2') or '').lower()
-        if ct == 'modify' and o1 in ('var', 'variable'):
-            if (cmd.get('name') or '').lower() == VAR_NAME.lower():
+        ct = cmd.get('cmdType')
+        if ct is None:
+            continue
+        ct_lower = ct.lower()
+        o1 = cmd.get('obj1', '')
+        o2 = cmd.get('obj2', '')
+
+        if ct_lower == 'modify' and o1.lower() in ('var', 'variable'):
+            if cmd.get('name', '').lower() == var_name.lower():
                 cmd.set('value', f'{{current_val:.2f}}')
-        elif ct == 'export' and o1 == 'result' and o2 == 'port':
-            if (cmd.get('name') or '').lower() == PORT_DATASET_NAME.lower():
+
+        elif ct_lower == 'export' and o1.lower() == 'result' and o2.lower() == 'port':
+            if cmd.get('name', '').lower() == port_dataset_name.lower():
                 cmd.set('file', port_file)
-    tree.write(TEMP_SCRIPT_XML, encoding='utf-8', xml_declaration=True)
 
-    # Part II: 运行仿真
+    tree.write(temp_script_xml, encoding='utf-8', xml_declaration=True)
+
+    # ---- Part II: 运行仿真 ----
+    bat_file = os.path.join(work_path, 'run_waveda.bat')
+    waveda_dir = os.path.dirname(waveda_exe)
+    waveda_name = os.path.basename(waveda_exe)
     with open(bat_file, 'w') as f:
-        f.write(f'cd /d "{{waveda_dir}}"\\n')
-        f.write(f'{{waveda_name}} "script={{TEMP_SCRIPT_XML}}"\\n')
+        f.write(f'cd /d "{{waveda_dir}}"\n')
+        f.write(f'{{waveda_name}} "script={{temp_script_xml}}"\n')
 
-    ok = False
     for retry in range(3):
         subprocess.run(bat_file, shell=True, capture_output=True)
         time.sleep(5)
         if os.path.exists(port_file):
             print(f'  ✅ 文件已生成 (try {{retry+1}})')
-            ok = True
             break
-        print(f'  ⚠ 文件未生成, 重试 ({{retry+1}}/3)')
-    if not ok:
+        print(f'  WARNING 文件未生成，重试 ({{retry+1}}/3)')
+
+    if not os.path.exists(port_file):
         print('  ❌ 重试失败')
         continue
 
-    # Part III: 读数据 & 算指标
-    freq = extract_col(port_file, 0)
-    s11_db = extract_col(port_file, 1)
+    # ---- Part III: 读数据 & 算指标 ----
+    freq = extract_col(port_file, '%', 0)
+    s11_db = extract_col(port_file, '%', 1)
+
     if not freq or not s11_db:
         continue
 
     all_freq[i] = freq
     all_s11[i] = s11_db
 
+    # 最小 S11
     min_idx = s11_db.index(min(s11_db))
     all_s11_min[i] = s11_db[min_idx]
     all_freq_min[i] = freq[min_idx]
 
-    bw_idx = [j for j, v in enumerate(s11_db) if v <= S11_THRESHOLD]
+    # 带宽
+    bw_idx = [j for j, v in enumerate(s11_db) if v <= s11_threshold]
     if len(bw_idx) >= 2:
         all_bw[i] = freq[bw_idx[-1]] - freq[bw_idx[0]]
 
-    closest = min(range(len(freq)), key=lambda j: abs(freq[j] - TARGET_FREQ))
+    # 目标频率
+    closest = min(range(len(freq)), key=lambda j: abs(freq[j] - target_freq))
     all_s11_target[i] = s11_db[closest]
 
     print(f'  min S11: {{all_s11_min[i]:.3f}} dB @ {{all_freq_min[i]:.4f}} GHz')
@@ -822,112 +630,228 @@ for i, current_val in enumerate(param_list):
 #  汇总图表
 # ================================================================
 
-if HAS_MPL:
-    fig1, ax1 = plt.subplots(figsize=(10, 6))
-    for i in range(num_params):
-        if all_freq[i] is not None:
-            ax1.plot(all_freq[i], all_s11[i], linewidth=1.5,
-                     label=f'{{VAR_NAME}}={{param_list[i]:.2f}} (min={{all_s11_min[i]:.2f}} dB)')
-    ax1.axhline(y=S11_THRESHOLD, color='r', linestyle='--')
-    ax1.axvline(x=TARGET_FREQ, color='g', linestyle='--')
-    ax1.set_xlabel('Frequency (GHz)')
-    ax1.set_ylabel('|S11| (dB)')
-    ax1.set_title(f'S11 Comparison — {{VAR_NAME}}')
-    ax1.legend(loc='best', fontsize=8)
-    ax1.grid(True)
-    fig1.tight_layout()
-    plt.show()
+# 图1: 全部 S11 叠加
+fig1, ax1 = plt.subplots(figsize=(10, 6))
+for i in range(num_params):
+    if all_freq[i] is not None:
+        ax1.plot(all_freq[i], all_s11[i], linewidth=1.5,
+                 label=f'{$TSP_VAR_NAME}={{param_list[i]:.2f}} (min={{all_s11_min[i]:.2f}} dB)')
+ax1.axhline(y=s11_threshold, color='r', linestyle='--')
+ax1.axvline(x=target_freq, color='g', linestyle='--')
+ax1.set_xlabel('Frequency (GHz)'); ax1.set_ylabel('|S11| (dB)')
+ax1.set_title(f'S11 Comparison — {$TSP_VAR_NAME}')
+ax1.legend(loc='best', fontsize=8); ax1.grid(True)
+fig1.tight_layout()
 
-print(f'\\n✅ 完成！结果目录: {{WORK_PATH}}')
-'''
+# 图2: 指标面板
+fig2, axes = plt.subplots(2, 3, figsize=(14, 8))
+axes[0,0].plot(param_list, all_s11_min, 'bo-'); axes[0,0].set_title('Min |S11|')
+axes[0,1].plot(param_list, all_freq_min, 'ro-'); axes[0,1].set_title('Resonant Freq')
+valid = [(j,v) for j,v in enumerate(all_bw) if not (isinstance(v,float) and v!=v)]
+if valid:
+    axes[0,2].plot([param_list[j] for j,_ in valid], [v for _,v in valid], 'go-')
+axes[0,2].set_title(f'{{s11_threshold}}dB BW')
+axes[1,0].plot(param_list, all_s11_target, 'co-'); axes[1,0].set_title(f'S11@{{target_freq}}GHz')
+axes[1,1].axis('off'); axes[1,2].axis('off')
+fig2.tight_layout()
 
+plt.show()
+"""
 
-# ── README 生成 ────────────────────────────────────────
+# ── single-param XML template（来自 01_single_param/template_xml.md）──
+XML_TEMPLATE_SINGLE = """<?xml version="1.0" encoding="UTF-8"?>
+<script version="1.0" >
+    <!--
+    单参数扫参 基础脚本模板 — WavEDA 脚本自动生成器
+    生成时间: $GEN_TIME
 
-def generate_readme(config: dict[str, Any]) -> str:
-    """生成运行说明 README.md"""
-    sweep_vars = config.get("sweep", {}).get("variables", {})
-    strategy = config.get("sweep", {}).get("strategy", "explicit_values")
-    controller = config.get("controller", "matlab")
-    is_dual = len(sweep_vars) == 2
+    【自动填充项】
+    load 命令 file="..."    → .tsp 工程路径
+    modify 命令 name="..."  → 变量名
+    export obv 命令 name="..." → Observer 数据集名
+    export port 命令 name="..." → Port S参数数据集名
 
-    var_lines = ""
-    for vname, vvals in sweep_vars.items():
-        var_lines += f"- **{vname}**: {vvals[0]} ~ {vvals[-1]} ({len(vvals)} 个值)\n"
-
-    strategy_desc = {
-        "explicit_values": "显式值列表",
-        "coarse_to_fine": "粗到细策略",
-        "builtin_sweep": "工程内置扫描",
-    }.get(strategy, strategy)
-
-    return f'''# WavEDA 自动化扫参任务
-
-> 生成时间: {datetime.now().strftime("%Y-%m-%d %H:%M:%S")}
-
-## 任务概览
-
-| 项目 | 值 |
-|------|-----|
-| 工程文件 | `{config.get("project_file", "N/A")}` |
-| 控制器 | {controller.upper()} |
-| 扫描策略 | {strategy_desc} |
-| 总组合数 | {_count_combinations(sweep_vars)} |
-
-## 扫参变量
-
-{var_lines}
-
-## 文件说明
-
-```
-automation_task/
-├── README.md              ← 本文件
-├── task_config.json       ← 任务配置（单一真相源）
-├── template.xml           ← XML 脚本模板
-├── run_batch.{'m' if controller == 'matlab' else 'py'}  ← 主控程序
-├── modify_script.m        ← XML 修改子程序 (MATLAB only)
-└── output/                ← 运行结果输出目录
-    ├── progress.csv
-    ├── raw/               ← 各参数点原始数据
-    ├── figures/           ← 汇总图表
-    └── logs/              ← 日志
-```
-
-## 使用方法
-
-### MATLAB
-1. 打开 MATLAB，`cd` 到本目录
-2. 确认 WavEDA 可执行文件路径正确
-3. 运行 `run_batch`
-
-### Python
-```bash
-pip install matplotlib
-python run_batch.py
-```
-
-## 注意事项
-
-- 运行前建议先用 GUI 单点验证模型和结果节点
-- 几何参数扫描必须强制删除旧网格（默认已启用）
-- 每次改变参数后用文件内容判断成功，不依赖退出码
-- 如果第二点闪退，检查上一轮 WavEDA 进程是否已结束
-
-## 自定义
-
-如需修改扫参策略、结果节点或目标指标，编辑 `task_config.json` 后重新生成。
-'''
+    【运行时替换项】
+    value="..."、file="..." → sweep_main 运行时通过 modify_script 替换
+    -->
+    <command cmdType="load"   obj1="project"    file="$TSP_PATH" />
+    <command cmdType="modify" obj1="var"        name="$TSP_VAR_NAME"    value="$FIRST_VALUE" />
+    <command cmdType="delete" obj1="mesh"       />
+    <command cmdType="sim"                      solver="auto" />
+$EXPORT_COMMANDS
+    <command cmdType="close" obj1="project" />
+    <command cmdType="close" obj1="gui" />
+</script>
+"""
 
 
-def _count_combinations(variables: dict[str, list[float]]) -> int:
-    total = 1
-    for vals in variables.values():
-        total *= len(vals)
-    return total
+# ═══════════════════════════════════════════════════════════════
+#  配置区生成函数
+# ═══════════════════════════════════════════════════════════════
+
+def _build_single_user_config(config: dict[str, Any]) -> str:
+    """生成本地跑单参数的用户配置区。"""
+    work_path = config.get("output_dir", "")
+    waveda_exe = config.get("waveda_exe", "")
+    sweep_vars = list(config.get("sweep", {}).get("variables", {}).items())
+    var_name = sweep_vars[0][0]
+    var_values = sweep_vars[0][1]
+
+    obv_name = config.get("observer_name", "")
+    port_name = config["results"][0]["name"] if config.get("results") else "Port_S_data_1"
+    target_freq = config.get("target_freq", 2.45)
+    s11_threshold = config.get("s11_threshold", -10)
+
+    return f"""% ---- 路径 ----
+work_path  = '{work_path}\\';
+waveda_exe = '"{waveda_exe}"';
+
+waveda_exe_clean = strrep(waveda_exe, '"', '');
+[waveda_dir, waveda_name, waveda_ext] = fileparts(waveda_exe_clean);
+waveda_cmd = [waveda_name waveda_ext];
+
+% ---- 文件 ----
+template_xml    = [work_path 'template.xml'];
+temp_script_xml = [work_path 'temp_script.xml'];
+
+% ---- 扫描参数 ----
+var_name  = '$TSP_VAR_NAME';
+var_start = {var_values[0]};  var_step = {var_values[1] - var_values[0]};  var_end = {var_values[-1]};
+
+% ---- 数据集名称（.tsp 工程里定义的，不区分大小写） ----
+obv_dataset_name  = '{obv_name}';    % 不需要Observer则传 ''
+port_dataset_name = '{port_name}';
+
+% ---- S参数分析目标 ----
+target_freq   = {target_freq};   % 关心的频率 (GHz)
+s11_threshold = {s11_threshold};    % 带宽判定门限 (dB)"""
 
 
-# ── 主入口：一键生成全部文件 ───────────────────────────
+def _build_dual_user_config(config: dict[str, Any]) -> str:
+    """生成双参数的用户配置区。"""
+    work_path = config.get("output_dir", "")
+    waveda_exe = config.get("waveda_exe", "")
+    sweep_vars = list(config.get("sweep", {}).get("variables", {}).items())
+    var1_name, var1_vals = sweep_vars[0]
+    var2_name, var2_vals = sweep_vars[1]
+
+    port_name = config["results"][0]["name"] if config.get("results") else "Port_S_data_1"
+    target_freq = config.get("target_freq", 2.45)
+    s11_threshold = config.get("s11_threshold", -10)
+
+    return f"""% ---- 路径 ----
+work_path  = '{work_path}\\';
+waveda_exe = '"{waveda_exe}"';
+
+waveda_exe_clean = strrep(waveda_exe, '"', '');
+[waveda_dir, waveda_name, waveda_ext] = fileparts(waveda_exe_clean);
+waveda_cmd = [waveda_name waveda_ext];
+
+template_xml    = [work_path 'template.xml'];
+temp_script_xml = [work_path 'temp_script.xml'];
+
+% ---- 变量1 ----
+var1_name  = '{var1_name}';  var1_start = {var1_vals[0]}; var1_step = {var1_vals[1] - var1_vals[0]}; var1_end = {var1_vals[-1]};
+% ---- 变量2 ----
+var2_name  = '{var2_name}';  var2_start = {var2_vals[0]}; var2_step = {var2_vals[1] - var2_vals[0]}; var2_end = {var2_vals[-1]};
+
+% ---- 数据集 ----
+port_dataset_name = '{port_name}';
+
+% ---- 分析目标 ----
+target_freq   = {target_freq};  s11_threshold = {s11_threshold};"""
+
+
+def _build_py_user_config(config: dict[str, Any]) -> str:
+    """生成 Python 的用户配置区。"""
+    work_path = config.get("output_dir", "")
+    waveda_exe = config.get("waveda_exe", "")
+    sweep_vars = list(config.get("sweep", {}).get("variables", {}).items())
+    var_name = sweep_vars[0][0]
+    var_values = sweep_vars[0][1]
+    port_name = config["results"][0]["name"] if config.get("results") else "Port_S_data_1"
+    target_freq = config.get("target_freq", 2.45)
+    s11_threshold = config.get("s11_threshold", -10)
+
+    return f"""work_path  = r'{work_path}'
+waveda_exe = r'{waveda_exe}'
+
+template_xml    = os.path.join(work_path, 'template.xml')
+temp_script_xml = os.path.join(work_path, 'temp_script.xml')
+
+var_name  = '$TSP_VAR_NAME'
+var_start = {var_values[0]}
+var_step  = {var_values[1] - var_values[0]}
+var_end   = {var_values[-1]}
+
+port_dataset_name = '{port_name}'
+target_freq   = {target_freq}
+s11_threshold = {s11_threshold}"""
+
+
+def _build_observer_blocks(config: dict[str, Any]) -> dict[str, str]:
+    """生成 Observer 相关的所有代码块。"""
+    has_observer = any(r.get("type") in ("observer", "obv") for r in config.get("results", []))
+    if not has_observer:
+        return {
+            "obs_init": "",
+            "obs_load": "",
+            "obs_print": "",
+            "obs_plot_single": "",
+            "obs_plot_overlay": "",
+            "obs_panel": "",
+        }
+
+    return {
+        "obs_init": "% Observer存储\nall_e_max = zeros(num_params,1); all_e_max_time = zeros(num_params,1);\nall_obv = {{}};",
+        "obs_load": """
+    % --- Observer ---
+    if exist(obv_file, 'file')
+        o = load(obv_file); t_vec = o(:,1); e_vec = o(:,2); all_obv{{i}} = o;
+        [all_e_max(i), e_idx] = max(abs(e_vec));
+        all_e_max_time(i) = t_vec(e_idx);
+    else t_vec=[]; e_vec=[];
+    end""",
+        "obs_print": "    if ~isempty(e_vec); fprintf('          E场: max|E|=%.4f @t=%.4f\\n', all_e_max(i), all_e_max_time(i)); end",
+        "obs_plot_single": """    if ~isempty(t_vec)
+        subplot(2, num_params, i); plot(t_vec, e_vec, 'b-'); hold on;
+        plot(all_e_max_time(i), all_e_max(i)*sign(e_vec(e_idx)), 'ro', 'MarkerSize',6,'MarkerFaceColor','r');
+        title(sprintf('%s=%.2f',var_name,current_val),'FontSize',9); xlabel('Time');
+    end""",
+        "obs_plot_overlay": """% --- 图3: 全部Observer叠加 ---
+figure(3); clf; set(gcf,'Position',[100 100 900 500]); hold on;
+o_leg = {{}};
+for i = 1:num_params
+    if ~isempty(all_obv{{i}})
+        plot(all_obv{{i}}(:,1), all_obv{{i}}(:,2), 'LineWidth',1.5, 'Color',colors(i,:));
+        o_leg{{end+1}}=sprintf('%s=%.2f',var_name,param_list(i));
+    end
+end
+if ~isempty(o_leg); legend(o_leg,'Location','best','FontSize',8); end
+xlabel('Time'); ylabel('E Field'); title(sprintf('Observer E场对比 — %s',var_name)); grid on;""",
+        "obs_panel": """subplot(2,4,5); plot(param_list,all_e_max,'mo-','LineWidth',1.5,'MarkerSize',8,'MarkerFaceColor','m');
+xlabel(var_name); ylabel('|E|max'); title('O: 最大|E|'); grid on;
+subplot(2,4,6); plot(param_list,all_e_max_time,'ko-','LineWidth',1.5,'MarkerSize',8,'MarkerFaceColor','k');
+xlabel(var_name); ylabel('Time'); title('O: |E|max时刻'); grid on;""",
+    }
+
+
+def _build_export_commands(config: dict[str, Any]) -> str:
+    """构建 XML 中的 export 命令。"""
+    lines = []
+    for r in config.get("results", []):
+        rtype = r.get("type", "port")
+        rname = r["name"]
+        if rtype in ("observer", "obv"):
+            lines.append(f'    <command cmdType="export" obj1="result"  obj2="obv"    name="{rname}"   file="./obv_data.txt" />')
+        elif rtype == "port":
+            lines.append(f'    <command cmdType="export" obj1="result"  obj2="port"   name="{rname}"        file="./port_data.txt" />')
+    return "\n".join(lines)
+
+
+# ═══════════════════════════════════════════════════════════════
+#  主入口
+# ═══════════════════════════════════════════════════════════════
 
 def build_task_config(
     project_file: str = "",
@@ -938,21 +862,25 @@ def build_task_config(
     sweep_vars: dict[str, list[float]] | None = None,
     strategy: str = "explicit_values",
     results: list[dict[str, Any]] | None = None,
+    observer_name: str = "",
     target_freq: float = 2.45,
     s11_threshold: float = -10.0,
     timeout_seconds: int = 1800,
     max_attempts: int = 3,
     force_remesh: bool = True,
 ) -> dict[str, Any]:
-    """构建标准 task_config.json
+    """构建标准 task_config.json。
 
     save_dir: 本地保存目录，生成的文件实际写入这里
-    work_dir: 目标工作目录，脚本和模板里用的路径（异地跑填目标电脑路径）
+    work_dir: 目标工作目录，脚本里用的 work_path（异地跑填目标电脑路径）
     """
     if sweep_vars is None:
         sweep_vars = {}
     if results is None:
         results = [{"name": "Port_S_data_1", "type": "port", "traces": ["S11 dB"]}]
+
+    if not work_dir:
+        work_dir = save_dir
 
     return {
         "project_file": project_file,
@@ -960,6 +888,7 @@ def build_task_config(
         "save_dir": save_dir,
         "output_dir": work_dir,  # 脚本中使用的 work_path
         "controller": controller,
+        "observer_name": observer_name,
         "sweep": {
             "variables": sweep_vars,
             "strategy": strategy,
@@ -981,46 +910,138 @@ class ScriptPackage:
 
     def __init__(self, config: dict[str, Any]) -> None:
         self.config = config
-        # 实际写入文件的本地目录
-        self.save_dir = Path(config.get("save_dir", config.get("output_dir", ".")))
-        # 脚本中引用的目标工作目录
+        self.save_dir = Path(config.get("save_dir", "."))
         self.work_dir = config.get("output_dir", str(self.save_dir))
+        self._gen_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
     def generate_all(self) -> dict[str, str]:
         """生成所有文件，返回 {文件名: 内容} 字典。"""
         files: dict[str, str] = {}
+        cfg = self.config
+        gen_time = self._gen_time
+        sweep_vars = cfg.get("sweep", {}).get("variables", {})
+        is_dual = len(sweep_vars) >= 2
+        controller = cfg.get("controller", "matlab")
 
         # task_config.json
-        files["task_config.json"] = json.dumps(self.config, ensure_ascii=False, indent=2)
+        files["task_config.json"] = json.dumps(cfg, ensure_ascii=False, indent=2)
+
+        # Observer blocks
+        obs = _build_observer_blocks(cfg)
 
         # XML template
-        files["template.xml"] = generate_xml_template(self.config)
+        export_cmds = _build_export_commands(cfg)
+        first_var = list(sweep_vars.keys())[0] if sweep_vars else "VAR"
+        first_val = sweep_vars[first_var][0] if sweep_vars else 0
+        xml = (XML_TEMPLATE_SINGLE
+               .replace("$GEN_TIME", gen_time)
+               .replace("$TSP_PATH", cfg.get("project_file", "<PROJECT_FILE>"))
+               .replace("$TSP_VAR_NAME", first_var)
+               .replace("$FIRST_VALUE", str(first_val))
+               .replace("$EXPORT_COMMANDS", export_cmds))
+        files["template.xml"] = xml
 
-        # MATLAB
-        if self.config.get("controller", "matlab") == "matlab":
-            modify_m = _generate_matlab_modify_script(self.config)
-            files["modify_script.m"] = modify_m
+        if controller == "matlab":
+            if is_dual:
+                files["modify_script_2var.m"] = MODIFY_SCRIPT_2VAR_M
+                user_cfg = _build_dual_user_config(cfg)
+                sweep_main = (SWEEP_MAIN_2VAR_M
+                              .replace("$GEN_TIME", gen_time)
+                              .replace("$USER_CONFIG", user_cfg))
+                files["run_batch.m"] = sweep_main
+            else:
+                files["modify_script.m"] = MODIFY_SCRIPT_M
+                user_cfg = _build_single_user_config(cfg)
+                sweep_main = (SWEEP_MAIN_M
+                              .replace("$GEN_TIME", gen_time)
+                              .replace("$USER_CONFIG", user_cfg)
+                              .replace("$OBS_INIT", obs.get("obs_init", ""))
+                              .replace("$OBS_LOAD", obs.get("obs_load", ""))
+                              .replace("$OBS_PRINT", obs.get("obs_print", ""))
+                              .replace("$OBS_PLOT_SINGLE", obs.get("obs_plot_single", ""))
+                              .replace("$OBS_PLOT_OVERLAY", obs.get("obs_plot_overlay", ""))
+                              .replace("$OBS_PANEL", obs.get("obs_panel", "")))
+                files["run_batch.m"] = sweep_main
 
-            sweep_main = generate_matlab_sweep(self.config)
-            ext = "m"
-            files[f"run_batch.{ext}"] = sweep_main
-
-        # Python
-        python_sweep = generate_python_sweep(self.config)
-        files["run_batch.py"] = python_sweep
+        # Python (always generate)
+        if not is_dual:
+            py_user = _build_py_user_config(cfg)
+            py = (SWEEP_MAIN_PY
+                  .replace("$GEN_TIME", gen_time)
+                  .replace("$USER_CONFIG_PY", py_user))
+            files["run_batch.py"] = py
 
         # README
-        files["README.md"] = generate_readme(self.config)
+        files["README.md"] = self._build_readme()
 
         return files
+
+    def _build_readme(self) -> str:
+        cfg = self.config
+        sweep_vars = cfg.get("sweep", {}).get("variables", {})
+        total = 1
+        for vals in sweep_vars.values():
+            total *= len(vals)
+        controller = cfg.get("controller", "matlab")
+
+        var_lines = ""
+        for vname, vvals in sweep_vars.items():
+            var_lines += f"- **{vname}**: {vvals[0]} ~ {vvals[-1]} ({len(vvals)} 个值)\n"
+
+        return f"""# WavEDA 自动化扫参任务
+
+> 生成时间: {self._gen_time}
+
+## 任务概览
+
+| 项目 | 值 |
+|------|-----|
+| 工程文件 | `{cfg.get("project_file", "N/A")}` |
+| 目标工作目录 | `{self.work_dir}` |
+| 控制器 | {controller.upper()} |
+| 总仿真次数 | {total} |
+
+## 扫参变量
+
+{var_lines}
+
+## 文件说明
+
+```
+├── task_config.json       ← 任务配置
+├── template.xml           ← XML 脚本模板
+├── modify_script.m        ← MATLAB: XML 修改子程序
+├── run_batch.m            ← MATLAB: 扫参主控
+├── run_batch.py           ← Python: 扫参主控
+├── README.md              ← 本文件
+└── output/                ← 运行结果
+```
+
+## 使用步骤
+
+### MATLAB
+1. 把本目录拷贝到目标电脑的 `{self.work_dir}`
+2. 打开 `run_batch.m`，检查顶部【用户配置区】的路径
+3. 在 MATLAB 中运行 `run_batch`
+
+### Python
+```bash
+pip install matplotlib
+python run_batch.py
+```
+
+## 注意事项
+
+- 运行前先在 GUI 中单点验证模型和结果节点
+- 几何参数扫描必须强制删除旧网格（XML 已包含）
+- 每轮用文件内容判断成功，不依赖 WavEDA 退出码
+- 如果第二点闪退，检查上一轮 WavEDA 进程是否已结束
+"""
 
     def write_all(self) -> Path:
         """生成并写入全部文件到本地保存目录。"""
         self.save_dir.mkdir(parents=True, exist_ok=True)
-        (self.save_dir / "generated_xml").mkdir(exist_ok=True)
-        (self.save_dir / "output" / "raw").mkdir(parents=True, exist_ok=True)
-        (self.save_dir / "output" / "figures").mkdir(parents=True, exist_ok=True)
-        (self.save_dir / "output" / "logs").mkdir(parents=True, exist_ok=True)
+        (self.save_dir / "output").mkdir(exist_ok=True)
 
         files = self.generate_all()
         for filename, content in files.items():
