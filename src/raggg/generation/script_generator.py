@@ -932,7 +932,8 @@ def _count_combinations(variables: dict[str, list[float]]) -> int:
 def build_task_config(
     project_file: str = "",
     waveda_exe: str = "",
-    output_dir: str = "",
+    save_dir: str = "",
+    work_dir: str = "",
     controller: str = "matlab",
     sweep_vars: dict[str, list[float]] | None = None,
     strategy: str = "explicit_values",
@@ -943,7 +944,11 @@ def build_task_config(
     max_attempts: int = 3,
     force_remesh: bool = True,
 ) -> dict[str, Any]:
-    """构建标准 task_config.json"""
+    """构建标准 task_config.json
+
+    save_dir: 本地保存目录，生成的文件实际写入这里
+    work_dir: 目标工作目录，脚本和模板里用的路径（异地跑填目标电脑路径）
+    """
     if sweep_vars is None:
         sweep_vars = {}
     if results is None:
@@ -952,7 +957,8 @@ def build_task_config(
     return {
         "project_file": project_file,
         "waveda_exe": waveda_exe,
-        "output_dir": output_dir,
+        "save_dir": save_dir,
+        "output_dir": work_dir,  # 脚本中使用的 work_path
         "controller": controller,
         "sweep": {
             "variables": sweep_vars,
@@ -975,7 +981,10 @@ class ScriptPackage:
 
     def __init__(self, config: dict[str, Any]) -> None:
         self.config = config
-        self.output_dir = Path(config["output_dir"])
+        # 实际写入文件的本地目录
+        self.save_dir = Path(config.get("save_dir", config.get("output_dir", ".")))
+        # 脚本中引用的目标工作目录
+        self.work_dir = config.get("output_dir", str(self.save_dir))
 
     def generate_all(self) -> dict[str, str]:
         """生成所有文件，返回 {文件名: 内容} 字典。"""
@@ -1006,16 +1015,16 @@ class ScriptPackage:
         return files
 
     def write_all(self) -> Path:
-        """生成并写入全部文件到输出目录。"""
-        self.output_dir.mkdir(parents=True, exist_ok=True)
-        (self.output_dir / "generated_xml").mkdir(exist_ok=True)
-        (self.output_dir / "output" / "raw").mkdir(parents=True, exist_ok=True)
-        (self.output_dir / "output" / "figures").mkdir(parents=True, exist_ok=True)
-        (self.output_dir / "output" / "logs").mkdir(parents=True, exist_ok=True)
+        """生成并写入全部文件到本地保存目录。"""
+        self.save_dir.mkdir(parents=True, exist_ok=True)
+        (self.save_dir / "generated_xml").mkdir(exist_ok=True)
+        (self.save_dir / "output" / "raw").mkdir(parents=True, exist_ok=True)
+        (self.save_dir / "output" / "figures").mkdir(parents=True, exist_ok=True)
+        (self.save_dir / "output" / "logs").mkdir(parents=True, exist_ok=True)
 
         files = self.generate_all()
         for filename, content in files.items():
-            out_path = self.output_dir / filename
+            out_path = self.save_dir / filename
             out_path.write_text(content, encoding="utf-8")
 
-        return self.output_dir
+        return self.save_dir

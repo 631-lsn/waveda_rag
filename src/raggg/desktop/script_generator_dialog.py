@@ -92,14 +92,23 @@ class ScriptGeneratorDialog(QDialog):
         row_tsp.addWidget(tsp_btn)
         path_form.addRow("工程 .tsp:", row_tsp)
 
-        row_out = QHBoxLayout()
-        self.out_edit = QLineEdit()
-        self.out_edit.setPlaceholderText("留空则默认输出到工程目录下的 automation_output/")
-        out_btn = QPushButton("选择...")
-        out_btn.clicked.connect(self._browse_output_dir)
-        row_out.addWidget(self.out_edit)
-        row_out.addWidget(out_btn)
-        path_form.addRow("输出目录:", row_out)
+        row_save = QHBoxLayout()
+        self.save_edit = QLineEdit()
+        self.save_edit.setPlaceholderText("选一个本地目录存放生成的文件，留空则放到工程目录下")
+        save_btn = QPushButton("选择...")
+        save_btn.clicked.connect(self._browse_save_dir)
+        row_save.addWidget(self.save_edit)
+        row_save.addWidget(save_btn)
+        path_form.addRow("本地保存目录:", row_save)
+
+        row_work = QHBoxLayout()
+        self.work_edit = QLineEdit()
+        self.work_edit.setPlaceholderText("目标电脑上的工作目录，例如 E:\\sweep_exp2\\")
+        row_work.addWidget(self.work_edit, stretch=1)
+        path_form.addRow("目标工作目录:", row_work)
+        path_form.addRow(
+            QLabel("↑ 异地跑填目标电脑路径，本地跑跟上面一样即可。"),
+        )
 
         layout.addWidget(path_group)
 
@@ -267,10 +276,10 @@ class ScriptGeneratorDialog(QDialog):
         if path:
             target.setText(path)
 
-    def _browse_output_dir(self) -> None:
-        path = QFileDialog.getExistingDirectory(self, "选择输出目录")
+    def _browse_save_dir(self) -> None:
+        path = QFileDialog.getExistingDirectory(self, "选择本地保存目录")
         if path:
-            self.out_edit.setText(path)
+            self.save_edit.setText(path)
 
     # ─── 收集用户输入 → task_config ────────────────────
     def _collect_config(self) -> dict:
@@ -303,13 +312,18 @@ class ScriptGeneratorDialog(QDialog):
 
         project_file = self.tsp_edit.text().strip()
         waveda_exe = self.exe_edit.text().strip()
-        output_dir = self.out_edit.text().strip()
+        save_dir = self.save_edit.text().strip()
+        work_dir = self.work_edit.text().strip()
 
-        if not output_dir:
+        if not save_dir:
             if project_file:
-                output_dir = str(Path(project_file).parent / "automation_output")
+                save_dir = str(Path(project_file).parent / "automation_output")
             else:
-                output_dir = str(Path.home() / "waveda_automation_output")
+                save_dir = str(Path.home() / "waveda_automation_output")
+
+        # 目标工作目录默认等于本地保存目录（本地跑的场景）
+        if not work_dir:
+            work_dir = save_dir
 
         if not waveda_exe:
             # 尝试从 settings 推断
@@ -325,7 +339,8 @@ class ScriptGeneratorDialog(QDialog):
         return build_task_config(
             project_file=project_file,
             waveda_exe=waveda_exe,
-            output_dir=output_dir,
+            save_dir=save_dir,
+            work_dir=work_dir,
             controller=controller,
             sweep_vars=sweep_vars,
             strategy=strategy,
@@ -346,7 +361,8 @@ class ScriptGeneratorDialog(QDialog):
         pkg = ScriptPackage(config)
         files = pkg.generate_all()
 
-        preview_text = f"输出目录: {pkg.output_dir}\n\n"
+        preview_text = f"本地保存目录: {pkg.save_dir}\n"
+        preview_text += f"目标工作目录: {pkg.work_dir}\n\n"
         preview_text += f"将生成 {len(files)} 个文件:\n\n"
         for name, content in files.items():
             lines = content.count("\n") + 1
@@ -391,7 +407,8 @@ class ScriptGeneratorDialog(QDialog):
         reply = QMessageBox.question(
             self,
             "确认生成",
-            f"将生成文件到:\n{config['output_dir']}\n\n"
+            f"本地保存: {config['save_dir']}\n"
+            f"目标工作目录: {config['output_dir']}\n\n"
             f"总仿真次数: {total}\n\n"
             f"确认生成？",
             QMessageBox.Yes | QMessageBox.No,
@@ -410,7 +427,9 @@ class ScriptGeneratorDialog(QDialog):
             QMessageBox.information(
                 self,
                 "生成完成 ✅",
-                f"已生成 {len(files)} 个文件到:\n{out_dir}\n\n{file_list}\n\n"
+                f"文件已保存到本地:\n{out_dir}\n\n"
+                f"目标工作目录: {config['output_dir']}\n\n"
+                f"生成 {len(files)} 个文件:\n{file_list}\n\n"
                 "下一步:\n"
                 "  1. 检查 task_config.json 中的路径\n"
                 "  2. 在 GUI 中先单点验证模型\n"
