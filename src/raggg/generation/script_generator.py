@@ -109,7 +109,7 @@ fprintf('扫描变量: %s  (%.2f~%.2f, %d组)\n\n', var_name, var_start, var_end
 all_s11_min = zeros(num_params,1); all_freq_min = zeros(num_params,1);
 all_bw = nan(num_params,1); all_center_f = nan(num_params,1);
 all_s11_target = zeros(num_params,1);
-all_s11 = {{}}; all_freq = {{}};
+all_s11 = {}; all_freq = {};
 $OBS_INIT
 
 %% ╔══════════════════════════════════════════════════════════════╗
@@ -194,7 +194,7 @@ for i = 1:num_params
     % --- S参数 ---
     if exist(port_file, 'file')
         p = load(port_file); freq = p(:,1); s11_db = p(:,2);
-        all_freq{{i}} = freq; all_s11{{i}} = s11_db;
+        all_freq{i} = freq; all_s11{i} = s11_db;
     else continue; end
 
     [all_s11_min(i), idx] = min(s11_db); all_freq_min(i) = freq(idx);
@@ -237,11 +237,11 @@ fprintf('    生成汇总图表...\n\n');
 
 % --- 图2: 全部S11叠加 ---
 figure(2); clf; set(gcf,'Position',[50 50 900 500]); hold on;
-colors = lines(num_params); v_leg = {{}};
+colors = lines(num_params); v_leg = {};
 for i = 1:num_params
-    if ~isempty(all_freq{{i}})
-        plot(all_freq{{i}}, all_s11{{i}}, 'LineWidth',1.5, 'Color',colors(i,:));
-        v_leg{{end+1}}=sprintf('%s=%.2f (min=%.2fdB)',var_name,param_list(i),all_s11_min(i));
+    if ~isempty(all_freq{i})
+        plot(all_freq{i}, all_s11{i}, 'LineWidth',1.5, 'Color',colors(i,:));
+        v_leg{end+1}=sprintf('%s=%.2f (min=%.2fdB)',var_name,param_list(i),all_s11_min(i));
     end
 end
 yline(s11_threshold,'r--'); xline(target_freq,'g--');
@@ -262,12 +262,12 @@ xlabel(var_name); ylabel('S11(dB)'); title(sprintf('S: @%.2fGHz',target_freq)); 
 $OBS_PANEL
 subplot(2,4,[7 8]); axis off;
 [~,bi]=min(all_s11_min); [~,be]=max(all_e_max);
-txt={{'====== 扫参汇总 ======', ...
+txt={'====== 扫参汇总 ======', ...
     sprintf('变量:%s (%.2f~%.2f,%d组)',var_name,var_start,var_end,num_params),'', ...
     sprintf('★ S最优:%s=%.2f  min|S11|=%.3fdB @%.4fGHz',var_name,param_list(bi),all_s11_min(bi),all_freq_min(bi)), ...
-    sprintf('★ E最优:%s=%.2f  max|E|=%.4f @t=%.4f',var_name,param_list(be),all_e_max(be),all_e_max_time(be)),''}};
-if ~isnan(all_bw(bi)); txt{{end+1}}=sprintf('  (S最优) %ddB BW=%.4fGHz',s11_threshold,all_bw(bi)); end
-txt{{end+1}}=sprintf('  (S最优) S11@%.2fGHz=%.3fdB',target_freq,all_s11_target(bi));
+    sprintf('★ E最优:%s=%.2f  max|E|=%.4f @t=%.4f',var_name,param_list(be),all_e_max(be),all_e_max_time(be)),''};
+if ~isnan(all_bw(bi)); txt{end+1}=sprintf('  (S最优) %ddB BW=%.4fGHz',s11_threshold,all_bw(bi)); end
+txt{end+1}=sprintf('  (S最优) S11@%.2fGHz=%.3fdB',target_freq,all_s11_target(bi));
 text(0,0.5,txt,'FontSize',10,'VerticalAlignment','middle','FontName','FixedWidth');
 
 
@@ -409,7 +409,7 @@ for i=1:n1
     % Part III
     fprintf('  [Part III] 提取数据...\n');
     if exist(pf,'file')
-        d=load(pf); freq=d(:,1); s11=d(:,2); all_freq{{i,j}}=freq; all_s11{{i,j}}=s11;
+        d=load(pf); freq=d(:,1); s11=d(:,2); all_freq{i,j}=freq; all_s11{i,j}=s11;
     else continue; end
 
     [all_s11_min(i,j),idx]=min(s11); all_freq_min(i,j)=freq(idx);
@@ -431,10 +431,10 @@ end
 
 fprintf('===============================================================\n    生成汇总图表...\n\n');
 figure(1);clf;set(gcf,'Position',[50 50 900 600]);hold on;
-C=lines(N); vl={{}}; ci=0;
-for i=1:n1 for j=1:n2; if ~isempty(all_freq{{i,j}})
-    ci=ci+1; plot(all_freq{{i,j}},all_s11{{i,j}},'LineWidth',1.5,'Color',C(ci,:));
-    vl{{end+1}}=sprintf('%s=%.2f %s=%.2f',var1_name,p1(i),var2_name,p2(j));
+C=lines(N); vl={}; ci=0;
+for i=1:n1 for j=1:n2; if ~isempty(all_freq{i,j})
+    ci=ci+1; plot(all_freq{i,j},all_s11{i,j},'LineWidth',1.5,'Color',C(ci,:));
+    vl{end+1}=sprintf('%s=%.2f %s=%.2f',var1_name,p1(i),var2_name,p2(j));
 end; end; end
 yline(s11_threshold,'r--'); xline(target_freq,'g--');
 if ~isempty(vl); legend(vl,'Location','bestoutside','FontSize',7); end
@@ -460,8 +460,8 @@ subplot(2,3,3); for i=1:n1; plot(p2,all_s11_min(i,:),'o-','LineWidth',1.5);hold 
 subplot(2,3,4); surf(p2,p1,all_freq_min,'EdgeColor','none'); xlabel(var2_name);ylabel(var1_name);zlabel('Freq');title('谐振频率 3D');colorbar;
 subplot(2,3,5); surf(p2,p1,all_bw,'EdgeColor','none'); xlabel(var2_name);ylabel(var1_name);zlabel('BW');title(sprintf('%ddB BW 3D',s11_threshold));colorbar;
 subplot(2,3,6);axis off;
-txt={{'====== 双参数扫参 ======',sprintf('%s:%.2f~%.2f',var1_name,var1_start,var1_end),sprintf('%s:%.2f~%.2f',var2_name,var2_start,var2_end),sprintf('共%d组',N),'',sprintf('★最优:%s=%.2f, %s=%.2f',var1_name,p1(bi),var2_name,p2(bj)),sprintf('  min|S11|=%.3fdB @%.4fGHz',all_s11_min(bi,bj),all_freq_min(bi,bj)),''}};
-if ~isnan(all_bw(bi,bj)); txt{{end+1}}=sprintf('  %ddB BW=%.4fGHz',s11_threshold,all_bw(bi,bj)); end
+txt={'====== 双参数扫参 ======',sprintf('%s:%.2f~%.2f',var1_name,var1_start,var1_end),sprintf('%s:%.2f~%.2f',var2_name,var2_start,var2_end),sprintf('共%d组',N),'',sprintf('★最优:%s=%.2f, %s=%.2f',var1_name,p1(bi),var2_name,p2(bj)),sprintf('  min|S11|=%.3fdB @%.4fGHz',all_s11_min(bi,bj),all_freq_min(bi,bj)),''};
+if ~isnan(all_bw(bi,bj)); txt{end+1}=sprintf('  %ddB BW=%.4fGHz',s11_threshold,all_bw(bi,bj)); end
 text(0,0.5,txt,'FontSize',10,'VerticalAlignment','middle','FontName','FixedWidth');
 
 
@@ -521,7 +521,7 @@ def extract_col(filepath, marker, col_idx):
                     except ValueError:
                         pass
     except FileNotFoundError:
-        print(f'  WARNING 文件不存在: {{filepath}}')
+        print(f'  WARNING 文件不存在: {filepath}')
     return vals
 
 
@@ -537,7 +537,7 @@ num_steps = round((var_end - var_start) / var_step) + 1
 param_list = [var_start + i * var_step for i in range(num_steps)]
 num_params = len(param_list)
 
-print(f'扫描变量: {$TSP_VAR_NAME}  ({{var_start:.2f}}~{{var_end:.2f}}, {{num_params}}组)\n')
+print(f'扫描变量: {$TSP_VAR_NAME}  ({var_start:.2f}~{var_end:.2f}, {num_params}组)\n')
 
 all_s11_min = [0.0] * num_params
 all_freq_min = [0.0] * num_params
@@ -553,10 +553,10 @@ all_freq = [None] * num_params
 
 for i, current_val in enumerate(param_list):
 
-    print(f'[{{i+1}}/{{num_params}}] {$TSP_VAR_NAME} = {{current_val:.2f}}')
+    print(f'[{i+1}/{num_params}] {$TSP_VAR_NAME} = {current_val:.2f}')
 
     # ---- Part I: 修改 XML ----
-    port_file = os.path.join(work_path, f'port_data_{{i+1}}.txt')
+    port_file = os.path.join(work_path, f'port_data_{i+1}.txt')
 
     tree = ET.parse(template_xml)
     root = tree.getroot()
@@ -571,7 +571,7 @@ for i, current_val in enumerate(param_list):
 
         if ct_lower == 'modify' and o1.lower() in ('var', 'variable'):
             if cmd.get('name', '').lower() == var_name.lower():
-                cmd.set('value', f'{{current_val:.2f}}')
+                cmd.set('value', f'{current_val:.2f}')
 
         elif ct_lower == 'export' and o1.lower() == 'result' and o2.lower() == 'port':
             if cmd.get('name', '').lower() == port_dataset_name.lower():
@@ -584,16 +584,16 @@ for i, current_val in enumerate(param_list):
     waveda_dir = os.path.dirname(waveda_exe)
     waveda_name = os.path.basename(waveda_exe)
     with open(bat_file, 'w') as f:
-        f.write(f'cd /d "{{waveda_dir}}"\n')
-        f.write(f'{{waveda_name}} "script={{temp_script_xml}}"\n')
+        f.write(f'cd /d "{waveda_dir}"\n')
+        f.write(f'{waveda_name} "script={temp_script_xml}"\n')
 
     for retry in range(3):
         subprocess.run(bat_file, shell=True, capture_output=True)
         time.sleep(5)
         if os.path.exists(port_file):
-            print(f'  ✅ 文件已生成 (try {{retry+1}})')
+            print(f'  ✅ 文件已生成 (try {retry+1})')
             break
-        print(f'  WARNING 文件未生成，重试 ({{retry+1}}/3)')
+        print(f'  WARNING 文件未生成，重试 ({retry+1}/3)')
 
     if not os.path.exists(port_file):
         print('  ❌ 重试失败')
@@ -623,7 +623,7 @@ for i, current_val in enumerate(param_list):
     closest = min(range(len(freq)), key=lambda j: abs(freq[j] - target_freq))
     all_s11_target[i] = s11_db[closest]
 
-    print(f'  min S11: {{all_s11_min[i]:.3f}} dB @ {{all_freq_min[i]:.4f}} GHz')
+    print(f'  min S11: {all_s11_min[i]:.3f} dB @ {all_freq_min[i]:.4f} GHz')
 
 
 # ================================================================
@@ -635,7 +635,7 @@ fig1, ax1 = plt.subplots(figsize=(10, 6))
 for i in range(num_params):
     if all_freq[i] is not None:
         ax1.plot(all_freq[i], all_s11[i], linewidth=1.5,
-                 label=f'{$TSP_VAR_NAME}={{param_list[i]:.2f}} (min={{all_s11_min[i]:.2f}} dB)')
+                 label=f'{$TSP_VAR_NAME}={param_list[i]:.2f} (min={all_s11_min[i]:.2f} dB)')
 ax1.axhline(y=s11_threshold, color='r', linestyle='--')
 ax1.axvline(x=target_freq, color='g', linestyle='--')
 ax1.set_xlabel('Frequency (GHz)'); ax1.set_ylabel('|S11| (dB)')
@@ -650,8 +650,8 @@ axes[0,1].plot(param_list, all_freq_min, 'ro-'); axes[0,1].set_title('Resonant F
 valid = [(j,v) for j,v in enumerate(all_bw) if not (isinstance(v,float) and v!=v)]
 if valid:
     axes[0,2].plot([param_list[j] for j,_ in valid], [v for _,v in valid], 'go-')
-axes[0,2].set_title(f'{{s11_threshold}}dB BW')
-axes[1,0].plot(param_list, all_s11_target, 'co-'); axes[1,0].set_title(f'S11@{{target_freq}}GHz')
+axes[0,2].set_title(f'{s11_threshold}dB BW')
+axes[1,0].plot(param_list, all_s11_target, 'co-'); axes[1,0].set_title(f'S11@{target_freq}GHz')
 axes[1,1].axis('off'); axes[1,2].axis('off')
 fig2.tight_layout()
 
@@ -803,11 +803,11 @@ def _build_observer_blocks(config: dict[str, Any]) -> dict[str, str]:
         }
 
     return {
-        "obs_init": "% Observer存储\nall_e_max = zeros(num_params,1); all_e_max_time = zeros(num_params,1);\nall_obv = {{}};",
+        "obs_init": "% Observer存储\nall_e_max = zeros(num_params,1); all_e_max_time = zeros(num_params,1);\nall_obv = {};",
         "obs_load": """
     % --- Observer ---
     if exist(obv_file, 'file')
-        o = load(obv_file); t_vec = o(:,1); e_vec = o(:,2); all_obv{{i}} = o;
+        o = load(obv_file); t_vec = o(:,1); e_vec = o(:,2); all_obv{i} = o;
         [all_e_max(i), e_idx] = max(abs(e_vec));
         all_e_max_time(i) = t_vec(e_idx);
     else t_vec=[]; e_vec=[];
@@ -820,11 +820,11 @@ def _build_observer_blocks(config: dict[str, Any]) -> dict[str, str]:
     end""",
         "obs_plot_overlay": """% --- 图3: 全部Observer叠加 ---
 figure(3); clf; set(gcf,'Position',[100 100 900 500]); hold on;
-o_leg = {{}};
+o_leg = {};
 for i = 1:num_params
-    if ~isempty(all_obv{{i}})
-        plot(all_obv{{i}}(:,1), all_obv{{i}}(:,2), 'LineWidth',1.5, 'Color',colors(i,:));
-        o_leg{{end+1}}=sprintf('%s=%.2f',var_name,param_list(i));
+    if ~isempty(all_obv{i})
+        plot(all_obv{i}(:,1), all_obv{i}(:,2), 'LineWidth',1.5, 'Color',colors(i,:));
+        o_leg{end+1}=sprintf('%s=%.2f',var_name,param_list(i));
     end
 end
 if ~isempty(o_leg); legend(o_leg,'Location','best','FontSize',8); end
